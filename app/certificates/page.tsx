@@ -74,17 +74,23 @@ export default function CertificatesPage() {
             {/* Preview thumbnail */}
             <div className={`relative h-32 w-full overflow-hidden bg-gradient-to-br ${cert.bg} flex items-center justify-center`}>
               {/* blurred large logo in background */}
-              <img
+              <Image
                 src={cert.icon}
                 alt=""
                 aria-hidden="true"
-                className="absolute h-28 w-28 opacity-20 blur-xl scale-150 pointer-events-none"
+                width={112}
+                height={112}
+                loading="lazy"
+                className="absolute opacity-20 blur-xl scale-150 pointer-events-none"
               />
               {/* sharp logo in foreground */}
-              <img
+              <Image
                 src={cert.icon}
                 alt={cert.title}
-                className="relative h-16 w-16 drop-shadow-lg"
+                width={64}
+                height={64}
+                loading="lazy"
+                className="relative drop-shadow-lg"
               />
             </div>
 
