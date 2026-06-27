@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "name": "Auto Push to GitHub",
+  "description": "Automatically commits and pushes all file changes to GitHub whenever a file is saved, triggering a Vercel redeploy",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.tsx",
+      "**/*.ts",
+      "**/*.css",
+      "**/*.json",
+      "**/*.mjs"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "cd \"c:\\Users\\user\\Downloads\\sage\\developer-portfolio-redesign (1)\" & git add . & git commit -m \"auto: update portfolio\" & git push",
+    "timeout": 30
+  }
+}
