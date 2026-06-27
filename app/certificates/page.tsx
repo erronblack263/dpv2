@@ -142,6 +142,7 @@ export default function CertificatesPage() {
               className="w-full"
               style={{ height: '80vh' }}
               allow="autoplay"
+              loading="lazy"
               title="Certificate Preview"
             />
           </div>
