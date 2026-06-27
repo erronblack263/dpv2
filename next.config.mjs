@@ -4,9 +4,15 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
+    ],
   },
   allowedDevOrigins: ['192.168.56.1'],
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 }
 
 export default nextConfig
