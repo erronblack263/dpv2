@@ -47,6 +47,17 @@ const certificates = [
   },
 ]
 
+const frameworks = [
+  {
+    title: 'Spring Boot',
+    issuer: 'Programming Hub',
+    date: 'Month Year',
+    embed: 'https://drive.google.com/file/d/1Dfr3MiE4edrNApKehrTFgn0aQ2bB2mgC/preview',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg',
+    bg: 'from-green-500/20 to-emerald-600/20',
+  },
+]
+
 export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null)
 
