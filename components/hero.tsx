@@ -6,7 +6,7 @@ import { GitHubIcon, GitLabIcon, LinkedInIcon } from '@/components/social-icons'
 
 const socials = [
   { label: 'LinkedIn', href: 'https://linkedin.com', Icon: LinkedInIcon },
-  { label: 'Email', href: 'mailto:hello@example.com', Icon: Mail },
+  { label: 'Email', href: 'mailto:musonzahw@gmail.com', Icon: Mail },
   { label: 'GitHub', href: 'https://github.com', Icon: GitHubIcon },
   { label: 'GitLab', href: 'https://gitlab.com', Icon: GitLabIcon },
 ]
@@ -49,11 +49,11 @@ export function Hero() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-              <Button nativeButton={false} render={<Link href="/contact" />}>
+              <Button className="rounded-full px-5" nativeButton={false} render={<Link href="/contact" />}>
                 <Mail className="size-4" />
                 Contact Me
               </Button>
-              <Button nativeButton={false} variant="outline" render={<Link href="/projects" />}>
+              <Button className="rounded-full px-5" nativeButton={false} variant="outline" render={<Link href="/projects" />}>
                 <FolderGit2 className="size-4" />
                 View Projects
               </Button>
