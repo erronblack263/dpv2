@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { CodeXml, Layers, Palette, LayoutGrid } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -38,7 +37,11 @@ const cards = [
   },
 ]
 
-export function Skills() {
+interface SkillsProps {
+  onViewProjects?: () => void
+}
+
+export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
   return (
     <section id="projects" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
       <div className="mb-12 max-w-2xl">
@@ -88,7 +91,7 @@ export function Skills() {
       </div>
 
       <div className="mt-10 flex justify-end">
-        <Button nativeButton={false} variant="outline" render={<Link href="/contact" />}>
+        <Button variant="outline" onClick={onViewProjects}>
           <LayoutGrid className="size-4" />
           View My Projects
         </Button>
