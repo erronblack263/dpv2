@@ -4,13 +4,41 @@ import { Send } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
-export function Contact() {
-  const [sent, setSent] = useState(false)
+type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+export function Contact() {
+  const [status, setStatus] = useState<Status>('idle')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
+    setStatus('sending')
+
+    const form = e.currentTarget
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    }
+
+    try {
+      const res = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (res.ok) {
+        setStatus('sent')
+        form.reset()
+        setTimeout(() => setStatus('idle'), 4000)
+      } else {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 4000)
+      }
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 4000)
+    }
   }
 
   return (
@@ -32,15 +60,10 @@ export function Contact() {
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur"
-          >
+          <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur">
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <label htmlFor="name" className="text-sm font-semibold">
-                  Name
-                </label>
+                <label htmlFor="name" className="text-sm font-semibold">Name</label>
                 <input
                   id="name"
                   name="name"
@@ -50,9 +73,7 @@ export function Contact() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label htmlFor="email" className="text-sm font-semibold">
-                  Email
-                </label>
+                <label htmlFor="email" className="text-sm font-semibold">Email</label>
                 <input
                   id="email"
                   name="email"
@@ -63,9 +84,7 @@ export function Contact() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label htmlFor="message" className="text-sm font-semibold">
-                  Message
-                </label>
+                <label htmlFor="message" className="text-sm font-semibold">Message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -75,10 +94,15 @@ export function Contact() {
                   className="w-full resize-none rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/40"
                 />
               </div>
+
+              {status === 'error' && (
+                <p className="text-sm text-destructive">Something went wrong. Please try again.</p>
+              )}
+
               <div className="flex justify-end">
-                <Button type="submit">
+                <Button type="submit" disabled={status === 'sending'}>
                   <Send className="size-4" />
-                  {sent ? 'Sent!' : 'Send'}
+                  {status === 'sending' ? 'Sending...' : status === 'sent' ? '✓ Sent!' : 'Send'}
                 </Button>
               </div>
             </div>
