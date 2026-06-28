@@ -127,6 +127,42 @@ export default function CertificatesPage() {
         ))}
       </div>
 
+      {/* Frameworks section */}
+      <div className="mt-14 mb-6 flex items-center gap-3">
+        <h2 className="text-2xl font-extrabold tracking-tight text-foreground">Frameworks</h2>
+        <div className="h-px flex-1 bg-border" />
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {frameworks.map((cert) => (
+          <div
+            key={cert.embed}
+            className="flex flex-col rounded-3xl border border-border bg-card overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-primary/40"
+          >
+            <div className={`relative h-32 w-full overflow-hidden bg-gradient-to-br ${cert.bg} flex items-center justify-center`}>
+              <Image src={cert.icon} alt="" aria-hidden="true" width={112} height={112} loading="lazy" className="absolute opacity-20 blur-xl scale-150 pointer-events-none" />
+              <Image src={cert.icon} alt={cert.title} width={64} height={64} loading="lazy" className="relative drop-shadow-lg" />
+            </div>
+            <div className="flex flex-col gap-2 p-4">
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <h3 className="font-bold text-base leading-tight">{cert.title}</h3>
+                  <BadgeCheck className="size-4 text-green-500 shrink-0" />
+                </div>
+                <p className="mt-0.5 text-sm text-muted-foreground">{cert.issuer}</p>
+                <p className="text-xs text-muted-foreground">{cert.date}</p>
+              </div>
+              <button
+                onClick={() => setSelected(cert.embed)}
+                className="mt-1 w-full rounded-2xl bg-secondary text-secondary-foreground py-2 text-sm font-semibold transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                View Certificate
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Modal */}
       {selected && (
         <div
