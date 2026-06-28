@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { X, BadgeCheck } from 'lucide-react'
+import { X, BadgeCheck, ChevronDown, ChevronUp } from 'lucide-react'
+
+const VISIBLE = 4
 
 const certificates = [
   {
@@ -56,127 +58,131 @@ const frameworks = [
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg',
     bg: 'from-green-500/20 to-emerald-600/20',
   },
+  {
+    title: 'React',
+    issuer: 'Programming Hub',
+    date: 'Month Year',
+    embed: 'https://drive.google.com/file/d/1ajroacrHht3FVy9LJU7fMzJfAXMKWUSB/preview',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+    bg: 'from-cyan-400/20 to-blue-500/20',
+  },
+  {
+    title: 'Next.js',
+    issuer: 'Programming Hub',
+    date: 'Month Year',
+    embed: 'https://drive.google.com/file/d/1n4mSLZ8BP6SmgtOpx0k17DoA7rMwzwLh/preview',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
+    bg: 'from-gray-500/20 to-gray-700/20',
+  },
+  {
+    title: 'Flutter',
+    issuer: 'Programming Hub',
+    date: 'Month Year',
+    embed: 'https://drive.google.com/file/d/1O8r7n7cZmgBwsbNqWlB4JL3JrILYAQGc/preview',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg',
+    bg: 'from-blue-400/20 to-cyan-500/20',
+  },
+  {
+    title: 'PyTorch',
+    issuer: 'Programming Hub',
+    date: 'Month Year',
+    embed: 'https://drive.google.com/file/d/15qtgFGRdxyZLK_g72ExzG32eOUFD2zZf/preview',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg',
+    bg: 'from-orange-400/20 to-red-600/20',
+  },
 ]
+
+type Cert = {
+  title: string
+  issuer: string
+  date: string
+  embed: string
+  icon: string
+  bg: string
+}
+
+function CertCard({ cert, onSelect }: Readonly<{ cert: Cert; onSelect: (embed: string) => void }>) {
+  return (
+    <div className="flex flex-col rounded-3xl border border-border bg-card overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-primary/40">
+      <div className={`relative h-32 w-full overflow-hidden bg-gradient-to-br ${cert.bg} flex items-center justify-center`}>
+        <Image src={cert.icon} alt="" aria-hidden="true" width={112} height={112} loading="lazy" className="absolute opacity-20 blur-xl scale-150 pointer-events-none" />
+        <Image src={cert.icon} alt={cert.title} width={64} height={64} loading="lazy" className="relative drop-shadow-lg" />
+      </div>
+      <div className="flex flex-col gap-2 p-4">
+        <div>
+          <div className="flex items-center gap-1.5">
+            <h3 className="font-bold text-base leading-tight">{cert.title}</h3>
+            <BadgeCheck className="size-4 text-green-500 shrink-0" />
+          </div>
+          <p className="mt-0.5 text-sm text-muted-foreground">{cert.issuer}</p>
+          <p className="text-xs text-muted-foreground">{cert.date}</p>
+        </div>
+        <button
+          onClick={() => onSelect(cert.embed)}
+          className="mt-1 w-full rounded-2xl bg-secondary text-secondary-foreground py-2 text-sm font-semibold transition-colors hover:bg-primary hover:text-primary-foreground"
+        >
+          View Certificate
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function CertSection({ title, items, onSelect }: Readonly<{ title: string; items: Cert[]; onSelect: (embed: string) => void }>) {
+  const [expanded, setExpanded] = useState(false)
+  const visible = expanded ? items : items.slice(0, VISIBLE)
+  const hasMore = items.length > VISIBLE
+
+  return (
+    <div>
+      <div className="mb-6 flex items-center gap-3">
+        <h2 className="text-2xl font-extrabold tracking-tight text-foreground">{title}</h2>
+        <div className="h-px flex-1 bg-border" />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {visible.map((cert) => (
+          <CertCard key={cert.embed} cert={cert} onSelect={onSelect} />
+        ))}
+      </div>
+      {hasMore && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="mt-4 flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+        >
+          {expanded ? (
+            <><ChevronUp className="size-4" /> Show less</>
+          ) : (
+            <><ChevronDown className="size-4" /> See {items.length - VISIBLE} more</>
+          )}
+        </button>
+      )}
+    </div>
+  )
+}
 
 export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null)
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-4 pt-20 pb-24 sm:px-6">
-      {/* Page header */}
+    <section className="mx-auto w-full max-w-7xl px-4 pt-20 pb-24 sm:px-6">
       <div className="mb-10">
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Certificates</h1>
         <p className="mt-2 text-muted-foreground">Courses and certifications I&apos;ve completed.</p>
       </div>
 
-      {/* Section header */}
-      <div className="mb-6 flex items-center gap-3">
-        <h2 className="text-2xl font-extrabold tracking-tight text-foreground">Languages</h2>
-        <div className="h-px flex-1 bg-border" />
-      </div>
-
-      {/* Cards grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {certificates.map((cert) => (
-          <div
-            key={cert.embed}
-            className="flex flex-col rounded-3xl border border-border bg-card overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-primary/40"
-          >
-            {/* Preview thumbnail */}
-            <div className={`relative h-32 w-full overflow-hidden bg-gradient-to-br ${cert.bg} flex items-center justify-center`}>
-              {/* blurred large logo in background */}
-              <Image
-                src={cert.icon}
-                alt=""
-                aria-hidden="true"
-                width={112}
-                height={112}
-                loading="lazy"
-                className="absolute opacity-20 blur-xl scale-150 pointer-events-none"
-              />
-              {/* sharp logo in foreground */}
-              <Image
-                src={cert.icon}
-                alt={cert.title}
-                width={64}
-                height={64}
-                loading="lazy"
-                className="relative drop-shadow-lg"
-              />
-            </div>
-
-            {/* Info */}
-            <div className="flex flex-col gap-2 p-4">
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <h3 className="font-bold text-base leading-tight">{cert.title}</h3>
-                  <BadgeCheck className="size-4 text-green-500 shrink-0" />
-                </div>
-                <p className="mt-0.5 text-sm text-muted-foreground">{cert.issuer}</p>
-                <p className="text-xs text-muted-foreground">{cert.date}</p>
-              </div>
-
-              <button
-                onClick={() => setSelected(cert.embed)}
-                className="mt-1 w-full rounded-2xl bg-secondary text-secondary-foreground py-2 text-sm font-semibold transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                View Certificate
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Frameworks section */}
-      <div className="mt-14 mb-6 flex items-center gap-3">
-        <h2 className="text-2xl font-extrabold tracking-tight text-foreground">Frameworks</h2>
-        <div className="h-px flex-1 bg-border" />
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {frameworks.map((cert) => (
-          <div
-            key={cert.embed}
-            className="flex flex-col rounded-3xl border border-border bg-card overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-primary/40"
-          >
-            <div className={`relative h-32 w-full overflow-hidden bg-gradient-to-br ${cert.bg} flex items-center justify-center`}>
-              <Image src={cert.icon} alt="" aria-hidden="true" width={112} height={112} loading="lazy" className="absolute opacity-20 blur-xl scale-150 pointer-events-none" />
-              <Image src={cert.icon} alt={cert.title} width={64} height={64} loading="lazy" className="relative drop-shadow-lg" />
-            </div>
-            <div className="flex flex-col gap-2 p-4">
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <h3 className="font-bold text-base leading-tight">{cert.title}</h3>
-                  <BadgeCheck className="size-4 text-green-500 shrink-0" />
-                </div>
-                <p className="mt-0.5 text-sm text-muted-foreground">{cert.issuer}</p>
-                <p className="text-xs text-muted-foreground">{cert.date}</p>
-              </div>
-              <button
-                onClick={() => setSelected(cert.embed)}
-                className="mt-1 w-full rounded-2xl bg-secondary text-secondary-foreground py-2 text-sm font-semibold transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                View Certificate
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="grid gap-10 lg:grid-cols-2">
+        <CertSection title="Languages" items={certificates} onSelect={setSelected} />
+        <CertSection title="Frameworks" items={frameworks} onSelect={setSelected} />
       </div>
 
       {/* Modal */}
       {selected && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-          onClick={() => setSelected(null)}
-          onKeyDown={(e) => e.key === 'Escape' && setSelected(null)}
-          tabIndex={0}
+        <dialog
+          open
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 w-full h-full max-w-none max-h-none border-0 bg-transparent"
+          onClose={() => setSelected(null)}
         >
-          <div
-            className="relative w-full max-w-4xl rounded-2xl overflow-hidden bg-card shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden bg-card shadow-2xl">
             <button
               onClick={() => setSelected(null)}
               className="absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-full bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
@@ -193,7 +199,7 @@ export default function CertificatesPage() {
               title="Certificate Preview"
             />
           </div>
-        </div>
+        </dialog>
       )}
     </section>
   )
