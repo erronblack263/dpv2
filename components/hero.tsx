@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { GitHubIcon, GitLabIcon, LinkedInIcon } from '@/components/social-icons'
 
 const socials = [
-  { label: 'LinkedIn', href: 'https://linkedin.com', Icon: LinkedInIcon },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/witnessmusonza', Icon: LinkedInIcon },
   { label: 'Email', href: 'mailto:musonzahw@gmail.com', Icon: Mail },
   { label: 'GitHub', href: 'https://github.com', Icon: GitHubIcon },
   { label: 'GitLab', href: 'https://gitlab.com', Icon: GitLabIcon },
