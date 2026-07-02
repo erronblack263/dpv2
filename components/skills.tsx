@@ -44,14 +44,17 @@ interface SkillsProps {
 export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
   return (
     <section id="projects" className="mx-auto w-full max-w-6xl px-4 pt-12 pb-6 sm:px-6">
-      <div className="mb-8 max-w-2xl">
-        <h2 className="text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Building Digital Experiences
-        </h2>
-        <p className="mt-3 leading-relaxed text-muted-foreground">
-          I specialize in creating stunning user interfaces and developing high-quality applications
-          that stand out.
-        </p>
+      <div className="mb-6 flex items-end justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Building Digital Experiences</h2>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            Crafting stunning UIs and high-quality applications that stand out.
+          </p>
+        </div>
+        <Button variant="outline" className="shrink-0" onClick={onViewProjects}>
+          <LayoutGrid className="size-4" />
+          View Projects
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
@@ -90,7 +93,7 @@ export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
         ))}
       </div>
 
-      <div className="mt-6 flex justify-end">
+      <div className="mt-0 flex justify-end hidden">
         <Button variant="outline" onClick={onViewProjects}>
           <LayoutGrid className="size-4" />
           View My Projects
