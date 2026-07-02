@@ -43,8 +43,8 @@ interface SkillsProps {
 
 export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
   return (
-    <section id="projects" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
-      <div className="mb-12 max-w-2xl">
+    <section id="projects" className="mx-auto w-full max-w-6xl px-4 pt-12 pb-6 sm:px-6">
+      <div className="mb-8 max-w-2xl">
         <h2 className="text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
           Building Digital Experiences
         </h2>
@@ -90,7 +90,7 @@ export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
         ))}
       </div>
 
-      <div className="mt-10 flex justify-end">
+      <div className="mt-6 flex justify-end">
         <Button variant="outline" onClick={onViewProjects}>
           <LayoutGrid className="size-4" />
           View My Projects

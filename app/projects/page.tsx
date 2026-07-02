@@ -82,7 +82,7 @@ export default function ProjectsPage() {
       <Skills onViewProjects={handleViewProjects} />
 
       {showEmpty && (
-        <div ref={emptyRef} className="mx-auto w-full max-w-6xl px-4 pb-24 sm:px-6">
+        <div ref={emptyRef} className="mx-auto w-full max-w-6xl px-4 pt-4 pb-24 sm:px-6">
 
           {/* Featured project */}
           <div className="mb-8">
