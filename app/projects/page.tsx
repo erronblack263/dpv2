@@ -60,6 +60,10 @@ const projects = [
 
 export default function ProjectsPage() {
   const [showProjects, setShowProjects] = useState(false)
+  const [page, setPage] = useState(1)
+  const PER_PAGE = 3 // 3 grid cards per page (+ featured on page 1 = 4 total)
+  const totalPages = Math.ceil(projects.length / PER_PAGE)
+  const paginated = projects.slice((page - 1) * PER_PAGE, page * PER_PAGE)
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-24 sm:px-6">
@@ -78,13 +82,14 @@ export default function ProjectsPage() {
               <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">My Projects</h2>
               <p className="mt-1 text-sm text-muted-foreground">A selection of things I&apos;ve built.</p>
             </div>
-            <Button variant="outline" className="shrink-0" onClick={() => setShowProjects(false)}>
+            <Button variant="outline" className="shrink-0" onClick={() => { setShowProjects(false); setPage(1) }}>
               <X className="size-4" />
               Close
             </Button>
           </div>
 
-          {/* Featured project */}
+          {/* Featured project — page 1 only */}
+          {page === 1 && (
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <Star className="size-4 text-primary fill-primary" />
@@ -142,10 +147,11 @@ export default function ProjectsPage() {
               </div>
             </div>
           </div>
+          )} {/* end page 1 featured */}
 
           {/* Project grid */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
+            {paginated.map((project) => (
               <div key={project.title} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg">
                 <div className="relative h-44 bg-muted overflow-hidden">
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -173,9 +179,44 @@ export default function ProjectsPage() {
             ))}
           </div>
 
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-8 flex items-center justify-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="flex size-9 items-center justify-center rounded-xl border border-border bg-background text-sm font-medium transition-colors hover:bg-accent disabled:opacity-40 disabled:pointer-events-none"
+              >
+                ‹
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`flex size-9 items-center justify-center rounded-xl border text-sm font-medium transition-colors ${
+                    p === page
+                      ? 'border-primary bg-primary text-primary-foreground'
+                      : 'border-border bg-background hover:bg-accent'
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="flex size-9 items-center justify-center rounded-xl border border-border bg-background text-sm font-medium transition-colors hover:bg-accent disabled:opacity-40 disabled:pointer-events-none"
+              >
+                ›
+              </button>
+            </div>
+          )}
+
           {/* Back to skills */}
           <div className="mt-10 flex justify-center">
-            <Button variant="outline" onClick={() => setShowProjects(false)}>
+            <Button variant="outline" onClick={() => { setShowProjects(false); setPage(1) }}>
               <LayoutGrid className="size-4" />
               Back to Skills
             </Button>
