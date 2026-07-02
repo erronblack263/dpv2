@@ -60,7 +60,7 @@ export function Contact() {
       {/* Toast */}
       {toast && (
         <div
-          className={`fixed top-6 right-6 z-50 flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-lg backdrop-blur-sm transition-all animate-in slide-in-from-top-4 ${
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-lg backdrop-blur-sm ${
             toast.type === 'success'
               ? 'border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400'
               : 'border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400'
