@@ -43,7 +43,7 @@ export async function POST(req: Request) {
           <p style="margin:0;color:#6b7280;font-size:12px;">Sent via sage.highspec.dpdns.org portfolio</p>
         </td></tr>
         <tr><td style="background:#f3f4f6;padding:20px 32px;border-top:1px solid #e5e7eb;text-align:center;">
-          <img src="https://dpv2-alpha.vercel.app/sage-logo.png" alt="Sage" style="height:32px;width:auto;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;" />
+          <img src="https://dpv2-alpha.vercel.app/sage-logo.png" alt="Sage" style="height:56px;width:auto;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;" />
           <p style="margin:0;color:#6b7280;font-size:11px;">Powered by <strong style="color:#6d28d9;">Sage</strong> — Portfolio Platform</p>
         </td></tr>
       </table>
