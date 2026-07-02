@@ -42,7 +42,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="mx-auto w-full max-w-2xl px-4 pt-32 pb-24 sm:px-6">
+    <section id="contact" className="mx-auto w-full max-w-2xl px-4 pt-16 pb-16 sm:px-6">
       <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10">
         <div
           aria-hidden="true"

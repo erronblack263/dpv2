@@ -18,7 +18,7 @@ export function Hero() {
       className="relative flex min-h-[calc(100vh-4rem)] items-center"
     >
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:text-left">
+        <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:items-center lg:text-left">
           <div className="relative shrink-0">
             <div className="absolute -inset-1 rounded-full bg-primary/30 blur-md" aria-hidden="true" />
             <Image
@@ -48,7 +48,7 @@ export function Hero() {
               functionality.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
               <Button className="rounded-full px-5" nativeButton={false} render={<Link href="/contact" />}>
                 <Mail className="size-4" />
                 Contact Me

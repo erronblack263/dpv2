@@ -96,7 +96,7 @@ export default function ProjectsPage() {
               <span className="text-sm font-semibold text-primary uppercase tracking-widest">Featured Project</span>
             </div>
             <div className="group relative overflow-hidden rounded-3xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-xl">
-              <div className="grid md:grid-cols-2">
+              <div className="grid lg:grid-cols-2">
                 {/* SVG illustration */}
                 <div className="relative h-56 md:h-auto bg-gradient-to-br from-green-900/40 to-emerald-800/30 overflow-hidden flex items-center justify-center">
                   <div className="absolute top-4 left-4 size-32 rounded-full bg-green-500/20 blur-3xl" />

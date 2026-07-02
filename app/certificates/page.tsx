@@ -170,7 +170,7 @@ export default function CertificatesPage() {
         <p className="mt-2 text-muted-foreground">Courses and certifications I&apos;ve completed.</p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid gap-10 xl:grid-cols-2">
         <CertSection title="Languages" items={certificates} onSelect={setSelected} />
         <CertSection title="Frameworks" items={frameworks} onSelect={setSelected} />
       </div>
