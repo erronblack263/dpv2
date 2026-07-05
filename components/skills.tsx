@@ -20,8 +20,8 @@ const cards = [
     intro: 'I use the latest tools and technologies to build functional and scalable products:',
     items: [
       { label: 'Frontend:', detail: 'Tailwind CSS, React, TypeScript' },
-      { label: 'Backend:', detail: 'Node.js, Fastify, MongoDB, PostgreSQL' },
-      { label: 'Design:', detail: 'Figma, Framer, Photoshop' },
+      { label: 'Backend:', detail: 'Spring Boot, Next.js, MongoDB, PostgreSQL' },
+      { label: 'Design:', detail: 'Figma' },
     ],
   },
   {
@@ -32,7 +32,6 @@ const cards = [
       'User-Centered Design',
       'Modern & Clean UI',
       'Responsive Layouts',
-      'Wireframes & Prototypes',
     ],
   },
 ]
@@ -51,7 +50,7 @@ export function Skills({ onViewProjects }: Readonly<SkillsProps>) {
             Crafting stunning UIs and high-quality applications that stand out.
           </p>
         </div>
-        <Button variant="outline" className="shrink-0" onClick={onViewProjects}>
+        <Button className="shrink-0 rounded-full px-5" onClick={onViewProjects}>
           <LayoutGrid className="size-4" />
           View Projects
         </Button>
