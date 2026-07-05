@@ -5,6 +5,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: false,
+    qualities: [100, 75],
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
     ],

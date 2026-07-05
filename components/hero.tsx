@@ -22,12 +22,13 @@ export function Hero() {
           <div className="relative shrink-0">
             <div className="absolute -inset-1 rounded-full bg-primary/30 blur-md" aria-hidden="true" />
             <Image
-              src="/witness-avatar.png"
+              src="/msonzah.jpg"
               alt="Portrait of Witness"
-              width={120}
-              height={120}
+              width={448}
+              height={448}
               priority
-              className="relative size-28 rounded-full border-2 border-primary/40 object-cover sm:size-32"
+              quality={100}
+              className="relative size-48 rounded-full border-2 border-primary/40 object-cover sm:size-56"
             />
           </div>
 
