@@ -148,13 +148,13 @@ export default function GreenSpaceArtifactsPage() {
 
       {/* Lightbox */}
       {lightbox !== null && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-sm p-4" onClick={() => setLightbox(null)}>
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-sm p-4 pt-20" onClick={() => setLightbox(null)}>
           <button onClick={(e) => { e.stopPropagation(); prev() }} className="absolute left-4 top-1/2 -translate-y-1/2 flex size-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors" aria-label="Previous">
             <ChevronLeft className="size-6" />
           </button>
 
           <div onClick={(e) => e.stopPropagation()} className="flex flex-col items-center gap-4 max-h-full w-full max-w-lg">
-            <img src={allImages[lightbox].src} alt={allImages[lightbox].caption} className="max-h-[70vh] max-w-[85vw] rounded-2xl object-contain shadow-2xl" />
+            <img src={allImages[lightbox].src} alt={allImages[lightbox].caption} className="max-h-[60vh] max-w-[85vw] rounded-2xl object-contain shadow-2xl" />
             <p className="text-sm font-medium text-white/80">{allImages[lightbox].caption}</p>
             <p className="text-xs text-white/40 mb-1">{lightbox + 1} / {allImages.length}</p>
             <button onClick={() => setLightbox(null)} className="flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-bold text-black shadow-lg hover:bg-gray-100 transition-colors">

@@ -61,6 +61,7 @@ const projects = [
 export default function ProjectsPage() {
   const [showProjects, setShowProjects] = useState(false)
   const [page, setPage] = useState(1)
+  const [descExpanded, setDescExpanded] = useState(false)
   const PER_PAGE = 3 // 3 grid cards per page (+ featured on page 1 = 4 total)
   const totalPages = Math.ceil(projects.length / PER_PAGE)
   const paginated = projects.slice((page - 1) * PER_PAGE, page * PER_PAGE)
@@ -98,10 +99,10 @@ export default function ProjectsPage() {
             <div className="group relative overflow-hidden rounded-3xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-xl">
               <div className="grid lg:grid-cols-2">
                 {/* SVG illustration */}
-                <div className="relative h-56 md:h-auto bg-gradient-to-br from-green-900/40 to-emerald-800/30 overflow-hidden flex items-center justify-center">
+                <div className="relative h-36 lg:h-auto bg-gradient-to-br from-green-900/40 to-emerald-800/30 overflow-hidden flex items-center justify-center">
                   <div className="absolute top-4 left-4 size-32 rounded-full bg-green-500/20 blur-3xl" />
                   <div className="absolute bottom-4 right-4 size-24 rounded-full bg-emerald-400/20 blur-2xl" />
-                  <svg viewBox="0 0 200 200" className="relative w-48 h-48 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg viewBox="0 0 200 200" className="relative w-28 h-28 lg:w-48 lg:h-48 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <ellipse cx="100" cy="155" rx="70" ry="18" fill="#6b4f2a" opacity="0.8"/>
                     <ellipse cx="100" cy="145" rx="70" ry="18" fill="#8B6340" opacity="0.9"/>
                     <ellipse cx="100" cy="135" rx="70" ry="18" fill="#A0784E"/>
@@ -122,10 +123,19 @@ export default function ProjectsPage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/60 hidden md:block" />
                 </div>
                 {/* Info */}
-                <div className="flex flex-col justify-between p-8">
+                <div className="flex flex-col justify-between p-5 lg:p-8">
                   <div>
                     <h2 className="text-2xl font-extrabold tracking-tight">{featured.title}</h2>
-                    <p className="mt-3 text-muted-foreground leading-relaxed">{featured.description}</p>
+                    {/* Collapsible description on mobile */}
+                    <p className={`mt-3 text-muted-foreground leading-relaxed ${descExpanded ? '' : 'line-clamp-3 lg:line-clamp-none'}`}>
+                      {featured.description}
+                    </p>
+                    <button
+                      onClick={() => setDescExpanded((v) => !v)}
+                      className="mt-1 text-xs font-semibold text-primary hover:underline lg:hidden"
+                    >
+                      {descExpanded ? 'Show less ↑' : 'Read more ↓'}
+                    </button>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {featured.tags.map((tag) => (
                         <span key={tag} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">{tag}</span>
