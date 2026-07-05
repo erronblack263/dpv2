@@ -32,6 +32,35 @@ const sections = [
       { src: '/artifacts/greenspace/dashboard/news screen (2).jpg', caption: 'News Screen 2' },
     ],
   },
+  {
+    title: 'Image Recognition Engine',
+    images: [
+      { src: '/artifacts/greenspace/image recognition engine/barren soil classification.jpg', caption: 'Barren Soil Classification' },
+      { src: '/artifacts/greenspace/image recognition engine/phase 1 barren (1).jpg', caption: 'Phase 1 — Barren' },
+      { src: '/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (1).jpg', caption: 'Phase 1 — Semi Vegetative 1' },
+      { src: '/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (2).jpg', caption: 'Phase 1 — Semi Vegetative 2' },
+      { src: '/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (3).jpg', caption: 'Phase 1 — Semi Vegetative 3' },
+      { src: '/artifacts/greenspace/image recognition engine/semi vegetative detail.jpg', caption: 'Semi Vegetative Detail' },
+      { src: '/artifacts/greenspace/image recognition engine/suspected fertile (2).jpg', caption: 'Suspected Fertile 2' },
+      { src: '/artifacts/greenspace/image recognition engine/suspected fertile (3).jpg', caption: 'Suspected Fertile 3' },
+      { src: '/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (1).jpg', caption: 'Suspected Fertile Phase 1 — 1' },
+      { src: '/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (2).jpg', caption: 'Suspected Fertile Phase 1 — 2' },
+      { src: '/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (3).jpg', caption: 'Suspected Fertile Phase 1 — 3' },
+    ],
+  },
+  {
+    title: 'Profile Screen & Reports',
+    images: [
+      { src: '/artifacts/greenspace/profile screen and reports/profile screen (1).jpg', caption: 'Profile Screen 1' },
+      { src: '/artifacts/greenspace/profile screen and reports/profile screen (2).jpg', caption: 'Profile Screen 2' },
+      { src: '/artifacts/greenspace/profile screen and reports/profile edit.jpg', caption: 'Profile Edit' },
+      { src: '/artifacts/greenspace/profile screen and reports/reports.jpg', caption: 'Reports' },
+      { src: '/artifacts/greenspace/profile screen and reports/reports modal.jpg', caption: 'Reports Modal' },
+      { src: '/artifacts/greenspace/profile screen and reports/visual.jpg', caption: 'Visual 1' },
+      { src: '/artifacts/greenspace/profile screen and reports/visual2.jpg', caption: 'Visual 2' },
+      { src: '/artifacts/greenspace/profile screen and reports/visua3.jpg', caption: 'Visual 3' },
+    ],
+  },
 ]
 
 const allImages = sections.flatMap((s) => s.images)

@@ -143,7 +143,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <a href={featured.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-primary/90">
+                    <a href="/projects/greenspace/demo" className="flex items-center gap-2 rounded-2xl bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-primary/90">
                       <ExternalLink className="size-4" /> Live Demo
                     </a>
                     <a href={featured.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-2xl border border-border bg-background px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent">
