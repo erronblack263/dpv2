@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ExternalLink, Code2, Star, LayoutGrid, X } from 'lucide-react'
 import { Skills } from '@/components/skills'
 import { Button } from '@/components/ui/button'
+import { ScrollIndicator } from '@/components/scroll-indicator'
 
 const featured = {
   title: 'GreenSpace 🏆',
@@ -68,17 +69,15 @@ export default function ProjectsPage() {
 
   return (
     <div className="w-full">
-      {/* Hero banner — always visible */}
-      <div className="relative w-full h-48 sm:h-64 overflow-hidden">
+      {/* Hero banner — starts from top, floats behind nav */}
+      <div className="relative w-full h-56 sm:h-72 overflow-hidden -mt-16">
         <img
           src="/projects.jpg.jpg"
           alt="Projects banner"
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-center"
         />
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/55" />
-        {/* Text overlay */}
-        <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10">
+        <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 pb-8 pt-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             <span className="text-primary">My Projects</span>{' '}
             <span className="text-white">Portfolio</span>
@@ -99,6 +98,7 @@ export default function ProjectsPage() {
       {/* Projects section — shown when toggled */}
       {showProjects && (
         <div>
+          <ScrollIndicator />
           {/* Header row with dismiss button */}
           <div className="mb-8 flex items-center justify-between">
             <div>

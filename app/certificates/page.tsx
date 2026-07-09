@@ -146,16 +146,18 @@ function CertSection({ title, items, onSelect }: Readonly<{ title: string; items
         ))}
       </div>
       {hasMore && (
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          className="mt-4 flex items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm font-semibold text-primary bg-primary/10 hover:bg-primary hover:text-primary-foreground transition-colors"
-        >
-          {expanded ? (
-            <><ChevronUp className="size-4" /> Show less</>
-          ) : (
-            <><ChevronDown className="size-4" /> See {items.length - VISIBLE} more</>
-          )}
-        </button>
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="flex items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm font-semibold text-primary bg-primary/10 hover:bg-primary hover:text-primary-foreground transition-colors"
+          >
+            {expanded ? (
+              <><ChevronUp className="size-4" /> Show less</>
+            ) : (
+              <><ChevronDown className="size-4" /> See {items.length - VISIBLE} more</>
+            )}
+          </button>
+        </div>
       )}
     </div>
   )
@@ -168,14 +170,14 @@ export default function CertificatesPage() {
     <div className="w-full">
       <ScrollIndicator />
       {/* Hero banner */}
-      <div className="relative w-full h-48 sm:h-64 overflow-hidden">
+      <div className="relative w-full h-56 sm:h-72 overflow-hidden -mt-16">
         <img
           src="/cert.jpg"
           alt="Certificates banner"
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10">
+        <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 pb-8 pt-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             <span className="text-primary">My</span>{' '}
             <span className="text-white">Certificates</span>
