@@ -147,7 +147,7 @@ function CertSection({ title, items, onSelect }: Readonly<{ title: string; items
       {hasMore && (
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="mt-4 flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+          className="mt-4 flex items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm font-semibold text-primary bg-primary/10 hover:bg-primary hover:text-primary-foreground transition-colors"
         >
           {expanded ? (
             <><ChevronUp className="size-4" /> Show less</>
@@ -184,7 +184,7 @@ export default function CertificatesPage() {
         </div>
       </div>
 
-      <section className="mx-auto w-full max-w-7xl px-4 pt-10 pb-24 sm:px-6">
+      <section className="mx-auto w-full max-w-7xl px-4 pt-6 pb-24 sm:px-6">
 
       <div className="grid gap-10 xl:grid-cols-2">
         <CertSection title="Languages" items={certificates} onSelect={setSelected} />
