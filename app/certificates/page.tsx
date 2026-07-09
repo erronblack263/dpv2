@@ -164,11 +164,27 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null)
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 pt-20 pb-24 sm:px-6">
-      <div className="mb-10">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Certificates</h1>
-        <p className="mt-2 text-muted-foreground">Courses and certifications I&apos;ve completed.</p>
+    <div className="w-full">
+      {/* Hero banner */}
+      <div className="relative w-full h-48 sm:h-64 overflow-hidden">
+        <img
+          src="/cert.jpg"
+          alt="Certificates banner"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <span className="text-primary">My</span>{' '}
+            <span className="text-white">Certificates</span>
+          </h1>
+          <p className="mt-2 text-sm sm:text-base text-white/70 max-w-lg">
+            Courses and certifications I&apos;ve completed across languages and frameworks.
+          </p>
+        </div>
       </div>
+
+      <section className="mx-auto w-full max-w-7xl px-4 pt-10 pb-24 sm:px-6">
 
       <div className="grid gap-10 xl:grid-cols-2">
         <CertSection title="Languages" items={certificates} onSelect={setSelected} />
@@ -202,5 +218,6 @@ export default function CertificatesPage() {
         </dialog>
       )}
     </section>
+    </div>
   )
 }

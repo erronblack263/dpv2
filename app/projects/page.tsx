@@ -67,7 +67,29 @@ export default function ProjectsPage() {
   const paginated = projects.slice((page - 1) * PER_PAGE, page * PER_PAGE)
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-24 sm:px-6">
+    <div className="w-full">
+      {/* Hero banner — always visible */}
+      <div className="relative w-full h-48 sm:h-64 overflow-hidden">
+        <img
+          src="/projects.jpg.jpg"
+          alt="Projects banner"
+          className="w-full h-full object-cover object-top"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/55" />
+        {/* Text overlay */}
+        <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <span className="text-primary">My Projects</span>{' '}
+            <span className="text-white">Portfolio</span>
+          </h1>
+          <p className="mt-2 text-sm sm:text-base text-white/70 max-w-lg">
+            A showcase of applications, tools and systems I&apos;ve designed and built.
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-24 sm:px-6">
 
       {/* Skills section — hidden when projects are shown */}
       {!showProjects && (
@@ -233,6 +255,7 @@ export default function ProjectsPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   )
 }
