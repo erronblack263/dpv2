@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { X, BadgeCheck, ChevronDown, ChevronUp } from 'lucide-react'
+import { ScrollIndicator } from '@/components/scroll-indicator'
 
 const VISIBLE = 4
 
@@ -165,6 +166,7 @@ export default function CertificatesPage() {
 
   return (
     <div className="w-full">
+      <ScrollIndicator />
       {/* Hero banner */}
       <div className="relative w-full h-48 sm:h-64 overflow-hidden">
         <img
