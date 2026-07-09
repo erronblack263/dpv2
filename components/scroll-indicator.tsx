@@ -17,7 +17,7 @@ export function ScrollIndicator() {
   if (!visible) return null
 
   return (
-    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 text-muted-foreground">
+    <div className="hidden sm:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-2 text-muted-foreground">
       {/* vertical line */}
       <div className="w-px h-16 bg-border" />
       {/* bouncing arrows */}
