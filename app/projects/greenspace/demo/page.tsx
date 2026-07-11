@@ -1,28 +1,34 @@
-import Link from 'next/link'
-import { ArrowLeft, Play, Trophy } from 'lucide-react'
+import Link from "next/link";
+import { ArrowLeft, Play, Trophy } from "lucide-react";
 
 const videos = [
   {
-    src: '/artifacts/greenspace/image reco live/barren.mp4',
-    title: 'Barren Soil Detection',
-    description: 'The Sage model classifying barren soil in real-time using the device camera.',
+    src: "/artifacts/greenspace/image reco live/barren.mp4",
+    title: "Barren Soil Detection",
+    description:
+      "The Sage model classifying barren soil in real-time using the device camera.",
   },
   {
-    src: '/artifacts/greenspace/image reco live/semi vegetative.mp4',
-    title: 'Semi-Vegetative Soil Detection',
-    description: 'Live detection of semi-vegetative soil conditions with classification output.',
+    src: "/artifacts/greenspace/image reco live/semi vegetative.mp4",
+    title: "Semi-Vegetative Soil Detection",
+    description:
+      "Live detection of semi-vegetative soil conditions with classification output.",
   },
   {
-    src: '/artifacts/greenspace/image reco live/suspected fert.mp4',
-    title: 'Suspected Fertile Soil Detection',
-    description: 'Real-time classification of suspected fertile soil with confidence scoring.',
+    src: "/artifacts/greenspace/image reco live/suspected fert.mp4",
+    title: "Suspected Fertile Soil Detection",
+    description:
+      "Real-time classification of suspected fertile soil with confidence scoring.",
   },
-]
+];
 
 export default function GreenSpaceDemoPage() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 pt-12 pb-24 sm:px-6">
-      <Link href="/projects" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+      <Link
+        href="/projects"
+        className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
         <ArrowLeft className="size-4" /> Back to Projects
       </Link>
 
@@ -31,9 +37,12 @@ export default function GreenSpaceDemoPage() {
           <Trophy className="size-6 text-green-500" />
         </div>
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">GreenSpace 🏆 — Live Demo</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            GreenSpace 🏆 — Live Demo
+          </h1>
           <p className="mt-2 text-muted-foreground">
-            The Sage image recognition engine in action — real-time soil classification via device camera.
+            The Sage image recognition engine in action — real-time soil
+            classification via device camera.
           </p>
         </div>
       </div>
@@ -52,7 +61,7 @@ export default function GreenSpaceDemoPage() {
                 preload="metadata"
                 playsInline
                 className="w-full rounded-t-2xl"
-                style={{ maxHeight: '400px' }}
+                style={{ maxHeight: "400px" }}
               >
                 Your browser does not support the video tag.
               </video>
@@ -64,7 +73,9 @@ export default function GreenSpaceDemoPage() {
                 <Play className="size-4 text-primary shrink-0" />
                 <h2 className="font-bold text-sm">{video.title}</h2>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{video.description}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {video.description}
+              </p>
             </div>
           </div>
         ))}
@@ -79,5 +90,5 @@ export default function GreenSpaceDemoPage() {
         </Link>
       </div>
     </section>
-  )
+  );
 }

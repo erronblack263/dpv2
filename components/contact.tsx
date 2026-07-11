@@ -1,57 +1,58 @@
-'use client'
+"use client";
 
-import { Send, CheckCircle, XCircle, X } from 'lucide-react'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Send, CheckCircle, XCircle, X } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
-type Status = 'idle' | 'sending' | 'sent' | 'error'
+type Status = "idle" | "sending" | "sent" | "error";
 
 interface Toast {
-  type: 'success' | 'error'
-  message: string
+  type: "success" | "error";
+  message: string;
 }
 
 export function Contact() {
-  const [status, setStatus] = useState<Status>('idle')
-  const [toast, setToast] = useState<Toast | null>(null)
+  const [status, setStatus] = useState<Status>("idle");
+  const [toast, setToast] = useState<Toast | null>(null);
 
-  function showToast(type: 'success' | 'error', message: string) {
-    setToast({ type, message })
-    setTimeout(() => setToast(null), 4000)
+  function showToast(type: "success" | "error", message: string) {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 4000);
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setStatus('sending')
+    e.preventDefault();
+    setStatus("sending");
 
-    const form = e.currentTarget
+    const form = e.currentTarget;
     const data = {
-      name: (form.elements.namedItem('name') as HTMLInputElement).value,
-      email: (form.elements.namedItem('email') as HTMLInputElement).value,
-      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
-    }
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+    };
 
     try {
-      const res = await fetch('/api/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      })
+      });
 
       if (res.ok) {
-        setStatus('sent')
-        form.reset()
-        showToast('success', 'Message sent! I\'ll get back to you soon.')
-        setTimeout(() => setStatus('idle'), 4000)
+        setStatus("sent");
+        form.reset();
+        showToast("success", "Message sent! I'll get back to you soon.");
+        setTimeout(() => setStatus("idle"), 4000);
       } else {
-        setStatus('error')
-        showToast('error', 'Something went wrong. Please try again.')
-        setTimeout(() => setStatus('idle'), 4000)
+        setStatus("error");
+        showToast("error", "Something went wrong. Please try again.");
+        setTimeout(() => setStatus("idle"), 4000);
       }
     } catch {
-      setStatus('error')
-      showToast('error', 'Network error. Please check your connection.')
-      setTimeout(() => setStatus('idle'), 4000)
+      setStatus("error");
+      showToast("error", "Network error. Please check your connection.");
+      setTimeout(() => setStatus("idle"), 4000);
     }
   }
 
@@ -61,15 +62,16 @@ export function Contact() {
       {toast && (
         <div
           className={`fixed top-20 right-6 z-[100] flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-lg backdrop-blur-sm ${
-            toast.type === 'success'
-              ? 'border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400'
-              : 'border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400'
+            toast.type === "success"
+              ? "border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400"
+              : "border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400"
           }`}
         >
-          {toast.type === 'success'
-            ? <CheckCircle className="size-5 shrink-0" />
-            : <XCircle className="size-5 shrink-0" />
-          }
+          {toast.type === "success" ? (
+            <CheckCircle className="size-5 shrink-0" />
+          ) : (
+            <XCircle className="size-5 shrink-0" />
+          )}
           <span className="text-sm font-medium">{toast.message}</span>
           <button
             onClick={() => setToast(null)}
@@ -81,7 +83,10 @@ export function Contact() {
         </div>
       )}
 
-      <section id="contact" className="mx-auto w-full max-w-2xl px-4 pt-16 pb-16 sm:px-6">
+      <section
+        id="contact"
+        className="mx-auto w-full max-w-2xl px-4 pt-16 pb-16 sm:px-6"
+      >
         <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10">
           <div
             aria-hidden="true"
@@ -99,10 +104,15 @@ export function Contact() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur">
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur"
+            >
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="name" className="text-sm font-semibold">Name</label>
+                  <label htmlFor="name" className="text-sm font-semibold">
+                    Name
+                  </label>
                   <input
                     id="name"
                     name="name"
@@ -112,7 +122,9 @@ export function Contact() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-sm font-semibold">Email</label>
+                  <label htmlFor="email" className="text-sm font-semibold">
+                    Email
+                  </label>
                   <input
                     id="email"
                     name="email"
@@ -123,7 +135,9 @@ export function Contact() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="message" className="text-sm font-semibold">Message</label>
+                  <label htmlFor="message" className="text-sm font-semibold">
+                    Message
+                  </label>
                   <textarea
                     id="message"
                     name="message"
@@ -135,9 +149,13 @@ export function Contact() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" disabled={status === 'sending'}>
+                  <Button type="submit" disabled={status === "sending"}>
                     <Send className="size-4" />
-                    {status === 'sending' ? 'Sending...' : status === 'sent' ? '✓ Sent!' : 'Send'}
+                    {status === "sending"
+                      ? "Sending..."
+                      : status === "sent"
+                        ? "✓ Sent!"
+                        : "Send"}
                   </Button>
                 </div>
               </div>
@@ -146,5 +164,5 @@ export function Contact() {
         </div>
       </section>
     </>
-  )
+  );
 }

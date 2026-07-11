@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export function ScrollIndicator() {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     function onScroll() {
-      setVisible(window.scrollY < 80)
+      setVisible(window.scrollY < 80);
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  if (!visible) return null
+  if (!visible) return null;
 
   return (
     <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-2 text-muted-foreground">
@@ -28,10 +28,10 @@ export function ScrollIndicator() {
       {/* rotated label */}
       <span
         className="text-sm font-semibold tracking-widest uppercase mt-2"
-        style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
       >
         Scroll Down To View
       </span>
     </div>
-  )
+  );
 }

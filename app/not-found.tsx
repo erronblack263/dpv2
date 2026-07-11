@@ -1,17 +1,16 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Home, ArrowLeft, Monitor, Smartphone } from 'lucide-react'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Home, ArrowLeft, Monitor, Smartphone } from "lucide-react";
 
 export default function NotFound() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-4xl rounded-3xl border border-border bg-card shadow-xl overflow-hidden">
         <div className="grid md:grid-cols-2">
-
           {/* Left panel */}
           <div className="flex flex-col justify-between gap-8 p-8 border-b border-border md:border-b-0 md:border-r">
             <div>
@@ -22,7 +21,8 @@ export default function NotFound() {
                 Lost your connection line? Keep exploring our stack.
               </h1>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                While we get you back on track, check out some of the core technologies used to build this portfolio.
+                While we get you back on track, check out some of the core
+                technologies used to build this portfolio.
               </p>
             </div>
 
@@ -42,8 +42,12 @@ export default function NotFound() {
           {/* Right panel */}
           <div className="flex flex-col justify-between gap-8 p-8">
             <div>
-              <p className="text-8xl font-black text-foreground leading-none">404</p>
-              <p className="mt-2 text-xl font-bold text-foreground">Page Not Found</p>
+              <p className="text-8xl font-black text-foreground leading-none">
+                404
+              </p>
+              <p className="mt-2 text-xl font-bold text-foreground">
+                Page Not Found
+              </p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 The path or directory you are requesting doesn&apos;t exist.
               </p>
@@ -53,7 +57,9 @@ export default function NotFound() {
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="flex size-5 items-center justify-center rounded-full border border-border text-xs">↺</span>
+                  <span className="flex size-5 items-center justify-center rounded-full border border-border text-xs">
+                    ↺
+                  </span>
                   Redirect paused
                 </div>
                 <span className="text-muted-foreground">›</span>
@@ -77,9 +83,8 @@ export default function NotFound() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }

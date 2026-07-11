@@ -1,23 +1,26 @@
-import { Resend } from 'resend'
-import { NextResponse } from 'next/server'
+import { Resend } from "resend";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.RESEND_API_KEY
+    const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: 'Email service not configured' }, { status: 503 })
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 503 },
+      );
     }
 
-    const resend = new Resend(apiKey)
-    const { name, email, message } = await req.json()
+    const resend = new Resend(apiKey);
+    const { name, email, message } = await req.json();
 
     if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
     const result = await resend.emails.send({
-      from: 'Witness Portfolio <contact@sage.highspec.dpdns.org>',
-      to: ['wmusonzah1@outlook.com'],
+      from: "Witness Portfolio <contact@sage.highspec.dpdns.org>",
+      to: ["wmusonzah1@outlook.com"],
       subject: `Portfolio Contact: ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       html: `<!DOCTYPE html>
@@ -51,18 +54,24 @@ export async function POST(req: Request) {
   </table>
 </body>
 </html>`,
-    })
+    });
 
-    console.log('Resend result:', JSON.stringify(result))
+    console.log("Resend result:", JSON.stringify(result));
 
     if (result.error) {
-      console.error('Resend error:', result.error)
-      return NextResponse.json({ error: result.error.message }, { status: 500 })
+      console.error("Resend error:", result.error);
+      return NextResponse.json(
+        { error: result.error.message },
+        { status: 500 },
+      );
     }
 
-    return NextResponse.json({ success: true, id: result.data?.id })
+    return NextResponse.json({ success: true, id: result.data?.id });
   } catch (err) {
-    console.error('Unexpected error:', err)
-    return NextResponse.json({ error: 'Unexpected server error' }, { status: 500 })
+    console.error("Unexpected error:", err);
+    return NextResponse.json(
+      { error: "Unexpected server error" },
+      { status: 500 },
+    );
   }
 }
