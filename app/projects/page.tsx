@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ExternalLink, Code2, Star, LayoutGrid, X } from "lucide-react";
 import { Skills } from "@/components/skills";
 import { Button } from "@/components/ui/button";
@@ -98,10 +99,13 @@ export default function ProjectsPage() {
     <div className="w-full">
       {/* Hero banner — starts from top, floats behind nav */}
       <div className="relative w-full h-56 sm:h-72 overflow-hidden -mt-16">
-        <img
+        <Image
           src="/projects.jpg.jpg"
           alt="Projects banner"
-          className="w-full h-full object-cover object-center"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 pb-8 pt-20">
@@ -249,6 +253,7 @@ export default function ProjectsPage() {
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>

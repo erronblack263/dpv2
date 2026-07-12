@@ -58,7 +58,7 @@ export default function GreenSpaceDemoPage() {
               <video
                 src={video.src}
                 controls
-                preload="metadata"
+                preload="none"
                 playsInline
                 className="w-full rounded-t-2xl"
                 style={{ maxHeight: "400px" }}

@@ -216,10 +216,12 @@ export default function CertificatesPage() {
       <ScrollIndicator />
       {/* Hero banner */}
       <div className="relative w-full h-56 sm:h-72 overflow-hidden -mt-16">
-        <img
+        <Image
           src="/cert.jpg"
           alt="Certificates banner"
+          fill
           className="w-full h-full object-cover object-center"
+          priority
         />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 pb-8 pt-20">

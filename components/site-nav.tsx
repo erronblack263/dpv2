@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
@@ -25,10 +26,13 @@ export function SiteNav() {
         <header className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/90 backdrop-blur-md px-4 h-14 shadow-lg">
           {/* Logo */}
           <Link href="/" className="flex shrink-0 items-center justify-center">
-            <img
+            <Image
               src="/sage-logo.png"
               alt="Sage"
+              width={44}
+              height={44}
               className="h-11 w-auto object-contain"
+              priority
             />
           </Link>
 

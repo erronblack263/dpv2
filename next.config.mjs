@@ -6,14 +6,12 @@ const nextConfig = {
   images: {
     unoptimized: false,
     qualities: [100, 75],
-    remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
-    ],
+    remotePatterns: [{ protocol: "https", hostname: "cdn.jsdelivr.net" }],
   },
-  allowedDevOrigins: ['192.168.56.1'],
+  allowedDevOrigins: ["192.168.56.1"],
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

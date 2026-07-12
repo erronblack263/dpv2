@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Auto Compress Artifacts",
+  "description": "Automatically compresses new images added to the public/artifacts folder using the compress-images script",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "public/artifacts/**/*.jpg",
+      "public/artifacts/**/*.jpeg",
+      "public/artifacts/**/*.png"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "node scripts/compress-images.mjs",
+    "timeout": 60
+  }
+}
