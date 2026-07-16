@@ -3,19 +3,19 @@ import { ArrowLeft, Play, Trophy } from "lucide-react";
 
 const videos = [
   {
-    src: "/artifacts/greenspace/image reco live/barren.mp4",
+    src: "/artifacts/greenspace/image%20reco%20live/barren.mp4",
     title: "Barren Soil Detection",
     description:
       "The Sage model classifying barren soil in real-time using the device camera.",
   },
   {
-    src: "/artifacts/greenspace/image reco live/semi vegetative.mp4",
+    src: "/artifacts/greenspace/image%20reco%20live/semi%20vegetative.mp4",
     title: "Semi-Vegetative Soil Detection",
     description:
       "Live detection of semi-vegetative soil conditions with classification output.",
   },
   {
-    src: "/artifacts/greenspace/image reco live/suspected fert.mp4",
+    src: "/artifacts/greenspace/image%20reco%20live/suspected%20fert.mp4",
     title: "Suspected Fertile Soil Detection",
     description:
       "Real-time classification of suspected fertile soil with confidence scoring.",
