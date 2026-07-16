@@ -6,7 +6,10 @@ const nextConfig = {
   images: {
     unoptimized: false,
     qualities: [100, 75],
-    remotePatterns: [{ protocol: "https", hostname: "cdn.jsdelivr.net" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "cdn.jsdelivr.net" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
   allowedDevOrigins: ["192.168.56.1"],
   compiler: {
