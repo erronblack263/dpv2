@@ -2,8 +2,19 @@ import Link from "next/link";
 import { ArrowLeft, Play, Trophy } from "lucide-react";
 import { VideoPlayer } from "@/components/video-player";
 
-// Cloudinary thumbnail: swap /video/upload/ → /video/upload/so_0/
-// and change extension to .jpg for a zero-cost thumbnail
+// Apply Cloudinary streaming optimizations:
+// - q_auto: auto quality based on network
+// - f_auto: best format (webm for Chrome, mp4 for Safari)
+// - vc_auto: auto video codec
+// - fl_streaming_attachment: enables progressive streaming
+function streamUrl(src: string) {
+  return src.replace(
+    "/video/upload/",
+    "/video/upload/q_auto,f_auto,vc_auto,fl_progressive/",
+  );
+}
+
+// Cloudinary thumbnail: first frame at 600px wide
 function cloudinaryThumb(videoUrl: string) {
   return videoUrl
     .replace("/video/upload/", "/video/upload/so_0,w_600/")
@@ -64,7 +75,7 @@ export default function GreenSpaceDemoPage() {
           >
             {/* Video player with thumbnail + progress + toast */}
             <VideoPlayer
-              src={video.src}
+              src={streamUrl(video.src)}
               thumbnail={cloudinaryThumb(video.src)}
               title={video.title}
             />

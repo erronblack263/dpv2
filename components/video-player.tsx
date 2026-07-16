@@ -150,7 +150,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         src={src}
         playsInline
         controls={started}
-        preload="none"
+        preload="metadata"
         poster={thumbnail}
         className="w-full"
         style={{ maxHeight: "400px", display: "block" }}
