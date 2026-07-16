@@ -1,12 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Play, Trophy } from "lucide-react";
 import { VideoPlayer } from "@/components/video-player";
 
-// Apply Cloudinary streaming optimizations:
-// - q_auto: auto quality based on network
-// - f_auto: best format (webm for Chrome, mp4 for Safari)
-// - vc_auto: auto video codec
-// - fl_streaming_attachment: enables progressive streaming
 function streamUrl(src: string) {
   return src.replace(
     "/video/upload/",
@@ -14,12 +12,17 @@ function streamUrl(src: string) {
   );
 }
 
-// Cloudinary thumbnail: first frame at 600px wide
 function cloudinaryThumb(videoUrl: string) {
   return videoUrl
     .replace("/video/upload/", "/video/upload/so_0,w_600/")
     .replace(/\.mp4$/, ".jpg");
 }
+
+const SIZE_OPTIONS = [
+  { label: "50%", height: 200 },
+  { label: "75%", height: 300 },
+  { label: "100%", height: 500 },
+];
 
 const videos = [
   {
@@ -41,6 +44,58 @@ const videos = [
       "Real-time classification of suspected fertile soil with confidence scoring.",
   },
 ];
+
+function VideoCard({
+  video,
+}: {
+  readonly video: { src: string; title: string; description: string };
+}) {
+  const [sizeIdx, setSizeIdx] = useState(1); // default 75%
+  const currentSize = SIZE_OPTIONS[sizeIdx];
+
+  return (
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg">
+      {/* Video player */}
+      <VideoPlayer
+        src={streamUrl(video.src)}
+        thumbnail={cloudinaryThumb(video.src)}
+        title={video.title}
+        maxHeight={currentSize.height}
+      />
+
+      {/* Info + size controls */}
+      <div className="flex flex-col gap-3 p-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <Play className="size-4 text-primary shrink-0" />
+            <h2 className="font-bold text-sm">{video.title}</h2>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+            {video.description}
+          </p>
+        </div>
+
+        {/* Size toggle */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs text-muted-foreground mr-1">Size:</span>
+          {SIZE_OPTIONS.map((opt, i) => (
+            <button
+              key={opt.label}
+              onClick={() => setSizeIdx(i)}
+              className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                i === sizeIdx
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-primary/20"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function GreenSpaceDemoPage() {
   return (
@@ -69,28 +124,7 @@ export default function GreenSpaceDemoPage() {
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {videos.map((video) => (
-          <div
-            key={video.src}
-            className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
-          >
-            {/* Video player with thumbnail + progress + toast */}
-            <VideoPlayer
-              src={streamUrl(video.src)}
-              thumbnail={cloudinaryThumb(video.src)}
-              title={video.title}
-            />
-
-            {/* Info */}
-            <div className="flex flex-col gap-1.5 p-4">
-              <div className="flex items-center gap-2">
-                <Play className="size-4 text-primary shrink-0" />
-                <h2 className="font-bold text-sm">{video.title}</h2>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {video.description}
-              </p>
-            </div>
-          </div>
+          <VideoCard key={video.src} video={video} />
         ))}
       </div>
 

@@ -7,6 +7,7 @@ interface VideoPlayerProps {
   readonly src: string;
   readonly thumbnail: string;
   readonly title: string;
+  readonly maxHeight?: number;
 }
 
 const NETWORK_TIMEOUT_MS = 5000;
@@ -26,7 +27,7 @@ function scheduleAutoDismiss(
   );
 }
 
-export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
+export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
   const [buffering, setBuffering] = useState(false);
@@ -153,7 +154,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         preload="metadata"
         poster={thumbnail}
         className="w-full"
-        style={{ maxHeight: "400px", display: "block" }}
+        style={{ maxHeight: `${maxHeight}px`, display: "block" }}
         onWaiting={handleWaiting}
         onPlaying={handlePlaying}
         onProgress={handleProgress}
