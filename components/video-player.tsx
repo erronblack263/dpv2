@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { Play, WifiOff, Loader2 } from "lucide-react";
+import { Play, WifiOff, Loader2, Maximize } from "lucide-react";
 
 interface VideoPlayerProps {
   readonly src: string;
@@ -105,6 +105,16 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
     setToast({ visible: false, dismissed: true });
   }, []);
 
+  const handleFullscreen = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if ((el as HTMLVideoElement & { webkitRequestFullscreen?: () => void }).webkitRequestFullscreen) {
+      (el as HTMLVideoElement & { webkitRequestFullscreen: () => void }).webkitRequestFullscreen();
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
       networkTimer.current && clearTimeout(networkTimer.current);
@@ -136,6 +146,17 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
             </span>
           </button>
         </div>
+      )}
+
+      {/* Fullscreen button — visible when playing */}
+      {started && (
+        <button
+          onClick={handleFullscreen}
+          aria-label="Fullscreen"
+          className="absolute top-2 right-2 z-20 flex size-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors backdrop-blur-sm"
+        >
+          <Maximize className="size-4" />
+        </button>
       )}
 
       {/* Buffering spinner */}
