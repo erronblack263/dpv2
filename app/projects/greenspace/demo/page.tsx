@@ -1,5 +1,14 @@
 import Link from "next/link";
 import { ArrowLeft, Play, Trophy } from "lucide-react";
+import { VideoPlayer } from "@/components/video-player";
+
+// Cloudinary thumbnail: swap /video/upload/ → /video/upload/so_0/
+// and change extension to .jpg for a zero-cost thumbnail
+function cloudinaryThumb(videoUrl: string) {
+  return videoUrl
+    .replace("/video/upload/", "/video/upload/so_0,w_600/")
+    .replace(/\.mp4$/, ".jpg");
+}
 
 const videos = [
   {
@@ -53,19 +62,12 @@ export default function GreenSpaceDemoPage() {
             key={video.src}
             className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
           >
-            {/* Video player */}
-            <div className="relative bg-black">
-              <video
-                src={video.src}
-                controls
-                preload="none"
-                playsInline
-                className="w-full rounded-t-2xl"
-                style={{ maxHeight: "400px" }}
-              >
-                Your browser does not support the video tag.
-              </video>
-            </div>
+            {/* Video player with thumbnail + progress + toast */}
+            <VideoPlayer
+              src={video.src}
+              thumbnail={cloudinaryThumb(video.src)}
+              title={video.title}
+            />
 
             {/* Info */}
             <div className="flex flex-col gap-1.5 p-4">
