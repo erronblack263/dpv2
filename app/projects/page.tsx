@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ExternalLink, Code2, Star, LayoutGrid, X } from "lucide-react";
 import { Skills } from "@/components/skills";
@@ -88,12 +89,23 @@ const projects = [
 ];
 
 export default function ProjectsPage() {
-  const [showProjects, setShowProjects] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const showProjects = searchParams.get("view") === "projects";
   const [page, setPage] = useState(1);
   const [descExpanded, setDescExpanded] = useState(false);
-  const PER_PAGE = 3; // 3 grid cards per page (+ featured on page 1 = 4 total)
+  const PER_PAGE = 3;
   const totalPages = Math.ceil(projects.length / PER_PAGE);
   const paginated = projects.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+  function openProjects() {
+    router.push("/projects?view=projects");
+  }
+
+  function closeProjects() {
+    setPage(1);
+    router.push("/projects");
+  }
 
   return (
     <div className="w-full">
@@ -123,7 +135,7 @@ export default function ProjectsPage() {
       <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-24 sm:px-6">
         {/* Skills section — hidden when projects are shown */}
         {!showProjects && (
-          <Skills onViewProjects={() => setShowProjects(true)} />
+          <Skills onViewProjects={() => openProjects()} />
         )}
 
         {/* Projects section — shown when toggled */}
@@ -144,7 +156,7 @@ export default function ProjectsPage() {
                 variant="outline"
                 className="shrink-0"
                 onClick={() => {
-                  setShowProjects(false);
+                  closeProjects();
                   setPage(1);
                 }}
               >
@@ -337,7 +349,7 @@ export default function ProjectsPage() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setShowProjects(false);
+                  closeProjects();
                   setPage(1);
                 }}
               >

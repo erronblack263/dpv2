@@ -101,7 +101,7 @@ export default function GreenSpaceDemoPage() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 pt-12 pb-24 sm:px-6">
       <Link
-        href="/projects"
+        href="/projects?view=projects"
         className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-4" /> Back to Projects
