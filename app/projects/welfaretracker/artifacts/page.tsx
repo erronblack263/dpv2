@@ -4,18 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Shield, ChevronLeft, ChevronRight, X } from "lucide-react";
 
-const sections: {
-  title: string;
-  images: { src: string; caption: string }[];
-}[] = [
-  // Add sections here as you drop images into /public/artifacts/welfaretracker/
-  // Example:
-  // {
-  //   title: 'Dashboard',
-  //   images: [
-  //     { src: '/artifacts/welfaretracker/dashboard/home.jpg', caption: 'Home Screen' },
-  //   ],
-  // },
+const sections: { title: string; images: { src: string; caption: string }[] }[] = [
+  {
+    title: 'Auth Screens',
+    images: [
+      { src: 'https://res.cloudinary.com/virfpzu4/image/upload/v1784627935/splash_screen_nqcwym.jpg', caption: 'Splash Screen' },
+      { src: 'https://res.cloudinary.com/virfpzu4/image/upload/v1784627934/role_selection_dmnbqu.jpg', caption: 'Role Selection Screen' },
+      { src: 'https://res.cloudinary.com/virfpzu4/image/upload/v1784627933/register_tewkit.jpg', caption: 'Register Screen' },
+      { src: 'https://res.cloudinary.com/virfpzu4/image/upload/v1784627933/password_strength_b0b1pz.jpg', caption: 'Password Strength Screen' },
+      { src: 'https://res.cloudinary.com/virfpzu4/image/upload/v1784627933/login_2_m94qje.jpg', caption: 'Login Screen' },
+    ],
+  },
 ];
 
 const allImages = sections.flatMap((s) => s.images);
