@@ -52,6 +52,16 @@ const sections = [
       { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633668/purple_theme_change_2_pjeszi.jpg", caption: "Purple Theme 3" },
     ],
   },
+  {
+    title: "Profile Screens",
+    images: [
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669050/parent_profile_screen_xvrybj.jpg", caption: "Parent Profile Screen" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669053/profile_screen_r97k3p.jpg", caption: "Child / User Profile Screen" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669724/language_picker_tcqrn7.jpg", caption: "Language Picker" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669727/advanced_options_wijeh4.jpg", caption: "Advanced Options" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669730/contact_details_avdit6.jpg", caption: "Contact Details" },
+    ],
+  },
 ];
 
 const allImages = sections.flatMap((s) => s.images);
