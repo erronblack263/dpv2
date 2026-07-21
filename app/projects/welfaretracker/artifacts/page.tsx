@@ -37,6 +37,20 @@ const sections = [
       },
     ],
   },
+  {
+    title: "Home",
+    images: [
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633672/sidebar_wngw8p.jpg", caption: "Sidebar" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633671/check_in_pivmdg.jpg", caption: "Check In" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633670/sos-alert_tcqzwh.jpg", caption: "SOS Alert" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633670/notifications-screen_laej2i.jpg", caption: "Notifications Screen" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633670/purple_theme_change_3_jmqtqt.jpg", caption: "Home Theme Change" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633670/purple_theme_change_1_tei1xk.jpg", caption: "Purple Theme 2" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633669/signout_confirmation_i0byec.jpg", caption: "Signout Confirmation" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633668/color_theme_switch_lsdddp.jpg", caption: "Theme Switch Section" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784633668/purple_theme_change_2_pjeszi.jpg", caption: "Purple Theme 3" },
+    ],
+  },
 ];
 
 const allImages = sections.flatMap((s) => s.images);
