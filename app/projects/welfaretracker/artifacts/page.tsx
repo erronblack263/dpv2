@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  ShieldAlert,
 } from "lucide-react";
 
 const sections = [
@@ -158,6 +159,7 @@ function SectionGallery({
 
 export default function WelfareTrackerArtifactsPage() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [disclaimerDismissed, setDisclaimerDismissed] = useState(false);
 
   function prev() {
     setLightbox((i) =>
@@ -252,6 +254,52 @@ export default function WelfareTrackerArtifactsPage() {
           >
             <ChevronRight className="size-6" />
           </button>
+        </div>
+      )}
+
+      {/* Disclaimer modal — shown on first visit */}
+      {!disclaimerDismissed && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg rounded-3xl border border-border bg-card shadow-2xl overflow-hidden">
+            <div className="flex items-center gap-3 bg-amber-500/10 border-b border-amber-500/20 px-6 py-4">
+              <ShieldAlert className="size-6 text-amber-500 shrink-0" />
+              <h2 className="font-extrabold text-lg text-foreground">Privacy Disclaimer</h2>
+            </div>
+            <div className="px-6 py-5">
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Artifacts in this project contain sensitive components such as{" "}
+                <span className="font-semibold text-foreground">location coordinates</span> and{" "}
+                <span className="font-semibold text-foreground">real names of account holders</span>.
+                They have been <span className="font-semibold text-foreground">blurred and sketched out</span> to
+                protect the location and sensitive information of the originator.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                For more information, contact{" "}
+                <span className="font-semibold text-foreground">Sage</span> on{" "}
+                <a
+                  href="mailto:musonzahw@gmail.com"
+                  className="text-primary underline underline-offset-2 hover:opacity-80"
+                >
+                  musonzahw@gmail.com
+                </a>{" "}
+                for a full presentation.
+              </p>
+            </div>
+            <div className="flex gap-3 px-6 pb-6">
+              <Link
+                href="/projects?view=projects"
+                className="flex-1 flex items-center justify-center rounded-2xl border border-border bg-background py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
+              >
+                Go Back
+              </Link>
+              <button
+                onClick={() => setDisclaimerDismissed(true)}
+                className="flex-1 rounded-2xl bg-primary text-primary-foreground py-2.5 text-sm font-semibold transition-colors hover:bg-primary/90"
+              >
+                I Understand, Continue
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>
