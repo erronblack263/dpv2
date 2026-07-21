@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ExternalLink, Code2, Star, LayoutGrid, X } from "lucide-react";
@@ -88,7 +88,7 @@ const projects = [
   },
 ];
 
-export default function ProjectsPage() {
+function ProjectsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const showProjects = searchParams.get("view") === "projects";
@@ -361,5 +361,13 @@ export default function ProjectsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense>
+      <ProjectsPageInner />
+    </Suspense>
   );
 }
