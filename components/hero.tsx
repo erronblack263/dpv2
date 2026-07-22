@@ -81,7 +81,7 @@ export function Hero() {
       className="relative flex min-h-[calc(78vh-4rem)] items-center pt-8 sm:min-h-[calc(100vh-4rem)] sm:pt-0"
     >
       <div className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6 sm:pb-0">
-        <div className="flex flex-col items-center gap-4 text-center sm:gap-8 lg:flex-row lg:items-center lg:text-left lg:justify-start">
+        <div className="flex flex-col items-center gap-1 text-center sm:gap-8 lg:flex-row lg:items-center lg:text-left lg:justify-start lg:gap-8">
 
           {/* Avatar + orbiting icons */}
           <div
