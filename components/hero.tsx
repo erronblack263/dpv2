@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[calc(84vh-4rem)] items-center sm:min-h-[calc(100vh-4rem)]"
+      className="relative flex min-h-[calc(84vh-4rem)] items-center pt-16 sm:min-h-[calc(100vh-4rem)] sm:pt-0"
     >
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
         <div className="flex flex-col items-center gap-6 text-center sm:gap-8 lg:flex-row lg:items-center lg:text-left">
