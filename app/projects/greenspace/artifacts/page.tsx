@@ -375,8 +375,8 @@ export default function GreenSpaceArtifactsPage() {
 
       {/* Gallery Modal */}
       {selectedSection && (
-        <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 pt-[calc(env(safe-area-inset-top)+1rem)] animate-in fade-in duration-300">
-          <div className="bg-card border border-border rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-stretch sm:items-center justify-center p-0 sm:p-4 sm:pt-[calc(env(safe-area-inset-top)+1rem)] animate-in fade-in duration-300">
+          <div className="bg-card border border-border rounded-none sm:rounded-3xl shadow-2xl w-full h-full sm:w-full sm:max-w-4xl sm:max-h-[90vh] flex flex-col">
             {/* Modal Header */}
             <div className="border-b border-border px-4 sm:px-6 py-4 flex items-center justify-between shrink-0">
               <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
@@ -399,7 +399,7 @@ export default function GreenSpaceArtifactsPage() {
             </div>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
               {/* Instruction Banner */}
               <div className="mb-6 rounded-2xl bg-primary/10 border border-primary/30 px-4 py-3 text-center">
                 <p className="text-sm font-semibold text-primary">
