@@ -375,7 +375,7 @@ export default function GreenSpaceArtifactsPage() {
 
       {/* Gallery Modal */}
       {selectedSection && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 pt-[calc(env(safe-area-inset-top)+1rem)] animate-in fade-in duration-300">
           <div className="bg-card border border-border rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] flex flex-col">
             {/* Modal Header */}
             <div className="border-b border-border px-4 sm:px-6 py-4 flex items-center justify-between shrink-0">
