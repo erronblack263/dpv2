@@ -177,3 +177,26 @@
     @apply font-sans;
   }
 }
+
+@keyframes orbit {
+  from { transform: rotate(var(--orbit-start)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--orbit-start))); }
+  to   { transform: rotate(calc(var(--orbit-start) + 360deg)) translateX(var(--orbit-r)) rotate(calc(-1 * (var(--orbit-start) + 360deg))); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.orbit-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -20px;
+  margin-left: -20px;
+  animation: orbit var(--orbit-duration, 10s) linear infinite;
+}
+
+.float-icon {
+  animation: float 3s ease-in-out infinite;
+}
