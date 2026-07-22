@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { Mail, Sparkles, FolderGit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GitHubIcon, GitLabIcon, LinkedInIcon } from "@/components/social-icons";
+import { Terminal } from "@/components/terminal";
 
 const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/witnessmusonza", Icon: LinkedInIcon },
@@ -31,24 +32,19 @@ function OrbitingIcons() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const icons = Array.from(container.querySelectorAll<HTMLDivElement>("[data-orbit-icon]"));
     const count = icons.length;
-    // Responsive radius — smaller on mobile
-    const isMobile = window.innerWidth < 640;
-    const radius = isMobile ? 100 : 150;
-    const cx = isMobile ? 120 : 170;
-    const cy = isMobile ? 120 : 170;
+    const radius = 150;
+    const cx = 170;
+    const cy = 170;
     const speed = 0.4;
 
     function animate() {
       angleRef.current = (angleRef.current + speed) % 360;
       icons.forEach((el, i) => {
         const angle = ((angleRef.current + (360 / count) * i) * Math.PI) / 180;
-        const x = cx + radius * Math.cos(angle) - 20;
-        const y = cy + radius * Math.sin(angle) - 20;
-        el.style.left = `${x}px`;
-        el.style.top = `${y}px`;
+        el.style.left = `${cx + radius * Math.cos(angle) - 20}px`;
+        el.style.top = `${cy + radius * Math.sin(angle) - 20}px`;
       });
       rafRef.current = requestAnimationFrame(animate);
     }
@@ -58,7 +54,7 @@ function OrbitingIcons() {
   }, []);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-visible" aria-hidden="true" style={{ pointerEvents: 'none' }}>
+    <div ref={containerRef} className="absolute inset-0 overflow-visible" aria-hidden="true" style={{ pointerEvents: "none" }}>
       {skillIcons.map(({ src, label }) => (
         <div
           key={label}
@@ -81,15 +77,16 @@ export function Hero() {
       className="relative flex min-h-[calc(78vh-4rem)] items-center pt-8 sm:min-h-[calc(100vh-4rem)] sm:pt-0"
     >
       <div className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6 sm:pb-0">
-        <div className="flex flex-col items-center gap-1 text-center sm:gap-8 lg:flex-row lg:items-center lg:text-left lg:justify-start lg:gap-8">
+        <div className="flex flex-col items-center gap-1 text-center sm:gap-8 lg:grid lg:grid-cols-[300px_1fr_280px] lg:items-center lg:text-left lg:gap-6">
 
           {/* Avatar + orbiting icons */}
-          <div
-            className="relative shrink-0"
-            style={{ width: "340px", height: "340px" }}
-          >
+          <div className="relative shrink-0 mx-auto -ml-0 lg:-ml-10" style={{ width: "300px", height: "300px" }}>
             <OrbitingIcons />
-            <div className="absolute -inset-1 rounded-full bg-primary/30 blur-md" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '230px', height: '230px' }} aria-hidden="true" />
+            <div
+              className="absolute rounded-full bg-primary/30 blur-md"
+              style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "210px", height: "210px" }}
+              aria-hidden="true"
+            />
             <Image
               src="/msonzah.jpg"
               alt="Portrait of Witness"
@@ -98,26 +95,26 @@ export function Hero() {
               priority
               quality={100}
               className="absolute rounded-full border-2 border-primary/40 object-cover"
-              style={{ width: '210px', height: '210px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+              style={{ width: "190px", height: "190px", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
             />
           </div>
 
-          <div className="flex flex-col gap-3 sm:gap-6">
-            <h1 className="text-balance text-[1.8rem] font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              <span className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-start">
-                Hey, I&apos;m <span className="text-primary">Witness H Musonza </span>
+          {/* Text content */}
+          <div className="flex flex-col gap-3 sm:gap-5 min-w-0">
+            <h1 className="text-balance text-[1.8rem] font-extrabold leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl">
+              <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 lg:justify-start">
+                Hey, I&apos;m <span className="text-primary">Witness H Musonza</span>
                 <Sparkles className="size-6 text-primary sm:size-7" aria-hidden="true" />
               </span>
-              <br />I am a{" "}
-              <span className="text-primary">Software Engineer/Developer</span>
+              <br />
+              I am a <span className="text-primary">Software Engineer/Developer</span>
             </h1>
 
-            <p className="mx-auto max-w-[20rem] text-pretty text-xs leading-relaxed text-muted-foreground sm:max-w-xl sm:text-base lg:mx-0">
-              A{" "}
-              <span className="font-semibold text-foreground">Fullstack software developer/engineer</span>{" "}
+            <p className="mx-auto max-w-[20rem] text-pretty text-xs leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm lg:mx-0">
+              A <span className="font-semibold text-foreground">Fullstack software developer/engineer</span>{" "}
               with solid foundations in{" "}
-              <span className="font-semibold text-foreground">Software Development Life Cycle (SDLC), systems architecture, database management and creating sleek UI/UX components.</span>{" "}
-              Passionate about crafting seamless user experiences, I thrive at the intersection of creativity and functionality.
+              <span className="font-semibold text-foreground">SDLC, systems architecture, database management and sleek UI/UX.</span>{" "}
+              Passionate about crafting seamless user experiences at the intersection of creativity and functionality.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-start">
@@ -129,9 +126,7 @@ export function Hero() {
                 <FolderGit2 className="size-4" />
                 View Projects
               </Button>
-
               <span className="mx-1 hidden h-6 w-px bg-border sm:block" aria-hidden="true" />
-
               <div className="flex items-center gap-1">
                 {socials.map(({ label, href, Icon }) => (
                   <a
@@ -148,6 +143,12 @@ export function Hero() {
               </div>
             </div>
           </div>
+
+          {/* Terminal — desktop only */}
+          <div className="hidden lg:flex lg:justify-end">
+            <Terminal />
+          </div>
+
         </div>
       </div>
     </section>
