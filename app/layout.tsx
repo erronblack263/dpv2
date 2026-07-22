@@ -9,10 +9,10 @@ import "./globals.css";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Witness — Software Developer",
+  title: "Witness H Musonza — Software Developer",
   description:
-    "Portfolio of Witness, a fullstack software developer crafting seamless user experiences.",
-  generator: "v0.app",
+    "Portfolio of Witness Musonza, a fullstack software developer crafting seamless user experiences.",
+
 };
 
 export const viewport: Viewport = {
