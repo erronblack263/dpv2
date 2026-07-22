@@ -62,6 +62,15 @@ const sections = [
       { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784669730/contact_details_avdit6.jpg", caption: "Contact Details" },
     ],
   },
+  {
+    title: "Dark Mode",
+    images: [
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784715221/home_screen_dark_extxvg.jpg", caption: "Home Screen Dark" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784715219/chst_screen_dark_ieuvrm.jpg", caption: "Chat Screen Dark" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784715222/map_screen_dark_fbbngw.jpg", caption: "Map Screen Dark" },
+      { src: "https://res.cloudinary.com/virfpzu4/image/upload/v1784715547/location_details_vam4jx.jpg", caption: "Location Details" },
+    ],
+  },
 ];
 
 const allImages = sections.flatMap((s) => s.images);
