@@ -375,8 +375,8 @@ export default function GreenSpaceArtifactsPage() {
 
       {/* Gallery Modal */}
       {selectedSection && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 pt-20 sm:pt-4 animate-in fade-in duration-300">
-          <div className="bg-card border border-border rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 animate-in fade-in duration-300">
+          <div className="bg-card border border-border rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] flex flex-col">
             {/* Modal Header */}
             <div className="border-b border-border px-4 sm:px-6 py-4 flex items-center justify-between shrink-0">
               <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
@@ -384,9 +384,17 @@ export default function GreenSpaceArtifactsPage() {
               </h2>
               <button
                 onClick={() => setSelectedSection(null)}
-                className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold transition-colors hover:bg-accent"
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold transition-colors hover:bg-accent sm:flex hidden"
               >
                 <ArrowLeft className="size-4" /> Back
+              </button>
+              {/* Mobile Close Button */}
+              <button
+                onClick={() => setSelectedSection(null)}
+                className="sm:hidden inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground p-2 transition-colors hover:bg-primary/90"
+                aria-label="Close"
+              >
+                <X className="size-5" />
               </button>
             </div>
 
