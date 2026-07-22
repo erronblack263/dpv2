@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -322,6 +322,15 @@ function SectionGallery({
 export default function GreenSpaceArtifactsPage() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    const modalOpen = selectedSection !== null || lightbox !== null;
+    document.body.classList.toggle("modal-open", modalOpen);
+
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [selectedSection, lightbox]);
 
   function prev() {
     setLightbox((i) =>

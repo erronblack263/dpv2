@@ -20,7 +20,7 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sticky top-4 z-40 flex justify-center px-4 pointer-events-none">
+    <div data-site-nav className="sticky top-4 z-40 flex justify-center px-4 pointer-events-none">
       <div className="pointer-events-auto w-full max-w-3xl">
         {/* Pill navbar */}
         <header className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/90 backdrop-blur-md px-4 h-14 shadow-lg">

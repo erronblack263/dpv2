@@ -163,6 +163,16 @@
   body {
     @apply bg-background text-foreground;
   }
+  body.modal-open {
+    overflow: hidden;
+  }
+
+  body.modal-open [data-site-nav] {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   html {
     @apply font-sans;
   }
