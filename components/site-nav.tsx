@@ -20,27 +20,74 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div data-site-nav className="sticky top-4 z-40 flex justify-center px-4 pointer-events-none">
-      <div className="pointer-events-auto w-full max-w-3xl">
-        {/* Pill navbar */}
-        <header className="flex items-center justify-between gap-4 rounded-full border border-border/60 bg-background/90 backdrop-blur-md px-4 h-14 shadow-lg">
-          {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center justify-center">
-            <Image
-              src="/sage-logo.png"
-              alt="Sage"
-              width={44}
-              height={44}
-              className="h-11 w-auto object-contain"
-              priority
-            />
+    <header
+      data-site-nav
+      className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/90 backdrop-blur-md"
+    >
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
+        {/* Logo */}
+        <Link href="/" className="flex shrink-0 items-center gap-2">
+          <Image
+            src="/sage-logo.png"
+            alt="Sage"
+            width={44}
+            height={44}
+            className="h-9 w-auto object-contain"
+            priority
+          />
+          <span className="hidden sm:block text-sm font-semibold text-foreground">
+            Witness H Musonza
+          </span>
+        </Link>
+
+        {/* Desktop links — centered */}
+        <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+          {links.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-foreground",
+                  active ? "text-foreground font-semibold" : "text-muted-foreground",
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Right — CTA + theme toggle */}
+        <div className="flex items-center gap-3 shrink-0">
+          <ThemeToggle />
+          <Link
+            href="/contact"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Let&apos;s Talk
           </Link>
 
-          {/* Desktop links — centered */}
-          <nav
-            className="hidden md:flex items-center gap-6"
-            aria-label="Primary"
+          {/* Hamburger — mobile only */}
+          <button
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
           >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <nav
+          className="border-t border-border bg-background/95 backdrop-blur-md md:hidden"
+          aria-label="Mobile"
+        >
+          <div className="mx-auto flex max-w-7xl flex-col px-5 py-2">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
@@ -48,59 +95,26 @@ export function SiteNav() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
+                  onClick={() => setOpen(false)}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-foreground",
-                    active ? "text-primary" : "text-muted-foreground",
+                    "py-3 text-sm font-medium transition-colors hover:text-foreground border-b border-border/40 last:border-0",
+                    active ? "text-foreground font-semibold" : "text-muted-foreground",
                   )}
                 >
                   {link.label}
                 </Link>
               );
             })}
-          </nav>
-
-          {/* Right side */}
-          <div className="flex items-center gap-2 shrink-0">
-            <ThemeToggle />
-            {/* Hamburger — mobile only */}
-            <button
-              className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
-              onClick={() => setOpen((v) => !v)}
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-3 mb-2 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
-            </button>
+              Let&apos;s Talk
+            </Link>
           </div>
-        </header>
-
-        {/* Mobile dropdown — rounded card below pill */}
-        {open && (
-          <nav
-            className="mt-2 rounded-2xl border border-border bg-background/95 backdrop-blur-md shadow-xl overflow-hidden md:hidden"
-            aria-label="Mobile"
-          >
-            <div className="flex flex-col py-2">
-              {links.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    aria-current={active ? "page" : undefined}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "px-6 py-3 text-sm font-medium transition-colors hover:bg-accent text-center",
-                      active ? "text-primary" : "text-muted-foreground",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-        )}
-      </div>
-    </div>
+        </nav>
+      )}
+    </header>
   );
 }
