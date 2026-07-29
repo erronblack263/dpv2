@@ -129,7 +129,7 @@ function CertThumbnail({ gradient }: Readonly<{ gradient: string }>) {
 
 function CertCard({ cert, onView }: Readonly<{ cert: Cert; onView: (embed: string) => void }>) {
   return (
-    <div className="flex flex-col rounded-2xl border border-gray-700/8 bg-gray-900/6 overflow-hidden transition-all duration-200 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-gray-400/12 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)]">
+    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
       {/* Thumbnail */}
       <div className="p-3 pb-0">
         <CertThumbnail gradient={cert.gradient} />
@@ -138,12 +138,12 @@ function CertCard({ cert, onView }: Readonly<{ cert: Cert; onView: (embed: strin
       {/* Body */}
       <div className="flex flex-col flex-1 p-4 gap-2">
         {/* Issuer label */}
-        <div className="text-xs font-medium text-gray-400">
+        <div className="text-xs font-medium text-violet-500">
           {cert.issuer} · {cert.category}
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-foreground leading-snug">
+        <h3 className="text-lg font-bold text-foreground leading-snug">
           {cert.title}
         </h3>
 
@@ -156,7 +156,7 @@ function CertCard({ cert, onView }: Readonly<{ cert: Cert; onView: (embed: strin
         <div className="mt-auto pt-3">
           <button
             onClick={() => onView(cert.embed)}
-            className="flex items-center gap-1.5 rounded-full border border-gray-700/12 bg-transparent px-3 py-1 text-xs font-medium text-gray-300 transition-colors hover:bg-gray-800/12"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
           >
             View certificate
           </button>
