@@ -129,7 +129,7 @@ function CertThumbnail({ gradient }: Readonly<{ gradient: string }>) {
 
 function CertCard({ cert, onView }: Readonly<{ cert: Cert; onView: (embed: string) => void }>) {
   return (
-    <div className="flex flex-col rounded-2xl border border-gray-700/8 bg-gray-900/6 overflow-hidden transition-all duration-200 hover:border-gray-400/12 hover:shadow-sm">
+    <div className="flex flex-col rounded-2xl border border-gray-700/8 bg-gray-900/6 overflow-hidden transition-all duration-200 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-gray-400/12 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)]">
       {/* Thumbnail */}
       <div className="p-3 pb-0">
         <CertThumbnail gradient={cert.gradient} />

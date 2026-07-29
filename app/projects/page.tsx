@@ -117,7 +117,7 @@ function ProjectCard({ project }: Readonly<{ project: Project }>) {
   const tagParts = project.tagline.split(" · ");
 
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
+    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-violet-500/40 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)] hover:-translate-y-0.5">
       {/* Thumbnail */}
       <div className="p-3 pb-0">
         <Thumbnail gradient={project.gradient} />
