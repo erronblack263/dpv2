@@ -7,14 +7,12 @@ import { AmbientBackground } from "@/components/ambient-background";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Witness H Musonza — Software Developer",
   description:
     "Portfolio of Witness Musonza, a fullstack software developer crafting seamless user experiences.",
 
 };
-
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
