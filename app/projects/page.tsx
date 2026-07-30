@@ -1,10 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, Play, Image as ImageIcon, GitBranch } from "lucide-react";
 
-/* ─── Data ────────────────────────────────────────────────────── */
+/* ─── Typewriter ──────────────────────────────────────────────── */
+
+function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const idxRef = useRef(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    let typingId: ReturnType<typeof setInterval> | null = null;
+    let pauseId: ReturnType<typeof setTimeout> | null = null;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      idxRef.current = 0;
+      setDisplayed("");
+      setDone(false);
+      typingId = setInterval(() => {
+        if (cancelled) { clearInterval(typingId!); return; }
+        idxRef.current += 1;
+        setDisplayed(text.slice(0, idxRef.current));
+        if (idxRef.current >= text.length) {
+          clearInterval(typingId!);
+          setDone(true);
+          pauseId = setTimeout(runCycle, pause);
+        }
+      }, speed);
+    };
+
+    runCycle();
+    return () => {
+      cancelled = true;
+      if (typingId) clearInterval(typingId);
+      if (pauseId) clearTimeout(pauseId);
+    };
+  }, [text, speed, pause]);
+
+  return (
+    <span>
+      {displayed}
+      <span
+        className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm bg-foreground transition-opacity duration-700 ${
+          done ? "opacity-0" : "animate-pulse"
+        }`}
+      />
+    </span>
+  );
+}
+
 
 type Category = "All work" | "Web platforms" | "Mobile";
 
@@ -222,7 +270,7 @@ export default function ProjectsPage() {
             Selected work · 2023—2026
           </p>
           <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-            Projects built for clarity, scale and impact.
+            <TypewriterText text="Projects built for clarity, scale and impact." />
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
             A focused collection of web platforms, mobile tools and backend
