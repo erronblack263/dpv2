@@ -24,7 +24,7 @@ export function SiteNav() {
       data-site-nav
       className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/90 backdrop-blur-md"
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
+      <div className="flex h-14 w-full items-center justify-between px-5 sm:px-8 lg:px-12">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
@@ -87,7 +87,7 @@ export function SiteNav() {
           className="border-t border-border bg-background/95 backdrop-blur-md md:hidden"
           aria-label="Mobile"
         >
-          <div className="mx-auto flex max-w-7xl flex-col px-5 py-2">
+          <div className="flex w-full flex-col px-5 py-2">
             {links.map((link) => {
               const active = pathname === link.href;
               return (

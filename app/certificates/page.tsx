@@ -175,7 +175,7 @@ export default function CertificatesPage() {
   return (
     <>
       <div className="min-h-screen bg-background text-foreground">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-6 pb-14">
+        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
           {/* Back */}
           <Link
             href="/"
@@ -199,7 +199,7 @@ export default function CertificatesPage() {
           </div>
 
           {/* Grid */}
-          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {allCerts.map((cert) => (
               <CertCard key={cert.embed} cert={cert} onView={setSelected} />
             ))}
