@@ -206,7 +206,7 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-6 pb-16">
+      <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
         {/* Back pill */}
         <Link
           href="/"

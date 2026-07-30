@@ -119,7 +119,7 @@ function GalleryModal({ section, globalOffset, onOpen, onClose }: GalleryModalPr
       </div>
 
       {/* Grid */}
-      <div className="mx-auto w-full max-w-6xl px-6 pt-20 pb-8">
+      <div className="w-full px-6 pt-20 pb-8">
         <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
           {section.images.map((img, i) => (
             <button
@@ -159,7 +159,7 @@ export default function GreenSpaceArtifactsPage() {
   return (
     <>
       <div className="min-h-screen bg-background">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-6 pb-20">
+        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-20">
           {/* Back */}
           <Link
             href="/projects"
