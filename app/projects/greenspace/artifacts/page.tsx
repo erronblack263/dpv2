@@ -19,6 +19,8 @@ import {
   Wrench,
   Leaf,
   Sparkles,
+  Plus,
+  Minus,
 } from "lucide-react";
 
 /* ─── Typewriter ─────────────────────────────────────────────────── */
@@ -440,6 +442,7 @@ export default function GreenSpaceArtifactsPage() {
   const [sectionIdx, setSectionIdx] = useState(0); // Defaults to Auth Screens (0)
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [expandedSections, setExpandedSections] = useState(false);
 
   const section = SECTIONS[sectionIdx];
 
@@ -463,9 +466,10 @@ export default function GreenSpaceArtifactsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-emerald-500/30 selection:text-emerald-500 font-sans pb-16 transition-colors duration-300">
       {/* ─── Section Tabs Selector Bar ─── */}
-      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-5 sm:px-8 lg:px-12 py-3 sticky top-14 z-30">
+      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-2.5 sticky top-14 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
+          {/* Desktop view (all sections) */}
+          <div className="hidden md:flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
             {SECTIONS.map((sec, idx) => (
               <button
                 key={sec.title}
@@ -480,6 +484,55 @@ export default function GreenSpaceArtifactsPage() {
               </button>
             ))}
           </div>
+
+          {/* Mobile view (3 at a time + Plus button to reveal all) */}
+          <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
+            {(expandedSections
+              ? SECTIONS.map((sec, idx) => ({ sec, idx }))
+              : (sectionIdx < 3
+                  ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
+                  : [
+                      { sec: SECTIONS[0], idx: 0 },
+                      { sec: SECTIONS[1], idx: 1 },
+                      { sec: SECTIONS[sectionIdx], idx: sectionIdx },
+                    ]
+                )
+            ).map(({ sec, idx }) => (
+              <button
+                key={sec.title}
+                onClick={() => setSectionIdx(idx)}
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  idx === sectionIdx
+                    ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black shadow-md font-bold"
+                    : "bg-muted/80 text-muted-foreground border border-border hover:text-foreground"
+                }`}
+              >
+                {sec.title}
+              </button>
+            ))}
+
+            {/* Toggle Plus / Minus Button */}
+            {!expandedSections ? (
+              <button
+                onClick={() => setExpandedSections(true)}
+                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1 hover:bg-emerald-500/20 transition-all cursor-pointer"
+                title="Show all sections"
+              >
+                <Plus className="size-3.5 stroke-[2.5]" />
+                <span>More</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setExpandedSections(false)}
+                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-muted text-muted-foreground border border-border flex items-center gap-1 hover:bg-accent transition-all cursor-pointer"
+                title="Collapse sections"
+              >
+                <Minus className="size-3.5 stroke-[2.5]" />
+                <span>Less</span>
+              </button>
+            )}
+          </div>
+
           <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 hidden sm:inline-flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
             Showing: {section.title} ({section.images.length} Screens)
