@@ -69,7 +69,7 @@ export function SiteNav() {
           <ThemeToggle />
           <Link
             href="/contact"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-1.5 text-sm font-semibold text-white shadow-md shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#4f46e5] px-4 py-1.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:shadow-[0_0_28px_rgba(124,58,237,0.6)] hover:brightness-110"
           >
             Let&apos;s Talk
             <ArrowUpRight className="size-3.5" />
