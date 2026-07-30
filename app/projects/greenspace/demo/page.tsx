@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { VideoPlayer } from "@/components/video-player";
 
 function streamUrl(src: string) {
@@ -60,6 +61,63 @@ function VideoCard({
   );
 }
 
+/* ─── Typewriter (copied from certificates page) ──────────────────────────────────────────────── */
+
+const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
+
+function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [colorIdx, setColorIdx] = useState(0);
+  const idxRef = useRef(0);
+
+  // Typing loop
+  useEffect(() => {
+    let cancelled = false;
+    let typingId: ReturnType<typeof setInterval> | null = null;
+    let pauseId: ReturnType<typeof setTimeout> | null = null;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      idxRef.current = 0;
+      setDisplayed("");
+      typingId = setInterval(() => {
+        if (cancelled) { clearInterval(typingId!); return; }
+        idxRef.current += 1;
+        setDisplayed(text.slice(0, idxRef.current));
+        if (idxRef.current >= text.length) {
+          clearInterval(typingId!);
+          pauseId = setTimeout(runCycle, pause);
+        }
+      }, speed);
+    };
+
+    runCycle();
+    return () => {
+      cancelled = true;
+      if (typingId) clearInterval(typingId);
+      if (pauseId) clearTimeout(pauseId);
+    };
+  }, [text, speed, pause]);
+
+  // Cursor color cycle — every 3 s
+  useEffect(() => {
+    const id = setInterval(() => {
+      setColorIdx((i) => (i + 1) % CURSOR_COLORS.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span>
+      {displayed}
+      <span
+        className="inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm animate-pulse transition-colors duration-700"
+        style={{ backgroundColor: CURSOR_COLORS[colorIdx] }}
+      />
+    </span>
+  );
+}
+
 export default function GreenSpaceDemoPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -79,7 +137,7 @@ export default function GreenSpaceDemoPage() {
             GREEN SPACE · VIDEO DEMOS
           </p>
           <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-            Green Space in action.
+            <TypewriterText text={"Green Space in action."} />
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
             A set of field recordings showing the Green Space workflow across
