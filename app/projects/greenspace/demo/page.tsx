@@ -285,6 +285,10 @@ export default function GreenSpaceDemoPage() {
                       <Zap className="size-3" />
                       NumPy
                     </span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-[10px] font-semibold text-foreground">
+                      <FileText className="size-3" />
+                      pandas
+                    </span>
                   </div>
                 </div>
 
