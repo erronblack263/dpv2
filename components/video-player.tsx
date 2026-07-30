@@ -1,7 +1,16 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { Play, WifiOff, Maximize } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize,
+  Minimize,
+  Settings,
+  WifiOff,
+} from "lucide-react";
 
 interface VideoPlayerProps {
   readonly src: string;
@@ -13,40 +22,60 @@ interface VideoPlayerProps {
 const NETWORK_TIMEOUT_MS = 5000;
 const TOAST_DURATION_MS = 4000;
 
-/** Schedules an auto-dismiss for the toast. Extracted to reduce nesting depth. */
-function scheduleAutoDismiss(
-  timerRef: React.RefObject<ReturnType<typeof setTimeout> | null>,
-  setToast: React.Dispatch<
-    React.SetStateAction<{ visible: boolean; dismissed: boolean }>
-  >,
-  durationMs: number,
-) {
-  timerRef.current = setTimeout(
-    () => setToast((t) => ({ ...t, visible: false })),
-    durationMs,
+function formatTime(seconds: number): string {
+  if (isNaN(seconds)) return "00:00";
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+}
+
+function isTouchDevice() {
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia("(pointer: coarse)").matches ||
+    navigator.maxTouchPoints > 0
   );
 }
 
-export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPlayerProps) {
+export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [started, setStarted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
   const [buffering, setBuffering] = useState(false);
   const [bufferProgress, setBufferProgress] = useState(0);
-  const [playProgress, setPlayProgress] = useState(0);
+  const [showControls, setShowControls] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [cssFullscreen, setCssFullscreen] = useState(false);
+  const [isPortraitVideo, setIsPortraitVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [toast, setToast] = useState<{ visible: boolean; dismissed: boolean }>({
     visible: false,
     dismissed: false,
   });
-  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const networkTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const networkTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsMobile(isTouchDevice());
+  }, []);
+
+  /* ── Network Toast ──────────────────────────────────────────────── */
   const showNetworkToast = useCallback(() => {
     toastTimer.current && clearTimeout(toastTimer.current);
     setToast({ visible: true, dismissed: false });
-    scheduleAutoDismiss(toastTimer, setToast, TOAST_DURATION_MS);
+    toastTimer.current = setTimeout(
+      () => setToast((t) => ({ ...t, visible: false })),
+      TOAST_DURATION_MS,
+    );
   }, []);
 
-  /** Arm a delayed toast — fires if no buffering data arrives in time. */
   const armNetworkToast = useCallback(() => {
     networkTimer.current && clearTimeout(networkTimer.current);
     networkTimer.current = setTimeout(showNetworkToast, NETWORK_TIMEOUT_MS);
@@ -56,13 +85,188 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
     networkTimer.current && clearTimeout(networkTimer.current);
   }, []);
 
-  const handlePlay = useCallback(() => {
+  /* ── Video Action Handlers ─────────────────────────────────────── */
+  const togglePlay = useCallback(() => {
     const el = videoRef.current;
     if (!el) return;
-    setStarted(true);
-    armNetworkToast();
-    el.play().catch(() => {});
-  }, [armNetworkToast]);
+
+    if (!started) {
+      setStarted(true);
+      armNetworkToast();
+    }
+
+    if (el.paused) {
+      el.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
+    } else {
+      el.pause();
+      setIsPlaying(false);
+    }
+  }, [started, armNetworkToast]);
+
+  const toggleMute = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = !el.muted;
+    setIsMuted(el.muted);
+  }, []);
+
+  const handleSeek = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const el = videoRef.current;
+      if (!el || !duration) return;
+      const targetTime = (parseFloat(e.target.value) / 100) * duration;
+      el.currentTime = targetTime;
+      setCurrentTime(targetTime);
+    },
+    [duration],
+  );
+
+  const exitFullscreen = useCallback(async () => {
+    setCssFullscreen(false);
+    setIsFullscreen(false);
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      }
+      const doc = document as Document & {
+        webkitExitFullscreen?: () => Promise<void> | void;
+      };
+      if (doc.webkitExitFullscreen) {
+        await doc.webkitExitFullscreen();
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const handleFullscreen = useCallback(async () => {
+    const container = containerRef.current;
+    const video = videoRef.current;
+    if (!container || !video) return;
+
+    if (isFullscreen || cssFullscreen || document.fullscreenElement) {
+      await exitFullscreen();
+      return;
+    }
+
+    // Mobile / touch: prefer CSS fullscreen so portrait videos can fill the phone screen
+    if (isMobile || isTouchDevice()) {
+      setCssFullscreen(true);
+      setIsFullscreen(true);
+      return;
+    }
+
+    try {
+      const el = container as HTMLElement & {
+        requestFullscreen?: () => Promise<void>;
+        webkitRequestFullscreen?: () => Promise<void> | void;
+      };
+      if (el.requestFullscreen) {
+        await el.requestFullscreen();
+        setIsFullscreen(true);
+        return;
+      }
+      if (el.webkitRequestFullscreen) {
+        await el.webkitRequestFullscreen();
+        setIsFullscreen(true);
+        return;
+      }
+    } catch {
+      /* fall through */
+    }
+
+    // iOS Safari native video fullscreen fallback
+    const iosVideo = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+    };
+    if (typeof iosVideo.webkitEnterFullscreen === "function") {
+      try {
+        iosVideo.webkitEnterFullscreen();
+        return;
+      } catch {
+        /* fall through */
+      }
+    }
+
+    setCssFullscreen(true);
+    setIsFullscreen(true);
+  }, [isFullscreen, cssFullscreen, exitFullscreen, isMobile]);
+
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      const active =
+        !!document.fullscreenElement &&
+        (document.fullscreenElement === containerRef.current ||
+          !!containerRef.current?.contains(document.fullscreenElement));
+      if (!cssFullscreen) {
+        setIsFullscreen(active);
+      }
+    };
+
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        onFullscreenChange,
+      );
+    };
+  }, [cssFullscreen]);
+
+  // Lock body scroll while CSS fullscreen is open
+  useEffect(() => {
+    if (!cssFullscreen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [cssFullscreen]);
+
+  // Esc closes CSS fullscreen
+  useEffect(() => {
+    if (!cssFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") exitFullscreen();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [cssFullscreen, exitFullscreen]);
+
+  /* ── Mouse / touch Controls Visibility ─────────────────────────── */
+  const revealControls = useCallback(() => {
+    setShowControls(true);
+    if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+    if (isPlaying) {
+      controlsTimeoutRef.current = setTimeout(() => {
+        setShowControls(false);
+      }, 3500);
+    }
+  }, [isPlaying]);
+
+  /* ── Video Event Handlers ───────────────────────────────────────── */
+  const handleTimeUpdate = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    setCurrentTime(el.currentTime);
+    if (el.duration && !isNaN(el.duration)) {
+      setDuration(el.duration);
+    }
+  }, []);
+
+  const handleLoadedMetadata = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (el.duration && !isNaN(el.duration)) {
+      setDuration(el.duration);
+    }
+    if (el.videoWidth && el.videoHeight) {
+      setIsPortraitVideo(el.videoHeight > el.videoWidth);
+    }
+  }, []);
 
   const handleWaiting = useCallback(() => {
     setBuffering(true);
@@ -71,8 +275,8 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
 
   const handlePlaying = useCallback(() => {
     setBuffering(false);
+    setIsPlaying(true);
     clearNetworkToast();
-    toastTimer.current && clearTimeout(toastTimer.current);
     setToast({ visible: false, dismissed: false });
   }, [clearNetworkToast]);
 
@@ -86,212 +290,200 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
     }
   }, [clearNetworkToast]);
 
-  const handleTimeUpdate = useCallback(() => {
-    const el = videoRef.current;
-    if (!el?.duration) return;
-    setPlayProgress((el.currentTime / el.duration) * 100);
-  }, []);
-
-  const handleError = useCallback(() => {
-    setBuffering(false);
-    clearNetworkToast();
-    toastTimer.current && clearTimeout(toastTimer.current);
-    setToast({ visible: true, dismissed: false });
-    scheduleAutoDismiss(toastTimer, setToast, TOAST_DURATION_MS);
-  }, [clearNetworkToast]);
-
-  const dismissToast = useCallback(() => {
-    toastTimer.current && clearTimeout(toastTimer.current);
-    setToast({ visible: false, dismissed: true });
-  }, []);
-
-  const handleFullscreen = useCallback(() => {
-    const el = videoRef.current;
-    if (!el) return;
-    if (el.requestFullscreen) {
-      el.requestFullscreen();
-    } else if ((el as HTMLVideoElement & { webkitRequestFullscreen?: () => void }).webkitRequestFullscreen) {
-      (el as HTMLVideoElement & { webkitRequestFullscreen: () => void }).webkitRequestFullscreen();
-    }
+  const handleEnded = useCallback(() => {
+    setIsPlaying(false);
+    setShowControls(true);
   }, []);
 
   useEffect(() => {
     return () => {
       networkTimer.current && clearTimeout(networkTimer.current);
       toastTimer.current && clearTimeout(toastTimer.current);
+      controlsTimeoutRef.current && clearTimeout(controlsTimeoutRef.current);
     };
   }, []);
 
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const expanded = isFullscreen || cssFullscreen;
+
+  // Inline: contain so portrait demos aren't cropped. Fullscreen mobile: cover to fill screen.
+  const videoFitClass = expanded
+    ? isMobile || isPortraitVideo
+      ? "w-full h-full object-cover"
+      : "max-w-full max-h-full w-auto h-auto object-contain"
+    : isPortraitVideo
+      ? "w-full h-full object-contain"
+      : "w-full h-full object-cover";
+
   return (
-    <div className="relative bg-black rounded-t-2xl overflow-hidden">
-      {/* Thumbnail overlay — shown before play is triggered */}
-      {!started && (
-        <div className="absolute inset-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={thumbnail}
-            alt={`${title} thumbnail`}
-            className="w-full h-full object-cover"
-          />
-          {/* Dark scrim */}
-          <div className="absolute inset-0 bg-black/40" />
-          {/* Play button */}
-          <button
-            onClick={handlePlay}
-            aria-label={`Play ${title}`}
-            className="absolute inset-0 flex items-center justify-center group focus:outline-none"
-          >
-            <span className="flex size-14 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-2 ring-white/50 transition-transform group-hover:scale-110 group-focus-visible:ring-white">
-              <Play className="size-6 text-white fill-white translate-x-0.5" />
-            </span>
-          </button>
-        </div>
-      )}
-
-      {/* Fullscreen button — visible when playing */}
-      {started && (
-        <button
-          onClick={handleFullscreen}
-          aria-label="Fullscreen"
-          className="absolute top-2 right-2 z-20 flex size-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors backdrop-blur-sm"
-        >
-          <Maximize className="size-4" />
-        </button>
-      )}
-
-      {/* Persistent circular play-progress indicator — bottom-left corner */}
-      {started && (
-        <div className="absolute bottom-8 left-3 z-20 pointer-events-none">
-          <div className="relative flex items-center justify-center">
-            <svg width="44" height="44" viewBox="0 0 44 44" className="-rotate-90">
-              <defs>
-                <linearGradient id="ringGradientSmall" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#8b5cf6" />
-                  <stop offset="100%" stopColor="#a855f7" />
-                </linearGradient>
-              </defs>
-              {/* Background track */}
-              <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
-              {/* Play progress arc */}
-              <circle
-                cx="22" cy="22" r="17"
-                fill="none"
-                stroke={playProgress >= 99 ? "#22c55e" : "url(#ringGradientSmall)"}
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 17}`}
-                strokeDashoffset={`${2 * Math.PI * 17 * (1 - Math.min(playProgress, 100) / 100)}`}
-                className="transition-all duration-100"
-              />
-            </svg>
-            <span className="absolute text-[9px] font-bold tabular-nums" style={{ color: playProgress >= 99 ? "#22c55e" : "white" }}>
-              {playProgress >= 99 ? "✓" : `${Math.round(playProgress)}%`}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {started && buffering && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-black/60 backdrop-blur-[2px]">
-          {/* Circular progress ring */}
-          <div className="relative flex items-center justify-center">
-            <svg width="72" height="72" viewBox="0 0 72 72" className="-rotate-90">
-              <defs>
-                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#8b5cf6" />
-                  <stop offset="100%" stopColor="#a855f7" />
-                </linearGradient>
-              </defs>
-              {/* Background track */}
-              <circle
-                cx="36" cy="36" r="30"
-                fill="none"
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth="4"
-              />
-              {/* Progress arc */}
-              <circle
-                cx="36" cy="36" r="30"
-                fill="none"
-                stroke="url(#ringGradient)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 30}`}
-                strokeDashoffset={`${2 * Math.PI * 30 * (1 - bufferProgress / 100)}`}
-                className="transition-all duration-500"
-              />
-            </svg>
-            {/* Centre percentage */}
-            <span className="absolute text-sm font-bold text-white tabular-nums">
-              {Math.round(bufferProgress)}%
-            </span>
-          </div>
-
-          {/* Linear track */}
-          <div className="relative w-40 h-1 rounded-full bg-white/10 overflow-hidden">
-            <div
-              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-500 to-purple-400 transition-all duration-500"
-              style={{ width: `${bufferProgress}%` }}
-            />
-            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          </div>
-
-          <span className="text-[10px] font-medium text-white/50 tracking-wide uppercase">Loading video</span>
-        </div>
-      )}
-
-      {/* Video element */}
+    <div
+      ref={containerRef}
+      onMouseMove={revealControls}
+      onTouchStart={revealControls}
+      onMouseLeave={() => isPlaying && !cssFullscreen && setShowControls(false)}
+      className={`bg-black overflow-hidden flex items-center justify-center group select-none ${
+        cssFullscreen
+          ? "fixed inset-0 z-[200] w-screen h-[100dvh] rounded-none"
+          : `relative w-full h-full ${expanded ? "rounded-none" : "rounded-xl"}`
+      }`}
+    >
+      {/* ─── Video Tag ─── */}
       <video
         ref={videoRef}
         src={src}
         playsInline
-        controls={started}
         preload="metadata"
         poster={thumbnail}
-        className="w-full"
-        style={{ maxHeight: `${maxHeight}px`, display: "block" }}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
         onWaiting={handleWaiting}
         onPlaying={handlePlaying}
         onProgress={handleProgress}
-        onTimeUpdate={handleTimeUpdate}
-        onError={handleError}
-      >
-        <track kind="captions" />
-        Your browser does not support the video tag.
-      </video>
+        onEnded={handleEnded}
+        onClick={togglePlay}
+        className={`cursor-pointer bg-black ${videoFitClass}`}
+      />
 
-      {/* Progress bar: buffer track + playhead */}
-      {started && (
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 z-20 pointer-events-none">
-          {/* Buffer track */}
-          <div
-            className="absolute inset-y-0 left-0 bg-white/20 transition-all duration-500 rounded-full"
-            style={{ width: `${bufferProgress}%` }}
+      {/* ─── Thumbnail & Initial Play Overlay ─── */}
+      {!started && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[1px]">
+          <img
+            src={thumbnail}
+            alt={title}
+            className={`absolute inset-0 w-full h-full ${
+              isPortraitVideo ? "object-contain" : "object-cover"
+            }`}
           />
-          {/* Playhead */}
-          <div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-purple-400 transition-all duration-100 rounded-full"
-            style={{ width: `${playProgress}%` }}
-          />
+          <div className="absolute inset-0 bg-black/40" />
+
+          <button
+            onClick={togglePlay}
+            aria-label={`Play ${title}`}
+            className="relative z-30 size-16 sm:size-20 rounded-full bg-emerald-500/90 hover:bg-emerald-400 text-black flex items-center justify-center shadow-[0_0_35px_rgba(16,185,129,0.6)] ring-4 ring-emerald-500/30 transition-all duration-300 hover:scale-110 focus:outline-none"
+          >
+            <Play className="size-8 sm:size-10 fill-black translate-x-0.5" />
+          </button>
         </div>
       )}
 
-      {/* Network error toast */}
-      {toast.visible && (
-        <div
-          role="alert"
-          aria-live="assertive"
-          className="absolute top-3 left-1/2 z-30 -translate-x-1/2 flex items-center gap-2.5 rounded-xl bg-destructive px-4 py-2.5 text-xs font-medium text-white shadow-lg animate-in fade-in slide-in-from-top-2 duration-300"
-        >
-          <WifiOff className="size-3.5 shrink-0" />
-          <span>Slow or no network — video may not load</span>
+      {/* ─── Paused / Hover Play Button ─── */}
+      {started && !isPlaying && !buffering && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none bg-black/20">
           <button
-            onClick={dismissToast}
-            aria-label="Dismiss"
-            className="ml-1 opacity-70 hover:opacity-100 focus:outline-none"
+            onClick={togglePlay}
+            aria-label="Play"
+            className="pointer-events-auto size-14 sm:size-16 rounded-full bg-emerald-500/90 text-black flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.5)] ring-4 ring-emerald-500/30 transition-transform hover:scale-110"
           >
-            ✕
+            <Play className="size-7 sm:size-8 fill-black translate-x-0.5" />
           </button>
+        </div>
+      )}
+
+      {/* ─── Buffering Spinner ─── */}
+      {started && buffering && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm gap-2">
+          <div className="size-10 rounded-full border-3 border-emerald-500 border-t-transparent animate-spin" />
+          <span className="text-xs font-semibold text-emerald-400">
+            Loading...
+          </span>
+        </div>
+      )}
+
+      {/* ─── Custom Bottom Controls Overlay ─── */}
+      {started && (
+        <div
+          className={`absolute bottom-0 inset-x-0 z-30 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-8 flex flex-col gap-2 transition-opacity duration-300 ${
+            showControls || !isPlaying
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <div className="relative w-full h-1.5 flex items-center group/slider cursor-pointer">
+            <div className="absolute inset-x-0 h-1 rounded-full bg-white/20 overflow-hidden">
+              <div
+                className="h-full bg-white/30 rounded-full transition-all duration-300"
+                style={{ width: `${bufferProgress}%` }}
+              />
+            </div>
+            <div
+              className="absolute left-0 h-1 rounded-full bg-emerald-500 transition-all duration-100"
+              style={{ width: `${progressPercent}%` }}
+            />
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={progressPercent || 0}
+              onChange={handleSeek}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            />
+            <div
+              className="absolute size-3.5 rounded-full bg-emerald-400 shadow-md transform -translate-x-1/2 pointer-events-none scale-0 group-hover/slider:scale-100 transition-transform"
+              style={{ left: `${progressPercent}%` }}
+            />
+          </div>
+
+          <div className="flex items-center justify-between text-white text-xs font-mono">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={togglePlay}
+                className="p-1 rounded-md text-white hover:text-emerald-400 transition-colors"
+                aria-label={isPlaying ? "Pause" : "Play"}
+              >
+                {isPlaying ? (
+                  <Pause className="size-4 fill-white" />
+                ) : (
+                  <Play className="size-4 fill-white" />
+                )}
+              </button>
+
+              <div className="text-[11px] font-bold text-zinc-300">
+                <span>{formatTime(currentTime)}</span>
+                <span className="mx-1 text-zinc-500">/</span>
+                <span>{formatTime(duration)}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleMute}
+                className="p-1 rounded-md text-white hover:text-emerald-400 transition-colors"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? (
+                  <VolumeX className="size-4 text-rose-400" />
+                ) : (
+                  <Volume2 className="size-4" />
+                )}
+              </button>
+
+              <button
+                className="p-1 rounded-md text-white hover:text-emerald-400 transition-colors"
+                aria-label="Settings"
+              >
+                <Settings className="size-4" />
+              </button>
+
+              <button
+                onClick={handleFullscreen}
+                className="p-1 rounded-md text-white hover:text-emerald-400 transition-colors"
+                aria-label={expanded ? "Exit fullscreen" : "Fullscreen"}
+              >
+                {expanded ? (
+                  <Minimize className="size-4" />
+                ) : (
+                  <Maximize className="size-4" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toast.visible && (
+        <div className="absolute top-3 left-1/2 z-40 -translate-x-1/2 flex items-center gap-2 rounded-lg bg-red-600/90 text-white px-3 py-1.5 text-xs shadow-lg backdrop-blur-sm">
+          <WifiOff className="size-3.5" />
+          <span>Slow connection detected</span>
         </div>
       )}
     </div>
