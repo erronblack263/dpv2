@@ -175,7 +175,7 @@ export default function CertificatesPage() {
   return (
     <>
       <div className="min-h-screen bg-background text-foreground">
-        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
+        <div className="w-full px-5 sm:px-8 lg:px-12 pt-12 pb-14">
           {/* Back */}
           <Link
             href="/"
@@ -193,7 +193,7 @@ export default function CertificatesPage() {
             <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
               Certificates and credentials.
             </h1>
-            <p className="mt-2 max-w-xl text-sm text-muted-foreground leading-relaxed">
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               A growing record of focused learning across software engineering, cloud platforms and modern development practices.
             </p>
           </div>

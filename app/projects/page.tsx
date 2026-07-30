@@ -224,7 +224,7 @@ export default function ProjectsPage() {
           <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
             Projects built for clarity, scale and impact.
           </h1>
-          <p className="mt-2 text-sm text-muted-foreground max-w-xl leading-relaxed">
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
             A focused collection of web platforms, mobile tools and backend
             systems designed to solve real-world problems.
           </p>
