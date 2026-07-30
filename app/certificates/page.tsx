@@ -6,11 +6,14 @@ import { ArrowLeft, X } from "lucide-react";
 
 /* ─── Typewriter ──────────────────────────────────────────────── */
 
+const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
+
 function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
   const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
+  const [colorIdx, setColorIdx] = useState(0);
   const idxRef = useRef(0);
 
+  // Typing loop
   useEffect(() => {
     let cancelled = false;
     let typingId: ReturnType<typeof setInterval> | null = null;
@@ -20,22 +23,18 @@ function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; spee
       if (cancelled) return;
       idxRef.current = 0;
       setDisplayed("");
-      setDone(false);
-
       typingId = setInterval(() => {
         if (cancelled) { clearInterval(typingId!); return; }
         idxRef.current += 1;
         setDisplayed(text.slice(0, idxRef.current));
         if (idxRef.current >= text.length) {
           clearInterval(typingId!);
-          setDone(true);
           pauseId = setTimeout(runCycle, pause);
         }
       }, speed);
     };
 
     runCycle();
-
     return () => {
       cancelled = true;
       if (typingId) clearInterval(typingId);
@@ -43,13 +42,20 @@ function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; spee
     };
   }, [text, speed, pause]);
 
+  // Cursor color cycle — every 3 s
+  useEffect(() => {
+    const id = setInterval(() => {
+      setColorIdx((i) => (i + 1) % CURSOR_COLORS.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <span>
       {displayed}
       <span
-        className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm bg-foreground transition-opacity duration-700 ${
-          done ? "opacity-0" : "animate-pulse"
-        }`}
+        className="inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm animate-pulse transition-colors duration-700"
+        style={{ backgroundColor: CURSOR_COLORS[colorIdx] }}
       />
     </span>
   );

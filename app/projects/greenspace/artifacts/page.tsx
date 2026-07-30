@@ -1,8 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
+
+/* ─── Typewriter (copied from certificates page) ──────────────────────────────────────────────── */
+
+const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
+
+function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [colorIdx, setColorIdx] = useState(0);
+  const idxRef = useRef(0);
+
+  // Typing loop
+  useEffect(() => {
+    let cancelled = false;
+    let typingId: ReturnType<typeof setInterval> | null = null;
+    let pauseId: ReturnType<typeof setTimeout> | null = null;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      idxRef.current = 0;
+      setDisplayed("");
+      typingId = setInterval(() => {
+        if (cancelled) { clearInterval(typingId!); return; }
+        idxRef.current += 1;
+        setDisplayed(text.slice(0, idxRef.current));
+        if (idxRef.current >= text.length) {
+          clearInterval(typingId!);
+          pauseId = setTimeout(runCycle, pause);
+        }
+      }, speed);
+    };
+
+    runCycle();
+    return () => {
+      cancelled = true;
+      if (typingId) clearInterval(typingId);
+      if (pauseId) clearTimeout(pauseId);
+    };
+  }, [text, speed, pause]);
+
+  // Cursor color cycle — every 3 s
+  useEffect(() => {
+    const id = setInterval(() => {
+      setColorIdx((i) => (i + 1) % CURSOR_COLORS.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span>
+      {displayed}
+      <span
+        className="inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm animate-pulse transition-colors duration-700"
+        style={{ backgroundColor: CURSOR_COLORS[colorIdx] }}
+      />
+    </span>
+  );
+}
 
 /* ─── Section metadata (subtitle shown on section card) ──────── */
 const sectionMeta: Record<string, { subtitle: string; description: string; gradient: string }> = {
@@ -103,18 +160,48 @@ function GalleryModal({ section, globalOffset, onOpen, onClose }: GalleryModalPr
     <div className="fixed inset-0 z-[60] flex flex-col bg-background overflow-y-auto">
       {/* Header — pushed below the site nav */}
       <div className="sticky top-14 z-10 flex items-center justify-between border-b border-border bg-background/95 backdrop-blur-md px-6 py-4">
-        <button
-          onClick={onClose}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
-        >
-          <ArrowLeft className="size-4" />
-          Back to sections
-        </button>
-        <div className="text-right">
-          <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
-            Green Space · {section.title}
-          </p>
-          <p className="text-sm font-bold text-foreground mt-0.5">{section.images.length} screens</p>
+        <div className="flex flex-col gap-3 w-full">
+          {section.title === "Auth Screens" ? (
+            <div className="flex items-start justify-between w-full">
+              <div className="flex flex-col">
+                <button
+                  onClick={onClose}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+                >
+                  <ArrowLeft className="size-4" />
+                  Back to sections
+                </button>
+                <p className="mt-2 text-sm font-medium text-violet-500 tracking-wide">
+                  Green Space · {section.title}
+                </p>
+              </div>
+
+              <p className="text-sm font-bold text-foreground">{section.images.length} screens</p>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 w-full">
+              <button
+                onClick={onClose}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+              >
+                <ArrowLeft className="size-4" />
+                Back to sections
+              </button>
+
+              <p className="text-sm font-medium text-violet-500 tracking-wide">
+                Green Space · {section.title}
+              </p>
+
+              <p className="text-sm font-bold text-foreground ml-auto">{section.images.length} screens</p>
+            </div>
+          )}
+
+          {/* Heading below the back/subtitle row; slightly smaller for Auth Screens */}
+          <div>
+            <h1 className={`${section.title === "Auth Screens" ? "text-3xl sm:text-4xl lg:text-5xl" : "text-4xl sm:text-5xl lg:text-6xl"} mt-1 font-extrabold leading-tight tracking-tight text-foreground`}>
+              <TypewriterText text={section.title} />
+            </h1>
+          </div>
         </div>
       </div>
 
@@ -171,12 +258,12 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Header */}
           <div className="mt-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
-              Green Space · Image Artifacts
-            </p>
-            <h1 className="mt-2 text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">
-              A closer look at Green Space.
-            </h1>
+              <p className="text-sm font-medium text-violet-500 tracking-wide">
+                Green Space · Image Artifacts
+              </p>
+              <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-foreground">
+                <TypewriterText text={"A closer look at Green Space."} />
+              </h1>
             <p className="mt-3 text-base text-muted-foreground max-w-2xl leading-relaxed">
               A visual record of the mobile experience, soil prediction workflow, and Sage-backed intelligence behind Green Space.
             </p>
