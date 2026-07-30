@@ -63,7 +63,7 @@ function VideoCard({
 export default function GreenSpaceDemoPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="w-full px-5 sm:px-8 lg:px-12 pt-12 pb-14">
+      <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
         {/* Back */}
         <Link
           href="/projects"
