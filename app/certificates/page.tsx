@@ -1,8 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, X } from "lucide-react";
+
+/* ─── Typewriter ──────────────────────────────────────────────── */
+
+function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const idxRef = useRef(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    let typingId: ReturnType<typeof setInterval> | null = null;
+    let pauseId: ReturnType<typeof setTimeout> | null = null;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      idxRef.current = 0;
+      setDisplayed("");
+      setDone(false);
+
+      typingId = setInterval(() => {
+        if (cancelled) { clearInterval(typingId!); return; }
+        idxRef.current += 1;
+        setDisplayed(text.slice(0, idxRef.current));
+        if (idxRef.current >= text.length) {
+          clearInterval(typingId!);
+          setDone(true);
+          pauseId = setTimeout(runCycle, pause);
+        }
+      }, speed);
+    };
+
+    runCycle();
+
+    return () => {
+      cancelled = true;
+      if (typingId) clearInterval(typingId);
+      if (pauseId) clearTimeout(pauseId);
+    };
+  }, [text, speed, pause]);
+
+  return (
+    <span>
+      {displayed}
+      <span
+        className={`inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm bg-foreground transition-opacity duration-700 ${
+          done ? "opacity-0" : "animate-pulse"
+        }`}
+      />
+    </span>
+  );
+}
 
 /* ─── Data ────────────────────────────────────────────────────── */
 
@@ -175,7 +226,7 @@ export default function CertificatesPage() {
   return (
     <>
       <div className="min-h-screen bg-background text-foreground">
-        <div className="w-full px-5 sm:px-8 lg:px-12 pt-12 pb-14">
+        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
           {/* Back */}
           <Link
             href="/"
@@ -191,7 +242,7 @@ export default function CertificatesPage() {
               Professional development · {total} credentials
             </p>
             <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              Certificates and credentials.
+              <TypewriterText text="Certificates and credentials." />
             </h1>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               A growing record of focused learning across software engineering, cloud platforms and modern development practices.
