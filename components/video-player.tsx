@@ -159,23 +159,83 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
         </button>
       )}
 
-      {/* Buffering overlay — progress bar + percentage */}
+      {/* Persistent circular play-progress indicator — bottom-left corner */}
+      {started && (
+        <div className="absolute bottom-8 left-3 z-20 pointer-events-none">
+          <div className="relative flex items-center justify-center">
+            <svg width="44" height="44" viewBox="0 0 44 44" className="-rotate-90">
+              <defs>
+                <linearGradient id="ringGradientSmall" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#8b5cf6" />
+                  <stop offset="100%" stopColor="#a855f7" />
+                </linearGradient>
+              </defs>
+              {/* Background track */}
+              <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+              {/* Play progress arc */}
+              <circle
+                cx="22" cy="22" r="17"
+                fill="none"
+                stroke={playProgress >= 99 ? "#22c55e" : "url(#ringGradientSmall)"}
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray={`${2 * Math.PI * 17}`}
+                strokeDashoffset={`${2 * Math.PI * 17 * (1 - Math.min(playProgress, 100) / 100)}`}
+                className="transition-all duration-100"
+              />
+            </svg>
+            <span className="absolute text-[9px] font-bold tabular-nums" style={{ color: playProgress >= 99 ? "#22c55e" : "white" }}>
+              {playProgress >= 99 ? "✓" : `${Math.round(playProgress)}%`}
+            </span>
+          </div>
+        </div>
+      )}
+
       {started && buffering && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-black/60 backdrop-blur-[2px]">
-          {/* Percentage badge */}
-          <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-semibold text-white tabular-nums">
-            {Math.round(bufferProgress)}%
-          </span>
-          {/* Track */}
-          <div className="relative w-48 h-1.5 rounded-full bg-white/10 overflow-hidden">
-            {/* Filled portion */}
+          {/* Circular progress ring */}
+          <div className="relative flex items-center justify-center">
+            <svg width="72" height="72" viewBox="0 0 72 72" className="-rotate-90">
+              <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#8b5cf6" />
+                  <stop offset="100%" stopColor="#a855f7" />
+                </linearGradient>
+              </defs>
+              {/* Background track */}
+              <circle
+                cx="36" cy="36" r="30"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="4"
+              />
+              {/* Progress arc */}
+              <circle
+                cx="36" cy="36" r="30"
+                fill="none"
+                stroke="url(#ringGradient)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeDasharray={`${2 * Math.PI * 30}`}
+                strokeDashoffset={`${2 * Math.PI * 30 * (1 - bufferProgress / 100)}`}
+                className="transition-all duration-500"
+              />
+            </svg>
+            {/* Centre percentage */}
+            <span className="absolute text-sm font-bold text-white tabular-nums">
+              {Math.round(bufferProgress)}%
+            </span>
+          </div>
+
+          {/* Linear track */}
+          <div className="relative w-40 h-1 rounded-full bg-white/10 overflow-hidden">
             <div
               className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-500 to-purple-400 transition-all duration-500"
               style={{ width: `${bufferProgress}%` }}
             />
-            {/* Shimmer sweep */}
             <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
+
           <span className="text-[10px] font-medium text-white/50 tracking-wide uppercase">Loading video</span>
         </div>
       )}
