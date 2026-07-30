@@ -1,19 +1,33 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { ExternalLink, Code2, Star, LayoutGrid, X } from "lucide-react";
-import { Skills } from "@/components/skills";
-import { Button } from "@/components/ui/button";
-import { ScrollIndicator } from "@/components/scroll-indicator";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, Play, Image as ImageIcon, GitBranch } from "lucide-react";
 
-const featured = [
+/* ─── Data ────────────────────────────────────────────────────── */
+
+type Category = "All work" | "Web platforms" | "Mobile";
+
+interface Project {
+  title: string;
+  tagline: string; // e.g. "Mobile · AgriTech"
+  description: string;
+  tech: string[];
+  category: Category;
+  /** Tailwind gradient classes for the thumbnail */
+  gradient: string;
+  demo?: string;
+  artifacts?: string;
+  github?: string;
+}
+
+const PROJECTS: Project[] = [
   {
-    title: "GreenSpace 🏆",
+    title: "Green Space",
+    tagline: "Mobile · AgriTech",
     description:
-      "An award-winning agricultural intelligence platform powered by Sage — a custom-trained machine learning model for soil classification, fertility prediction, and accurate soil naming. Features smart image recognition for soil scanning via camera, a React Native (TypeScript) frontend, and rich community engagement tools including event planning, a social forum, and real-time messaging — all backed by Supabase BaaS.",
-    tags: [
+      "A React Native app powered by Sage, a Python-trained soil fertility prediction and classification model. Built with Supabase, PyTorch, scikit-learn, NumPy and pandas.",
+    tech: [
       "React Native",
       "TypeScript",
       "Python",
@@ -21,353 +35,225 @@ const featured = [
       "Supabase",
       "Image Recognition",
     ],
+    category: "Mobile",
+    gradient: "from-green-800 via-emerald-700 to-green-900",
     demo: "/projects/greenspace/demo",
-    github: "#",
     artifacts: "/projects/greenspace/artifacts",
-    gradient: "from-green-900/40 to-emerald-800/30",
-    svgColor: "#4ade80",
+    github: "#",
   },
   {
     title: "WelfareTracker",
+    tagline: "Mobile · Welfare Management",
     description:
-      "A cross-platform welfare management system built with Flutter and Dart, powered by Firebase BaaS. Features real-time welfare tracking, geofence management for location-based alerts, and a panic alert system for emergency response — designed for organizations managing field staff safety.",
-    tags: ["Flutter", "Dart", "Firebase", "Geofencing", "Real-time"],
+      "A cross-platform welfare management system for field staff safety, with real-time tracking, geofence alerts, and emergency panic response.",
+    tech: ["Flutter", "Dart", "Firebase", "Geofencing", "Real-time"],
+    category: "Mobile",
+    gradient: "from-sky-500 via-blue-400 to-yellow-400",
     demo: "#",
-    github: "#",
     artifacts: "/projects/welfaretracker/artifacts",
-    gradient: "from-blue-900/40 to-indigo-800/30",
-    svgColor: "#60a5fa",
-  },
-];
-
-const projects = [
-  {
-    title: "Task Management App",
-    description:
-      "A Kanban-style task manager with drag-and-drop, team collaboration, and real-time updates.",
-    image: "/placeholder.jpg",
-    tags: ["React", "Node.js", "MongoDB", "Socket.io"],
-    demo: "#",
     github: "#",
   },
   {
-    title: "Mobile Fitness Tracker",
+    title: "TaskFlow Mobile",
+    tagline: "Mobile · Productivity",
     description:
-      "Cross-platform mobile app to track workouts, nutrition, and progress with charts and insights.",
-    image: "/placeholder.jpg",
-    tags: ["Flutter", "Dart", "Firebase"],
-    demo: "#",
-    github: "#",
-  },
-  {
-    title: "AI Chat Assistant",
-    description:
-      "A conversational AI interface powered by OpenAI, with chat history and markdown rendering.",
-    image: "/placeholder.jpg",
-    tags: ["Next.js", "OpenAI", "TypeScript", "Tailwind CSS"],
+      "A thoughtfully designed productivity companion with offline-first support and seamless sync.",
+    tech: ["React Native", "TypeScript", "SQLite", "Redux"],
+    category: "Mobile",
+    gradient: "from-zinc-800 via-zinc-700 to-zinc-900",
     demo: "#",
     github: "#",
   },
   {
     title: "Portfolio CMS",
+    tagline: "Web platforms · Content",
     description:
-      "A headless CMS for managing portfolio content with a drag-and-drop page builder.",
-    image: "/placeholder.jpg",
-    tags: ["React", "Spring Boot", "PostgreSQL"],
+      "A headless CMS for managing portfolio content with a drag-and-drop page builder and live preview.",
+    tech: ["Next.js", "Spring Boot", "PostgreSQL", "TypeScript"],
+    category: "Web platforms",
+    gradient: "from-violet-800 via-purple-700 to-indigo-900",
+    demo: "#",
+    github: "#",
+  },
+  {
+    title: "AI Chat Assistant",
+    tagline: "Web platforms · AI",
+    description:
+      "A conversational AI interface powered by OpenAI, with persistent chat history, markdown rendering and streaming.",
+    tech: ["Next.js", "OpenAI", "TypeScript", "Tailwind CSS"],
+    category: "Web platforms",
+    gradient: "from-rose-800 via-pink-700 to-purple-900",
     demo: "#",
     github: "#",
   },
   {
     title: "Weather Dashboard",
+    tagline: "Web platforms · Data",
     description:
-      "Real-time weather dashboard with location search, forecasts, and interactive maps.",
-    image: "/placeholder.jpg",
-    tags: ["React", "Python", "REST API"],
+      "Real-time weather dashboard with location search, 7-day forecasts and interactive map overlays.",
+    tech: ["React", "Python", "REST API", "Leaflet"],
+    category: "Web platforms",
+    gradient: "from-cyan-700 via-teal-600 to-blue-900",
     demo: "#",
     github: "#",
   },
 ];
 
-function ProjectsPageInner() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const showProjects = searchParams.get("view") === "projects";
-  const [page, setPage] = useState(1);
-  const [descExpanded, setDescExpanded] = useState(false);
-  const PER_PAGE = 3;
-  const totalPages = Math.ceil(projects.length / PER_PAGE);
-  const paginated = projects.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+const CATEGORIES: Category[] = ["All work", "Web platforms", "Mobile"];
 
-  function openProjects() {
-    router.push("/projects?view=projects");
-  }
+/* ─── Thumbnail ───────────────────────────────────────────────── */
 
-  function closeProjects() {
-    setPage(1);
-    router.push("/projects");
-  }
+function Thumbnail({ gradient }: Readonly<{ gradient: string }>) {
+  return (
+    <div
+      className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient}`}
+    />
+  );
+}
+
+/* ─── Card ────────────────────────────────────────────────────── */
+
+function ProjectCard({ project }: Readonly<{ project: Project }>) {
+  const tagParts = project.tagline.split(" · ");
 
   return (
-    <div className="w-full">
-      {/* Hero banner — starts from top, floats behind nav */}
-      <div className="relative w-full h-56 sm:h-72 overflow-hidden -mt-16">
-        <Image
-          src="/projects.jpg.jpg"
-          alt="Projects banner"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 pb-8 pt-20">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            <span className="text-primary">My Projects</span>{" "}
-            <span className="text-white">Portfolio</span>
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-white/70 max-w-lg">
-            A showcase of applications, tools and systems I&apos;ve designed and
-            built.
-          </p>
-        </div>
+    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-violet-500/40 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)] hover:-translate-y-0.5">
+      {/* Thumbnail */}
+      <div className="p-3 pb-0">
+        <Thumbnail gradient={project.gradient} />
       </div>
 
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-24 sm:px-6">
-        {/* Skills section — hidden when projects are shown */}
-        {!showProjects && (
-          <Skills onViewProjects={() => openProjects()} />
-        )}
+      {/* Body */}
+      <div className="flex flex-col flex-1 p-4 gap-2">
+        {/* Category label */}
+        <div className="flex flex-wrap gap-1 text-xs font-medium text-violet-500">
+          {tagParts.map((part, i) => (
+            <span key={part}>
+              {i > 0 && <span className="text-muted-foreground/40 mr-1">·</span>}
+              {part}
+            </span>
+          ))}
+        </div>
 
-        {/* Projects section — shown when toggled */}
-        {showProjects && (
-          <div>
-            <ScrollIndicator />
-            {/* Header row with dismiss button */}
-            <div className="mb-8 flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-                  My Projects
-                </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  A selection of things I&apos;ve built.
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                className="shrink-0"
-                onClick={() => {
-                  closeProjects();
-                  setPage(1);
-                }}
-              >
-                <X className="size-4" />
-                Close
-              </Button>
-            </div>
-            {/* Featured projects — page 1 only */}
-            {page === 1 && (
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <Star className="size-4 text-primary fill-primary" />
-                  <span className="text-sm font-semibold text-primary uppercase tracking-widest">
-                    Featured Projects
-                  </span>
-                </div>
-                <div className="grid gap-6 lg:grid-cols-2">
-                  {featured.map((f) => (
-                    <div
-                      key={f.title}
-                      className="group relative overflow-hidden rounded-3xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-xl"
-                    >
-                      {/* Illustration */}
-                      <div
-                        className={`relative h-36 bg-gradient-to-br ${f.gradient} overflow-hidden flex items-center justify-center`}
-                      >
-                        <div
-                          className="absolute top-4 left-4 size-24 rounded-full blur-3xl"
-                          style={{ background: f.svgColor + "33" }}
-                        />
-                        <div
-                          className="absolute bottom-4 right-4 size-16 rounded-full blur-2xl"
-                          style={{ background: f.svgColor + "22" }}
-                        />
-                        <span className="text-5xl">
-                          {f.title.includes("GreenSpace") ? "🌱" : "🛡️"}
-                        </span>
-                      </div>
-                      {/* Info */}
-                      <div className="flex flex-col justify-between p-5">
-                        <div>
-                          <h2 className="text-xl font-extrabold tracking-tight">
-                            {f.title}
-                          </h2>
-                          <p
-                            className={`mt-2 text-sm text-muted-foreground leading-relaxed ${descExpanded ? "" : "line-clamp-3"}`}
-                          >
-                            {f.description}
-                          </p>
-                          <button
-                            onClick={() => setDescExpanded((v) => !v)}
-                            className="mt-1 text-xs font-semibold text-primary hover:underline"
-                          >
-                            {descExpanded ? "Show less ↑" : "Read more ↓"}
-                          </button>
-                          <div className="mt-3 flex flex-wrap gap-1.5">
-                            {f.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          <a
-                            href={f.demo}
-                            className="flex items-center gap-1.5 rounded-2xl bg-primary text-primary-foreground px-4 py-2 text-xs font-semibold transition-colors hover:bg-primary/90"
-                          >
-                            <ExternalLink className="size-3.5" /> Live Demo
-                          </a>
-                          <a
-                            href={f.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 rounded-2xl border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors hover:bg-accent"
-                          >
-                            <Code2 className="size-3.5" /> GitHub
-                          </a>
-                          {f.artifacts !== "#" && (
-                            <a
-                              href={f.artifacts}
-                              className="flex items-center gap-1.5 rounded-2xl border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors hover:bg-accent"
-                            >
-                              <ExternalLink className="size-3.5" /> Artifacts
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}{" "}
-            {/* end page 1 featured */}
-            {/* Project grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {paginated.map((project) => (
-                <div
-                  key={project.title}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg"
-                >
-                  <div className="relative h-44 bg-muted overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-col flex-1 p-5 gap-3">
-                    <div>
-                      <h3 className="font-bold text-base">{project.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                        {project.description}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-auto flex gap-2 pt-2">
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-primary-foreground py-2 text-xs font-semibold transition-colors hover:bg-primary/90"
-                      >
-                        <ExternalLink className="size-3.5" /> Demo
-                      </a>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-background py-2 text-xs font-semibold transition-colors hover:bg-accent"
-                      >
-                        <Code2 className="size-3.5" /> GitHub
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-center gap-2">
-                <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="flex size-9 items-center justify-center rounded-xl border border-border bg-background text-sm font-medium transition-colors hover:bg-accent disabled:opacity-40 disabled:pointer-events-none"
-                >
-                  ‹
-                </button>
+        {/* Title */}
+        <h3 className="text-lg font-bold text-foreground leading-snug">
+          {project.title}
+        </h3>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (p) => (
-                    <button
-                      key={p}
-                      onClick={() => setPage(p)}
-                      className={`flex size-9 items-center justify-center rounded-xl border text-sm font-medium transition-colors ${
-                        p === page
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-background hover:bg-accent"
-                      }`}
-                    >
-                      {p}
-                    </button>
-                  ),
-                )}
+        {/* Description */}
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+          {project.description}
+        </p>
 
-                <button
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                  className="flex size-9 items-center justify-center rounded-xl border border-border bg-background text-sm font-medium transition-colors hover:bg-accent disabled:opacity-40 disabled:pointer-events-none"
-                >
-                  ›
-                </button>
-              </div>
-            )}
-            {/* Back to skills */}
-            <div className="mt-10 flex justify-center">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  closeProjects();
-                  setPage(1);
-                }}
-              >
-                <LayoutGrid className="size-4" />
-                Back to Skills
-              </Button>
-            </div>
-          </div>
-        )}
+        {/* Tech chips */}
+        <div className="flex flex-wrap gap-x-1 gap-y-0.5 mt-auto pt-1 text-[11px] font-medium text-violet-500">
+          {project.tech.map((t, i) => (
+            <span key={t}>
+              {t}
+              {i < project.tech.length - 1 && (
+                <span className="text-muted-foreground/30 ml-1">·</span>
+              )}
+            </span>
+          ))}
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex flex-wrap gap-2 pt-2">
+          {project.demo && project.demo !== "#" && (
+            <Link
+              href={project.demo}
+              className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              <Play className="size-3" />
+              Video demo
+            </Link>
+          )}
+          {project.artifacts && (
+            <Link
+              href={project.artifacts}
+              className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              <ImageIcon className="size-3" />
+              Image artifacts
+            </Link>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              <GitBranch className="size-3" />
+              GitHub repo
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
+/* ─── Page ────────────────────────────────────────────────────── */
+
 export default function ProjectsPage() {
+  const [active, setActive] = useState<Category>("All work");
+
+  const filtered =
+    active === "All work"
+      ? PROJECTS
+      : PROJECTS.filter((p) => p.category === active);
+
   return (
-    <Suspense>
-      <ProjectsPageInner />
-    </Suspense>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
+        {/* Back pill */}
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+        >
+          <ArrowLeft className="size-4" />
+          Back to Home
+        </Link>
+
+        {/* Header */}
+        <div className="mt-5">
+          <p className="text-sm font-medium text-violet-500 tracking-wide">
+            Selected work · 2023—2026
+          </p>
+          <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+            Projects built for clarity, scale and impact.
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+            A focused collection of web platforms, mobile tools and backend
+            systems designed to solve real-world problems.
+          </p>
+        </div>
+
+        {/* Category filter */}
+        <div className="mt-6 flex flex-wrap gap-6 border-b border-border pb-3">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActive(cat)}
+              className={`text-sm font-medium pb-1 transition-colors ${
+                active === cat
+                  ? "text-violet-500 border-b-2 border-violet-500"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
