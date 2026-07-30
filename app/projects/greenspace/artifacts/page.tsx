@@ -160,18 +160,48 @@ function GalleryModal({ section, globalOffset, onOpen, onClose }: GalleryModalPr
     <div className="fixed inset-0 z-[60] flex flex-col bg-background overflow-y-auto">
       {/* Header — pushed below the site nav */}
       <div className="sticky top-14 z-10 flex items-center justify-between border-b border-border bg-background/95 backdrop-blur-md px-6 py-4">
-        <button
-          onClick={onClose}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
-        >
-          <ArrowLeft className="size-4" />
-          Back to sections
-        </button>
-        <div className="text-right">
-          <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
-            Green Space · {section.title}
-          </p>
-          <p className="text-sm font-bold text-foreground mt-0.5">{section.images.length} screens</p>
+        <div className="flex flex-col gap-3 w-full">
+          {section.title === "Auth Screens" ? (
+            <div className="flex items-start justify-between w-full">
+              <div className="flex flex-col">
+                <button
+                  onClick={onClose}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+                >
+                  <ArrowLeft className="size-4" />
+                  Back to sections
+                </button>
+                <p className="mt-2 text-sm font-medium text-violet-500 tracking-wide">
+                  Green Space · {section.title}
+                </p>
+              </div>
+
+              <p className="text-sm font-bold text-foreground">{section.images.length} screens</p>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 w-full">
+              <button
+                onClick={onClose}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+              >
+                <ArrowLeft className="size-4" />
+                Back to sections
+              </button>
+
+              <p className="text-sm font-medium text-violet-500 tracking-wide">
+                Green Space · {section.title}
+              </p>
+
+              <p className="text-sm font-bold text-foreground ml-auto">{section.images.length} screens</p>
+            </div>
+          )}
+
+          {/* Heading below the back/subtitle row; slightly smaller for Auth Screens */}
+          <div>
+            <h1 className={`${section.title === "Auth Screens" ? "text-3xl sm:text-4xl lg:text-5xl" : "text-4xl sm:text-5xl lg:text-6xl"} mt-1 font-extrabold leading-tight tracking-tight text-foreground`}>
+              <TypewriterText text={section.title} />
+            </h1>
+          </div>
         </div>
       </div>
 
@@ -228,12 +258,12 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Header */}
           <div className="mt-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-violet-500">
-              Green Space · Image Artifacts
-            </p>
-            <h1 className="mt-2 text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">
-              <TypewriterText text={"A closer look at Green Space."} />
-            </h1>
+              <p className="text-sm font-medium text-violet-500 tracking-wide">
+                Green Space · Image Artifacts
+              </p>
+              <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-foreground">
+                <TypewriterText text={"A closer look at Green Space."} />
+              </h1>
             <p className="mt-3 text-base text-muted-foreground max-w-2xl leading-relaxed">
               A visual record of the mobile experience, soil prediction workflow, and Sage-backed intelligence behind Green Space.
             </p>
