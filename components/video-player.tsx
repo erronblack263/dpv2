@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { Play, WifiOff, Loader2, Maximize } from "lucide-react";
+import { Play, WifiOff, Maximize } from "lucide-react";
 
 interface VideoPlayerProps {
   readonly src: string;
@@ -159,10 +159,24 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
         </button>
       )}
 
-      {/* Buffering spinner */}
+      {/* Buffering overlay — progress bar + percentage */}
       {started && buffering && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40">
-          <Loader2 className="size-10 text-white animate-spin" />
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-black/60 backdrop-blur-[2px]">
+          {/* Percentage badge */}
+          <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-semibold text-white tabular-nums">
+            {Math.round(bufferProgress)}%
+          </span>
+          {/* Track */}
+          <div className="relative w-48 h-1.5 rounded-full bg-white/10 overflow-hidden">
+            {/* Filled portion */}
+            <div
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-500 to-purple-400 transition-all duration-500"
+              style={{ width: `${bufferProgress}%` }}
+            />
+            {/* Shimmer sweep */}
+            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </div>
+          <span className="text-[10px] font-medium text-white/50 tracking-wide uppercase">Loading video</span>
         </div>
       )}
 
@@ -188,13 +202,15 @@ export function VideoPlayer({ src, thumbnail, title, maxHeight = 300 }: VideoPla
 
       {/* Progress bar: buffer track + playhead */}
       {started && (
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-20 pointer-events-none">
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 z-20 pointer-events-none">
+          {/* Buffer track */}
           <div
-            className="absolute inset-y-0 left-0 bg-white/30 transition-all duration-300"
+            className="absolute inset-y-0 left-0 bg-white/20 transition-all duration-500 rounded-full"
             style={{ width: `${bufferProgress}%` }}
           />
+          {/* Playhead */}
           <div
-            className="absolute inset-y-0 left-0 bg-primary transition-all duration-100"
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-purple-400 transition-all duration-100 rounded-full"
             style={{ width: `${playProgress}%` }}
           />
         </div>
