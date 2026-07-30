@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Home, ArrowLeft, Monitor, Smartphone } from "lucide-react";
@@ -11,7 +10,6 @@ export default function NotFound() {
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-4xl rounded-3xl border border-border bg-card shadow-xl overflow-hidden">
         <div className="grid md:grid-cols-2">
-          {/* Left panel */}
           <div className="flex flex-col justify-between gap-8 p-8 border-b border-border md:border-b-0 md:border-r">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">
@@ -26,7 +24,6 @@ export default function NotFound() {
               </p>
             </div>
 
-            {/* Tech tags */}
             <div className="flex flex-wrap gap-3">
               <div className="flex items-center gap-2 rounded-xl border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
                 <Monitor className="size-4 text-primary" />
@@ -39,7 +36,6 @@ export default function NotFound() {
             </div>
           </div>
 
-          {/* Right panel */}
           <div className="flex flex-col justify-between gap-8 p-8">
             <div>
               <p className="text-8xl font-black text-foreground leading-none">
@@ -53,7 +49,6 @@ export default function NotFound() {
               </p>
             </div>
 
-            {/* Redirect status */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">

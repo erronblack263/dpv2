@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import {
@@ -28,9 +27,6 @@ import {
 } from "lucide-react";
 import { VideoPlayer } from "@/components/video-player";
 import { GitHubIcon } from "@/components/social-icons";
-
-/* --- Cloudinary URL Helper Functions ----------------------------- */
-
 function streamUrl(src: string) {
   return src.replace(
     "/video/upload/",
@@ -43,8 +39,6 @@ function cloudinaryThumb(videoUrl: string) {
     .replace("/video/upload/", "/video/upload/so_0,w_600/")
     .replace(/\.mp4$/, ".jpg");
 }
-
-/* ─── Video Data Array ───────────────────────────────────────────── */
 
 interface VideoItem {
   id: string;
@@ -102,7 +96,7 @@ const WORKFLOW_STEPS = [
   },
   {
     title: "AI Processing",
-    description: "TensorFlow Lite inference",
+    description: "Sage V1 inference",
     icon: Brain,
     color: "bg-violet-500 text-white ring-violet-500/25",
   },
@@ -123,13 +117,11 @@ const WORKFLOW_STEPS = [
 const DETAIL_ROWS = [
   { label: "Category", value: "Computer Vision", icon: Layers },
   { label: "Videos", value: "3", icon: Video },
-  { label: "Platform", value: "Flutter", icon: Monitor },
-  { label: "Model", value: "TensorFlow Lite", icon: Cpu },
+  { label: "Platform", value: "Python", icon: Monitor },
+  { label: "Model", value: "Sage V1", icon: Cpu },
   { label: "Purpose", value: "Soil Classification", icon: Target },
   { label: "Dataset", value: "Field Captures", icon: FileText },
 ] as const;
-
-/* ─── Component ─────────────────────────────────────────────────── */
 
 export default function GreenSpaceDemoPage() {
   const [activeVideoIdx, setActiveVideoIdx] = useState(0);
@@ -205,11 +197,8 @@ export default function GreenSpaceDemoPage() {
             </div>
           </div>
 
-          {/* Center Video Player */}
           <div className="lg:col-span-5 flex flex-col gap-2">
-            <div
-              className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none"
-            >
+            <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none">
               <div className="absolute inset-0">
                 <VideoPlayer
                   key={currentVideo.src}
@@ -279,6 +268,26 @@ export default function GreenSpaceDemoPage() {
                   </div>
                 ))}
 
+                <div className="pt-3">
+                  <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-semibold">
+                    Trained with
+                  </span>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-foreground">
+                      <Brain className="size-3" />
+                      PyTorch
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-violet-500/30 bg-violet-500/10 px-2.5 py-1 text-[10px] font-semibold text-foreground">
+                      <Layers className="size-3" />
+                      scikit-learn
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-1 text-[10px] font-semibold text-foreground">
+                      <Zap className="size-3" />
+                      NumPy
+                    </span>
+                  </div>
+                </div>
+
                 <div className="flex items-center justify-between pt-0.5">
                   <span>Status</span>
                   <span className="inline-flex items-center rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
@@ -291,7 +300,7 @@ export default function GreenSpaceDemoPage() {
                     <Clock className="size-3" /> Duration
                   </span>
                   <span className="font-semibold text-foreground">
-                    May 2024 – Jun 2024
+                    May 2024 – Jun 2025
                   </span>
                 </div>
               </div>
@@ -299,7 +308,6 @@ export default function GreenSpaceDemoPage() {
           </div>
         </div>
 
-        {/* Middle: compact Demonstrations + Workflow */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
           <div className="lg:col-span-9 flex flex-col">
             <div className="flex items-center justify-between mb-3 gap-3">
@@ -329,7 +337,6 @@ export default function GreenSpaceDemoPage() {
                         : "border-border bg-card/70 hover:border-emerald-500/40 hover:bg-card"
                     }`}
                   >
-                    {/* Compact thumbnail — portrait-aware on mobile */}
                     <div className="relative w-full aspect-[9/16] max-h-40 sm:max-h-none sm:aspect-[16/9] rounded-lg overflow-hidden bg-black border border-zinc-800 mx-auto">
                       <img
                         src={cloudinaryThumb(vid.src)}
@@ -404,7 +411,6 @@ export default function GreenSpaceDemoPage() {
             </div>
           </div>
 
-          {/* Workflow — same height as demo cards row */}
           <div className="lg:col-span-3 flex">
             <div className="rounded-xl border border-border bg-card p-3.5 backdrop-blur-md shadow-xl w-full flex flex-col">
               <div className="flex items-center gap-2 border-b border-border pb-2 mb-3 shrink-0">
@@ -419,7 +425,10 @@ export default function GreenSpaceDemoPage() {
                 {WORKFLOW_STEPS.map((step) => {
                   const Icon = step.icon;
                   return (
-                    <div key={step.title} className="relative flex gap-2.5 items-start">
+                    <div
+                      key={step.title}
+                      className="relative flex gap-2.5 items-start"
+                    >
                       <span
                         className={`relative z-10 size-6 rounded-full flex items-center justify-center ring-2 shrink-0 ${step.color}`}
                       >
@@ -441,7 +450,6 @@ export default function GreenSpaceDemoPage() {
           </div>
         </div>
 
-        {/* Field Test Analytics — compact */}
         <div className="mt-4 rounded-xl border border-border bg-card/60 p-3.5 sm:p-4 backdrop-blur-md">
           <h2 className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-[0.18em] mb-3">
             Field Test Analytics
@@ -520,7 +528,6 @@ export default function GreenSpaceDemoPage() {
           </div>
         </div>
 
-        {/* Bottom CTA — compact */}
         <div className="mt-4 rounded-xl border border-border bg-card/70 p-3.5 sm:p-4 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="size-9 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">

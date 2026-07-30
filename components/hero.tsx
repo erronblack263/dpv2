@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
@@ -99,7 +98,6 @@ export function Hero() {
             />
           </div>
 
-          {/* Text content */}
           <div className="flex flex-col gap-3 sm:gap-5 min-w-0">
             <h1 className="text-balance text-[1.8rem] font-extrabold leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl">
               <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 lg:justify-start">
@@ -144,11 +142,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Terminal — desktop only */}
           <div className="hidden lg:flex lg:justify-end">
             <Terminal />
           </div>
-
         </div>
       </div>
     </section>

@@ -45,7 +45,6 @@ export function Terminal() {
         <span className="ml-2 text-xs text-white/40">~developer.sh</span>
       </div>
 
-      {/* Terminal body */}
       <div className="px-4 py-4 space-y-1 min-h-[220px]">
         {lines.slice(0, visibleCount).map((line, i) => (
           <div key={i} className="flex items-start gap-2 leading-relaxed">

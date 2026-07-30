@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -25,7 +24,8 @@ export function SiteNav() {
       className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/90 backdrop-blur-md"
     >
       <div className="flex h-14 w-full items-center justify-between px-5 sm:px-8 lg:px-12">
-        {/* Logo */}
+
+
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="/sage-logo.png"
@@ -40,7 +40,6 @@ export function SiteNav() {
           </span>
         </Link>
 
-        {/* Desktop links — centered */}
         <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
           {links.map((link) => {
             const active = pathname === link.href;
@@ -60,7 +59,6 @@ export function SiteNav() {
           })}
         </nav>
 
-        {/* Right — CTA + theme toggle */}
         <div className="flex items-center gap-3 shrink-0">
           <ThemeToggle />
           <Link
@@ -70,7 +68,6 @@ export function SiteNav() {
             Let&apos;s Talk
           </Link>
 
-          {/* Hamburger — mobile only */}
           <button
             className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -81,7 +78,6 @@ export function SiteNav() {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
       {open && (
         <nav
           className="border-t border-border bg-background/95 backdrop-blur-md md:hidden"
