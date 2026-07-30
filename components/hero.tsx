@@ -1,26 +1,52 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { Mail, Sparkles, FolderGit2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, FolderGit2 } from "lucide-react";
 import { GitHubIcon, GitLabIcon, LinkedInIcon } from "@/components/social-icons";
 import { Terminal } from "@/components/terminal";
 
 const socials = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/witnessmusonza", Icon: LinkedInIcon },
-  { label: "Email", href: "mailto:musonzahw@gmail.com", Icon: Mail },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/witnessmusonza",
+    Icon: LinkedInIcon,
+  },
+  {
+    label: "Email",
+    href: "mailto:musonzahw@gmail.com",
+    Icon: Mail,
+  },
   { label: "GitHub", href: "https://github.com", Icon: GitHubIcon },
   { label: "GitLab", href: "https://gitlab.com", Icon: GitLabIcon },
 ];
 
 const skillIcons = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", label: "Java" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", label: "Flutter" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", label: "Spring Boot" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", label: "Python" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", label: "TypeScript" },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+    label: "Flutter",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+    label: "MongoDB",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    label: "Docker",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    label: "TypeScript",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    label: "React",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    label: "Java",
+  },
 ];
 
 function OrbitingIcons() {
@@ -31,19 +57,21 @@ function OrbitingIcons() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    const icons = Array.from(container.querySelectorAll<HTMLDivElement>("[data-orbit-icon]"));
+    const icons = Array.from(
+      container.querySelectorAll<HTMLDivElement>("[data-orbit-icon]"),
+    );
     const count = icons.length;
-    const radius = 150;
-    const cx = 170;
-    const cy = 170;
-    const speed = 0.4;
+    const radius = 105;
+    const cx = 120;
+    const cy = 120;
+    const speed = 0.35;
 
     function animate() {
       angleRef.current = (angleRef.current + speed) % 360;
       icons.forEach((el, i) => {
         const angle = ((angleRef.current + (360 / count) * i) * Math.PI) / 180;
-        el.style.left = `${cx + radius * Math.cos(angle) - 20}px`;
-        el.style.top = `${cy + radius * Math.sin(angle) - 20}px`;
+        el.style.left = `${cx + radius * Math.cos(angle) - 15}px`;
+        el.style.top = `${cy + radius * Math.sin(angle) - 15}px`;
       });
       rafRef.current = requestAnimationFrame(animate);
     }
@@ -53,16 +81,21 @@ function OrbitingIcons() {
   }, []);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-visible" aria-hidden="true" style={{ pointerEvents: "none" }}>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 overflow-visible"
+      aria-hidden="true"
+      style={{ pointerEvents: "none" }}
+    >
       {skillIcons.map(({ src, label }) => (
         <div
           key={label}
           data-orbit-icon
-          className="absolute hidden sm:flex size-10 items-center justify-center rounded-full bg-card/90 border border-border shadow-lg backdrop-blur-sm"
+          className="absolute hidden sm:flex size-7 items-center justify-center rounded-full bg-card/90 border border-white/10 shadow-md backdrop-blur-sm"
           style={{ left: 0, top: 0 }}
           title={label}
         >
-          <img src={src} alt={label} className="size-5" loading="lazy" />
+          <img src={src} alt={label} className="size-3.5" loading="lazy" />
         </div>
       ))}
     </div>
@@ -71,78 +104,112 @@ function OrbitingIcons() {
 
 export function Hero() {
   return (
-    <section
-      id="home"
-      className="relative flex min-h-[calc(78vh-4rem)] items-center pt-8 sm:min-h-[calc(100vh-4rem)] sm:pt-0"
-    >
-      <div className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6 sm:pb-0">
-        <div className="flex flex-col items-center gap-1 text-center sm:gap-8 lg:grid lg:grid-cols-[300px_1fr_280px] lg:items-center lg:text-left lg:gap-6">
-
-          {/* Avatar + orbiting icons */}
-          <div className="relative shrink-0 mx-auto -ml-0 lg:-ml-10" style={{ width: "300px", height: "300px" }}>
-            <OrbitingIcons />
+    <section id="home" className="relative pt-3 pb-2 sm:pt-4 sm:pb-3">
+      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[220px_minmax(0,1fr)_240px] lg:items-center lg:gap-5 xl:gap-6">
+          {/* Avatar */}
+          <div className="flex flex-col items-center lg:items-start">
             <div
-              className="absolute rounded-full bg-primary/30 blur-md"
-              style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "210px", height: "210px" }}
-              aria-hidden="true"
-            />
-            <Image
-              src="/msonzah.jpg"
-              alt="Portrait of Witness"
-              width={448}
-              height={448}
-              priority
-              quality={100}
-              className="absolute rounded-full border-2 border-primary/40 object-cover"
-              style={{ width: "190px", height: "190px", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-            />
+              className="relative shrink-0"
+              style={{ width: "220px", height: "220px" }}
+            >
+              <OrbitingIcons />
+              <div
+                className="absolute rounded-full bg-violet-500/20 blur-xl"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "150px",
+                  height: "150px",
+                }}
+                aria-hidden="true"
+              />
+              <Image
+                src="/msonzah.jpg"
+                alt="Portrait of Witness H Musonza"
+                width={448}
+                height={448}
+                priority
+                quality={100}
+                className="absolute rounded-full border-2 border-violet-500/30 object-cover shadow-[0_0_30px_rgba(124,58,237,0.25)]"
+                style={{
+                  width: "140px",
+                  height: "140px",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            </div>
+
+            <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-400">
+              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Available for new opportunities
+            </span>
           </div>
 
-          <div className="flex flex-col gap-3 sm:gap-5 min-w-0">
-            <h1 className="text-balance text-[1.8rem] font-extrabold leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl">
-              <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 lg:justify-start">
-                Hey, I&apos;m <span className="text-primary">Witness H Musonza</span>
-                <Sparkles className="size-6 text-primary sm:size-7" aria-hidden="true" />
-              </span>
-              <br />
-              I am a <span className="text-primary">Software Engineer/Developer</span>
-            </h1>
-
-            <p className="mx-auto max-w-[20rem] text-pretty text-xs leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm lg:mx-0">
-              A <span className="font-semibold text-foreground">Fullstack software developer/engineer</span>{" "}
-              with solid foundations in{" "}
-              <span className="font-semibold text-foreground">SDLC, systems architecture, database management and sleek UI/UX.</span>{" "}
-              Passionate about crafting seamless user experiences at the intersection of creativity and functionality.
+          {/* Intro */}
+          <div className="flex flex-col gap-2 sm:gap-2.5 text-center lg:text-left min-w-0">
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Hey there! 👋
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-start">
-              <Button className="rounded-full px-5" nativeButton={false} render={<Link href="/contact" />}>
-                <Mail className="size-4" />
+            <h1 className="text-balance text-2xl sm:text-3xl lg:text-[2rem] font-extrabold leading-tight tracking-tight">
+              I&apos;m{" "}
+              <span className="bg-gradient-to-r from-violet-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                Witness H Musonza
+              </span>
+            </h1>
+
+            <p className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-snug">
+              I build scalable digital solutions that{" "}
+              <span className="bg-gradient-to-r from-cyan-400 to-sky-400 bg-clip-text text-transparent">
+                solve real problems.
+              </span>
+            </p>
+
+            <p className="mx-auto max-w-lg text-xs sm:text-sm leading-relaxed text-muted-foreground lg:mx-0 line-clamp-2">
+              Fullstack software developer with expertise in SDLC, systems
+              architecture, and sleek UI/UX. Passionate about crafting seamless
+              user experiences.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-0.5 lg:justify-start">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500"
+              >
+                <Mail className="size-3.5" />
                 Contact Me
-              </Button>
-              <Button className="rounded-full px-5" nativeButton={false} variant="outline" render={<Link href="/projects" />}>
-                <FolderGit2 className="size-4" />
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-4 py-2 text-xs font-semibold text-foreground backdrop-blur-sm transition-all hover:bg-card hover:border-primary/30"
+              >
+                <FolderGit2 className="size-3.5" />
                 View Projects
-              </Button>
-              <span className="mx-1 hidden h-6 w-px bg-border sm:block" aria-hidden="true" />
-              <div className="flex items-center gap-1">
-                {socials.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
-                  >
-                    <Icon className="size-5" />
-                  </a>
-                ))}
-              </div>
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-center gap-0.5 lg:justify-start">
+              {socials.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          <div className="hidden lg:flex lg:justify-end">
+          {/* Terminal */}
+          <div className="flex justify-center lg:justify-end">
             <Terminal />
           </div>
         </div>

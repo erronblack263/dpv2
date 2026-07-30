@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
@@ -21,9 +21,9 @@ export function SiteNav() {
   return (
     <header
       data-site-nav
-      className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/90 backdrop-blur-md"
+      className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl"
     >
-      <div className="flex h-14 w-full items-center justify-between px-5 sm:px-8 lg:px-12">
+      <div className="flex h-12 w-full items-center justify-between px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
 
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
@@ -49,11 +49,17 @@ export function SiteNav() {
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground",
+                  "relative text-sm font-medium transition-colors hover:text-foreground pb-0.5",
                   active ? "text-foreground font-semibold" : "text-muted-foreground",
                 )}
               >
                 {link.label}
+                {active && (
+                  <span
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]"
+                    aria-hidden="true"
+                  />
+                )}
               </Link>
             );
           })}
@@ -63,9 +69,10 @@ export function SiteNav() {
           <ThemeToggle />
           <Link
             href="/contact"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-violet-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-violet-700"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-1.5 text-sm font-semibold text-white shadow-md shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500"
           >
             Let&apos;s Talk
+            <ArrowUpRight className="size-3.5" />
           </Link>
 
           <button
@@ -104,9 +111,10 @@ export function SiteNav() {
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="mt-3 mb-2 inline-flex items-center justify-center rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white"
+              className="mt-3 mb-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white"
             >
               Let&apos;s Talk
+              <ArrowUpRight className="size-3.5" />
             </Link>
           </div>
         </nav>
