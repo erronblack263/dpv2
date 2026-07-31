@@ -1,45 +1,167 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 
-const lines = [
-  { type: "prompt" as const, text: "whoami" },
-  { type: "output" as const, text: "Witness H Musonza" },
-  { type: "prompt" as const, text: "skills --list" },
-  { type: "bullet" as const, text: "Java" },
-  { type: "bullet" as const, text: "Spring Boot" },
-  { type: "bullet" as const, text: "Flutter" },
-  { type: "bullet" as const, text: "Docker" },
-  { type: "bullet" as const, text: "PostgreSQL" },
-  { type: "bullet" as const, text: "Redis" },
-  { type: "bullet" as const, text: "TypeScript" },
-  { type: "prompt" as const, text: "status" },
-  { type: "highlight" as const, text: "Building scalable solutions" },
-  { type: "prompt" as const, text: "mission" },
-  { type: "highlight" as const, text: "Making an impact every day 🚀" },
-  { type: "prompt" as const, text: "_", cursor: true },
-];
+type TerminalLine = {
+  type: "prompt" | "output" | "bullet" | "highlight" | "error";
+  text: string;
+};
+
+const makeCommandResponse = (command: string): TerminalLine[] => {
+  const trimmed = command.trim();
+  const normalized = trimmed.toLowerCase();
+
+  if (!trimmed) {
+    return [] as TerminalLine[];
+  }
+
+  if (normalized === "help" || normalized === "?") {
+    return [
+      { type: "output", text: "Available commands:" },
+      { type: "bullet", text: "whoami" },
+      { type: "bullet", text: "skills" },
+      { type: "bullet", text: "status" },
+      { type: "bullet", text: "mission" },
+      { type: "bullet", text: "projects" },
+      { type: "bullet", text: "certificates" },
+      { type: "bullet", text: "contact" },
+      { type: "bullet", text: "clear" },
+    ] as TerminalLine[];
+  }
+
+  if (normalized === "whoami") {
+    return [{ type: "output", text: "Witness H Musonza" }];
+  }
+
+  if (normalized === "skills" || normalized === "skills --list") {
+    return [
+      { type: "output", text: "Core stack:" },
+      { type: "bullet", text: "Java" },
+      { type: "bullet", text: "Spring Boot" },
+      { type: "bullet", text: "Flutter" },
+      { type: "bullet", text: "Docker" },
+      { type: "bullet", text: "PostgreSQL" },
+      { type: "bullet", text: "Redis" },
+      { type: "bullet", text: "TypeScript" },
+    ];
+  }
+
+  if (normalized === "status") {
+    return [{ type: "highlight", text: "Building scalable solutions" }];
+  }
+
+  if (normalized === "mission") {
+    return [{ type: "highlight", text: "Making an impact every day 🚀" }];
+  }
+
+  if (normalized === "projects") {
+    return [
+      { type: "output", text: "Featured work:" },
+      { type: "bullet", text: "Greenspace" },
+      { type: "bullet", text: "WelfareTracker" },
+    ];
+  }
+
+  if (normalized === "contact") {
+    return [{ type: "output", text: "Reach out through the contact page to start a conversation." }];
+  }
+
+  if (normalized === "certificates") {
+    return [{ type: "output", text: "Opening the certificates page..." }];
+  }
+
+  if (normalized === "clear") {
+    return [];
+  }
+
+  return [
+    { type: "error", text: `command not found: ${trimmed}` },
+    { type: "output", text: "Type 'help' for a list of available commands." },
+  ];
+};
 
 export function Terminal() {
-  const [visibleCount, setVisibleCount] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const router = useRouter();
+  const [lines, setLines] = useState<TerminalLine[]>([
+    { type: "output", text: "Welcome to the developer terminal. Type 'help' to begin." },
+  ]);
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const outputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function showNext(idx: number) {
-      if (idx >= lines.length) return;
-      setVisibleCount(idx + 1);
-      const delay = lines[idx].type === "prompt" ? 400 : 80;
-      timerRef.current = setTimeout(() => showNext(idx + 1), delay);
-    }
-    timerRef.current = setTimeout(() => showNext(0), 400);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    outputRef.current?.scrollTo({ top: outputRef.current.scrollHeight, behavior: "smooth" });
+  }, [lines]);
+
+  const submitCommand = (value: string) => {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return;
+    }
+
+    const normalized = trimmed.toLowerCase();
+    const response = makeCommandResponse(trimmed);
+    setLines((current) => [
+      ...current,
+      { type: "prompt", text: trimmed },
+      ...response,
+    ]);
+
+    if (normalized === "projects") {
+      router.push("/projects");
+    }
+
+    if (normalized === "contact") {
+      router.push("/contact");
+    }
+
+    if (normalized === "certificates") {
+      router.push("/certificates");
+    }
+
+    setHistory((current) => [...current, trimmed]);
+    setHistoryIndex(-1);
+    setInput("");
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submitCommand(input);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (history.length === 0) {
+        return;
+      }
+
+      const nextIndex = historyIndex < 0 ? history.length - 1 : Math.max(0, historyIndex - 1);
+      setHistoryIndex(nextIndex);
+      setInput(history[nextIndex]);
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (history.length === 0) {
+        return;
+      }
+
+      const nextIndex = historyIndex < 0 ? -1 : Math.min(history.length - 1, historyIndex + 1);
+      setHistoryIndex(nextIndex);
+      setInput(nextIndex >= 0 ? history[nextIndex] : "");
+    }
+  };
 
   return (
     <div className="relative w-full max-w-[310px] xl:max-w-[340px] shrink-0 mx-auto lg:ml-auto">
-      {/* Outer Glow & Gradient border shell */}
       <div
         className="rounded-xl p-[1px] shadow-[0_0_30px_rgba(139,92,246,0.18)] transition-all"
         style={{
@@ -48,7 +170,6 @@ export function Terminal() {
         }}
       >
         <div className="rounded-xl overflow-hidden bg-white/95 dark:bg-[#07070e]/95 backdrop-blur-xl font-mono text-[11px] shadow-xl border border-border/80 dark:border-white/10">
-          {/* Header */}
           <div className="flex items-center justify-between gap-2 px-3 py-1.5 bg-slate-100/80 dark:bg-white/[0.04] border-b border-border/60 dark:border-white/10">
             <div className="flex items-center gap-1.5">
               <span className="size-2 rounded-full bg-[#ff5f56] shadow-[0_0_5px_rgba(255,95,86,0.6)]" />
@@ -60,47 +181,48 @@ export function Terminal() {
             </div>
             <span className="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
               <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
-              Online
+              Interactive
             </span>
           </div>
 
-          {/* Terminal output */}
-          <div className="p-3 space-y-1 min-h-[220px]">
-            {lines.slice(0, visibleCount).map((line, i) => (
-              <div key={i} className="flex items-start gap-1.5 leading-snug">
+          <div ref={outputRef} className="p-3 space-y-1 min-h-[220px] max-h-[320px] overflow-y-auto">
+            {lines.map((line, index) => (
+              <div key={`${line.text}-${index}`} className="flex items-start gap-1.5 leading-snug">
                 {line.type === "prompt" ? (
                   <>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
-                      $
-                    </span>
-                    <span
-                      className={
-                        line.cursor
-                          ? "text-slate-900 dark:text-white animate-pulse font-bold"
-                          : "text-violet-700 dark:text-violet-300 font-medium"
-                      }
-                    >
-                      {line.text}
-                    </span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
+                    <span className="text-violet-700 dark:text-violet-300 font-medium">{line.text}</span>
                   </>
                 ) : line.type === "bullet" ? (
                   <span className="text-slate-700 dark:text-violet-200/90 pl-3 flex items-center gap-1.5">
-                    <span className="text-violet-600 dark:text-violet-400 text-[9px]">
-                      •
-                    </span>
+                    <span className="text-violet-600 dark:text-violet-400 text-[9px]">•</span>
                     {line.text}
                   </span>
                 ) : line.type === "highlight" ? (
                   <span className="text-cyan-600 dark:text-cyan-400 font-semibold pl-3 drop-shadow-[0_0_6px_rgba(56,189,248,0.3)]">
                     {line.text}
                   </span>
+                ) : line.type === "error" ? (
+                  <span className="text-rose-600 dark:text-rose-400 pl-3">{line.text}</span>
                 ) : (
-                  <span className="text-slate-800 dark:text-slate-200 pl-3">
-                    {line.text}
-                  </span>
+                  <span className="text-slate-800 dark:text-slate-200 pl-3">{line.text}</span>
                 )}
               </div>
             ))}
+
+            <form onSubmit={handleSubmit} className="mt-2 flex items-center gap-1.5 leading-snug">
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                placeholder="Type a command"
+                autoComplete="off"
+                spellCheck={false}
+              />
+            </form>
           </div>
         </div>
       </div>

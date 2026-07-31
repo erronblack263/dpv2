@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Copyright notice */}
         <p className="text-xs text-muted-foreground font-medium text-center sm:text-left">
-          &copy; 2026 Witness H Musonza. Proffessionaly know as Sage.
+          &copy; Powered by Sage 2026.
         </p>
 
         {/* Social & Contact Icon Links */}
@@ -57,4 +57,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-
