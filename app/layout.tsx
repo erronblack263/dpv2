@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { AmbientBackground } from "@/components/ambient-background";
 import "./globals.css";
 
@@ -38,15 +39,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative min-h-screen text-foreground overflow-x-hidden">
+          <div className="relative min-h-screen text-foreground overflow-x-hidden flex flex-col justify-between">
             <AmbientBackground />
             <SiteNav />
             <main
               style={{ position: "relative", zIndex: 1 }}
-              className="w-full overflow-x-hidden"
+              className="w-full overflow-x-hidden flex-1"
             >
               {children}
             </main>
+            <SiteFooter />
           </div>
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
