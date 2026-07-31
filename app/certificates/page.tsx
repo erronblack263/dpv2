@@ -8,7 +8,15 @@ import { ArrowLeft, X } from "lucide-react";
 
 const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
 
-function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+function TypewriterText({
+  text,
+  speed = 40,
+  pause = 3000,
+}: {
+  text: string;
+  speed?: number;
+  pause?: number;
+}) {
   const [displayed, setDisplayed] = useState("");
   const [colorIdx, setColorIdx] = useState(0);
   const idxRef = useRef(0);
@@ -24,7 +32,10 @@ function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; spee
       idxRef.current = 0;
       setDisplayed("");
       typingId = setInterval(() => {
-        if (cancelled) { clearInterval(typingId!); return; }
+        if (cancelled) {
+          clearInterval(typingId!);
+          return;
+        }
         idxRef.current += 1;
         setDisplayed(text.slice(0, idxRef.current));
         if (idxRef.current >= text.length) {
@@ -78,40 +89,50 @@ const allCerts: Cert[] = [
     title: "Python",
     issuer: "Programming Hub",
     category: "Programming",
-    description: "Credential validating core Python programming concepts and practical development skills.",
-    embed: "https://drive.google.com/file/d/1yMP_8LuicNagfmQu8xnDF4TFWlY1u-Vh/preview",
+    description:
+      "Credential validating core Python programming concepts and practical development skills.",
+    embed:
+      "https://drive.google.com/file/d/1yMP_8LuicNagfmQu8xnDF4TFWlY1u-Vh/preview",
     gradient: "from-blue-800 via-blue-700 to-indigo-900",
   },
   {
     title: "JavaScript Developer",
     issuer: "Programming Hub",
     category: "Programming",
-    description: "Credential demonstrating modern JavaScript patterns, application architecture and best practices.",
-    embed: "https://drive.google.com/file/d/1HS9VSHDdZuGyFOzplND_T2siJgwWNlLg/preview",
+    description:
+      "Credential demonstrating modern JavaScript patterns, application architecture and best practices.",
+    embed:
+      "https://drive.google.com/file/d/1HS9VSHDdZuGyFOzplND_T2siJgwWNlLg/preview",
     gradient: "from-yellow-700 via-amber-600 to-orange-800",
   },
   {
     title: "Dart",
     issuer: "Programming Hub",
     category: "Programming",
-    description: "Credential validating Dart programming concepts and practical development skills.",
-    embed: "https://drive.google.com/file/d/12Bb1J32eHv11NsQt4YGzMUnRDuzghHWj/preview",
+    description:
+      "Credential validating Dart programming concepts and practical development skills.",
+    embed:
+      "https://drive.google.com/file/d/12Bb1J32eHv11NsQt4YGzMUnRDuzghHWj/preview",
     gradient: "from-cyan-700 via-teal-600 to-blue-900",
   },
   {
     title: "Java Certificate",
     issuer: "Programming Hub",
     category: "Programming",
-    description: "Verified Java programming certificate issued by Programming Hub.",
-    embed: "https://drive.google.com/file/d/1KnH91NPPXmguP8JtBlpfFfu2Fvcw2e09/preview",
+    description:
+      "Verified Java programming certificate issued by Programming Hub.",
+    embed:
+      "https://drive.google.com/file/d/1KnH91NPPXmguP8JtBlpfFfu2Fvcw2e09/preview",
     gradient: "from-red-800 via-rose-700 to-orange-900",
   },
   {
     title: "TypeScript",
     issuer: "Programming Hub",
     category: "Programming",
-    description: "Credential validating TypeScript development skills and typed JavaScript patterns.",
-    embed: "https://drive.google.com/file/d/1a0Ia1zohZPNSu9W7FkNT5rByB6rjFLED/preview",
+    description:
+      "Credential validating TypeScript development skills and typed JavaScript patterns.",
+    embed:
+      "https://drive.google.com/file/d/1a0Ia1zohZPNSu9W7FkNT5rByB6rjFLED/preview",
     gradient: "from-blue-700 via-sky-600 to-indigo-800",
   },
   // Frameworks
@@ -119,40 +140,50 @@ const allCerts: Cert[] = [
     title: "Spring Boot",
     issuer: "Programming Hub",
     category: "Framework",
-    description: "Credential demonstrating Spring Boot backend development and REST API design.",
-    embed: "https://drive.google.com/file/d/1Dfr3MiE4edrNApKehrTFgn0aQ2bB2mgC/preview",
+    description:
+      "Credential demonstrating Spring Boot backend development and REST API design.",
+    embed:
+      "https://drive.google.com/file/d/1Dfr3MiE4edrNApKehrTFgn0aQ2bB2mgC/preview",
     gradient: "from-green-800 via-emerald-700 to-green-900",
   },
   {
     title: "React",
     issuer: "Programming Hub",
     category: "Framework",
-    description: "Credential demonstrating React component architecture and modern frontend patterns.",
-    embed: "https://drive.google.com/file/d/1ajroacrHht3FVy9LJU7fMzJfAXMKWUSB/preview",
+    description:
+      "Credential demonstrating React component architecture and modern frontend patterns.",
+    embed:
+      "https://drive.google.com/file/d/1ajroacrHht3FVy9LJU7fMzJfAXMKWUSB/preview",
     gradient: "from-sky-600 via-cyan-500 to-blue-800",
   },
   {
     title: "Next.js",
     issuer: "Programming Hub",
     category: "Framework",
-    description: "Credential validating Next.js full-stack development and server-side rendering skills.",
-    embed: "https://drive.google.com/file/d/1n4mSLZ8BP6SmgtOpx0k17DoA7rMwzwLh/preview",
+    description:
+      "Credential validating Next.js full-stack development and server-side rendering skills.",
+    embed:
+      "https://drive.google.com/file/d/1n4mSLZ8BP6SmgtOpx0k17DoA7rMwzwLh/preview",
     gradient: "from-zinc-700 via-zinc-600 to-zinc-900",
   },
   {
     title: "Flutter",
     issuer: "Programming Hub",
     category: "Framework",
-    description: "Credential demonstrating cross-platform mobile app development with Flutter and Dart.",
-    embed: "https://drive.google.com/file/d/1O8r7n7cZmgBwsbNqWlB4JL3JrILYAQGc/preview",
+    description:
+      "Credential demonstrating cross-platform mobile app development with Flutter and Dart.",
+    embed:
+      "https://drive.google.com/file/d/1O8r7n7cZmgBwsbNqWlB4JL3JrILYAQGc/preview",
     gradient: "from-blue-600 via-indigo-500 to-violet-800",
   },
   {
     title: "PyTorch",
     issuer: "Programming Hub",
     category: "Machine Learning",
-    description: "Credential validating machine learning model development skills using PyTorch.",
-    embed: "https://drive.google.com/file/d/15qtgFGRdxyZLK_g72ExzG32eOUFD2zZf/preview",
+    description:
+      "Credential validating machine learning model development skills using PyTorch.",
+    embed:
+      "https://drive.google.com/file/d/15qtgFGRdxyZLK_g72ExzG32eOUFD2zZf/preview",
     gradient: "from-orange-700 via-red-600 to-rose-900",
   },
 ];
@@ -184,7 +215,10 @@ function CertThumbnail({ gradient }: Readonly<{ gradient: string }>) {
 
 /* ─── Card ────────────────────────────────────────────────────── */
 
-function CertCard({ cert, onView }: Readonly<{ cert: Cert; onView: (embed: string) => void }>) {
+function CertCard({
+  cert,
+  onView,
+}: Readonly<{ cert: Cert; onView: (embed: string) => void }>) {
   return (
     <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
       {/* Thumbnail */}
@@ -251,7 +285,8 @@ export default function CertificatesPage() {
               <TypewriterText text="Certificates and credentials." />
             </h1>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              A growing record of focused learning across software engineering, cloud platforms and modern development practices.
+              A growing record of focused learning across software engineering,
+              cloud platforms and modern development practices.
             </p>
           </div>
 

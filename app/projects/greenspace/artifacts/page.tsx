@@ -93,7 +93,11 @@ function TypewriterText({
 
 function ReactNativeIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="-11.5 -10.23174 23 20.46348" fill="none">
+    <svg
+      className={className}
+      viewBox="-11.5 -10.23174 23 20.46348"
+      fill="none"
+    >
       <circle cx="0" cy="0" r="2.05" fill="#61DAFB" />
       <g stroke="#61DAFB" strokeWidth="1" fill="none">
         <ellipse rx="11" ry="4.2" />
@@ -453,8 +457,8 @@ export default function GreenSpaceArtifactsPage() {
     setActiveScreenIdx((i) => (i + 1) % section.images.length);
   }
   function prevScreen() {
-    setActiveScreenIdx((i) =>
-      (i - 1 + section.images.length) % section.images.length
+    setActiveScreenIdx(
+      (i) => (i - 1 + section.images.length) % section.images.length,
     );
   }
 
@@ -481,14 +485,13 @@ export default function GreenSpaceArtifactsPage() {
           <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
             {(expandedSections
               ? SECTIONS.map((sec, idx) => ({ sec, idx }))
-              : (sectionIdx < 3
-                  ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
-                  : [
-                      { sec: SECTIONS[0], idx: 0 },
-                      { sec: SECTIONS[1], idx: 1 },
-                      { sec: SECTIONS[sectionIdx], idx: sectionIdx },
-                    ]
-                )
+              : sectionIdx < 3
+                ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
+                : [
+                    { sec: SECTIONS[0], idx: 0 },
+                    { sec: SECTIONS[1], idx: 1 },
+                    { sec: SECTIONS[sectionIdx], idx: sectionIdx },
+                  ]
             ).map(({ sec, idx }) => (
               <button
                 key={sec.title}
@@ -649,7 +652,8 @@ export default function GreenSpaceArtifactsPage() {
                     {currentScreen.caption}
                   </p>
                   <p className="text-[10px] text-emerald-400 font-mono">
-                    {currentScreen.num} / {section.images.length.toString().padStart(2, "0")}
+                    {currentScreen.num} /{" "}
+                    {section.images.length.toString().padStart(2, "0")}
                   </p>
                 </div>
               </div>
@@ -672,7 +676,9 @@ export default function GreenSpaceArtifactsPage() {
                   <span className="flex items-center gap-1.5">
                     <Monitor className="size-3.5" /> Project
                   </span>
-                  <span className="font-semibold text-foreground">GreenSpace</span>
+                  <span className="font-semibold text-foreground">
+                    GreenSpace
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -738,9 +744,7 @@ export default function GreenSpaceArtifactsPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="flex items-center gap-1.5">
-                    Status
-                  </span>
+                  <span className="flex items-center gap-1.5">Status</span>
                   <span className="inline-flex items-center rounded-full bg-emerald-500/10 dark:bg-emerald-950 border border-emerald-500/30 dark:border-emerald-800/80 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
                     {section.status}
                   </span>
@@ -955,7 +959,7 @@ export default function GreenSpaceArtifactsPage() {
               e.stopPropagation();
               setLightboxIdx(
                 (lightboxIdx - 1 + section.images.length) %
-                  section.images.length
+                  section.images.length,
               );
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 size-11 rounded-full bg-zinc-900/80 text-white border border-zinc-700 flex items-center justify-center hover:bg-emerald-500 hover:text-black transition-colors z-30"

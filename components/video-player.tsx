@@ -182,8 +182,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
       try {
         iosVideo.webkitEnterFullscreen();
         return;
-      } catch {
-      }
+      } catch {}
     }
 
     setCssFullscreen(true);

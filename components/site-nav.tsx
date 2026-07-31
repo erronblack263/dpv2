@@ -24,8 +24,6 @@ export function SiteNav() {
       className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl"
     >
       <div className="flex h-12 w-full items-center justify-between px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-
-
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="/sage-logo.png"
@@ -50,7 +48,9 @@ export function SiteNav() {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "relative text-sm font-medium transition-colors hover:text-foreground pb-0.5",
-                  active ? "text-foreground font-semibold" : "text-muted-foreground",
+                  active
+                    ? "text-foreground font-semibold"
+                    : "text-muted-foreground",
                 )}
               >
                 {link.label}
@@ -101,7 +101,9 @@ export function SiteNav() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "py-3 text-sm font-medium transition-colors hover:text-foreground border-b border-border/40 last:border-0",
-                    active ? "text-foreground font-semibold" : "text-muted-foreground",
+                    active
+                      ? "text-foreground font-semibold"
+                      : "text-muted-foreground",
                   )}
                 >
                   {link.label}

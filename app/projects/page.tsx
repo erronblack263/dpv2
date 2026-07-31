@@ -8,7 +8,15 @@ import { ArrowLeft, Play, Image as ImageIcon, GitBranch } from "lucide-react";
 
 const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
 
-function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; speed?: number; pause?: number }) {
+function TypewriterText({
+  text,
+  speed = 40,
+  pause = 3000,
+}: {
+  text: string;
+  speed?: number;
+  pause?: number;
+}) {
   const [displayed, setDisplayed] = useState("");
   const [colorIdx, setColorIdx] = useState(0);
   const idxRef = useRef(0);
@@ -24,7 +32,10 @@ function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; spee
       idxRef.current = 0;
       setDisplayed("");
       typingId = setInterval(() => {
-        if (cancelled) { clearInterval(typingId!); return; }
+        if (cancelled) {
+          clearInterval(typingId!);
+          return;
+        }
         idxRef.current += 1;
         setDisplayed(text.slice(0, idxRef.current));
         if (idxRef.current >= text.length) {
@@ -60,7 +71,6 @@ function TypewriterText({ text, speed = 40, pause = 3000 }: { text: string; spee
     </span>
   );
 }
-
 
 type Category = "All work" | "Web platforms" | "Mobile";
 
@@ -185,7 +195,9 @@ function ProjectCard({ project }: Readonly<{ project: Project }>) {
         <div className="flex flex-wrap gap-1 text-xs font-medium text-violet-500">
           {tagParts.map((part, i) => (
             <span key={part}>
-              {i > 0 && <span className="text-muted-foreground/40 mr-1">·</span>}
+              {i > 0 && (
+                <span className="text-muted-foreground/40 mr-1">·</span>
+              )}
               {part}
             </span>
           ))}

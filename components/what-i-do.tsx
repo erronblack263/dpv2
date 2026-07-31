@@ -49,51 +49,54 @@ export function WhatIDo() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-        {services.map(({ icon: Icon, title, tagline, description, gradient }) => (
-          <div
-            key={title}
-            className="group flex flex-col rounded-2xl border border-border/80 dark:border-white/10 bg-card/90 dark:bg-[#080812]/90 backdrop-blur-xl overflow-hidden transition-all duration-300 shadow-md hover:border-violet-500/50 dark:hover:border-violet-500/40 hover:shadow-[0_12px_36px_rgba(124,58,237,0.18)] hover:-translate-y-0.5"
-          >
-            {/* Top Thumbnail Banner Box */}
-            <div className="p-2 pb-0">
-              <div
-                className={`w-full h-20 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden shadow-inner`}
-              >
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Icon className="size-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
-              </div>
-            </div>
-
-            {/* Card Content Body */}
-            <div className="flex flex-col flex-1 p-3.5 gap-2 justify-between">
-              <div>
-                <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
-                  {tagline}
-                </span>
-                <h3 className="text-sm sm:text-base font-bold text-foreground dark:text-white leading-snug mt-0.5">
-                  {title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed mt-1 line-clamp-2">
-                  {description}
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div className="flex items-center justify-between pt-2.5 border-t border-border/60 dark:border-white/10 mt-2">
-                <span className="text-[11px] font-medium text-violet-600 dark:text-violet-400">View projects</span>
-                <Link
-                  href="/projects"
-                  aria-label={`Explore ${title}`}
-                  className="flex size-7 items-center justify-center rounded-full border border-border/80 dark:border-white/15 bg-muted/60 dark:bg-white/5 text-foreground/80 dark:text-slate-300 transition-all group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.5)]"
+        {services.map(
+          ({ icon: Icon, title, tagline, description, gradient }) => (
+            <div
+              key={title}
+              className="group flex flex-col rounded-2xl border border-border/80 dark:border-white/10 bg-card/90 dark:bg-[#080812]/90 backdrop-blur-xl overflow-hidden transition-all duration-300 shadow-md hover:border-violet-500/50 dark:hover:border-violet-500/40 hover:shadow-[0_12px_36px_rgba(124,58,237,0.18)] hover:-translate-y-0.5"
+            >
+              {/* Top Thumbnail Banner Box */}
+              <div className="p-2 pb-0">
+                <div
+                  className={`w-full h-20 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden shadow-inner`}
                 >
-                  <ArrowUpRight className="size-3.5" />
-                </Link>
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Icon className="size-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
+                </div>
+              </div>
+
+              {/* Card Content Body */}
+              <div className="flex flex-col flex-1 p-3.5 gap-2 justify-between">
+                <div>
+                  <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
+                    {tagline}
+                  </span>
+                  <h3 className="text-sm sm:text-base font-bold text-foreground dark:text-white leading-snug mt-0.5">
+                    {title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-1 line-clamp-2">
+                    {description}
+                  </p>
+                </div>
+
+                {/* Action Button */}
+                <div className="flex items-center justify-between pt-2.5 border-t border-border/60 dark:border-white/10 mt-2">
+                  <span className="text-[11px] font-medium text-violet-600 dark:text-violet-400">
+                    View projects
+                  </span>
+                  <Link
+                    href="/projects"
+                    aria-label={`Explore ${title}`}
+                    className="flex size-7 items-center justify-center rounded-full border border-border/80 dark:border-white/15 bg-muted/60 dark:bg-white/5 text-foreground/80 dark:text-slate-300 transition-all group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.5)]"
+                  >
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     </section>
   );
 }
-
