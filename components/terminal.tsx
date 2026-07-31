@@ -70,7 +70,9 @@ export function Terminal() {
               <div key={i} className="flex items-start gap-1.5 leading-snug">
                 {line.type === "prompt" ? (
                   <>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+                      $
+                    </span>
                     <span
                       className={
                         line.cursor
@@ -83,7 +85,9 @@ export function Terminal() {
                   </>
                 ) : line.type === "bullet" ? (
                   <span className="text-slate-700 dark:text-violet-200/90 pl-3 flex items-center gap-1.5">
-                    <span className="text-violet-600 dark:text-violet-400 text-[9px]">•</span>
+                    <span className="text-violet-600 dark:text-violet-400 text-[9px]">
+                      •
+                    </span>
                     {line.text}
                   </span>
                 ) : line.type === "highlight" ? (
@@ -91,7 +95,9 @@ export function Terminal() {
                     {line.text}
                   </span>
                 ) : (
-                  <span className="text-slate-800 dark:text-slate-200 pl-3">{line.text}</span>
+                  <span className="text-slate-800 dark:text-slate-200 pl-3">
+                    {line.text}
+                  </span>
                 )}
               </div>
             ))}
@@ -101,6 +107,3 @@ export function Terminal() {
     </div>
   );
 }
-
-
-

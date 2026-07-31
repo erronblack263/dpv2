@@ -361,7 +361,7 @@ const SECTIONS: SectionData[] = [
 ];
 
 export default function WelfareTrackerArtifactsPage() {
-  const [sectionIdx, setSectionIdx] = useState(0); 
+  const [sectionIdx, setSectionIdx] = useState(0);
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [expandedSections, setExpandedSections] = useState(false);
@@ -459,7 +459,6 @@ export default function WelfareTrackerArtifactsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-5 flex flex-col justify-between h-full pt-2">
             <div>
-
               <Link
                 href="/projects"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"

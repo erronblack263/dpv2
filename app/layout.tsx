@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "Witness H Musonza — Software Developer",
   description:
     "Portfolio of Witness Musonza, a fullstack software developer crafting seamless user experiences.",
-
 };
 export const viewport: Viewport = {
   colorScheme: "light dark",
@@ -42,7 +41,12 @@ export default function RootLayout({
           <div className="relative min-h-screen text-foreground overflow-x-hidden">
             <AmbientBackground />
             <SiteNav />
-            <main style={{ position: "relative", zIndex: 1 }} className="w-full overflow-x-hidden">{children}</main>
+            <main
+              style={{ position: "relative", zIndex: 1 }}
+              className="w-full overflow-x-hidden"
+            >
+              {children}
+            </main>
           </div>
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
