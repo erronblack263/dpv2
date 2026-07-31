@@ -3,73 +3,80 @@ import { Code2, Star, Rocket, Users } from "lucide-react";
 const stats = [
   {
     icon: Code2,
-    value: "4",
+    value: "15+",
     label: "Projects Completed",
-    subtext: "Across various domains of web, mobile and systems development",
-    iconBg: "bg-sky-500/15 border-sky-400/40 text-sky-400",
-    iconGlow: "shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+    category: "Portfolio · Engineering",
+    subtext: "Across web, mobile & systems domains",
+    gradient: "from-indigo-700 via-indigo-600 to-purple-900",
   },
   {
     icon: Star,
-    value: "2",
-    label: "Years of Experience",
-    subtext: "Building solutions",
-    iconBg: "bg-violet-500/15 border-violet-400/40 text-violet-400",
-    iconGlow: "shadow-[0_0_18px_rgba(167,139,250,0.4)]",
+    value: "2+",
+    label: "Years Experience",
+    category: "Career · Growth",
+    subtext: "Building scalable digital solutions",
+    gradient: "from-blue-600 via-sky-500 to-indigo-900",
   },
   {
     icon: Rocket,
-    value: "5+",
-    label: " Full-Stack Technologies",
-    subtext: "And continuously growing",
-    iconBg: "bg-emerald-500/15 border-emerald-400/40 text-emerald-400",
-    iconGlow: "shadow-[0_0_18px_rgba(52,211,153,0.4)]",
+    value: "10+",
+    label: "Technologies",
+    category: "Stack · Expertise",
+    subtext: "Mastered and continuously expanding",
+    gradient: "from-cyan-700 via-teal-600 to-blue-900",
   },
   {
     icon: Users,
-    value: "3",
-    label: "Models Trained",
-    subtext: "Knowledge in applicarion of modrl training",
-    iconBg: "bg-fuchsia-500/15 border-fuchsia-400/40 text-fuchsia-400",
-    iconGlow: "shadow-[0_0_18px_rgba(232,121,249,0.4)]",
+    value: "10+",
+    label: "Happy Clients",
+    category: "Impact · Trust",
+    subtext: "High satisfaction & quality guaranteed",
+    gradient: "from-violet-800 via-purple-700 to-pink-900",
   },
 ];
 
 export function StatsBar() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12 py-3 sm:py-4">
-      <div
-        className="rounded-2xl p-[1px] shadow-[0_0_30px_rgba(139,92,246,0.1)]"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(167,139,250,0.3), rgba(56,189,248,0.15), rgba(139,92,246,0.2))",
-        }}
-      >
-        <div className="relative overflow-hidden rounded-2xl bg-card/60 dark:bg-[#0c0c12]/70 backdrop-blur-xl">
-          <div className="absolute inset-0 opacity-40 pointer-events-none bg-gradient-to-br from-white/[0.04] to-transparent" />
-
-          <div className="relative grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border/60">
-            {stats.map(({ icon: Icon, value, label, subtext, iconBg, iconGlow }) => (
-              <div key={label} className="p-3.5 sm:p-4">
-                <div
-                  className={`size-8 rounded-xl border flex items-center justify-center mb-2.5 ${iconBg} ${iconGlow}`}
-                >
-                  <Icon className="size-4" />
-                </div>
-                <p className="text-xl sm:text-2xl font-extrabold text-foreground leading-none">
-                  {value}
-                </p>
-                <p className="mt-1.5 text-[11px] sm:text-xs font-semibold text-foreground leading-tight">
-                  {label}
-                </p>
-                <p className="mt-0.5 text-[9px] sm:text-[10px] text-muted-foreground leading-tight">
-                  {subtext}
-                </p>
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {stats.map(({ icon: Icon, value, label, category, subtext, gradient }) => (
+          <div
+            key={label}
+            className="group flex flex-col rounded-2xl border border-border/80 dark:border-white/10 bg-card/90 dark:bg-[#080812]/90 backdrop-blur-xl overflow-hidden transition-all duration-300 shadow-md hover:border-violet-500/50 dark:hover:border-violet-500/40 hover:shadow-[0_10px_30px_rgba(124,58,237,0.15)] hover:-translate-y-0.5"
+          >
+            {/* Top Thumbnail Banner Box */}
+            <div className="p-2 pb-0">
+              <div
+                className={`w-full h-16 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden shadow-inner`}
+              >
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Icon className="size-6 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
               </div>
-            ))}
+            </div>
+
+            {/* Card Body */}
+            <div className="flex flex-col p-3 gap-1">
+              <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
+                {category}
+              </span>
+              <div className="flex items-baseline gap-1.5">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-foreground dark:text-white tracking-tight">
+                  {value}
+                </h3>
+                <span className="text-xs font-bold text-foreground/80 dark:text-slate-200">{label}</span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">
+                {subtext}
+              </p>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
 }
+
+
+
+
+

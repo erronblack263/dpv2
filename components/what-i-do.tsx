@@ -5,84 +5,95 @@ const services = [
   {
     icon: Code2,
     title: "Fullstack Development",
+    tagline: "Service · Engineering",
     description:
-      "End-to-end web apps with modern frameworks and seamless user experiences.",
-    iconBg: "bg-violet-500/15 border-violet-400/40 text-violet-400",
-    iconGlow: "shadow-[0_0_18px_rgba(167,139,250,0.4)]",
-    border: "border-violet-500/15 hover:border-violet-400/35",
+      "Building robust end-to-end applications with modern web and mobile stacks.",
+    gradient: "from-indigo-700 via-indigo-600 to-purple-900",
   },
   {
     icon: Database,
     title: "Backend Engineering",
+    tagline: "Service · Architecture",
     description:
-      "Scalable APIs, database architecture, and high-performance server solutions.",
-    iconBg: "bg-sky-500/15 border-sky-400/40 text-sky-400",
-    iconGlow: "shadow-[0_0_18px_rgba(56,189,248,0.4)]",
-    border: "border-sky-500/15 hover:border-sky-400/35",
+      "Designing scalable APIs, databases and cloud-ready microservice architectures.",
+    gradient: "from-blue-600 via-sky-500 to-indigo-900",
   },
   {
     icon: Pencil,
     title: "UI/UX Development",
+    tagline: "Service · Product Design",
     description:
-      "Beautiful, intuitive interfaces built with modern design principles.",
-    iconBg: "bg-emerald-500/15 border-emerald-400/40 text-emerald-400",
-    iconGlow: "shadow-[0_0_18px_rgba(52,211,153,0.4)]",
-    border: "border-emerald-500/15 hover:border-emerald-400/35",
+      "Crafting responsive, sleek, and highly intuitive user interfaces.",
+    gradient: "from-cyan-700 via-teal-600 to-blue-900",
   },
   {
     icon: Cloud,
     title: "DevOps & Deployment",
+    tagline: "Service · Cloud Systems",
     description:
-      "CI/CD pipelines, containerization, and reliable cloud deployments.",
-    iconBg: "bg-fuchsia-500/15 border-fuchsia-400/40 text-fuchsia-400",
-    iconGlow: "shadow-[0_0_18px_rgba(232,121,249,0.4)]",
-    border: "border-fuchsia-500/15 hover:border-fuchsia-400/35",
+      "Containerization, automated CI/CD pipelines and seamless cloud deployments.",
+    gradient: "from-violet-800 via-purple-700 to-pink-900",
   },
 ];
 
 export function WhatIDo() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12 py-4 sm:py-5">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5 sm:py-5">
       <div className="text-center mb-4 sm:mb-5">
-        <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-foreground">
+        <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
           What I do
         </h2>
         <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
-          Turning ideas into powerful digital experiences
+          Turning ideas into powerful digital experiences.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-        {services.map(
-          ({ icon: Icon, title, description, iconBg, iconGlow, border }) => (
-            <article
-              key={title}
-              className={`group relative overflow-hidden rounded-2xl border bg-card/60 dark:bg-[#0c0c12]/70 backdrop-blur-xl p-4 transition-all duration-300 hover:bg-card dark:hover:bg-[#101018]/85 ${border}`}
-            >
-              <div className="absolute inset-0 opacity-40 pointer-events-none bg-gradient-to-br from-white/[0.04] to-transparent" />
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+        {services.map(({ icon: Icon, title, tagline, description, gradient }) => (
+          <div
+            key={title}
+            className="group flex flex-col rounded-2xl border border-border/80 dark:border-white/10 bg-card/90 dark:bg-[#080812]/90 backdrop-blur-xl overflow-hidden transition-all duration-300 shadow-md hover:border-violet-500/50 dark:hover:border-violet-500/40 hover:shadow-[0_12px_36px_rgba(124,58,237,0.18)] hover:-translate-y-0.5"
+          >
+            {/* Top Thumbnail Banner Box */}
+            <div className="p-2 pb-0">
               <div
-                className={`relative size-9 rounded-xl border flex items-center justify-center mb-3 ${iconBg} ${iconGlow}`}
+                className={`w-full h-20 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden shadow-inner`}
               >
-                <Icon className="size-4" />
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Icon className="size-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
               </div>
-              <h3 className="relative text-sm font-bold text-foreground leading-tight">
-                {title}
-              </h3>
-              <p className="relative mt-1.5 text-xs text-muted-foreground leading-snug pr-8 line-clamp-2">
-                {description}
-              </p>
-              <Link
-                href="/projects"
-                aria-label={`Explore ${title}`}
-                className="absolute bottom-3.5 right-3.5 flex size-7 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground transition-all group-hover:border-violet-400/40 group-hover:text-violet-400 group-hover:bg-violet-500/10 group-hover:shadow-[0_0_14px_rgba(167,139,250,0.35)]"
-              >
-                <ArrowUpRight className="size-3.5" />
-              </Link>
-            </article>
-          ),
-        )}
+            </div>
+
+            {/* Card Content Body */}
+            <div className="flex flex-col flex-1 p-3.5 gap-2 justify-between">
+              <div>
+                <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
+                  {tagline}
+                </span>
+                <h3 className="text-sm sm:text-base font-bold text-foreground dark:text-white leading-snug mt-0.5">
+                  {title}
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed mt-1 line-clamp-2">
+                  {description}
+                </p>
+              </div>
+
+              {/* Action Button */}
+              <div className="flex items-center justify-between pt-2.5 border-t border-border/60 dark:border-white/10 mt-2">
+                <span className="text-[11px] font-medium text-violet-600 dark:text-violet-400">View projects</span>
+                <Link
+                  href="/projects"
+                  aria-label={`Explore ${title}`}
+                  className="flex size-7 items-center justify-center rounded-full border border-border/80 dark:border-white/15 bg-muted/60 dark:bg-white/5 text-foreground/80 dark:text-slate-300 transition-all group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.5)]"
+                >
+                  <ArrowUpRight className="size-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
+
