@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { Mail, Sparkles, FolderGit2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, FolderGit2 } from "lucide-react";
 import { GitHubIcon, GitLabIcon, LinkedInIcon } from "@/components/social-icons";
 import { Terminal } from "@/components/terminal";
 
@@ -15,142 +13,132 @@ const socials = [
   { label: "GitLab", href: "https://gitlab.com", Icon: GitLabIcon },
 ];
 
-const skillIcons = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", label: "Java" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", label: "Flutter" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", label: "Spring Boot" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", label: "Python" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", label: "TypeScript" },
-];
-
-function OrbitingIcons() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const angleRef = useRef(0);
-  const rafRef = useRef<number>(0);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const icons = Array.from(container.querySelectorAll<HTMLDivElement>("[data-orbit-icon]"));
-    const count = icons.length;
-    const radius = 150;
-    const cx = 170;
-    const cy = 170;
-    const speed = 0.4;
-
-    function animate() {
-      angleRef.current = (angleRef.current + speed) % 360;
-      icons.forEach((el, i) => {
-        const angle = ((angleRef.current + (360 / count) * i) * Math.PI) / 180;
-        el.style.left = `${cx + radius * Math.cos(angle) - 20}px`;
-        el.style.top = `${cy + radius * Math.sin(angle) - 20}px`;
-      });
-      rafRef.current = requestAnimationFrame(animate);
-    }
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, []);
-
-  return (
-    <div ref={containerRef} className="absolute inset-0 overflow-visible" aria-hidden="true" style={{ pointerEvents: "none" }}>
-      {skillIcons.map(({ src, label }) => (
-        <div
-          key={label}
-          data-orbit-icon
-          className="absolute hidden sm:flex size-10 items-center justify-center rounded-full bg-card/90 border border-border shadow-lg backdrop-blur-sm"
-          style={{ left: 0, top: 0 }}
-          title={label}
-        >
-          <img src={src} alt={label} className="size-5" loading="lazy" />
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[calc(78vh-4rem)] items-center pt-8 sm:min-h-[calc(100vh-4rem)] sm:pt-0"
+      className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-2 pb-1"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6 sm:pb-0">
-        <div className="flex flex-col items-center gap-1 text-center sm:gap-8 lg:grid lg:grid-cols-[300px_1fr_280px] lg:items-center lg:text-left lg:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr_320px] xl:grid-cols-[260px_1fr_350px] lg:items-center gap-4 lg:gap-6">
 
-          {/* Avatar + orbiting icons */}
-          <div className="relative shrink-0 mx-auto -ml-0 lg:-ml-10" style={{ width: "300px", height: "300px" }}>
-            <OrbitingIcons />
-            <div
-              className="absolute rounded-full bg-primary/30 blur-md"
-              style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "210px", height: "210px" }}
-              aria-hidden="true"
-            />
-            <Image
-              src="/msonzah.jpg"
-              alt="Portrait of Witness"
-              width={448}
-              height={448}
-              priority
-              quality={100}
-              className="absolute rounded-full border-2 border-primary/40 object-cover"
-              style={{ width: "190px", height: "190px", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-            />
+        {/* Avatar */}
+        <div className="relative shrink-0 mx-auto" style={{ width: "250px", height: "250px" }}>
+          {/* Radial glow background */}
+          <div
+            className="absolute rounded-full"
+            style={{
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "190px", height: "190px",
+              background: "radial-gradient(circle, rgba(124,58,237,0.3) 0%, rgba(56,189,248,0.1) 50%, transparent 70%)",
+              filter: "blur(16px)",
+            }}
+            aria-hidden="true"
+          />
+          {/* Outer glowing border ring */}
+          <div
+            className="absolute rounded-full"
+            style={{
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "172px", height: "172px",
+              background: "linear-gradient(135deg, rgba(139,92,246,0.8), rgba(56,189,248,0.6))",
+              padding: "2px",
+              boxShadow: "0 0 24px rgba(124,58,237,0.35)",
+            }}
+            aria-hidden="true"
+          />
+          <Image
+            src="/msonzah.jpg"
+            alt="Portrait of Witness H Musonza"
+            width={330}
+            height={330}
+            priority
+            quality={100}
+            className="absolute rounded-full object-cover border-2 border-violet-500/50"
+            style={{ width: "166px", height: "166px", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+          />
+          {/* Available status badge */}
+          <div
+            className="absolute flex items-center gap-1.5 rounded-full bg-card/95 dark:bg-[#0c0c16]/95 border border-border dark:border-white/10 px-3 py-1 text-[11px] font-medium text-foreground shadow-md backdrop-blur-md"
+            style={{ bottom: "10px", left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap" }}
+          >
+            <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
+            Available for new opportunities
+          </div>
+        </div>
+
+        {/* Text content */}
+        <div className="flex flex-col gap-2.5 text-center lg:text-left">
+          <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 tracking-wide">Hey there! 👋</p>
+
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground">
+              I&apos;m{" "}
+              <span
+                className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400"
+              >
+                Witness H Musonza
+              </span>
+            </h1>
+            <p className="mt-1 text-base sm:text-lg lg:text-xl font-bold text-foreground/90 leading-snug">
+              I build scalable digital solutions that{" "}
+              <span
+                className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400"
+              >
+                solve real problems.
+              </span>
+            </p>
           </div>
 
-          {/* Text content */}
-          <div className="flex flex-col gap-3 sm:gap-5 min-w-0">
-            <h1 className="text-balance text-[1.8rem] font-extrabold leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl">
-              <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 lg:justify-start">
-                Hey, I&apos;m <span className="text-primary">Witness H Musonza</span>
-                <Sparkles className="size-6 text-primary sm:size-7" aria-hidden="true" />
-              </span>
-              <br />
-              I am a <span className="text-primary">Software Engineer/Developer</span>
-            </h1>
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
+            A <span className="font-semibold text-foreground">Fullstack software developer/engineer</span> with solid foundations in SDLC, systems architecture, database management and sleek UI/UX. Passionate about crafting seamless user experiences at the intersection of creativity and functionality.
+          </p>
 
-            <p className="mx-auto max-w-[20rem] text-pretty text-xs leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm lg:mx-0">
-              A <span className="font-semibold text-foreground">Fullstack software developer/engineer</span>{" "}
-              with solid foundations in{" "}
-              <span className="font-semibold text-foreground">SDLC, systems architecture, database management and sleek UI/UX.</span>{" "}
-              Passionate about crafting seamless user experiences at the intersection of creativity and functionality.
-            </p>
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mt-0.5">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all hover:shadow-[0_0_28px_rgba(99,102,241,0.7)] hover:brightness-110"
+            >
+              <Mail className="size-3.5" />
+              Contact Me
+            </Link>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border dark:border-white/15 bg-card/80 dark:bg-white/5 px-4 py-2 text-xs font-semibold text-foreground transition-all hover:bg-accent dark:hover:bg-white/10 hover:border-border/80 dark:hover:border-white/25"
+            >
+              <FolderGit2 className="size-3.5" />
+              View Projects
+            </Link>
+          </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-start">
-              <Button className="rounded-full px-5" nativeButton={false} render={<Link href="/contact" />}>
-                <Mail className="size-4" />
-                Contact Me
-              </Button>
-              <Button className="rounded-full px-5" nativeButton={false} variant="outline" render={<Link href="/projects" />}>
-                <FolderGit2 className="size-4" />
-                View Projects
-              </Button>
-              <span className="mx-1 hidden h-6 w-px bg-border sm:block" aria-hidden="true" />
-              <div className="flex items-center gap-1">
-                {socials.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
-                  >
-                    <Icon className="size-5" />
-                  </a>
-                ))}
-              </div>
+          <div className="flex items-center justify-center lg:justify-start gap-2.5 mt-1">
+            <span className="text-[11px] text-muted-foreground">Find me on</span>
+            <div className="flex items-center gap-1">
+              {socials.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex size-7 items-center justify-center rounded-lg border border-border dark:border-white/10 bg-card/60 dark:bg-white/5 text-muted-foreground transition-all hover:bg-accent dark:hover:bg-white/10 hover:text-foreground hover:border-border/80 dark:hover:border-white/20"
+                >
+                  <Icon className="size-3.5" />
+                </a>
+              ))}
             </div>
           </div>
-
-          {/* Terminal — desktop only */}
-          <div className="hidden lg:flex lg:justify-end">
-            <Terminal />
-          </div>
-
         </div>
+
+        {/* Terminal */}
+        <div className="w-full">
+          <Terminal />
+        </div>
+
       </div>
     </section>
   );
 }
+
+

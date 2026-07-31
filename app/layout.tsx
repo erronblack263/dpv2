@@ -29,20 +29,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} bg-background`}
+      className={`${inter.variable} bg-background overflow-x-hidden`}
       suppressHydrationWarning
     >
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative min-h-screen text-foreground">
+          <div className="relative min-h-screen text-foreground overflow-x-hidden">
             <AmbientBackground />
             <SiteNav />
-            <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
+            <main style={{ position: "relative", zIndex: 1 }} className="w-full overflow-x-hidden">{children}</main>
           </div>
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}

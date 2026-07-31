@@ -66,7 +66,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     setIsMobile(isTouchDevice());
   }, []);
 
-  /* ── Network Toast ──────────────────────────────────────────────── */
   const showNetworkToast = useCallback(() => {
     toastTimer.current && clearTimeout(toastTimer.current);
     setToast({ visible: true, dismissed: false });
@@ -85,7 +84,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     networkTimer.current && clearTimeout(networkTimer.current);
   }, []);
 
-  /* ── Video Action Handlers ─────────────────────────────────────── */
   const togglePlay = useCallback(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -177,7 +175,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
       /* fall through */
     }
 
-    // iOS Safari native video fullscreen fallback
     const iosVideo = video as HTMLVideoElement & {
       webkitEnterFullscreen?: () => void;
     };
@@ -186,7 +183,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         iosVideo.webkitEnterFullscreen();
         return;
       } catch {
-        /* fall through */
       }
     }
 
@@ -216,7 +212,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     };
   }, [cssFullscreen]);
 
-  // Lock body scroll while CSS fullscreen is open
   useEffect(() => {
     if (!cssFullscreen) return;
     const prev = document.body.style.overflow;
@@ -226,7 +221,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     };
   }, [cssFullscreen]);
 
-  // Esc closes CSS fullscreen
   useEffect(() => {
     if (!cssFullscreen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -236,7 +230,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [cssFullscreen, exitFullscreen]);
 
-  /* ── Mouse / touch Controls Visibility ─────────────────────────── */
   const revealControls = useCallback(() => {
     setShowControls(true);
     if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
@@ -247,7 +240,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
     }
   }, [isPlaying]);
 
-  /* ── Video Event Handlers ───────────────────────────────────────── */
   const handleTimeUpdate = useCallback(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -306,7 +298,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
   const expanded = isFullscreen || cssFullscreen;
 
-  // Inline: contain so portrait demos aren't cropped. Fullscreen mobile: cover to fill screen.
   const videoFitClass = expanded
     ? isMobile || isPortraitVideo
       ? "w-full h-full object-cover"
@@ -327,7 +318,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
           : `relative w-full h-full ${expanded ? "rounded-none" : "rounded-xl"}`
       }`}
     >
-      {/* ─── Video Tag ─── */}
       <video
         ref={videoRef}
         src={src}
@@ -344,7 +334,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         className={`cursor-pointer bg-black ${videoFitClass}`}
       />
 
-      {/* ─── Thumbnail & Initial Play Overlay ─── */}
       {!started && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[1px]">
           <img
@@ -366,7 +355,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         </div>
       )}
 
-      {/* ─── Paused / Hover Play Button ─── */}
       {started && !isPlaying && !buffering && (
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none bg-black/20">
           <button
@@ -379,7 +367,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         </div>
       )}
 
-      {/* ─── Buffering Spinner ─── */}
       {started && buffering && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm gap-2">
           <div className="size-10 rounded-full border-3 border-emerald-500 border-t-transparent animate-spin" />
@@ -389,7 +376,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         </div>
       )}
 
-      {/* ─── Custom Bottom Controls Overlay ─── */}
       {started && (
         <div
           className={`absolute bottom-0 inset-x-0 z-30 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-8 flex flex-col gap-2 transition-opacity duration-300 ${

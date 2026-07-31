@@ -161,7 +161,6 @@ interface SectionData {
   images: ScreenImage[];
 }
 
-/* ─── All Artifact Sections ───────────────────────────────────────── */
 const SECTIONS: SectionData[] = [
   {
     title: "Auth Screens",
@@ -170,9 +169,9 @@ const SECTIONS: SectionData[] = [
       "A modern environmental awareness app that connects people to nature. Clean, intuitive and built for impact.",
     tags: ["React Native", "TypeScript", "Supabase", "2026"],
     category: "Authentication",
-    platform: "Android",
+    platform: "Android & IOS",
     role: "Fullstack Developer",
-    duration: "2 Weeks",
+    duration: "65 weeks",
     status: "Completed",
     images: [
       {
@@ -214,7 +213,7 @@ const SECTIONS: SectionData[] = [
       "Events, forum discussions, and Green Guardian reporting workflow for active community participation.",
     tags: ["React Native", "TypeScript", "Supabase", "2026"],
     category: "Dashboard & Forum",
-    platform: "Android",
+    platform: "Android & IOS",
     role: "Fullstack Developer",
     duration: "3 Weeks",
     status: "Completed",
@@ -300,7 +299,7 @@ const SECTIONS: SectionData[] = [
       "Sage PyTorch model classification results surfaced as clear, actionable field guidance for agricultural users.",
     tags: ["React Native", "PyTorch", "Supabase", "2026"],
     category: "AI Classifier",
-    platform: "Android",
+    platform: "Android & IOS",
     role: "ML & Fullstack Engineer",
     duration: "4 Weeks",
     status: "Completed",
@@ -380,7 +379,7 @@ const SECTIONS: SectionData[] = [
       "Visual reporting tools, user activity metrics, and profile management interface for field personnel.",
     tags: ["React Native", "TypeScript", "Supabase", "2026"],
     category: "Analytics & Profile",
-    platform: "Android",
+    platform: "Android & IOS",
     role: "Fullstack Developer",
     duration: "2 Weeks",
     status: "Completed",
@@ -437,7 +436,6 @@ const SECTIONS: SectionData[] = [
   },
 ];
 
-/* ─── Main Component ─────────────────────────────────────────────── */
 export default function GreenSpaceArtifactsPage() {
   const [sectionIdx, setSectionIdx] = useState(0); // Defaults to Auth Screens (0)
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
@@ -445,8 +443,6 @@ export default function GreenSpaceArtifactsPage() {
   const [expandedSections, setExpandedSections] = useState(false);
 
   const section = SECTIONS[sectionIdx];
-
-  // Reset active screen when switching section
   useEffect(() => {
     setActiveScreenIdx(0);
   }, [sectionIdx]);
@@ -456,7 +452,6 @@ export default function GreenSpaceArtifactsPage() {
   function nextScreen() {
     setActiveScreenIdx((i) => (i + 1) % section.images.length);
   }
-
   function prevScreen() {
     setActiveScreenIdx((i) =>
       (i - 1 + section.images.length) % section.images.length
@@ -465,10 +460,8 @@ export default function GreenSpaceArtifactsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-emerald-500/30 selection:text-emerald-500 font-sans pb-16 transition-colors duration-300">
-      {/* ─── Section Tabs Selector Bar ─── */}
       <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-2.5 sticky top-14 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
-          {/* Desktop view (all sections) */}
           <div className="hidden md:flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
             {SECTIONS.map((sec, idx) => (
               <button
@@ -485,7 +478,6 @@ export default function GreenSpaceArtifactsPage() {
             ))}
           </div>
 
-          {/* Mobile view (3 at a time + Plus button to reveal all) */}
           <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
             {(expandedSections
               ? SECTIONS.map((sec, idx) => ({ sec, idx }))

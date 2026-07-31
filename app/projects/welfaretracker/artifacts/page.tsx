@@ -22,9 +22,6 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
-
-/* ─── Typewriter ─────────────────────────────────────────────────── */
-
 const CURSOR_COLORS = ["#0284c7", "#8b5cf6", "#06b6d4", "#f43f5e", "#10b981"];
 
 function TypewriterText({
@@ -89,8 +86,6 @@ function TypewriterText({
   );
 }
 
-/* ─── Inline Tech SVGs ───────────────────────────────────────────── */
-
 function FlutterIcon({ className = "size-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 417 512" fill="none">
@@ -148,7 +143,6 @@ function FirebaseIcon({ className = "size-4" }: { className?: string }) {
   );
 }
 
-/* ─── Data Types ─────────────────────────────────────────────────── */
 interface ScreenImage {
   num: string;
   caption: string;
@@ -169,7 +163,6 @@ interface SectionData {
   images: ScreenImage[];
 }
 
-/* ─── All Artifact Sections ───────────────────────────────────────── */
 const SECTIONS: SectionData[] = [
   {
     title: "Auth Screens",
@@ -367,16 +360,13 @@ const SECTIONS: SectionData[] = [
   },
 ];
 
-/* ─── Main Component ─────────────────────────────────────────────── */
 export default function WelfareTrackerArtifactsPage() {
-  const [sectionIdx, setSectionIdx] = useState(0); // Defaults to Auth Screens (0)
+  const [sectionIdx, setSectionIdx] = useState(0); 
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [expandedSections, setExpandedSections] = useState(false);
 
   const section = SECTIONS[sectionIdx];
-
-  // Reset active screen when switching section
   useEffect(() => {
     setActiveScreenIdx(0);
   }, [sectionIdx]);
@@ -388,17 +378,15 @@ export default function WelfareTrackerArtifactsPage() {
   }
 
   function prevScreen() {
-    setActiveScreenIdx((i) =>
-      (i - 1 + section.images.length) % section.images.length
+    setActiveScreenIdx(
+      (i) => (i - 1 + section.images.length) % section.images.length,
     );
   }
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-sky-500/30 selection:text-sky-500 font-sans pb-16 transition-colors duration-300">
-      {/* ─── Section Tabs Selector Bar ─── */}
       <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-2.5 sticky top-14 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
-          {/* Desktop view (all sections) */}
           <div className="hidden md:flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
             {SECTIONS.map((sec, idx) => (
               <button
@@ -415,18 +403,16 @@ export default function WelfareTrackerArtifactsPage() {
             ))}
           </div>
 
-          {/* Mobile view (3 at a time + Plus button to reveal all) */}
           <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
             {(expandedSections
               ? SECTIONS.map((sec, idx) => ({ sec, idx }))
-              : (sectionIdx < 3
-                  ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
-                  : [
-                      { sec: SECTIONS[0], idx: 0 },
-                      { sec: SECTIONS[1], idx: 1 },
-                      { sec: SECTIONS[sectionIdx], idx: sectionIdx },
-                    ]
-                )
+              : sectionIdx < 3
+                ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
+                : [
+                    { sec: SECTIONS[0], idx: 0 },
+                    { sec: SECTIONS[1], idx: 1 },
+                    { sec: SECTIONS[sectionIdx], idx: sectionIdx },
+                  ]
             ).map(({ sec, idx }) => (
               <button
                 key={sec.title}
@@ -441,7 +427,6 @@ export default function WelfareTrackerArtifactsPage() {
               </button>
             ))}
 
-            {/* Toggle Plus / Minus Button */}
             {!expandedSections ? (
               <button
                 onClick={() => setExpandedSections(true)}
@@ -471,12 +456,10 @@ export default function WelfareTrackerArtifactsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6">
-        {/* ─── Top Main Grid (Hero Overview + Phone Frame + Sidebar) ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Hero Header Column (Cols 1 to 5) */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full pt-2">
             <div>
-              {/* Back to Projects Pill */}
+
               <Link
                 href="/projects"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
@@ -485,7 +468,6 @@ export default function WelfareTrackerArtifactsPage() {
                 Back to Projects
               </Link>
 
-              {/* Title & Tagline */}
               <div className="mt-6">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-sky-600 dark:text-sky-400 drop-shadow-[0_0_25px_rgba(14,165,233,0.2)]">
                   WelfareTracker
@@ -495,7 +477,6 @@ export default function WelfareTrackerArtifactsPage() {
                 </p>
               </div>
 
-              {/* Badges Row */}
               <div className="mt-5 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
                   <Smartphone className="size-3.5 text-sky-600 dark:text-sky-400" />
@@ -519,13 +500,11 @@ export default function WelfareTrackerArtifactsPage() {
                 </span>
               </div>
 
-              {/* Description Paragraph */}
               <p className="mt-6 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md">
                 {section.description}
               </p>
             </div>
 
-            {/* View Projects Button */}
             <div className="mt-8">
               <Link
                 href="/projects"
@@ -537,9 +516,7 @@ export default function WelfareTrackerArtifactsPage() {
             </div>
           </div>
 
-          {/* Center Stage Phone Mockup (Cols 6 to 8) */}
           <div className="lg:col-span-4 flex items-center justify-center relative my-4 lg:my-0">
-            {/* Backdrop Radial Glow */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-72 h-96 bg-sky-500/20 dark:bg-sky-500/15 blur-3xl rounded-full animate-pulse" />
               <svg
@@ -565,9 +542,7 @@ export default function WelfareTrackerArtifactsPage() {
               </svg>
             </div>
 
-            {/* iPhone Frame Container */}
             <div className="relative z-10 w-[240px] sm:w-[260px] h-[500px] sm:h-[530px] rounded-[42px] border-[7px] border-zinc-900 dark:border-zinc-800 bg-zinc-950 p-1.5 shadow-[0_20px_60px_rgba(0,0,0,0.3),0_0_40px_rgba(14,165,233,0.2)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(14,165,233,0.25)] flex flex-col overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
-              {/* Camera Notch / Dynamic Island */}
               <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 w-24 h-4 rounded-full bg-black flex items-center justify-center gap-2">
                 <div className="size-2 rounded-full bg-zinc-900 border border-zinc-800" />
                 <div className="size-1.5 rounded-full bg-blue-950" />
@@ -587,7 +562,8 @@ export default function WelfareTrackerArtifactsPage() {
                     {currentScreen.caption}
                   </p>
                   <p className="text-[10px] text-sky-400 font-mono">
-                    {currentScreen.num} / {section.images.length.toString().padStart(2, "0")}
+                    {currentScreen.num} /{" "}
+                    {section.images.length.toString().padStart(2, "0")}
                   </p>
                 </div>
               </div>
@@ -610,7 +586,9 @@ export default function WelfareTrackerArtifactsPage() {
                   <span className="flex items-center gap-1.5">
                     <Monitor className="size-3.5" /> Project
                   </span>
-                  <span className="font-semibold text-foreground">WelfareTracker</span>
+                  <span className="font-semibold text-foreground">
+                    WelfareTracker
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -676,9 +654,7 @@ export default function WelfareTrackerArtifactsPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="flex items-center gap-1.5">
-                    Status
-                  </span>
+                  <span className="flex items-center gap-1.5">Status</span>
                   <span className="inline-flex items-center rounded-full bg-sky-500/10 dark:bg-sky-950 border border-sky-500/30 dark:border-sky-800/80 px-2.5 py-0.5 text-[11px] font-semibold text-sky-600 dark:text-sky-400">
                     {section.status}
                   </span>
@@ -893,7 +869,7 @@ export default function WelfareTrackerArtifactsPage() {
               e.stopPropagation();
               setLightboxIdx(
                 (lightboxIdx - 1 + section.images.length) %
-                  section.images.length
+                  section.images.length,
               );
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 size-11 rounded-full bg-zinc-900/80 text-white border border-zinc-700 flex items-center justify-center hover:bg-sky-500 hover:text-black transition-colors z-30"
