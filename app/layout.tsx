@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AmbientBackground } from "@/components/ambient-background";
+import { ContactDrawer } from "@/components/contact-drawer";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -49,6 +50,7 @@ export default function RootLayout({
               {children}
             </main>
             <SiteFooter />
+            <ContactDrawer />
           </div>
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}

@@ -1,11 +1,49 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TerminalLine = {
   type: "prompt" | "output" | "bullet" | "highlight" | "error";
   text: string;
+};
+
+const getLineContent = (line: TerminalLine) => {
+  if (line.type === "prompt") {
+    return (
+      <>
+        <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
+        <span className="text-violet-700 dark:text-violet-300 font-medium">{line.text}</span>
+      </>
+    );
+  }
+
+  if (line.type === "bullet") {
+    return (
+      <span className="text-slate-700 dark:text-violet-200/90 pl-3 flex items-center gap-1.5">
+        <span className="text-violet-600 dark:text-violet-400 text-[9px]">•</span>
+        {line.text}
+      </span>
+    );
+  }
+
+  if (line.type === "highlight") {
+    return (
+      <span className="text-cyan-600 dark:text-cyan-400 font-semibold pl-3 drop-shadow-[0_0_6px_rgba(56,189,248,0.3)]">
+        {line.text}
+      </span>
+    );
+  }
+
+  if (line.type === "error") {
+    return (
+      <span className="text-rose-600 dark:text-rose-400 pl-3">{line.text}</span>
+    );
+  }
+
+  return (
+    <span className="text-slate-800 dark:text-slate-200 pl-3">{line.text}</span>
+  );
 };
 
 const makeCommandResponse = (command: string): TerminalLine[] => {
@@ -55,20 +93,16 @@ const makeCommandResponse = (command: string): TerminalLine[] => {
     return [{ type: "highlight", text: "Making an impact every day 🚀" }];
   }
 
-  if (normalized === "projects") {
-    return [
-      { type: "output", text: "Featured work:" },
-      { type: "bullet", text: "Greenspace" },
-      { type: "bullet", text: "WelfareTracker" },
-    ];
+  if (normalized === "projects" || normalized === "project" || normalized.startsWith("cd project") || normalized.startsWith("open project") || normalized.startsWith("goto project")) {
+    return [{ type: "highlight", text: "Navigating to /projects..." }];
   }
 
   if (normalized === "contact") {
-    return [{ type: "output", text: "Reach out through the contact page to start a conversation." }];
+    return [{ type: "output", text: "Opening contact form..." }];
   }
 
   if (normalized === "certificates") {
-    return [{ type: "output", text: "Opening the certificates page..." }];
+    return [{ type: "highlight", text: "Navigating to /certificates..." }];
   }
 
   if (normalized === "clear") {
@@ -84,7 +118,7 @@ const makeCommandResponse = (command: string): TerminalLine[] => {
 export function Terminal() {
   const router = useRouter();
   const [lines, setLines] = useState<TerminalLine[]>([
-    { type: "output", text: "Welcome to the developer terminal. Type 'help' to begin." },
+    { type: "output", text: "Welcome to the developer terminal. Type 'help' or 'projects' to begin." },
   ]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
@@ -114,16 +148,20 @@ export function Terminal() {
       ...response,
     ]);
 
-    if (normalized === "projects") {
-      router.push("/projects");
+    if (normalized === "projects" || normalized === "project" || normalized.startsWith("cd project") || normalized.startsWith("open project") || normalized.startsWith("goto project")) {
+      setTimeout(() => router.push("/projects"), 300);
     }
 
     if (normalized === "contact") {
-      router.push("/contact");
+      setTimeout(() => {
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("open-contact-drawer"));
+        }
+      }, 300);
     }
 
     if (normalized === "certificates") {
-      router.push("/certificates");
+      setTimeout(() => router.push("/certificates"), 300);
     }
 
     setHistory((current) => [...current, trimmed]);
@@ -131,12 +169,12 @@ export function Terminal() {
     setInput("");
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     submitCommand(input);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowUp") {
       event.preventDefault();
       if (history.length === 0) {
@@ -161,7 +199,7 @@ export function Terminal() {
   };
 
   return (
-    <div className="relative w-full max-w-[310px] xl:max-w-[340px] shrink-0 mx-auto lg:ml-auto">
+    <div className="relative w-full max-w-full lg:max-w-[320px] xl:max-w-[350px] shrink-0 mx-auto lg:ml-auto">
       <div
         className="rounded-xl p-[1px] shadow-[0_0_30px_rgba(139,92,246,0.18)] transition-all"
         style={{
@@ -180,7 +218,7 @@ export function Terminal() {
               </span>
             </div>
             <span className="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-              <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
+              <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />{' '}
               Interactive
             </span>
           </div>
@@ -188,25 +226,7 @@ export function Terminal() {
           <div ref={outputRef} className="p-3 space-y-1 min-h-[220px] max-h-[320px] overflow-y-auto">
             {lines.map((line, index) => (
               <div key={`${line.text}-${index}`} className="flex items-start gap-1.5 leading-snug">
-                {line.type === "prompt" ? (
-                  <>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
-                    <span className="text-violet-700 dark:text-violet-300 font-medium">{line.text}</span>
-                  </>
-                ) : line.type === "bullet" ? (
-                  <span className="text-slate-700 dark:text-violet-200/90 pl-3 flex items-center gap-1.5">
-                    <span className="text-violet-600 dark:text-violet-400 text-[9px]">•</span>
-                    {line.text}
-                  </span>
-                ) : line.type === "highlight" ? (
-                  <span className="text-cyan-600 dark:text-cyan-400 font-semibold pl-3 drop-shadow-[0_0_6px_rgba(56,189,248,0.3)]">
-                    {line.text}
-                  </span>
-                ) : line.type === "error" ? (
-                  <span className="text-rose-600 dark:text-rose-400 pl-3">{line.text}</span>
-                ) : (
-                  <span className="text-slate-800 dark:text-slate-200 pl-3">{line.text}</span>
-                )}
+                {getLineContent(line)}
               </div>
             ))}
 
