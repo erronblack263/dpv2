@@ -439,7 +439,7 @@ export default function WelfareTrackerArtifactsPage() {
             ) : (
               <button
                 onClick={() => setExpandedSections(false)}
-                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-muted text-muted-foreground border border-border flex items-center gap-1 hover:bg-accent transition-all cursor-pointer"
+                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-red-500/10 dark:bg-red-950 text-red-500 dark:text-red-400 border border-red-500/30 flex items-center gap-1 hover:bg-red-500/20 transition-all cursor-pointer"
                 title="Collapse sections"
               >
                 <Minus className="size-3.5 stroke-[2.5]" />
