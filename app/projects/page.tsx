@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, Play, Image as ImageIcon, GitBranch } from "lucide-react";
+import { Boxes } from "@/components/ui/background-boxes";
 
 /* ─── Typewriter ──────────────────────────────────────────────── */
 
@@ -172,8 +173,15 @@ const CATEGORIES: Category[] = ["All work", "Web platforms", "Mobile"];
 function Thumbnail({ gradient }: Readonly<{ gradient: string }>) {
   return (
     <div
-      className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient}`}
-    />
+      className={`group/thumb relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient} overflow-hidden`}
+    >
+      {/* Boxes overlay — always mounted so hover works, invisible until card hover */}
+      <div className="absolute inset-0 z-10 opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300 overflow-hidden">
+        {/* Radial mask fades edges */}
+        <div className="absolute inset-0 z-20 [mask-image:radial-gradient(transparent_20%,black)] pointer-events-none" />
+        <Boxes />
+      </div>
+    </div>
   );
 }
 

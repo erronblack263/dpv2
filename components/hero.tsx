@@ -11,6 +11,7 @@ import {
 } from "@/components/social-icons";
 import { Terminal } from "@/components/terminal";
 import { openContactDrawer } from "@/components/contact-drawer";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 
 const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
 
@@ -197,13 +198,18 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mt-0.5">
-            <button
+            <MovingBorderButton
+              as="button"
+              borderRadius="9999px"
+              duration={2200}
+              containerClassName="inline-flex rounded-full overflow-hidden p-0"
+              borderClassName="bg-white/30"
+              className="inline-flex items-center gap-1.5 rounded-full border border-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all hover:shadow-[0_0_28px_rgba(99,102,241,0.7)] hover:brightness-110"
               onClick={() => openContactDrawer()}
-              className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all hover:shadow-[0_0_28px_rgba(99,102,241,0.7)] hover:brightness-110"
             >
               <Mail className="size-3.5" />
               Contact Me
-            </button>
+            </MovingBorderButton>
             <Link
               href="/projects"
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 dark:bg-white/5 px-4 py-2 text-xs font-semibold text-foreground transition-all hover:bg-accent hover:border-primary/30"

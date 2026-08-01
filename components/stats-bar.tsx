@@ -1,4 +1,5 @@
 import { Code2, Star, Rocket, Users } from "lucide-react";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
 
 const stats = [
   {
@@ -55,7 +56,12 @@ export function StatsBar() {
           <div className="relative grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border">
             {stats.map(
               ({ icon: Icon, value, label, category, subtext, iconBg, iconGlow }) => (
-                <div key={label} className="p-4 sm:p-4.5">
+                <CardSpotlight
+                  key={label}
+                  className="p-4 sm:p-4.5 border border-border bg-card/60 dark:bg-black/30 backdrop-blur-2xl transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl"
+                  radius={280}
+                  color="rgba(79, 70, 229, 0.12)"
+                >
                   <div
                     className={`size-8 rounded-lg border flex items-center justify-center mb-2.5 ${iconBg} ${iconGlow}`}
                   >
@@ -75,7 +81,7 @@ export function StatsBar() {
                   <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2 mt-1">
                     {subtext}
                   </p>
-                </div>
+                </CardSpotlight>
               ),
             )}
           </div>
