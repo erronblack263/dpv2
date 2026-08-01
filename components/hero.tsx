@@ -14,15 +14,17 @@ import { openContactDrawer } from "@/components/contact-drawer";
 
 const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
 
+type TypewriterTextProps = Readonly<{
+  text: string;
+  speed?: number;
+  pause?: number;
+}>;
+
 function TypewriterText({
   text,
   speed = 50,
   pause = 3500,
-}: {
-  text: string;
-  speed?: number;
-  pause?: number;
-}) {
+}: TypewriterTextProps) {
   const [displayed, setDisplayed] = useState("");
   const [colorIdx, setColorIdx] = useState(0);
   const idxRef = useRef(0);
@@ -91,13 +93,14 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-2 pb-1"
+      className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr_320px] xl:grid-cols-[350px_1fr_350px] lg:items-center gap-4 lg:gap-6">
+      <div className="overflow-hidden rounded-[28px] border border-border bg-card/70 dark:bg-black/35 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.2)] dark:shadow-[0_0_60px_rgba(0,0,0,0.35)] p-5 sm:p-6 lg:p-7">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] xl:grid-cols-[290px_1fr_310px] lg:items-center gap-5 lg:gap-6">
         {/* Avatar */}
         <div
           className="relative shrink-0 mx-auto"
-          style={{ width: "340px", height: "340px" }}
+          style={{ width: "280px", height: "280px" }}
         >
           {/* Radial glow background */}
           <div
@@ -106,11 +109,11 @@ export function Hero() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "280px",
-              height: "280px",
+              width: "230px",
+              height: "230px",
               background:
                 "radial-gradient(circle, rgba(124,58,237,0.3) 0%, rgba(56,189,248,0.1) 50%, transparent 70%)",
-              filter: "blur(22px)",
+              filter: "blur(20px)",
             }}
             aria-hidden="true"
           />
@@ -121,8 +124,8 @@ export function Hero() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "266px",
-              height: "266px",
+              width: "220px",
+              height: "220px",
               background:
                 "linear-gradient(135deg, rgba(139,92,246,0.8), rgba(56,189,248,0.6))",
               padding: "2px",
@@ -139,8 +142,8 @@ export function Hero() {
             quality={100}
             className="absolute rounded-full object-cover border-2 border-violet-500/50"
             style={{
-              width: "260px",
-              height: "260px",
+              width: "214px",
+              height: "214px",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
@@ -156,13 +159,13 @@ export function Hero() {
               whiteSpace: "nowrap",
             }}
           >
-            <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
+            <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />{' '}
             Available for new opportunities
           </div>
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col gap-2.5 text-center lg:text-left">
+        <div className="flex flex-col gap-3 text-center lg:text-left">
           <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 tracking-wide">
             Hey there! 👋
           </p>
@@ -174,7 +177,7 @@ export function Hero() {
                 <TypewriterText text="Witness H Musonza" />
               </span>
             </h1>
-            <p className="mt-1 text-base sm:text-lg lg:text-xl font-bold text-foreground/90 leading-snug">
+            <p className="mt-1 text-base sm:text-lg lg:text-xl font-bold text-foreground leading-snug">
               I build scalable digital solutions that{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
                 solve real problems.
@@ -202,15 +205,15 @@ export function Hero() {
             </button>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-1.5 rounded-full border border-border dark:border-white/15 bg-card/80 dark:bg-white/5 px-4 py-2 text-xs font-semibold text-foreground transition-all hover:bg-accent dark:hover:bg-white/10 hover:border-border/80 dark:hover:border-white/25"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 dark:bg-white/5 px-4 py-2 text-xs font-semibold text-foreground transition-all hover:bg-accent hover:border-primary/30"
             >
               <FolderGit2 className="size-3.5" />
               View Projects
             </Link>
           </div>
 
-          <div className="flex items-center justify-center lg:justify-start gap-2.5 mt-1">
-            <span className="text-[11px] text-muted-foreground">
+          <div className="flex items-center justify-center lg:justify-start gap-2.5 mt-1.5">
+            <span className="text-xs text-muted-foreground">
               Find me on
             </span>
             <div className="flex items-center gap-1">
@@ -221,9 +224,9 @@ export function Hero() {
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex size-7 items-center justify-center rounded-lg border border-border dark:border-white/10 bg-card/60 dark:bg-white/5 text-muted-foreground transition-all hover:bg-accent dark:hover:bg-white/10 hover:text-foreground hover:border-border/80 dark:hover:border-white/20"
+                  className="flex size-8 items-center justify-center rounded-lg border border-border bg-background/60 dark:bg-white/5 text-muted-foreground transition-all hover:bg-accent hover:text-primary hover:border-primary/30"
                 >
-                  <Icon className="size-3.5" />
+                  <Icon className="size-4" />
                 </a>
               ))}
             </div>
@@ -233,6 +236,7 @@ export function Hero() {
         {/* Terminal */}
         <div className="w-full">
           <Terminal />
+        </div>
         </div>
       </div>
     </section>

@@ -46,6 +46,18 @@ const getLineContent = (line: TerminalLine) => {
   );
 };
 
+const getHelpLines = (): TerminalLine[] => [
+  { type: "output", text: "Available commands:" },
+  { type: "bullet", text: "whoami" },
+  { type: "bullet", text: "skills" },
+  { type: "bullet", text: "status" },
+  { type: "bullet", text: "mission" },
+  { type: "bullet", text: "projects" },
+  { type: "bullet", text: "certificates" },
+  { type: "bullet", text: "contact" },
+  { type: "bullet", text: "clear" },
+];
+
 const makeCommandResponse = (command: string): TerminalLine[] => {
   const trimmed = command.trim();
   const normalized = trimmed.toLowerCase();
@@ -55,17 +67,7 @@ const makeCommandResponse = (command: string): TerminalLine[] => {
   }
 
   if (normalized === "help" || normalized === "?") {
-    return [
-      { type: "output", text: "Available commands:" },
-      { type: "bullet", text: "whoami" },
-      { type: "bullet", text: "skills" },
-      { type: "bullet", text: "status" },
-      { type: "bullet", text: "mission" },
-      { type: "bullet", text: "projects" },
-      { type: "bullet", text: "certificates" },
-      { type: "bullet", text: "contact" },
-      { type: "bullet", text: "clear" },
-    ] as TerminalLine[];
+    return getHelpLines();
   }
 
   if (normalized === "whoami") {
@@ -111,14 +113,16 @@ const makeCommandResponse = (command: string): TerminalLine[] => {
 
   return [
     { type: "error", text: `command not found: ${trimmed}` },
-    { type: "output", text: "Type 'help' for a list of available commands." },
+    { type: "output", text: "Try one of the commands shown above." },
   ];
 };
 
 export function Terminal() {
   const router = useRouter();
   const [lines, setLines] = useState<TerminalLine[]>([
-    { type: "output", text: "Welcome to the developer terminal. Type 'help' or 'projects' to begin." },
+    { type: "output", text: "Welcome to the developer terminal." },
+    ...getHelpLines(),
+    { type: "output", text: "Type a command to explore the portfolio." },
   ]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);

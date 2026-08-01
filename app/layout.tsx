@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { AmbientBackground } from "@/components/ambient-background";
 import { ContactDrawer } from "@/components/contact-drawer";
 import "./globals.css";
 
@@ -40,8 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative min-h-screen text-foreground overflow-x-hidden flex flex-col justify-between">
-            <AmbientBackground />
+          <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden flex flex-col justify-between">
             <SiteNav />
             <main
               style={{ position: "relative", zIndex: 1 }}
