@@ -8,7 +8,8 @@ const services = [
     tagline: "Service · Engineering",
     description:
       "Building robust end-to-end applications with modern web and mobile stacks.",
-    gradient: "from-indigo-700 via-indigo-600 to-purple-900",
+    iconBg: "bg-violet-500/15 border-violet-400/30 text-violet-500 dark:text-violet-400",
+    iconGlow: "shadow-[0_0_16px_rgba(167,139,250,0.35)]",
   },
   {
     icon: Database,
@@ -16,7 +17,8 @@ const services = [
     tagline: "Service · Architecture",
     description:
       "Designing scalable APIs, databases and cloud-ready microservice architectures.",
-    gradient: "from-blue-600 via-sky-500 to-indigo-900",
+    iconBg: "bg-sky-500/15 border-sky-400/30 text-sky-500 dark:text-sky-400",
+    iconGlow: "shadow-[0_0_16px_rgba(56,189,248,0.35)]",
   },
   {
     icon: Pencil,
@@ -24,7 +26,8 @@ const services = [
     tagline: "Service · Product Design",
     description:
       "Crafting responsive, sleek, and highly intuitive user interfaces.",
-    gradient: "from-cyan-700 via-teal-600 to-blue-900",
+    iconBg: "bg-emerald-500/15 border-emerald-400/30 text-emerald-600 dark:text-emerald-400",
+    iconGlow: "shadow-[0_0_16px_rgba(52,211,153,0.35)]",
   },
   {
     icon: Cloud,
@@ -32,68 +35,61 @@ const services = [
     tagline: "Service · Cloud Systems",
     description:
       "Containerization, automated CI/CD pipelines and seamless cloud deployments.",
-    gradient: "from-violet-800 via-purple-700 to-pink-900",
+    iconBg: "bg-fuchsia-500/15 border-fuchsia-400/30 text-fuchsia-500 dark:text-fuchsia-400",
+    iconGlow: "shadow-[0_0_16px_rgba(232,121,249,0.35)]",
   },
 ];
 
 export function WhatIDo() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5 sm:py-5">
-      <div className="text-center mb-4 sm:mb-5">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-1 sm:pt-1.5 pb-2 sm:pb-3">
+      <div className="text-center mb-2.5 sm:mb-3">
         <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
           What I do
         </h2>
-        <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
+        <p className="mt-0.5 text-xs sm:text-sm text-muted-foreground">
           Turning ideas into powerful digital experiences.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
         {services.map(
-          ({ icon: Icon, title, tagline, description, gradient }) => (
-            <div
+          ({ icon: Icon, title, tagline, description, iconBg, iconGlow }) => (
+            <article
               key={title}
-              className="group flex flex-col rounded-2xl border border-border/80 dark:border-white/10 bg-card/90 dark:bg-[#080812]/90 backdrop-blur-xl overflow-hidden transition-all duration-300 shadow-md hover:border-violet-500/50 dark:hover:border-violet-500/40 hover:shadow-[0_12px_36px_rgba(124,58,237,0.18)] hover:-translate-y-0.5"
+              className="group relative overflow-hidden rounded-xl border border-border bg-card/60 dark:bg-black/30 backdrop-blur-2xl p-4 transition-all duration-300 hover:border-violet-400/30 hover:bg-card dark:hover:bg-black/40 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]"
             >
-              {/* Top Thumbnail Banner Box */}
-              <div className="p-2 pb-0">
-                <div
-                  className={`w-full h-20 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden shadow-inner`}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent pointer-events-none" />
+
+              <div
+                className={`relative size-9 rounded-lg border flex items-center justify-center mb-3 ${iconBg} ${iconGlow}`}
+              >
+                <Icon className="size-4" />
+              </div>
+
+              <span className="relative text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
+                {tagline}
+              </span>
+              <h3 className="relative text-sm font-bold text-foreground leading-snug mt-1">
+                {title}
+              </h3>
+              <p className="relative text-xs text-muted-foreground leading-relaxed mt-1.5 line-clamp-2 pr-6">
+                {description}
+              </p>
+
+              <div className="relative flex items-center justify-between pt-3 mt-3 border-t border-border">
+                <span className="text-[11px] font-medium text-violet-600 dark:text-violet-400">
+                  View projects
+                </span>
+                <Link
+                  href="/projects"
+                  aria-label={`Explore ${title}`}
+                  className="flex size-7 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground transition-all group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.45)]"
                 >
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <Icon className="size-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
-                </div>
+                  <ArrowUpRight className="size-3.5" />
+                </Link>
               </div>
-
-              {/* Card Content Body */}
-              <div className="flex flex-col flex-1 p-3.5 gap-2 justify-between">
-                <div>
-                  <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 tracking-wide uppercase">
-                    {tagline}
-                  </span>
-                  <h3 className="text-sm sm:text-base font-bold text-foreground dark:text-white leading-snug mt-0.5">
-                    {title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-1 line-clamp-2">
-                    {description}
-                  </p>
-                </div>
-
-                {/* Action Button */}
-                <div className="flex items-center justify-between pt-2.5 border-t border-border/60 dark:border-white/10 mt-2">
-                  <span className="text-[11px] font-medium text-violet-600 dark:text-violet-400">
-                    View projects
-                  </span>
-                  <Link
-                    href="/projects"
-                    aria-label={`Explore ${title}`}
-                    className="flex size-7 items-center justify-center rounded-full border border-border/80 dark:border-white/15 bg-muted/60 dark:bg-white/5 text-foreground/80 dark:text-slate-300 transition-all group-hover:bg-violet-600 group-hover:text-white group-hover:border-violet-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.5)]"
-                  >
-                    <ArrowUpRight className="size-3.5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
+            </article>
           ),
         )}
       </div>

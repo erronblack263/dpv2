@@ -150,11 +150,12 @@ export function Contact() {
                 <div className="flex justify-end">
                   <Button type="submit" disabled={status === "sending"}>
                     <Send className="size-4" />
-                    {status === "sending"
-                      ? "Sending..."
-                      : status === "sent"
-                        ? "✓ Sent!"
-                        : "Send"}
+                    {(() => {
+                      let buttonText = "Send";
+                      if (status === "sending") buttonText = "Sending...";
+                      else if (status === "sent") buttonText = "✓ Sent!";
+                      return buttonText;
+                    })()}
                   </Button>
                 </div>
               </div>

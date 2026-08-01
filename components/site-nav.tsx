@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { openContactDrawer } from "@/components/contact-drawer";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -67,13 +68,13 @@ export function SiteNav() {
 
         <div className="flex items-center gap-3 shrink-0">
           <ThemeToggle />
-          <Link
-            href="/contact"
+          <button
+            onClick={() => openContactDrawer()}
             className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#4f46e5] px-4 py-1.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:shadow-[0_0_28px_rgba(124,58,237,0.6)] hover:brightness-110"
           >
             Let&apos;s Talk
             <ArrowUpRight className="size-3.5" />
-          </Link>
+          </button>
 
           <button
             className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
@@ -110,14 +111,16 @@ export function SiteNav() {
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
+            <button
+              onClick={() => {
+                setOpen(false);
+                openContactDrawer();
+              }}
               className="mt-3 mb-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white"
             >
               Let&apos;s Talk
               <ArrowUpRight className="size-3.5" />
-            </Link>
+            </button>
           </div>
         </nav>
       )}
