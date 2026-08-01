@@ -8,7 +8,8 @@ const services = [
     tagline: "Service · Engineering",
     description:
       "Building robust end-to-end applications with modern web and mobile stacks.",
-    iconBg: "bg-violet-500/15 border-violet-400/30 text-violet-500 dark:text-violet-400",
+    iconBg:
+      "bg-violet-500/15 border-violet-400/30 text-violet-500 dark:text-violet-400",
     iconGlow: "shadow-[0_0_16px_rgba(167,139,250,0.35)]",
   },
   {
@@ -26,7 +27,8 @@ const services = [
     tagline: "Service · Product Design",
     description:
       "Crafting responsive, sleek, and highly intuitive user interfaces.",
-    iconBg: "bg-emerald-500/15 border-emerald-400/30 text-emerald-600 dark:text-emerald-400",
+    iconBg:
+      "bg-emerald-500/15 border-emerald-400/30 text-emerald-600 dark:text-emerald-400",
     iconGlow: "shadow-[0_0_16px_rgba(52,211,153,0.35)]",
   },
   {
@@ -35,7 +37,8 @@ const services = [
     tagline: "Service · Cloud Systems",
     description:
       "Containerization, automated CI/CD pipelines and seamless cloud deployments.",
-    iconBg: "bg-fuchsia-500/15 border-fuchsia-400/30 text-fuchsia-500 dark:text-fuchsia-400",
+    iconBg:
+      "bg-fuchsia-500/15 border-fuchsia-400/30 text-fuchsia-500 dark:text-fuchsia-400",
     iconGlow: "shadow-[0_0_16px_rgba(232,121,249,0.35)]",
   },
 ];

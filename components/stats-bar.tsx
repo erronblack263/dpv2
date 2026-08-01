@@ -17,7 +17,8 @@ const stats = [
     label: "Years Experience",
     category: "Career · Growth",
     subtext: "Building scalable digital solutions",
-    iconBg: "bg-violet-500/15 border-violet-400/30 text-violet-500 dark:text-violet-400",
+    iconBg:
+      "bg-violet-500/15 border-violet-400/30 text-violet-500 dark:text-violet-400",
     iconGlow: "shadow-[0_0_16px_rgba(167,139,250,0.35)]",
   },
   {
@@ -26,7 +27,8 @@ const stats = [
     label: "Technologies",
     category: "Tech Stack · Expertise",
     subtext: "Mastered and continuously expanding",
-    iconBg: "bg-emerald-500/15 border-emerald-400/30 text-emerald-600 dark:text-emerald-400",
+    iconBg:
+      "bg-emerald-500/15 border-emerald-400/30 text-emerald-600 dark:text-emerald-400",
     iconGlow: "shadow-[0_0_16px_rgba(52,211,153,0.35)]",
   },
   {
@@ -35,7 +37,8 @@ const stats = [
     label: "Models Trained",
     category: "Machine Learning · Customization",
     subtext: "High satisfaction & quality guaranteed",
-    iconBg: "bg-fuchsia-500/15 border-fuchsia-400/30 text-fuchsia-500 dark:text-fuchsia-400",
+    iconBg:
+      "bg-fuchsia-500/15 border-fuchsia-400/30 text-fuchsia-500 dark:text-fuchsia-400",
     iconGlow: "shadow-[0_0_16px_rgba(232,121,249,0.35)]",
   },
 ];
@@ -55,7 +58,15 @@ export function StatsBar() {
 
           <div className="relative grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border">
             {stats.map(
-              ({ icon: Icon, value, label, category, subtext, iconBg, iconGlow }) => (
+              ({
+                icon: Icon,
+                value,
+                label,
+                category,
+                subtext,
+                iconBg,
+                iconGlow,
+              }) => (
                 <CardSpotlight
                   key={label}
                   className="p-4 sm:p-4.5 border border-border bg-card/60 dark:bg-black/30 backdrop-blur-2xl transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl"

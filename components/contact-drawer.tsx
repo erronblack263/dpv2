@@ -73,10 +73,11 @@ export function ContactDrawer() {
       } else {
         // Fallback to mailto if API key is not set
         const mailtoSubject = encodeURIComponent(
-          formData.subject || `Message from ${formData.name || "Portfolio Visitor"}`
+          formData.subject ||
+            `Message from ${formData.name || "Portfolio Visitor"}`,
         );
         const mailtoBody = encodeURIComponent(
-          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
         );
         window.location.href = `mailto:musonzahw@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
         setStatus("sent");
@@ -90,10 +91,11 @@ export function ContactDrawer() {
       }
     } catch {
       const mailtoSubject = encodeURIComponent(
-        formData.subject || `Message from ${formData.name || "Portfolio Visitor"}`
+        formData.subject ||
+          `Message from ${formData.name || "Portfolio Visitor"}`,
       );
       const mailtoBody = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
       );
       window.location.href = `mailto:musonzahw@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
       setStatus("sent");
@@ -129,8 +131,12 @@ export function ContactDrawer() {
                   <Sparkles className="size-4 animate-pulse" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-extrabold tracking-tight">Let&apos;s Talk</h2>
-                  <p className="text-xs text-muted-foreground">Send a direct message to Witness</p>
+                  <h2 className="text-lg font-extrabold tracking-tight">
+                    Let&apos;s Talk
+                  </h2>
+                  <p className="text-xs text-muted-foreground">
+                    Send a direct message to Witness
+                  </p>
                 </div>
               </div>
 
@@ -150,11 +156,16 @@ export function ContactDrawer() {
                 </div>
                 <h3 className="text-lg font-bold">Message Sent!</h3>
                 <p className="text-xs text-muted-foreground max-w-xs leading-relaxed">
-                  Thank you for reaching out! Your message has been sent to <strong>musonzahw@gmail.com</strong>. Witness will get back to you shortly.
+                  Thank you for reaching out! Your message has been sent to{" "}
+                  <strong>musonzahw@gmail.com</strong>. Witness will get back to
+                  you shortly.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
+              <form
+                onSubmit={handleSubmit}
+                className="mt-5 flex flex-col gap-4"
+              >
                 {/* Pre-filled Recipient Field */}
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
@@ -180,7 +191,9 @@ export function ContactDrawer() {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     placeholder="e.g. Alex Smith"
                     className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
@@ -195,7 +208,9 @@ export function ContactDrawer() {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     placeholder="alex@example.com"
                     className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-semibold text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
@@ -209,7 +224,9 @@ export function ContactDrawer() {
                   <input
                     type="text"
                     value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
                     placeholder="Project Inquiry / Collaboration"
                     className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
@@ -224,7 +241,9 @@ export function ContactDrawer() {
                     required
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     placeholder="Tell me about your project, timeline, stack, or idea..."
                     className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 p-3.5 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60 resize-none leading-relaxed"
                   />
@@ -246,7 +265,10 @@ export function ContactDrawer() {
           <div className="pt-4 border-t border-border/40 dark:border-white/10 mt-6 text-center">
             <p className="text-[11px] text-muted-foreground">
               Prefer direct mail? Reach Witness at{" "}
-              <a href="mailto:musonzahw@gmail.com" className="text-violet-500 font-semibold underline">
+              <a
+                href="mailto:musonzahw@gmail.com"
+                className="text-violet-500 font-semibold underline"
+              >
                 musonzahw@gmail.com
               </a>
             </p>

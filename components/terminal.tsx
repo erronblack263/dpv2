@@ -12,8 +12,12 @@ const getLineContent = (line: TerminalLine) => {
   if (line.type === "prompt") {
     return (
       <>
-        <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
-        <span className="text-violet-700 dark:text-violet-300 font-medium">{line.text}</span>
+        <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+          $
+        </span>
+        <span className="text-violet-700 dark:text-violet-300 font-medium">
+          {line.text}
+        </span>
       </>
     );
   }
@@ -21,7 +25,9 @@ const getLineContent = (line: TerminalLine) => {
   if (line.type === "bullet") {
     return (
       <span className="text-slate-700 dark:text-violet-200/90 pl-3 flex items-center gap-1.5">
-        <span className="text-violet-600 dark:text-violet-400 text-[9px]">•</span>
+        <span className="text-violet-600 dark:text-violet-400 text-[9px]">
+          •
+        </span>
         {line.text}
       </span>
     );
@@ -95,7 +101,13 @@ const makeCommandResponse = (command: string): TerminalLine[] => {
     return [{ type: "highlight", text: "Making an impact every day 🚀" }];
   }
 
-  if (normalized === "projects" || normalized === "project" || normalized.startsWith("cd project") || normalized.startsWith("open project") || normalized.startsWith("goto project")) {
+  if (
+    normalized === "projects" ||
+    normalized === "project" ||
+    normalized.startsWith("cd project") ||
+    normalized.startsWith("open project") ||
+    normalized.startsWith("goto project")
+  ) {
     return [{ type: "highlight", text: "Navigating to /projects..." }];
   }
 
@@ -135,7 +147,10 @@ export function Terminal() {
   }, []);
 
   useEffect(() => {
-    outputRef.current?.scrollTo({ top: outputRef.current.scrollHeight, behavior: "smooth" });
+    outputRef.current?.scrollTo({
+      top: outputRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [lines]);
 
   const submitCommand = (value: string) => {
@@ -152,7 +167,13 @@ export function Terminal() {
       ...response,
     ]);
 
-    if (normalized === "projects" || normalized === "project" || normalized.startsWith("cd project") || normalized.startsWith("open project") || normalized.startsWith("goto project")) {
+    if (
+      normalized === "projects" ||
+      normalized === "project" ||
+      normalized.startsWith("cd project") ||
+      normalized.startsWith("open project") ||
+      normalized.startsWith("goto project")
+    ) {
       setTimeout(() => router.push("/projects"), 300);
     }
 
@@ -185,7 +206,8 @@ export function Terminal() {
         return;
       }
 
-      const nextIndex = historyIndex < 0 ? history.length - 1 : Math.max(0, historyIndex - 1);
+      const nextIndex =
+        historyIndex < 0 ? history.length - 1 : Math.max(0, historyIndex - 1);
       setHistoryIndex(nextIndex);
       setInput(history[nextIndex]);
     }
@@ -196,7 +218,8 @@ export function Terminal() {
         return;
       }
 
-      const nextIndex = historyIndex < 0 ? -1 : Math.min(history.length - 1, historyIndex + 1);
+      const nextIndex =
+        historyIndex < 0 ? -1 : Math.min(history.length - 1, historyIndex + 1);
       setHistoryIndex(nextIndex);
       setInput(nextIndex >= 0 ? history[nextIndex] : "");
     }
@@ -222,20 +245,31 @@ export function Terminal() {
               </span>
             </div>
             <span className="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-              <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />{' '}
+              <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />{" "}
               Interactive
             </span>
           </div>
 
-          <div ref={outputRef} className="p-3 space-y-1 min-h-[220px] max-h-[320px] overflow-y-auto">
+          <div
+            ref={outputRef}
+            className="p-3 space-y-1 min-h-[220px] max-h-[320px] overflow-y-auto"
+          >
             {lines.map((line, index) => (
-              <div key={`${line.text}-${index}`} className="flex items-start gap-1.5 leading-snug">
+              <div
+                key={`${line.text}-${index}`}
+                className="flex items-start gap-1.5 leading-snug"
+              >
                 {getLineContent(line)}
               </div>
             ))}
 
-            <form onSubmit={handleSubmit} className="mt-2 flex items-center gap-1.5 leading-snug">
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">$</span>
+            <form
+              onSubmit={handleSubmit}
+              className="mt-2 flex items-center gap-1.5 leading-snug"
+            >
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+                $
+              </span>
               <input
                 ref={inputRef}
                 value={input}
