@@ -41,7 +41,7 @@ const stats = [
 
 export function StatsBar() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3 pb-0.5">
       <div
         className="rounded-2xl p-[1px] shadow-[0_0_24px_rgba(139,92,246,0.12)]"
         style={{

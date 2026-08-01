@@ -35,6 +35,7 @@ export const WavyBackground = ({
   [key: string]: unknown;
 }) => {
   const noise = createNoise3D();
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationIdRef = useRef<number>(0);
   const ntRef = useRef(0);
@@ -44,17 +45,7 @@ export const WavyBackground = ({
   const waveColorsRef = useRef(colors ?? DEFAULT_WAVE_COLORS);
   const blurRef = useRef(blur);
   const waveWidthRef = useRef(waveWidth || 50);
-
-  const getSpeed = () => {
-    switch (speed) {
-      case "slow":
-        return 0.001;
-      case "fast":
-        return 0.002;
-      default:
-        return 0.001;
-    }
-  };
+  const speedRef = useRef(speed);
 
   useEffect(() => {
     backgroundFillRef.current = backgroundFill || "black";
@@ -62,33 +53,72 @@ export const WavyBackground = ({
     waveColorsRef.current = colors ?? DEFAULT_WAVE_COLORS;
     blurRef.current = blur;
     waveWidthRef.current = waveWidth || 50;
-  }, [backgroundFill, waveOpacity, colors, blur, waveWidth]);
+    speedRef.current = speed;
+  }, [backgroundFill, waveOpacity, colors, blur, waveWidth, speed]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let w = 0;
     let h = 0;
+    let isMobile = false;
+    let prefersReducedMotion = false;
+    let avatarBaseline = 0;
 
-    const drawWave = (n: number, mobile: boolean) => {
+    const getSpeed = () => {
+      if (prefersReducedMotion) return 0;
+      const base = speedRef.current === "fast" ? 0.002 : 0.001;
+      // Calm but clearly visible on phones/tablets
+      return isMobile ? base * 0.45 : base;
+    };
+
+    const updateAvatarBaseline = () => {
+      const avatar = document.querySelector(
+        "[data-avatar-anchor]",
+      ) as HTMLElement | null;
+      if (!avatar) {
+        avatarBaseline = isMobile ? Math.min(220, h * 0.28) : h * 0.5;
+        return;
+      }
+      const containerRect = container.getBoundingClientRect();
+      const avatarRect = avatar.getBoundingClientRect();
+      // Center of avatar relative to the wavy container / canvas top
+      const centerY =
+        avatarRect.top -
+        containerRect.top +
+        container.scrollTop +
+        avatarRect.height / 2;
+      avatarBaseline = Math.max(80, centerY);
+    };
+
+    const drawWave = () => {
       const waveColors = waveColorsRef.current;
-      const amplitude = mobile ? 55 : 100;
-      const step = mobile ? 7 : 5;
-      const lineWidth = mobile
-        ? Math.max(1, Math.floor(waveWidthRef.current * 0.75))
+      const amplitude = isMobile ? 70 : 100;
+      const step = isMobile ? 6 : 5;
+      const spatial = isMobile ? 900 : 800;
+      const lineWidth = isMobile
+        ? Math.max(28, Math.floor(waveWidthRef.current * 0.85))
         : waveWidthRef.current;
+      const waveCount = isMobile ? 4 : 5;
+      // Mobile/tablet: waves sit directly behind the avatar image
+      const baseline = isMobile ? avatarBaseline : h * 0.5;
 
-      for (let i = 0; i < n; i++) {
+      ctx.globalAlpha = isMobile
+        ? Math.max(0.55, waveOpacityRef.current)
+        : waveOpacityRef.current;
+
+      for (let i = 0; i < waveCount; i++) {
         ctx.beginPath();
         ctx.lineWidth = lineWidth;
         ctx.strokeStyle = waveColors[i % waveColors.length];
         for (let x = 0; x < w; x += step) {
-          const y = noise(x / 800, 0.3 * i, ntRef.current) * amplitude;
-          ctx.lineTo(x, y + h * 0.5);
+          const y = noise(x / spatial, 0.3 * i, ntRef.current) * amplitude;
+          ctx.lineTo(x, y + baseline);
         }
         ctx.stroke();
         ctx.closePath();
@@ -96,31 +126,79 @@ export const WavyBackground = ({
     };
 
     const render = () => {
-      const mobile = window.matchMedia("(max-width: 768px)").matches;
-      ntRef.current += getSpeed() * (mobile ? 0.45 : 1);
+      ntRef.current += getSpeed();
 
-      ctx.filter = `blur(${blurRef.current}px)`;
+      ctx.globalAlpha = 1;
+      ctx.filter = "none";
       ctx.fillStyle = backgroundFillRef.current;
-      ctx.globalAlpha = waveOpacityRef.current;
       ctx.fillRect(0, 0, w, h);
-      drawWave(5, mobile);
+
+      const blurPx = isMobile
+        ? Math.min(blurRef.current, 8)
+        : blurRef.current;
+      ctx.filter = `blur(${blurPx}px)`;
+      drawWave();
+
       animationIdRef.current = requestAnimationFrame(render);
     };
 
-    const resize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+    const updateFlags = () => {
+      isMobile = window.matchMedia("(max-width: 1024px)").matches;
+      prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
     };
 
+    const resize = () => {
+      updateFlags();
+      const rect = container.getBoundingClientRect();
+      w = Math.max(window.innerWidth, Math.floor(rect.width) || window.innerWidth);
+      h = Math.max(
+        window.innerHeight,
+        Math.floor(rect.height) || window.innerHeight,
+        container.scrollHeight || 0,
+      );
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      updateAvatarBaseline();
+    };
+
+    updateFlags();
     resize();
+    // Avatar mounts after first paint — remeasure once layout settles
+    requestAnimationFrame(() => {
+      updateAvatarBaseline();
+      setTimeout(updateAvatarBaseline, 120);
+      setTimeout(updateAvatarBaseline, 400);
+    });
     render();
 
+    const mqMobile = window.matchMedia("(max-width: 1024px)");
+    const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => resize();
+
+    mqMobile.addEventListener?.("change", onChange);
+    mqMotion.addEventListener?.("change", onChange);
     window.addEventListener("resize", resize);
+    window.addEventListener("scroll", updateAvatarBaseline, { passive: true });
+
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(container);
+
     return () => {
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", updateAvatarBaseline);
+      mqMobile.removeEventListener?.("change", onChange);
+      mqMotion.removeEventListener?.("change", onChange);
+      ro.disconnect();
       cancelAnimationFrame(animationIdRef.current);
     };
-  }, [speed]);
+  }, []);
 
   const [isSafari, setIsSafari] = useState(false);
   useEffect(() => {
@@ -133,13 +211,14 @@ export const WavyBackground = ({
 
   return (
     <div
+      ref={containerRef}
       className={cn(
-        "h-screen flex flex-col items-center justify-center",
+        "relative h-screen flex flex-col items-center justify-center",
         containerClassName,
       )}
     >
       <canvas
-        className="absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-0"
         ref={canvasRef}
         id="canvas"
         style={{

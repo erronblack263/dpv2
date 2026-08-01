@@ -42,8 +42,8 @@ const services = [
 
 export function WhatIDo() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
-      <div className="text-center mb-3 sm:mb-4">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-1 sm:pt-1.5 pb-2 sm:pb-3">
+      <div className="text-center mb-2.5 sm:mb-3">
         <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
           What I do
         </h2>

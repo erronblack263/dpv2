@@ -23,10 +23,10 @@ export function LandingPage() {
       containerClassName="relative w-full min-h-[calc(100vh-3rem)] !h-auto flex flex-col items-stretch justify-start"
       className="w-full"
       backgroundFill={isDark ? "#000000" : "#f1f5f9"}
-      waveOpacity={isDark ? 0.35 : 0.28}
-      blur={12}
+      waveOpacity={isDark ? 0.55 : 0.4}
+      blur={10}
       speed="slow"
-      waveWidth={48}
+      waveWidth={52}
       colors={isDark ? DARK_WAVE_COLORS : LIGHT_WAVE_COLORS}
     >
       <div className="flex w-full flex-col gap-0 pb-6 sm:pb-8">
