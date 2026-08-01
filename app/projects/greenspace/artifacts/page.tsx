@@ -464,8 +464,8 @@ export default function GreenSpaceArtifactsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-emerald-500/30 selection:text-emerald-500 font-sans pb-16 transition-colors duration-300">
-      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-2.5 sticky top-14 z-30">
-        <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
+      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-0.5 sticky top-4 z-30">
+        <div className="flex items-center justify-center gap-3 max-w-7xl mx-auto h-auto md:h-10 relative">
           <div className="hidden md:flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
             {SECTIONS.map((sec, idx) => (
               <button
@@ -482,11 +482,11 @@ export default function GreenSpaceArtifactsPage() {
             ))}
           </div>
 
-          <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
+          <div className="flex md:hidden items-center gap-1.5 whitespace-nowrap overflow-x-auto py-0">
             {(expandedSections
               ? SECTIONS.map((sec, idx) => ({ sec, idx }))
-              : sectionIdx < 3
-                ? SECTIONS.slice(0, 3).map((sec, idx) => ({ sec, idx }))
+              : sectionIdx < 2
+                ? SECTIONS.slice(0, 2).map((sec, idx) => ({ sec, idx }))
                 : [
                     { sec: SECTIONS[0], idx: 0 },
                     { sec: SECTIONS[1], idx: 1 },
@@ -528,7 +528,7 @@ export default function GreenSpaceArtifactsPage() {
             )}
           </div>
 
-          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 hidden sm:inline-flex items-center gap-1.5">
+          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 hidden sm:inline-flex items-center gap-1.5 absolute right-6">
             <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
             Showing: {section.title} ({section.images.length} Screens)
           </span>
