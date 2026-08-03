@@ -2,8 +2,14 @@
 
 import { useMotionValue, motion, useMotionTemplate } from "motion/react";
 import React, { MouseEvent as ReactMouseEvent, useState } from "react";
-import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
+
+// Lazy-load Three.js canvas effect — only fetched on first hover
+const CanvasRevealEffect = dynamic(
+  () => import("@/components/ui/canvas-reveal-effect").then((mod) => ({ default: mod.CanvasRevealEffect })),
+  { ssr: false }
+);
 
 export const CardSpotlight = ({
   children,

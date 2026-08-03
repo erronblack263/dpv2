@@ -5,7 +5,6 @@ import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
 
-// Canvas loaded lazily — never blocks first paint
 const WavyBackground = dynamic(
   () => import("@/components/ui/wavy-background").then((mod) => ({ default: mod.WavyBackground })),
   { ssr: false }
@@ -33,36 +32,20 @@ export function LandingPage() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (canvasReady) return;
-    let activated = false;
-    const activate = () => {
-      if (activated) return;
-      activated = true;
-      setCanvasReady(true);
-    };
-    window.addEventListener("scroll", activate, { once: true, passive: true });
-    window.addEventListener("pointermove", activate, { once: true, passive: true });
-    window.addEventListener("touchstart", activate, { once: true, passive: true });
-    const timer = setTimeout(activate, 0);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", activate);
-      window.removeEventListener("pointermove", activate);
-      window.removeEventListener("touchstart", activate);
-    };
-  }, [canvasReady]);
+    // Mount canvas immediately — chunks already preloaded from hero-landing
+    setCanvasReady(true);
+  }, []);
 
   const isDark = !mounted || resolvedTheme === "dark";
   const bgFill = isDark ? "#000000" : "#f1f5f9";
 
   return (
-    // Single stable outer div — never remounts, no flash
     <div
       ref={containerRef}
       className="relative w-full min-h-[calc(100vh-3rem)] flex flex-col items-stretch justify-start"
       style={{ backgroundColor: bgFill }}
     >
-      {/* Canvas layer — absolutely positioned behind content, only mounts after interaction */}
+      {/* Canvas wave layer — renders immediately since chunks are pre-cached */}
       {canvasReady && (
         <WavyBackground
           containerClassName="!absolute inset-0 !h-full pointer-events-none"
@@ -76,7 +59,7 @@ export function LandingPage() {
         />
       )}
 
-      {/* Content — always rendered, never remounts */}
+      {/* Content */}
       <div className="relative z-10 flex w-full flex-col gap-0 pb-6 sm:pb-8">
         <Hero />
         <StatsBar />
