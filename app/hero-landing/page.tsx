@@ -6,11 +6,26 @@ import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
+// Preload the WavyBackground + simplex-noise chunk in the background
+// so it's cached by the time the user navigates to /home
+function usePreloadHomeChunks() {
+  useEffect(() => {
+    // Wait for hero page to fully paint first, then preload in background
+    const timer = setTimeout(() => {
+      import("@/components/ui/wavy-background").catch(() => {});
+      import("@/components/stats-bar").catch(() => {});
+      import("@/components/what-i-do").catch(() => {});
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+}
+
 export default function HeroLandingPage() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+  usePreloadHomeChunks(); // silently preload while user reads the hero page
 
   const mockupSrc =
     mounted && resolvedTheme === "light" ? "/landing-light.png" : "/landing.png";
