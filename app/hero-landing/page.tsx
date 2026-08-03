@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // Preload the WavyBackground + simplex-noise chunk in the background
 // so it's cached by the time the user navigates to /home
@@ -21,14 +20,7 @@ function usePreloadHomeChunks() {
 }
 
 export default function HeroLandingPage() {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-  usePreloadHomeChunks(); // silently preload while user reads the hero page
-
-  const mockupSrc =
-    mounted && resolvedTheme === "light" ? "/landing-light.png" : "/landing.png";
+  usePreloadHomeChunks();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -102,7 +94,7 @@ export default function HeroLandingPage() {
         </div>
 
         {/* ── Full-width mockup image ───────────────────────────── */}
-        <div className="relative w-full">
+        <div className="relative w-full px-4 sm:px-8 lg:px-16 pb-0">
           <div
             className="relative rounded-2xl p-[1px]"
             style={{
@@ -111,24 +103,32 @@ export default function HeroLandingPage() {
             }}
           >
             <div className="relative overflow-hidden rounded-2xl">
-              {/* Bottom fade into background */}
+              {/* Bottom fade */}
               <div
                 className="absolute bottom-0 left-0 right-0 h-1/4 z-10 pointer-events-none"
                 style={{ background: "linear-gradient(to bottom, transparent, var(--background))" }}
               />
-              {mounted ? (
-                <Image
-                  src={mockupSrc}
-                  alt="Portfolio preview"
-                  width={1600}
-                  height={1000}
-                  quality={100}
-                  priority
-                  className="w-full object-cover object-top select-none"
-                />
-              ) : (
-                <div className="w-full aspect-video bg-muted animate-pulse rounded-2xl" />
-              )}
+
+              {/* Dark mockup — visible by default, hidden in light mode via CSS */}
+              <Image
+                src="/landing.png"
+                alt="Portfolio preview"
+                width={1600}
+                height={1000}
+                quality={100}
+                priority
+                className="w-full object-cover object-top select-none dark:block hidden"
+              />
+              {/* Light mockup — visible only in light mode */}
+              <Image
+                src="/landing-light.png"
+                alt="Portfolio preview"
+                width={1600}
+                height={1000}
+                quality={100}
+                priority
+                className="w-full object-cover object-top select-none block dark:hidden"
+              />
             </div>
           </div>
 
