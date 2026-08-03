@@ -23,8 +23,6 @@ import {
   Minus,
 } from "lucide-react";
 
-/* ─── Typewriter ─────────────────────────────────────────────────── */
-
 const CURSOR_COLORS = ["#10b981", "#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b"];
 
 function TypewriterText({

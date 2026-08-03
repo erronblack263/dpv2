@@ -1,75 +1,42 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, X } from "lucide-react";
+import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
 /* ─── Typewriter ──────────────────────────────────────────────── */
-
-const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
+// Lightweight version: runs once on mount, no looping
 
 function TypewriterText({
   text,
-  speed = 40,
-  pause = 3000,
+  speed = 50,
 }: {
   text: string;
   speed?: number;
-  pause?: number;
 }) {
   const [displayed, setDisplayed] = useState("");
-  const [colorIdx, setColorIdx] = useState(0);
-  const idxRef = useRef(0);
 
-  // Typing loop
   useEffect(() => {
     let cancelled = false;
-    let typingId: ReturnType<typeof setInterval> | null = null;
-    let pauseId: ReturnType<typeof setTimeout> | null = null;
+    let idx = 0;
 
-    const runCycle = () => {
+    const type = () => {
       if (cancelled) return;
-      idxRef.current = 0;
-      setDisplayed("");
-      typingId = setInterval(() => {
-        if (cancelled) {
-          clearInterval(typingId!);
-          return;
-        }
-        idxRef.current += 1;
-        setDisplayed(text.slice(0, idxRef.current));
-        if (idxRef.current >= text.length) {
-          clearInterval(typingId!);
-          pauseId = setTimeout(runCycle, pause);
-        }
-      }, speed);
+      if (idx <= text.length) {
+        setDisplayed(text.slice(0, idx));
+        idx++;
+        setTimeout(type, speed);
+      }
     };
 
-    runCycle();
+    type();
     return () => {
       cancelled = true;
-      if (typingId) clearInterval(typingId);
-      if (pauseId) clearTimeout(pauseId);
     };
-  }, [text, speed, pause]);
+  }, [text, speed]);
 
-  // Cursor color cycle — every 3 s
-  useEffect(() => {
-    const id = setInterval(() => {
-      setColorIdx((i) => (i + 1) % CURSOR_COLORS.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <span>
-      {displayed}
-      <span
-        className="inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm animate-pulse transition-colors duration-700"
-        style={{ backgroundColor: CURSOR_COLORS[colorIdx] }}
-      />
-    </span>
-  );
+  return <span>{displayed}</span>;
 }
 
 /* ─── Data ────────────────────────────────────────────────────── */
@@ -291,11 +258,13 @@ export default function CertificatesPage() {
           </div>
 
           {/* Grid */}
-          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {allCerts.map((cert) => (
-              <CertCard key={cert.embed} cert={cert} onView={setSelected} />
-            ))}
-          </div>
+          <FadeInOnScroll>
+            <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+              {allCerts.map((cert) => (
+                <CertCard key={cert.embed} cert={cert} onView={setSelected} />
+              ))}
+            </div>
+          </FadeInOnScroll>
         </div>
       </div>
 

@@ -1,76 +1,47 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ArrowLeft, Play, Image as ImageIcon, GitBranch } from "lucide-react";
-import { Boxes } from "@/components/ui/background-boxes";
+import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
+
+// Removed: const Boxes = dynamic(...) — disabled for performance
 
 /* ─── Typewriter ──────────────────────────────────────────────── */
 
-const CURSOR_COLORS = ["#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b", "#10b981"];
+/* ─── Typewriter ──────────────────────────────────────────────── */
+// Lightweight version: runs once on mount, no looping
 
 function TypewriterText({
   text,
-  speed = 40,
-  pause = 3000,
+  speed = 50,
 }: {
   text: string;
   speed?: number;
-  pause?: number;
 }) {
   const [displayed, setDisplayed] = useState("");
-  const [colorIdx, setColorIdx] = useState(0);
-  const idxRef = useRef(0);
 
-  // Typing loop
   useEffect(() => {
     let cancelled = false;
-    let typingId: ReturnType<typeof setInterval> | null = null;
-    let pauseId: ReturnType<typeof setTimeout> | null = null;
+    let idx = 0;
 
-    const runCycle = () => {
+    const type = () => {
       if (cancelled) return;
-      idxRef.current = 0;
-      setDisplayed("");
-      typingId = setInterval(() => {
-        if (cancelled) {
-          clearInterval(typingId!);
-          return;
-        }
-        idxRef.current += 1;
-        setDisplayed(text.slice(0, idxRef.current));
-        if (idxRef.current >= text.length) {
-          clearInterval(typingId!);
-          pauseId = setTimeout(runCycle, pause);
-        }
-      }, speed);
+      if (idx <= text.length) {
+        setDisplayed(text.slice(0, idx));
+        idx++;
+        setTimeout(type, speed);
+      }
     };
 
-    runCycle();
+    type();
     return () => {
       cancelled = true;
-      if (typingId) clearInterval(typingId);
-      if (pauseId) clearTimeout(pauseId);
     };
-  }, [text, speed, pause]);
+  }, [text, speed]);
 
-  // Cursor color cycle — every 3 s
-  useEffect(() => {
-    const id = setInterval(() => {
-      setColorIdx((i) => (i + 1) % CURSOR_COLORS.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <span>
-      {displayed}
-      <span
-        className="inline-block w-[3px] h-[0.85em] ml-1 align-middle rounded-sm animate-pulse transition-colors duration-700"
-        style={{ backgroundColor: CURSOR_COLORS[colorIdx] }}
-      />
-    </span>
-  );
+  return <span>{displayed}</span>;
 }
 
 type Category = "All work" | "Web platforms" | "Mobile";
@@ -173,21 +144,16 @@ const CATEGORIES: Category[] = ["All work", "Web platforms", "Mobile"];
 function Thumbnail({ gradient }: Readonly<{ gradient: string }>) {
   return (
     <div
-      className={`group/thumb relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient} overflow-hidden`}
+      className={`relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient} overflow-hidden`}
     >
-      {/* Boxes overlay — always mounted so hover works, invisible until card hover */}
-      <div className="absolute inset-0 z-10 opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300 overflow-hidden">
-        {/* Radial mask fades edges */}
-        <div className="absolute inset-0 z-20 [mask-image:radial-gradient(transparent_20%,black)] pointer-events-none" />
-        <Boxes />
-      </div>
+      {/* Boxes canvas disabled for performance — gradient is sufficient */}
     </div>
   );
 }
 
 /* ─── Card ────────────────────────────────────────────────────── */
 
-function ProjectCard({ project }: Readonly<{ project: Project }>) {
+const ProjectCard = memo(function ProjectCard({ project }: Readonly<{ project: Project }>) {
   const tagParts = project.tagline.split(" · ");
 
   return (
@@ -268,7 +234,7 @@ function ProjectCard({ project }: Readonly<{ project: Project }>) {
       </div>
     </div>
   );
-}
+});
 
 /* ─── Page ────────────────────────────────────────────────────── */
 
@@ -307,28 +273,32 @@ export default function ProjectsPage() {
         </div>
 
         {/* Category filter */}
-        <div className="mt-6 flex flex-wrap gap-6 border-b border-border pb-3">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActive(cat)}
-              className={`text-sm font-medium pb-1 transition-colors ${
-                active === cat
-                  ? "text-violet-500 border-b-2 border-violet-500"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <FadeInOnScroll delay={100}>
+          <div className="mt-6 flex flex-wrap gap-6 border-b border-border pb-3">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`text-sm font-medium pb-1 transition-colors ${
+                  active === cat
+                    ? "text-violet-500 border-b-2 border-violet-500"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </FadeInOnScroll>
 
         {/* Grid */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
-        </div>
+        <FadeInOnScroll delay={200}>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+        </FadeInOnScroll>
       </div>
     </div>
   );

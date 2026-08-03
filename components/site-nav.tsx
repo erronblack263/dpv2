@@ -9,7 +9,7 @@ import { openContactDrawer } from "@/components/contact-drawer";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "/home" },
   { label: "Projects", href: "/projects" },
   { label: "Certificates", href: "/certificates" },
   { label: "Contact", href: "/contact" },
@@ -25,7 +25,7 @@ export function SiteNav() {
       className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl"
     >
       <div className="flex h-12 w-full items-center justify-between px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
+        <Link href="/home" className="flex shrink-0 items-center gap-2">
           <Image
             src="/sage-logo.png"
             alt="Sage"
