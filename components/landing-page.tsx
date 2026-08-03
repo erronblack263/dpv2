@@ -29,7 +29,13 @@ export function LandingPage() {
   const [canvasReady, setCanvasReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // Always start at top when home page mounts — covers desktop + mobile/iOS Safari
+    window.scrollTo({ top: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0; // iOS Safari fallback
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Mount canvas immediately — chunks already preloaded from hero-landing
