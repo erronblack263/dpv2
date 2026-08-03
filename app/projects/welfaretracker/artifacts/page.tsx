@@ -385,8 +385,8 @@ export default function WelfareTrackerArtifactsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-sky-500/30 selection:text-sky-500 font-sans pb-16 transition-colors duration-300">
-      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-2.5 sticky top-14 z-30">
-        <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
+      <div className="w-full border-b border-border bg-card/80 backdrop-blur-md px-4 sm:px-8 lg:px-12 py-0.5 sticky top-4 z-30">
+        <div className="flex items-center justify-center gap-3 max-w-7xl mx-auto h-auto md:h-10 relative">
           <div className="hidden md:flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
             {SECTIONS.map((sec, idx) => (
               <button
@@ -403,7 +403,7 @@ export default function WelfareTrackerArtifactsPage() {
             ))}
           </div>
 
-          <div className="flex md:hidden items-center gap-1.5 flex-wrap py-1">
+          <div className="flex md:hidden items-center gap-1.5 whitespace-nowrap overflow-x-auto py-0">
             {(expandedSections
               ? SECTIONS.map((sec, idx) => ({ sec, idx }))
               : sectionIdx < 3
@@ -439,7 +439,7 @@ export default function WelfareTrackerArtifactsPage() {
             ) : (
               <button
                 onClick={() => setExpandedSections(false)}
-                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-muted text-muted-foreground border border-border flex items-center gap-1 hover:bg-accent transition-all cursor-pointer"
+                className="px-2.5 py-1.5 rounded-full text-xs font-bold bg-red-500/10 dark:bg-red-950 text-red-500 dark:text-red-400 border border-red-500/30 flex items-center gap-1 hover:bg-red-500/20 transition-all cursor-pointer"
                 title="Collapse sections"
               >
                 <Minus className="size-3.5 stroke-[2.5]" />
@@ -448,7 +448,7 @@ export default function WelfareTrackerArtifactsPage() {
             )}
           </div>
 
-          <span className="text-xs font-medium text-sky-600 dark:text-sky-400 hidden sm:inline-flex items-center gap-1.5">
+          <span className="text-xs font-medium text-sky-600 dark:text-sky-400 hidden sm:inline-flex items-center gap-1.5 absolute right-6">
             <span className="size-1.5 rounded-full bg-sky-500 animate-ping" />
             Showing: {section.title} ({section.images.length} Screens)
           </span>

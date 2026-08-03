@@ -133,9 +133,7 @@ export const WavyBackground = ({
       ctx.fillStyle = backgroundFillRef.current;
       ctx.fillRect(0, 0, w, h);
 
-      const blurPx = isMobile
-        ? Math.min(blurRef.current, 8)
-        : blurRef.current;
+      const blurPx = isMobile ? Math.min(blurRef.current, 8) : blurRef.current;
       ctx.filter = `blur(${blurPx}px)`;
       drawWave();
 
@@ -152,7 +150,10 @@ export const WavyBackground = ({
     const resize = () => {
       updateFlags();
       const rect = container.getBoundingClientRect();
-      w = Math.max(window.innerWidth, Math.floor(rect.width) || window.innerWidth);
+      w = Math.max(
+        window.innerWidth,
+        Math.floor(rect.width) || window.innerWidth,
+      );
       h = Math.max(
         window.innerHeight,
         Math.floor(rect.height) || window.innerHeight,

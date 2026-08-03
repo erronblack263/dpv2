@@ -2,6 +2,7 @@
 import { Send, CheckCircle, XCircle, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -82,16 +83,17 @@ export function Contact() {
         </div>
       )}
 
-      <section
-        id="contact"
-        className="mx-auto w-full max-w-2xl px-4 pt-16 pb-16 sm:px-6"
-      >
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_15%_50%,color-mix(in_oklch,var(--primary)_18%,transparent),transparent)]"
-          />
-          <div className="flex flex-col gap-10">
+      <FadeInOnScroll>
+        <section
+          id="contact"
+          className="mx-auto w-full max-w-2xl px-4 pt-16 pb-16 sm:px-6"
+        >
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_15%_50%,color-mix(in_oklch,var(--primary)_18%,transparent),transparent)]"
+            />
+            <div className="flex flex-col gap-10">
             <div className="text-center">
               <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight text-primary sm:text-4xl">
                 Bringing your ideas to life.
@@ -163,6 +165,7 @@ export function Contact() {
           </div>
         </div>
       </section>
+      </FadeInOnScroll>
     </>
   );
 }

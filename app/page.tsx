@@ -1,5 +1,5 @@
-import { LandingPage } from "@/components/landing-page";
+import HeroLandingPage from "@/app/hero-landing/page";
 
 export default function Page() {
-  return <LandingPage />;
+  return <HeroLandingPage />;
 }
