@@ -7,19 +7,22 @@ export function useIntersectionObserver(options?: IntersectionObserverInit) {
   useEffect(() => {
     if (!ref.current) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        // Use requestAnimationFrame to ensure the initial state is painted first
-        requestAnimationFrame(() => {
-          setIsVisible(true);
-        });
-        observer.unobserve(entry.target);
-      }
-    }, {
-      threshold: 0.05,
-      rootMargin: "0px 0px -50px 0px",
-      ...options,
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Use requestAnimationFrame to ensure the initial state is painted first
+          requestAnimationFrame(() => {
+            setIsVisible(true);
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: "0px 0px -50px 0px",
+        ...options,
+      },
+    );
 
     observer.observe(ref.current);
     return () => observer.disconnect();

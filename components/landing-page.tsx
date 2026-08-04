@@ -6,22 +6,39 @@ import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
 
 const WavyBackground = dynamic(
-  () => import("@/components/ui/wavy-background").then((mod) => ({ default: mod.WavyBackground })),
-  { ssr: false }
+  () =>
+    import("@/components/ui/wavy-background").then((mod) => ({
+      default: mod.WavyBackground,
+    })),
+  { ssr: false },
 );
 
 const StatsBar = dynamic(
-  () => import("@/components/stats-bar").then((mod) => ({ default: mod.StatsBar })),
-  { ssr: false, loading: () => <div className="h-32" /> }
+  () =>
+    import("@/components/stats-bar").then((mod) => ({ default: mod.StatsBar })),
+  { ssr: false, loading: () => <div className="h-32" /> },
 );
 
 const WhatIDo = dynamic(
-  () => import("@/components/what-i-do").then((mod) => ({ default: mod.WhatIDo })),
-  { ssr: false, loading: () => <div className="h-40" /> }
+  () =>
+    import("@/components/what-i-do").then((mod) => ({ default: mod.WhatIDo })),
+  { ssr: false, loading: () => <div className="h-40" /> },
 );
 
-const DARK_WAVE_COLORS = ["#38bdf8", "#818cf8", "#a78bfa", "#6366f1", "#22d3ee"];
-const LIGHT_WAVE_COLORS = ["#6366f1", "#818cf8", "#38bdf8", "#a78bfa", "#22d3ee"];
+const DARK_WAVE_COLORS = [
+  "#38bdf8",
+  "#818cf8",
+  "#a78bfa",
+  "#6366f1",
+  "#22d3ee",
+];
+const LIGHT_WAVE_COLORS = [
+  "#6366f1",
+  "#818cf8",
+  "#38bdf8",
+  "#a78bfa",
+  "#22d3ee",
+];
 
 export function LandingPage() {
   const { resolvedTheme } = useTheme();

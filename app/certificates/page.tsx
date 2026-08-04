@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, X, LayoutGrid, List, LayoutDashboard } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
-
-/* ─── Typewriter ──────────────────────────────────────────────── */
-// Lightweight version: runs once on mount, no looping
 
 function TypewriterText({
   text,
@@ -16,11 +13,9 @@ function TypewriterText({
   speed?: number;
 }) {
   const [displayed, setDisplayed] = useState("");
-
   useEffect(() => {
     let cancelled = false;
     let idx = 0;
-
     const type = () => {
       if (cancelled) return;
       if (idx <= text.length) {
@@ -29,17 +24,15 @@ function TypewriterText({
         setTimeout(type, speed);
       }
     };
-
     type();
     return () => {
       cancelled = true;
     };
   }, [text, speed]);
-
   return <span>{displayed}</span>;
 }
 
-/* ─── Data ────────────────────────────────────────────────────── */
+type ViewMode = "grid" | "list" | "tiles";
 
 interface Cert {
   title: string;
@@ -51,7 +44,6 @@ interface Cert {
 }
 
 const allCerts: Cert[] = [
-  // Languages
   {
     title: "Python",
     issuer: "Programming Hub",
@@ -102,7 +94,6 @@ const allCerts: Cert[] = [
       "https://drive.google.com/file/d/1a0Ia1zohZPNSu9W7FkNT5rByB6rjFLED/preview",
     gradient: "from-blue-700 via-sky-600 to-indigo-800",
   },
-  // Frameworks
   {
     title: "Spring Boot",
     issuer: "Programming Hub",
@@ -155,62 +146,55 @@ const allCerts: Cert[] = [
   },
 ];
 
-/* ─── Thumbnail ───────────────────────────────────────────────── */
+const CATEGORIES = ["All", "Programming", "Framework", "Machine Learning"];
 
-function CertThumbnail({ gradient }: Readonly<{ gradient: string }>) {
+/* ─── Cert icon ────────────────────────────────────────────────── */
+function CertIcon() {
   return (
-    <div
-      className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center`}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="size-8 text-white/20"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.2}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="size-10 text-white/20"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    </div>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
   );
 }
 
-/* ─── Card ────────────────────────────────────────────────────── */
-
-function CertCard({
+/* ─── GRID card ────────────────────────────────────────────────── */
+function GridCard({
   cert,
   onView,
-}: Readonly<{ cert: Cert; onView: (embed: string) => void }>) {
+}: {
+  cert: Cert;
+  onView: (e: string) => void;
+}) {
   return (
     <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
-      {/* Thumbnail */}
       <div className="p-3 pb-0">
-        <CertThumbnail gradient={cert.gradient} />
+        <div
+          className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
+        >
+          <CertIcon />
+        </div>
       </div>
-
-      {/* Body */}
       <div className="flex flex-col flex-1 p-4 gap-2">
-        {/* Issuer label */}
         <div className="text-xs font-medium text-violet-500">
           {cert.issuer} · {cert.category}
         </div>
-
-        {/* Title */}
         <h3 className="text-lg font-bold text-foreground leading-snug">
           {cert.title}
         </h3>
-
-        {/* Description */}
         <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
           {cert.description}
         </p>
-
-        {/* Action */}
         <div className="mt-auto pt-3">
           <button
             onClick={() => onView(cert.embed)}
@@ -224,29 +208,116 @@ function CertCard({
   );
 }
 
-/* ─── Page ────────────────────────────────────────────────────── */
+/* ─── LIST row ─────────────────────────────────────────────────── */
+function ListRow({
+  cert,
+  onView,
+}: {
+  cert: Cert;
+  onView: (e: string) => void;
+}) {
+  return (
+    <div className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
+      <div
+        className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="size-4 text-white/40"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-sm font-bold text-foreground">
+            {cert.title}
+          </span>
+          <span className="text-[11px] text-violet-500 font-medium">
+            {cert.issuer} · {cert.category}
+          </span>
+        </div>
+        <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+          {cert.description}
+        </p>
+      </div>
+      <button
+        onClick={() => onView(cert.embed)}
+        className="shrink-0 flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+      >
+        View
+      </button>
+    </div>
+  );
+}
 
+/* ─── TILE compact card ────────────────────────────────────────── */
+function TileCard({
+  cert,
+  onView,
+}: {
+  cert: Cert;
+  onView: (e: string) => void;
+}) {
+  return (
+    <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-lg hover:-translate-y-0.5">
+      <div
+        className={`w-full h-16 bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
+      >
+        <CertIcon />
+      </div>
+      <div className="p-3 flex flex-col gap-1">
+        <span className="text-[10px] font-semibold text-violet-500">
+          {cert.category}
+        </span>
+        <h3 className="text-sm font-bold text-foreground leading-snug">
+          {cert.title}
+        </h3>
+        <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
+        <button
+          onClick={() => onView(cert.embed)}
+          className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
+        >
+          View →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Page ─────────────────────────────────────────────────────── */
 export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null);
-  const total = allCerts.length;
+  const [view, setView] = useState<ViewMode>("grid");
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filtered =
+    activeCategory === "All"
+      ? allCerts
+      : allCerts.filter((c) => c.category === activeCategory);
 
   return (
     <>
       <div className="min-h-screen bg-background text-foreground">
         <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
-          {/* Back */}
           <Link
             href="/"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
           >
-            <ArrowLeft className="size-4" />
-            Back to Home
+            <ArrowLeft className="size-4" /> Back to Home
           </Link>
 
-          {/* Header */}
           <div className="mt-5 text-left">
             <p className="text-sm font-semibold tracking-wide text-violet-500">
-              Professional development · {total} credentials
+              Professional development · {allCerts.length} credentials
             </p>
             <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
               <TypewriterText text="Certificates and credentials." />
@@ -257,13 +328,71 @@ export default function CertificatesPage() {
             </p>
           </div>
 
-          {/* Grid */}
+          {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
-            <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-              {allCerts.map((cert) => (
-                <CertCard key={cert.embed} cert={cert} onView={setSelected} />
-              ))}
+            <div className="mt-6 flex items-center justify-between border-b border-border pb-3">
+              <div className="flex flex-wrap gap-5">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`text-sm font-medium pb-1 transition-colors ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* View toggle */}
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
+                <button
+                  onClick={() => setView("grid")}
+                  title="Grid view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <LayoutGrid className="size-3.5" />
+                </button>
+                <button
+                  onClick={() => setView("tiles")}
+                  title="Tiles view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <LayoutDashboard className="size-3.5" />
+                </button>
+                <button
+                  onClick={() => setView("list")}
+                  title="List view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <List className="size-3.5" />
+                </button>
+              </div>
             </div>
+          </FadeInOnScroll>
+
+          {/* Certs */}
+          <FadeInOnScroll>
+            {view === "grid" && (
+              <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                {filtered.map((cert) => (
+                  <GridCard key={cert.embed} cert={cert} onView={setSelected} />
+                ))}
+              </div>
+            )}
+            {view === "list" && (
+              <div className="mt-6 flex flex-col gap-2">
+                {filtered.map((cert) => (
+                  <ListRow key={cert.embed} cert={cert} onView={setSelected} />
+                ))}
+              </div>
+            )}
+            {view === "tiles" && (
+              <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+                {filtered.map((cert) => (
+                  <TileCard key={cert.embed} cert={cert} onView={setSelected} />
+                ))}
+              </div>
+            )}
           </FadeInOnScroll>
         </div>
       </div>
