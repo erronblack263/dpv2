@@ -7,8 +7,11 @@ import { cn } from "@/lib/utils";
 
 // Lazy-load Three.js canvas effect — only fetched on first hover
 const CanvasRevealEffect = dynamic(
-  () => import("@/components/ui/canvas-reveal-effect").then((mod) => ({ default: mod.CanvasRevealEffect })),
-  { ssr: false }
+  () =>
+    import("@/components/ui/canvas-reveal-effect").then((mod) => ({
+      default: mod.CanvasRevealEffect,
+    })),
+  { ssr: false },
 );
 
 export const CardSpotlight = ({
