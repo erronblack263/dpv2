@@ -2,12 +2,15 @@
 const nextConfig = {
   experimental: {
     scrollRestoration: false,
+    optimizePackageImports: ["lucide-react", "motion"],
   },
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
     unoptimized: false,
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 86400,
     qualities: [100, 75],
     remotePatterns: [
       { protocol: "https", hostname: "cdn.jsdelivr.net" },

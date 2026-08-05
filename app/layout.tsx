@@ -4,10 +4,20 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { ContactDrawer } from "@/components/contact-drawer";
+import dynamic from "next/dynamic";
 import "./globals.css";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+const ContactDrawer = dynamic(
+  () => import("@/components/contact-drawer").then((m) => ({ default: m.ContactDrawer })),
+  { ssr: false }
+);
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+});
 export const metadata: Metadata = {
   title: "Witness H Musonza — Software Developer",
   description:
