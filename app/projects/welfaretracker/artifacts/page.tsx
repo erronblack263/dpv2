@@ -21,7 +21,12 @@ import {
   Sparkles,
   Plus,
   Minus,
+  LayoutGrid,
+  LayoutDashboard,
+  GalleryHorizontal,
 } from "lucide-react";
+type ScreenViewMode = "grid" | "tiles" | "carousel";
+
 const CURSOR_COLORS = ["#0284c7", "#8b5cf6", "#06b6d4", "#f43f5e", "#10b981"];
 
 function TypewriterText({
@@ -365,6 +370,8 @@ export default function WelfareTrackerArtifactsPage() {
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [expandedSections, setExpandedSections] = useState(false);
+  const [screenView, setScreenView] = useState<ScreenViewMode>("grid");
+  const screenCarouselRef = useRef<HTMLDivElement | null>(null);
 
   const section = SECTIONS[sectionIdx];
   useEffect(() => {
@@ -381,6 +388,18 @@ export default function WelfareTrackerArtifactsPage() {
     setActiveScreenIdx(
       (i) => (i - 1 + section.images.length) % section.images.length,
     );
+  }
+
+  function scrollScreenPrev() {
+    const el = screenCarouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  }
+
+  function scrollScreenNext() {
+    const el = screenCarouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: Math.round(el.clientWidth * 0.8), behavior: "smooth" });
   }
 
   return (
@@ -698,8 +717,25 @@ export default function WelfareTrackerArtifactsPage() {
               </h2>
             </div>
 
-            {/* Carousel dots & arrows */}
             <div className="flex items-center gap-3">
+              {/* Screen view toggle */}
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
+                <button onClick={() => setScreenView("grid")} title="Grid"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-sky-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <LayoutGrid className="size-3" />
+                </button>
+                <button onClick={() => setScreenView("tiles")} title="Tiles"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-sky-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <LayoutDashboard className="size-3" />
+                </button>
+                <button onClick={() => setScreenView("carousel")} title="Carousel"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-sky-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <GalleryHorizontal className="size-3" />
+                </button>
+              </div>
+
+              {/* Carousel dots & arrows — only shown in grid/tiles */}
+              {screenView !== "carousel" && <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
                 {section.images.map((_, i) => (
                   <button
@@ -731,10 +767,12 @@ export default function WelfareTrackerArtifactsPage() {
                   <ChevronRight className="size-4" />
                 </button>
               </div>
+            </div>}
             </div>
           </div>
 
-          {/* Grid of Mobile Screen Cards */}
+          {/* Grid view */}
+          {screenView === "grid" && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {section.images.map((img, i) => {
               const isActive = i === activeScreenIdx;
@@ -795,6 +833,111 @@ export default function WelfareTrackerArtifactsPage() {
               );
             })}
           </div>
+          )}
+
+          {/* Tiles view — larger 2-col grid */}
+          {screenView === "tiles" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {section.images.map((img, i) => {
+              const isActive = i === activeScreenIdx;
+              return (
+                <div
+                  key={img.src}
+                  onClick={() => setActiveScreenIdx(i)}
+                  className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
+                    isActive
+                      ? "border-sky-500 bg-card shadow-[0_0_25px_rgba(14,165,233,0.25)] ring-1 ring-sky-500/50"
+                      : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"
+                  }`}
+                >
+                  {/* Number Badge Top Left */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span
+                      className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${
+                        isActive
+                          ? "bg-sky-600 dark:bg-sky-500 text-white dark:text-black font-extrabold"
+                          : "bg-muted text-muted-foreground border border-border"
+                      }`}
+                    >
+                      {img.num}
+                    </span>
+                  </div>
+
+                  {/* Thumbnail Mockup Frame */}
+                  <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
+                    <img
+                      src={img.src}
+                      alt={img.caption}
+                      className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Quick Lightbox View Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxIdx(i);
+                      }}
+                      className="absolute bottom-3 right-3 z-20 size-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-sky-500 hover:text-black hover:border-sky-400 transition-all"
+                      title="Open full view"
+                    >
+                      <Eye className="size-4" />
+                    </button>
+                  </div>
+
+                  {/* Caption Footer */}
+                  <div className="mt-3 flex flex-col gap-0.5">
+                    <p className="text-xs font-bold text-foreground truncate">
+                      {img.caption}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground font-mono">
+                      {img.resolution}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          )}
+
+          {/* Carousel view */}
+          {screenView === "carousel" && (
+          <div className="relative">
+            <div
+              ref={screenCarouselRef}
+              className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+            >
+              {section.images.map((img, i) => (
+                <div key={img.src} className="shrink-0 snap-center w-[72%] sm:w-[45%] lg:w-[28%]">
+                  {/* Tall portrait carousel card */}
+                  <div
+                    onClick={() => { setActiveScreenIdx(i); setLightboxIdx(i); }}
+                    className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+                    style={{ height: "420px" }}
+                  >
+                    <div className="absolute inset-0 bg-zinc-900 rounded-2xl border border-zinc-800" />
+                    <img src={img.src} alt={img.caption} className="absolute inset-0 w-full h-full object-cover rounded-2xl" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent rounded-2xl" />
+                    <div className="relative z-10 mt-auto p-4">
+                      <p className="text-xs font-bold text-white truncate">{img.caption}</p>
+                      <p className="text-[10px] text-sky-400 font-mono">{img.num} · {img.resolution}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Apple-style circular arrows */}
+            <div className="flex items-center gap-2 absolute bottom-4 right-4">
+              <button onClick={scrollScreenPrev} aria-label="Previous"
+                className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-sky-600 hover:text-white hover:border-sky-600 transition-all">
+                <ChevronLeft className="size-5" />
+              </button>
+              <button onClick={scrollScreenNext} aria-label="Next"
+                className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-sky-600 hover:text-white hover:border-sky-600 transition-all">
+                <ChevronRight className="size-5" />
+              </button>
+            </div>
+          </div>
+          )}
         </div>
 
         {/* ─── Bottom Projects Footer Navigation ─── */}

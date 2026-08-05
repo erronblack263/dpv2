@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -19,6 +19,9 @@ import {
   Sparkles,
   Plus,
   Minus,
+  LayoutGrid,
+  LayoutDashboard,
+  GalleryHorizontal,
 } from "lucide-react";
 
 function ReactIcon({ className = "size-4" }: { className?: string }) {
@@ -300,11 +303,26 @@ const SECTIONS: SectionData[] = [
   },
 ];
 
+type ScreenViewMode = "grid" | "tiles" | "carousel";
+
 export default function SmartHRArtifactsPage() {
   const [sectionIdx, setSectionIdx] = useState(0);
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [expandedSections, setExpandedSections] = useState(false);
+  const [screenView, setScreenView] = useState<ScreenViewMode>("grid");
+  const screenCarouselRef = useRef<HTMLDivElement | null>(null);
+
+  function scrollScreenPrev() {
+    const el = screenCarouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  }
+  function scrollScreenNext() {
+    const el = screenCarouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  }
 
   const section = SECTIONS[sectionIdx];
   useEffect(() => {
@@ -626,83 +644,183 @@ export default function SmartHRArtifactsPage() {
               </h2>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                {section.images.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveScreenIdx(i)}
-                    className={`size-2 rounded-full transition-all ${i === activeScreenIdx ? "bg-violet-500 w-4" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
-                    aria-label={`Screen ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <div className="flex items-center gap-1 border-l border-border pl-3">
-                <button
-                  onClick={prevScreen}
-                  className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-                >
-                  <ChevronLeft className="size-4" />
+              {/* Screen view toggle */}
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
+                <button onClick={() => setScreenView("grid")} title="Grid"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <LayoutGrid className="size-3" />
                 </button>
-                <button
-                  onClick={nextScreen}
-                  className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-                >
-                  <ChevronRight className="size-4" />
+                <button onClick={() => setScreenView("tiles")} title="Tiles"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <LayoutDashboard className="size-3" />
+                </button>
+                <button onClick={() => setScreenView("carousel")} title="Carousel"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  <GalleryHorizontal className="size-3" />
                 </button>
               </div>
+              {/* Dots & arrows — hidden in carousel mode */}
+              {screenView !== "carousel" && (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    {section.images.map((_, i) => (
+                      <button key={i} onClick={() => setActiveScreenIdx(i)}
+                        className={`size-2 rounded-full transition-all ${i === activeScreenIdx ? "bg-violet-500 w-4" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
+                        aria-label={`Go to screen ${i + 1}`} />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-1 border-l border-border pl-3">
+                    <button onClick={prevScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Previous screen">
+                      <ChevronLeft className="size-4" />
+                    </button>
+                    <button onClick={nextScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Next screen">
+                      <ChevronRight className="size-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Screen cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {section.images.map((img, i) => {
-              const isActive = i === activeScreenIdx;
-              return (
-                <div
-                  key={img.src}
-                  onClick={() => setActiveScreenIdx(i)}
-                  className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${isActive ? "border-violet-500 bg-card shadow-[0_0_25px_rgba(124,58,237,0.25)] ring-1 ring-violet-500/50" : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"}`}
-                >
-                  <div className="absolute top-4 left-4 z-20">
-                    <span
-                      className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${isActive ? "bg-violet-600 dark:bg-violet-500 text-white font-extrabold" : "bg-muted text-muted-foreground border border-border"}`}
-                    >
-                      {img.num}
-                    </span>
-                  </div>
-                  {/* Laptop-style thumbnail */}
+          {/* Screen cards — grid view */}
+          {screenView === "grid" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {section.images.map((img, i) => {
+                const isActive = i === activeScreenIdx;
+                return (
                   <div
-                    className="relative w-full rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800"
-                    style={{ aspectRatio: "16/10" }}
+                    key={img.src}
+                    onClick={() => setActiveScreenIdx(i)}
+                    className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${isActive ? "border-violet-500 bg-card shadow-[0_0_25px_rgba(124,58,237,0.25)] ring-1 ring-violet-500/50" : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"}`}
                   >
-                    <img
-                      src={img.src}
-                      alt={img.caption}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxIdx(i);
-                      }}
-                      className="absolute bottom-2 right-2 z-20 size-7 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-violet-500 transition-all"
-                      title="Expand"
+                    <div className="absolute top-4 left-4 z-20">
+                      <span
+                        className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${isActive ? "bg-violet-600 dark:bg-violet-500 text-white font-extrabold" : "bg-muted text-muted-foreground border border-border"}`}
+                      >
+                        {img.num}
+                      </span>
+                    </div>
+                    {/* Laptop-style thumbnail */}
+                    <div
+                      className="relative w-full rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800"
+                      style={{ aspectRatio: "16/10" }}
                     >
-                      <Eye className="size-3.5" />
-                    </button>
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxIdx(i);
+                        }}
+                        className="absolute bottom-2 right-2 z-20 size-7 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-violet-500 transition-all"
+                        title="Expand"
+                      >
+                        <Eye className="size-3.5" />
+                      </button>
+                    </div>
+                    <div className="mt-2.5 flex flex-col gap-0.5">
+                      <p className="text-xs font-bold text-foreground truncate">
+                        {img.caption}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground font-mono">
+                        {img.resolution}
+                      </p>
+                    </div>
                   </div>
-                  <div className="mt-2.5 flex flex-col gap-0.5">
-                    <p className="text-xs font-bold text-foreground truncate">
-                      {img.caption}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground font-mono">
-                      {img.resolution}
-                    </p>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Screen cards — tiles view */}
+          {screenView === "tiles" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {section.images.map((img, i) => {
+                const isActive = i === activeScreenIdx;
+                return (
+                  <div
+                    key={img.src}
+                    onClick={() => setActiveScreenIdx(i)}
+                    className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${isActive ? "border-violet-500 bg-card shadow-[0_0_25px_rgba(124,58,237,0.25)] ring-1 ring-violet-500/50" : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"}`}
+                  >
+                    <div className="absolute top-4 left-4 z-20">
+                      <span
+                        className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${isActive ? "bg-violet-600 dark:bg-violet-500 text-white font-extrabold" : "bg-muted text-muted-foreground border border-border"}`}
+                      >
+                        {img.num}
+                      </span>
+                    </div>
+                    {/* Laptop-style thumbnail */}
+                    <div
+                      className="relative w-full rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800"
+                      style={{ aspectRatio: "16/10" }}
+                    >
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxIdx(i);
+                        }}
+                        className="absolute bottom-2 right-2 z-20 size-7 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-violet-500 transition-all"
+                        title="Expand"
+                      >
+                        <Eye className="size-3.5" />
+                      </button>
+                    </div>
+                    <div className="mt-2.5 flex flex-col gap-0.5">
+                      <p className="text-xs font-bold text-foreground truncate">
+                        {img.caption}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground font-mono">
+                        {img.resolution}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Screen cards — carousel view */}
+          {screenView === "carousel" && (
+            <div className="relative">
+              <div ref={screenCarouselRef}
+                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16">
+                {section.images.map((img, i) => (
+                  <div key={img.src} className="shrink-0 snap-center w-[85%] sm:w-[60%] lg:w-[42%]">
+                    <div onClick={() => { setActiveScreenIdx(i); setLightboxIdx(i); }}
+                      className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02] border border-zinc-800"
+                      style={{ aspectRatio: "16/10" }}>
+                      <div className="absolute inset-0 bg-zinc-900" />
+                      <img src={img.src} alt={img.caption} className="absolute inset-0 w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                      <div className="relative z-10 mt-auto p-4">
+                        <p className="text-xs font-bold text-white truncate">{img.caption}</p>
+                        <p className="text-[10px] text-violet-400 font-mono">{img.num} · {img.resolution}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                <button onClick={scrollScreenPrev} aria-label="Previous"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                  <ChevronLeft className="size-5" />
+                </button>
+                <button onClick={scrollScreenNext} aria-label="Next"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                  <ChevronRight className="size-5" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer nav */}
