@@ -124,9 +124,9 @@ const SECTIONS: SectionData[] = [
     images: [
       {
         num: "01",
-        caption: "Main Dashboard",
+        caption: "Landing Page",
         resolution: "1440 × 900",
-        src: "/artifacts/smarthr/dashboard/main.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785842008/smarthr_xwyta5.png",
       },
       {
         num: "02",
