@@ -1,15 +1,19 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowRight,
   Play,
   Image as ImageIcon,
   GitBranch,
   LayoutGrid,
   List,
   LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
+  GalleryHorizontal,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
@@ -41,7 +45,7 @@ function TypewriterText({
 }
 
 type Category = "All work" | "Web platforms" | "Mobile";
-type ViewMode = "grid" | "list" | "tiles";
+type ViewMode = "grid" | "list" | "tiles" | "carousel";
 
 interface Project {
   title: string;
@@ -257,7 +261,45 @@ const ListRow = memo(function ListRow({ project }: { project: Project }) {
   );
 });
 
-/* ─── TILE compact card ───────────────────────────────────────── */
+/* ─── CAROUSEL card — tall portrait, text overlay ─────────── */
+const CarouselCard = memo(function CarouselCard({ project }: { project: Project }) {
+  const tagParts = project.tagline.split(" · ");
+  return (
+    <div className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+      style={{ height: "480px" }}>
+      {/* Full-bleed gradient background */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
+      {/* Subtle overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+      {/* Text content at bottom */}
+      <div className="relative z-10 mt-auto p-6 flex flex-col gap-1.5">
+        <span className="text-xs font-semibold text-white/60 tracking-wide">
+          {tagParts[tagParts.length - 1]}
+        </span>
+        <h3 className="text-2xl font-extrabold text-white leading-tight">{project.title}</h3>
+        <p className="text-sm text-white/70 line-clamp-2 mt-0.5">{project.description}</p>
+        {/* Action buttons */}
+        <div className="flex flex-wrap gap-2 mt-3">
+          {project.demo && project.demo !== "#" && (
+            <Link href={project.demo} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+              <Play className="size-3" /> Video demo
+            </Link>
+          )}
+          {project.artifacts && (
+            <Link href={project.artifacts} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+              <ImageIcon className="size-3" /> Artifacts
+            </Link>
+          )}
+          {project.github && (
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+              <GitBranch className="size-3" /> GitHub
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});
 const TileCard = memo(function TileCard({ project }: { project: Project }) {
   return (
     <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-[0_8px_24px_rgba(124,58,237,0.12)] hover:-translate-y-0.5">
@@ -283,7 +325,32 @@ const TileCard = memo(function TileCard({ project }: { project: Project }) {
 /* ─── Page ────────────────────────────────────────────────────── */
 export default function ProjectsPage() {
   const [active, setActive] = useState<Category>("All work");
-  const [view, setView] = useState<ViewMode>("grid");
+  const [view, setView] = useState<ViewMode>(() => {
+    if (typeof window !== "undefined") {
+      return (sessionStorage.getItem("projects-view") as ViewMode) || "grid";
+    }
+    return "grid";
+  });
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  function changeView(v: ViewMode) {
+    setView(v);
+    sessionStorage.setItem("projects-view", v);
+  }
+
+  function scrollPrev() {
+    const el = carouselRef.current;
+    if (!el) return;
+    const amount = Math.round(el.clientWidth * 0.8);
+    el.scrollBy({ left: -amount, behavior: "smooth" });
+  }
+
+  function scrollNext() {
+    const el = carouselRef.current;
+    if (!el) return;
+    const amount = Math.round(el.clientWidth * 0.8);
+    el.scrollBy({ left: amount, behavior: "smooth" });
+  }
 
   const filtered =
     active === "All work"
@@ -331,21 +398,28 @@ export default function ProjectsPage() {
             {/* View toggle */}
             <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
               <button
-                onClick={() => setView("grid")}
+                onClick={() => changeView("grid")}
                 title="Grid view"
                 className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <LayoutGrid className="size-3.5" />
               </button>
               <button
-                onClick={() => setView("tiles")}
+                onClick={() => changeView("tiles")}
                 title="Tiles view"
                 className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <LayoutDashboard className="size-3.5" />
               </button>
               <button
-                onClick={() => setView("list")}
+                onClick={() => changeView("carousel")}
+                title="Carousel view"
+                className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                <GalleryHorizontal className="size-3.5" />
+              </button>
+              <button
+                onClick={() => changeView("list")}
                 title="List view"
                 className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
@@ -376,6 +450,40 @@ export default function ProjectsPage() {
               {filtered.map((p) => (
                 <TileCard key={p.title} project={p} />
               ))}
+            </div>
+          )}
+          {view === "carousel" && (
+            <div className="mt-6">
+              <div className="relative">
+                <div
+                  ref={carouselRef}
+                  className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+                >
+                  {filtered.map((p) => (
+                    <div key={p.title} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]">
+                      <CarouselCard project={p} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Apple-style circular arrows — bottom right */}
+                <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                  <button
+                    onClick={scrollPrev}
+                    aria-label="Previous"
+                    className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                  >
+                    <ChevronLeft className="size-5" />
+                  </button>
+                  <button
+                    onClick={scrollNext}
+                    aria-label="Next"
+                    className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                  >
+                    <ChevronRight className="size-5" />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </FadeInOnScroll>

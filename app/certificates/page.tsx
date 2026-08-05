@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, X, LayoutGrid, List, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, X, LayoutGrid, List, LayoutDashboard, ChevronLeft, ChevronRight, GalleryHorizontal } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
 function TypewriterText({
@@ -32,7 +32,7 @@ function TypewriterText({
   return <span>{displayed}</span>;
 }
 
-type ViewMode = "grid" | "list" | "tiles";
+type ViewMode = "grid" | "list" | "tiles" | "carousel";
 
 interface Cert {
   title: string;
@@ -298,6 +298,18 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  function scrollPrev() {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  }
+  function scrollNext() {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  }
 
   const filtered =
     activeCategory === "All"
@@ -360,6 +372,13 @@ export default function CertificatesPage() {
                   <LayoutDashboard className="size-3.5" />
                 </button>
                 <button
+                  onClick={() => setView("carousel")}
+                  title="Carousel view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <GalleryHorizontal className="size-3.5" />
+                </button>
+                <button
                   onClick={() => setView("list")}
                   title="List view"
                   className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
@@ -391,6 +410,58 @@ export default function CertificatesPage() {
                 {filtered.map((cert) => (
                   <TileCard key={cert.embed} cert={cert} onView={setSelected} />
                 ))}
+              </div>
+            )}
+            {view === "carousel" && (
+              <div className="mt-6">
+                <div className="relative">
+                  <div
+                    ref={carouselRef}
+                    className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+                  >
+                    {filtered.map((cert) => (
+                      <div key={cert.embed} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]">
+                        {/* Tall portrait carousel card */}
+                        <div
+                          className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+                          style={{ height: "480px" }}
+                          onClick={() => setSelected(cert.embed)}
+                        >
+                          <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`} />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                          <div className="relative z-10 mt-auto p-6 flex flex-col gap-1.5">
+                            <span className="text-xs font-semibold text-white/60 tracking-wide">{cert.category}</span>
+                            <h3 className="text-2xl font-extrabold text-white leading-tight">{cert.title}</h3>
+                            <p className="text-sm text-white/70 mt-0.5">{cert.issuer}</p>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setSelected(cert.embed); }}
+                              className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+                            >
+                              View certificate
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Apple-style circular arrows — bottom right */}
+                  <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                    <button
+                      onClick={scrollPrev}
+                      aria-label="Previous"
+                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                    >
+                      <ChevronLeft className="size-5" />
+                    </button>
+                    <button
+                      onClick={scrollNext}
+                      aria-label="Next"
+                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                    >
+                      <ChevronRight className="size-5" />
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </FadeInOnScroll>
