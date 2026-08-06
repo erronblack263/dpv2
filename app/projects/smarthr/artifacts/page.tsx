@@ -268,6 +268,18 @@ const SECTIONS: SectionData[] = [
         resolution: "1440 × 900",
         src: "/artifacts/smarthr/assessment/results.jpg",
       },
+      {
+        num: "04",
+        caption: "Psychometric Assessment Modal",
+        resolution: "1440 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1786007339/psychometric_assesment_s3lm03.png",
+      },
+      {
+        num: "05",
+        caption: "Psychometric Test Submission",
+        resolution: "1440 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1786007170/psychometrci_test_submission_s5ed8j.png",
+      },
     ],
   },
   {
