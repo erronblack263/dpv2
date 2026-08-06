@@ -4,13 +4,8 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import dynamic from "next/dynamic";
+import { ContactDrawer } from "@/components/contact-drawer";
 import "./globals.css";
-
-const ContactDrawer = dynamic(
-  () => import("@/components/contact-drawer").then((m) => ({ default: m.ContactDrawer })),
-  { ssr: false }
-);
 
 const inter = Inter({
   variable: "--font-inter",
