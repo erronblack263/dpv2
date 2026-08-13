@@ -328,7 +328,10 @@ export default function SmartHRArtifactsPage() {
   function scrollScreenPrev() {
     const el = screenCarouselRef.current;
     if (!el) return;
-    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+    el.scrollBy({
+      left: -Math.round(el.clientWidth * 0.8),
+      behavior: "smooth",
+    });
   }
   function scrollScreenNext() {
     const el = screenCarouselRef.current;
@@ -658,16 +661,25 @@ export default function SmartHRArtifactsPage() {
             <div className="flex items-center gap-3">
               {/* Screen view toggle */}
               <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
-                <button onClick={() => setScreenView("grid")} title="Grid"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("grid")}
+                  title="Grid"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutGrid className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("tiles")} title="Tiles"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("tiles")}
+                  title="Tiles"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutDashboard className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("carousel")} title="Carousel"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("carousel")}
+                  title="Carousel"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <GalleryHorizontal className="size-3" />
                 </button>
               </div>
@@ -676,16 +688,27 @@ export default function SmartHRArtifactsPage() {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     {section.images.map((_, i) => (
-                      <button key={i} onClick={() => setActiveScreenIdx(i)}
+                      <button
+                        key={i}
+                        onClick={() => setActiveScreenIdx(i)}
                         className={`size-2 rounded-full transition-all ${i === activeScreenIdx ? "bg-violet-500 w-4" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
-                        aria-label={`Go to screen ${i + 1}`} />
+                        aria-label={`Go to screen ${i + 1}`}
+                      />
                     ))}
                   </div>
                   <div className="flex items-center gap-1 border-l border-border pl-3">
-                    <button onClick={prevScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Previous screen">
+                    <button
+                      onClick={prevScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Previous screen"
+                    >
                       <ChevronLeft className="size-4" />
                     </button>
-                    <button onClick={nextScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Next screen">
+                    <button
+                      onClick={nextScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Next screen"
+                    >
                       <ChevronRight className="size-4" />
                     </button>
                   </div>
@@ -803,31 +826,55 @@ export default function SmartHRArtifactsPage() {
           {/* Screen cards — carousel view */}
           {screenView === "carousel" && (
             <div className="relative">
-              <div ref={screenCarouselRef}
-                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16">
+              <div
+                ref={screenCarouselRef}
+                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+              >
                 {section.images.map((img, i) => (
-                  <div key={img.src} className="shrink-0 snap-center w-[85%] sm:w-[60%] lg:w-[42%]">
-                    <div onClick={() => { setActiveScreenIdx(i); setLightboxIdx(i); }}
+                  <div
+                    key={img.src}
+                    className="shrink-0 snap-center w-[85%] sm:w-[60%] lg:w-[42%]"
+                  >
+                    <div
+                      onClick={() => {
+                        setActiveScreenIdx(i);
+                        setLightboxIdx(i);
+                      }}
                       className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02] border border-zinc-800"
-                      style={{ aspectRatio: "16/10" }}>
+                      style={{ aspectRatio: "16/10" }}
+                    >
                       <div className="absolute inset-0 bg-zinc-900" />
-                      <img src={img.src} alt={img.caption} className="absolute inset-0 w-full h-full object-cover" />
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                       <div className="relative z-10 mt-auto p-4">
-                        <p className="text-xs font-bold text-white truncate">{img.caption}</p>
-                        <p className="text-[10px] text-violet-400 font-mono">{img.num} · {img.resolution}</p>
+                        <p className="text-xs font-bold text-white truncate">
+                          {img.caption}
+                        </p>
+                        <p className="text-[10px] text-violet-400 font-mono">
+                          {img.num} · {img.resolution}
+                        </p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
               <div className="flex items-center gap-2 absolute bottom-4 right-4">
-                <button onClick={scrollScreenPrev} aria-label="Previous"
-                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                <button
+                  onClick={scrollScreenPrev}
+                  aria-label="Previous"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                >
                   <ChevronLeft className="size-5" />
                 </button>
-                <button onClick={scrollScreenNext} aria-label="Next"
-                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                <button
+                  onClick={scrollScreenNext}
+                  aria-label="Next"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                >
                   <ChevronRight className="size-5" />
                 </button>
               </div>

@@ -2,7 +2,18 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, X, LayoutGrid, List, LayoutDashboard, ChevronLeft, ChevronRight, GalleryHorizontal } from "lucide-react";
+import {
+  ArrowLeft,
+  X,
+  LayoutGrid,
+  List,
+  LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
+  GalleryHorizontal,
+  Plus,
+  Minus,
+} from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
 function TypewriterText({
@@ -51,7 +62,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating core Python programming concepts and practical development skills.",
     embed:
-      "https://drive.google.com/file/d/1yMP_8LuicNagfmQu8xnDF4TFWlY1u-Vh/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784812968/python_cert_koi3p2.png",
     gradient: "from-blue-800 via-blue-700 to-indigo-900",
   },
   {
@@ -61,7 +72,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating modern JavaScript patterns, application architecture and best practices.",
     embed:
-      "https://drive.google.com/file/d/1HS9VSHDdZuGyFOzplND_T2siJgwWNlLg/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804810/javascript_cert_cswyzj.png",
     gradient: "from-yellow-700 via-amber-600 to-orange-800",
   },
   {
@@ -71,7 +82,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating Dart programming concepts and practical development skills.",
     embed:
-      "https://drive.google.com/file/d/12Bb1J32eHv11NsQt4YGzMUnRDuzghHWj/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784813291/dart_cert_d6rilt.png",
     gradient: "from-cyan-700 via-teal-600 to-blue-900",
   },
   {
@@ -81,7 +92,7 @@ const allCerts: Cert[] = [
     description:
       "Verified Java programming certificate issued by Programming Hub.",
     embed:
-      "https://drive.google.com/file/d/1KnH91NPPXmguP8JtBlpfFfu2Fvcw2e09/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804534/java_cert_lhbtzk.png",
     gradient: "from-red-800 via-rose-700 to-orange-900",
   },
   {
@@ -91,7 +102,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating TypeScript development skills and typed JavaScript patterns.",
     embed:
-      "https://drive.google.com/file/d/1a0Ia1zohZPNSu9W7FkNT5rByB6rjFLED/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567138/typescript_x9kn53.jpg",
     gradient: "from-blue-700 via-sky-600 to-indigo-800",
   },
   {
@@ -101,7 +112,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating Spring Boot backend development and REST API design.",
     embed:
-      "https://drive.google.com/file/d/1Dfr3MiE4edrNApKehrTFgn0aQ2bB2mgC/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/spring_hjnllb.jpg",
     gradient: "from-green-800 via-emerald-700 to-green-900",
   },
   {
@@ -111,7 +122,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating React component architecture and modern frontend patterns.",
     embed:
-      "https://drive.google.com/file/d/1ajroacrHht3FVy9LJU7fMzJfAXMKWUSB/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567122/reat_vwgdna.jpg",
     gradient: "from-sky-600 via-cyan-500 to-blue-800",
   },
   {
@@ -121,7 +132,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating Next.js full-stack development and server-side rendering skills.",
     embed:
-      "https://drive.google.com/file/d/1n4mSLZ8BP6SmgtOpx0k17DoA7rMwzwLh/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567122/nextjs_xyas9v.jpg",
     gradient: "from-zinc-700 via-zinc-600 to-zinc-900",
   },
   {
@@ -131,7 +142,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating cross-platform mobile app development with Flutter and Dart.",
     embed:
-      "https://drive.google.com/file/d/1O8r7n7cZmgBwsbNqWlB4JL3JrILYAQGc/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786622074/flutter_httcwn.png",
     gradient: "from-blue-600 via-indigo-500 to-violet-800",
   },
   {
@@ -141,12 +152,60 @@ const allCerts: Cert[] = [
     description:
       "Credential validating machine learning model development skills using PyTorch.",
     embed:
-      "https://drive.google.com/file/d/15qtgFGRdxyZLK_g72ExzG32eOUFD2zZf/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567450/machine_learning_km7s6e.png",
     gradient: "from-orange-700 via-red-600 to-rose-900",
+  },
+  {
+    title: "DevOps Certification",
+    issuer: "Programming Hub",
+    category: "CI/CD",
+    description:
+      "Credential demonstrating system design principles, architecture patterns, and scalability practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/devops_qzj9xy.jpg",
+    gradient: "from-purple-800 via-purple-700 to-indigo-900",
+  },
+  {
+    title: "Web Development",
+    issuer: "Programming Hub",
+    category: "System Design",
+    description:
+      "Credential demonstrating advanced web development practices, modern frameworks, and best practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/web_dev_ymn5ue.jpg",
+    gradient: "from-emerald-700 via-teal-600 to-cyan-800",
+  },
+  {
+    title: "Agile Project Management",
+    issuer: "Programming Hub",
+    category: "System Design",
+    description:
+      "Credential demonstrating agile methodologies, project planning, and team collaboration practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/agile_project_management_c2ohec.jpg",
+    gradient: "from-blue-700 via-indigo-600 to-purple-800",
+  },
+  {
+    title: "Cybersecurity",
+    issuer: "Programming Hub",
+    category: "Security",
+    description:
+      "Credential demonstrating security best practices, threat assessment, and cybersecurity principles.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786622806/cybersecurity_gtexg0.png",
+    gradient: "from-red-800 via-red-700 to-orange-900",
   },
 ];
 
-const CATEGORIES = ["All", "Programming", "Framework", "Machine Learning"];
+const CATEGORIES = [
+  "All",
+  "Programming",
+  "Framework",
+  "Machine Learning",
+  "System Design",
+  "CI/CD",
+  "Security",
+];
 
 /* ─── Cert icon ────────────────────────────────────────────────── */
 function CertIcon() {
@@ -298,12 +357,16 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [expandedCategories, setExpandedCategories] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   function scrollPrev() {
     const el = carouselRef.current;
     if (!el) return;
-    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+    el.scrollBy({
+      left: -Math.round(el.clientWidth * 0.8),
+      behavior: "smooth",
+    });
   }
   function scrollNext() {
     const el = carouselRef.current;
@@ -342,49 +405,77 @@ export default function CertificatesPage() {
 
           {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
-            <div className="mt-6 flex items-center justify-between border-b border-border pb-3">
-              <div className="flex flex-wrap gap-5">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`text-sm font-medium pb-1 transition-colors ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+            <div className="mt-6 flex flex-col gap-3 border-b border-border pb-3">
+              {/* Categories Row */}
+              <div className="flex flex-wrap items-center gap-2">
+                {(expandedCategories ? CATEGORIES : CATEGORIES.slice(0, 4)).map(
+                  (cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`text-sm font-medium pb-1 transition-colors whitespace-nowrap ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
+                    >
+                      {cat}
+                    </button>
+                  ),
+                )}
               </div>
 
-              {/* View toggle */}
-              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
-                <button
-                  onClick={() => setView("grid")}
-                  title="Grid view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <LayoutGrid className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("tiles")}
-                  title="Tiles view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <LayoutDashboard className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("carousel")}
-                  title="Carousel view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <GalleryHorizontal className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("list")}
-                  title="List view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <List className="size-3.5" />
-                </button>
+              {/* Expand/Collapse + View Toggle Row */}
+              <div className="flex items-center justify-between gap-3">
+                {CATEGORIES.length > 4 && (
+                  <div>
+                    {!expandedCategories ? (
+                      <button
+                        onClick={() => setExpandedCategories(true)}
+                        className="flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-500 hover:bg-violet-500/20 transition-all"
+                      >
+                        <Plus className="size-3.5 stroke-[2.5]" />
+                        <span>More</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setExpandedCategories(false)}
+                        className="flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-500 hover:bg-red-500/20 transition-all"
+                      >
+                        <Minus className="size-3.5 stroke-[2.5]" />
+                        <span>Less</span>
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* View toggle */}
+                <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
+                  <button
+                    onClick={() => setView("grid")}
+                    title="Grid view"
+                    className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <LayoutGrid className="size-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setView("tiles")}
+                    title="Tiles view"
+                    className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <LayoutDashboard className="size-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setView("carousel")}
+                    title="Carousel view"
+                    className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <GalleryHorizontal className="size-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setView("list")}
+                    title="List view"
+                    className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <List className="size-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           </FadeInOnScroll>
@@ -420,21 +511,35 @@ export default function CertificatesPage() {
                     className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
                   >
                     {filtered.map((cert) => (
-                      <div key={cert.embed} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]">
+                      <div
+                        key={cert.embed}
+                        className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]"
+                      >
                         {/* Tall portrait carousel card */}
                         <div
                           className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
                           style={{ height: "480px" }}
                           onClick={() => setSelected(cert.embed)}
                         >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`} />
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`}
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                           <div className="relative z-10 mt-auto p-6 flex flex-col gap-1.5">
-                            <span className="text-xs font-semibold text-white/60 tracking-wide">{cert.category}</span>
-                            <h3 className="text-2xl font-extrabold text-white leading-tight">{cert.title}</h3>
-                            <p className="text-sm text-white/70 mt-0.5">{cert.issuer}</p>
+                            <span className="text-xs font-semibold text-white/60 tracking-wide">
+                              {cert.category}
+                            </span>
+                            <h3 className="text-2xl font-extrabold text-white leading-tight">
+                              {cert.title}
+                            </h3>
+                            <p className="text-sm text-white/70 mt-0.5">
+                              {cert.issuer}
+                            </p>
                             <button
-                              onClick={(e) => { e.stopPropagation(); setSelected(cert.embed); }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelected(cert.embed);
+                              }}
                               className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
                             >
                               View certificate
@@ -491,13 +596,11 @@ export default function CertificatesPage() {
             >
               <X className="size-4" />
             </button>
-            <iframe
+            <img
               src={selected}
-              className="w-full"
-              style={{ height: "80vh" }}
-              allow="autoplay"
-              loading="lazy"
-              title="Certificate Preview"
+              alt="Certificate Preview"
+              className="w-full h-auto object-contain"
+              style={{ maxHeight: "80vh" }}
             />
           </div>
         </div>

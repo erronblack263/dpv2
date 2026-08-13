@@ -262,13 +262,21 @@ const ListRow = memo(function ListRow({ project }: { project: Project }) {
 });
 
 /* ─── CAROUSEL card — tall portrait, text overlay ─────────── */
-const CarouselCard = memo(function CarouselCard({ project }: { project: Project }) {
+const CarouselCard = memo(function CarouselCard({
+  project,
+}: {
+  project: Project;
+}) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
-      style={{ height: "480px" }}>
+    <div
+      className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+      style={{ height: "480px" }}
+    >
       {/* Full-bleed gradient background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`}
+      />
       {/* Subtle overlay for text readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
       {/* Text content at bottom */}
@@ -276,22 +284,37 @@ const CarouselCard = memo(function CarouselCard({ project }: { project: Project 
         <span className="text-xs font-semibold text-white/60 tracking-wide">
           {tagParts[tagParts.length - 1]}
         </span>
-        <h3 className="text-2xl font-extrabold text-white leading-tight">{project.title}</h3>
-        <p className="text-sm text-white/70 line-clamp-2 mt-0.5">{project.description}</p>
+        <h3 className="text-2xl font-extrabold text-white leading-tight">
+          {project.title}
+        </h3>
+        <p className="text-sm text-white/70 line-clamp-2 mt-0.5">
+          {project.description}
+        </p>
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2 mt-3">
           {project.demo && project.demo !== "#" && (
-            <Link href={project.demo} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <Link
+              href={project.demo}
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <Play className="size-3" /> Video demo
             </Link>
           )}
           {project.artifacts && (
-            <Link href={project.artifacts} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <Link
+              href={project.artifacts}
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <ImageIcon className="size-3" /> Artifacts
             </Link>
           )}
           {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <GitBranch className="size-3" /> GitHub
             </a>
           )}
@@ -460,7 +483,10 @@ export default function ProjectsPage() {
                   className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
                 >
                   {filtered.map((p) => (
-                    <div key={p.title} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]">
+                    <div
+                      key={p.title}
+                      className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
+                    >
                       <CarouselCard project={p} />
                     </div>
                   ))}
