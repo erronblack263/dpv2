@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo, useRef } from "react";
+import React, { useState, useEffect, memo, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -446,36 +446,43 @@ export default function ProjectsPage() {
               })}
             </div>
 
-            {/* View toggle */}
-            <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
-              <button
-                onClick={() => changeView("grid")}
-                title="Grid view"
-                className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <LayoutGrid className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("tiles")}
-                title="Tiles view"
-                className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <LayoutDashboard className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("carousel")}
-                title="Carousel view"
-                className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <GalleryHorizontal className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("list")}
-                title="List view"
-                className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <List className="size-3.5" />
-              </button>
+            {/* View toggle — stepper style */}
+            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
+              {(["grid", "tiles", "carousel", "list"] as const).map((v, idx) => {
+                const labels: Record<string, string> = { grid: "Grid", tiles: "Tiles", carousel: "Carousel", list: "List" };
+                const icons: Record<string, React.ReactNode> = {
+                  grid: <LayoutGrid className="size-3" />,
+                  tiles: <LayoutDashboard className="size-3" />,
+                  carousel: <GalleryHorizontal className="size-3" />,
+                  list: <List className="size-3" />,
+                };
+                const views = ["grid", "tiles", "carousel", "list"];
+                const isActive = view === v;
+                const isCompleted = views.indexOf(view) > idx;
+                return (
+                  <div key={v} className="flex items-center">
+                    <button onClick={() => changeView(v)} className="flex flex-col items-center gap-1.5 group">
+                      <div className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
+                        isActive
+                          ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                          : isCompleted
+                          ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                          : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                      }`}>
+                        {icons[v]}
+                      </div>
+                      <span className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
+                        isActive ? "text-violet-500" : "text-muted-foreground group-hover:text-foreground"
+                      }`}>{labels[v]}</span>
+                    </button>
+                    {idx < 3 && (
+                      <div className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
+                        isCompleted ? "bg-violet-500/60" : "bg-border"
+                      }`} />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </FadeInOnScroll>
