@@ -19,10 +19,10 @@ import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 function TypewriterText({
   text,
   speed = 50,
-}: {
+}: Readonly<{
   text: string;
   speed?: number;
-}) {
+}>) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
     let cancelled = false;
@@ -231,10 +231,10 @@ function CertIcon() {
 function GridCard({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
       <div className="p-3 pb-0">
@@ -271,10 +271,10 @@ function GridCard({
 function ListRow({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
       <div
@@ -309,6 +309,7 @@ function ListRow({
         </p>
       </div>
       <button
+        type="button"
         onClick={() => onView(cert.embed)}
         className="shrink-0 flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
       >
@@ -322,10 +323,10 @@ function ListRow({
 function TileCard({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-lg hover:-translate-y-0.5">
       <div
@@ -342,6 +343,7 @@ function TileCard({
         </h3>
         <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
         <button
+          type="button"
           onClick={() => onView(cert.embed)}
           className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
         >
@@ -405,28 +407,28 @@ export default function CertificatesPage() {
 
           {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
-            <div className="mt-6 flex flex-col gap-3 border-b border-border pb-3">
-              {/* Categories Row */}
+            <div className="mt-6 flex items-center justify-between border-b border-border pb-3 gap-3 flex-wrap">
+              {/* Categories Row + More/Less on Left */}
               <div className="flex flex-wrap items-center gap-2">
-                {(expandedCategories ? CATEGORIES : CATEGORIES.slice(0, 4)).map(
-                  (cat) => (
+                {CATEGORIES.map(
+                  (cat, idx) => (
                     <button
                       key={cat}
+                      type="button"
                       onClick={() => setActiveCategory(cat)}
-                      className={`text-sm font-medium pb-1 transition-colors whitespace-nowrap ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
+                      className={`text-sm font-medium pb-1 transition-colors whitespace-nowrap ${idx >= 4 && !expandedCategories ? "hidden" : ""} sm:inline-block ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
                     >
                       {cat}
                     </button>
                   ),
                 )}
-              </div>
 
-              {/* Expand/Collapse + View Toggle Row */}
-              <div className="flex items-center justify-between gap-3">
+                {/* More/Less button - only show on mobile */}
                 {CATEGORIES.length > 4 && (
-                  <div>
+                  <div className="sm:hidden">
                     {!expandedCategories ? (
                       <button
+                        type="button"
                         onClick={() => setExpandedCategories(true)}
                         className="flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-500 hover:bg-violet-500/20 transition-all"
                       >
@@ -435,6 +437,7 @@ export default function CertificatesPage() {
                       </button>
                     ) : (
                       <button
+                        type="button"
                         onClick={() => setExpandedCategories(false)}
                         className="flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-500 hover:bg-red-500/20 transition-all"
                       >
@@ -444,38 +447,42 @@ export default function CertificatesPage() {
                     )}
                   </div>
                 )}
+              </div>
 
-                {/* View toggle */}
-                <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
-                  <button
-                    onClick={() => setView("grid")}
-                    title="Grid view"
-                    className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    <LayoutGrid className="size-3.5" />
-                  </button>
-                  <button
-                    onClick={() => setView("tiles")}
-                    title="Tiles view"
-                    className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    <LayoutDashboard className="size-3.5" />
-                  </button>
-                  <button
-                    onClick={() => setView("carousel")}
-                    title="Carousel view"
-                    className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    <GalleryHorizontal className="size-3.5" />
-                  </button>
-                  <button
-                    onClick={() => setView("list")}
-                    title="List view"
-                    className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    <List className="size-3.5" />
-                  </button>
-                </div>
+              {/* View toggle on Right */}
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setView("grid")}
+                  title="Grid view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <LayoutGrid className="size-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView("tiles")}
+                  title="Tiles view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <LayoutDashboard className="size-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView("carousel")}
+                  title="Carousel view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <GalleryHorizontal className="size-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView("list")}
+                  title="List view"
+                  className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  <List className="size-3.5" />
+                </button>
               </div>
             </div>
           </FadeInOnScroll>
@@ -552,6 +559,7 @@ export default function CertificatesPage() {
                   {/* Apple-style circular arrows — bottom right */}
                   <div className="flex items-center gap-2 absolute bottom-4 right-4">
                     <button
+                      type="button"
                       onClick={scrollPrev}
                       aria-label="Previous"
                       className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
@@ -559,6 +567,7 @@ export default function CertificatesPage() {
                       <ChevronLeft className="size-5" />
                     </button>
                     <button
+                      type="button"
                       onClick={scrollNext}
                       aria-label="Next"
                       className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
@@ -590,6 +599,7 @@ export default function CertificatesPage() {
             onKeyDown={(e) => e.stopPropagation()}
           >
             <button
+              type="button"
               onClick={() => setSelected(null)}
               className="absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-full bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Close"
