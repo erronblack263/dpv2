@@ -407,46 +407,48 @@ export default function CertificatesPage() {
 
           {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
-            <div className="mt-6 flex items-center justify-between border-b border-border pb-3 gap-3 flex-wrap">
-              {/* Categories Row + More/Less on Left */}
-              <div className="flex flex-wrap items-center gap-2">
-                {CATEGORIES.map(
-                  (cat, idx) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => setActiveCategory(cat)}
-                      className={`text-sm font-medium pb-1 transition-colors whitespace-nowrap ${idx >= 4 && !expandedCategories ? "hidden" : ""} sm:inline-block ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
-                    >
-                      {cat}
-                    </button>
-                  ),
-                )}
-
-                {/* More/Less button - only show on mobile */}
-                {CATEGORIES.length > 4 && (
-                  <div className="sm:hidden">
-                    {!expandedCategories ? (
+            <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
+              {/* Stepper breadcrumb categories */}
+              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
+                {CATEGORIES.map((cat, idx) => {
+                  const isActive = activeCategory === cat;
+                  const isCompleted = CATEGORIES.indexOf(activeCategory) > idx;
+                  return (
+                    <div key={cat} className="flex items-center">
+                      {/* Node + Label */}
                       <button
                         type="button"
-                        onClick={() => setExpandedCategories(true)}
-                        className="flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-500 hover:bg-violet-500/20 transition-all"
+                        onClick={() => setActiveCategory(cat)}
+                        className="flex flex-col items-center gap-1.5 group"
                       >
-                        <Plus className="size-3.5 stroke-[2.5]" />
-                        <span>More</span>
+                        <div className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
+                          isActive
+                            ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
+                            : isCompleted
+                            ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                            : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                        }`}>
+                          {isCompleted ? (
+                            <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : (
+                            <span className="text-[10px] font-bold">{idx + 1}</span>
+                          )}
+                        </div>
+                        <span className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
+                          isActive ? "text-violet-500" : "text-muted-foreground group-hover:text-foreground"
+                        }`}>{cat}</span>
                       </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setExpandedCategories(false)}
-                        className="flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-500 hover:bg-red-500/20 transition-all"
-                      >
-                        <Minus className="size-3.5 stroke-[2.5]" />
-                        <span>Less</span>
-                      </button>
-                    )}
-                  </div>
-                )}
+                      {/* Connector line */}
+                      {idx < CATEGORIES.length - 1 && (
+                        <div className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
+                          isCompleted ? "bg-violet-500/60" : "bg-border"
+                        }`} />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               {/* View toggle on Right */}

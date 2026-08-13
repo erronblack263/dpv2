@@ -405,17 +405,45 @@ export default function ProjectsPage() {
 
         {/* Filter tabs + view toggle */}
         <FadeInOnScroll delay={100}>
-          <div className="mt-6 flex items-center justify-between border-b border-border pb-3">
-            <div className="flex flex-wrap gap-6">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActive(cat)}
-                  className={`text-sm font-medium pb-1 transition-colors ${active === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  {cat}
-                </button>
-              ))}
+          <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
+            {/* Stepper breadcrumb categories */}
+            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
+              {CATEGORIES.map((cat, idx) => {
+                const isActive = active === cat;
+                const isCompleted = CATEGORIES.indexOf(active) > idx;
+                return (
+                  <div key={cat} className="flex items-center">
+                    <button
+                      onClick={() => setActive(cat)}
+                      className="flex flex-col items-center gap-1.5 group"
+                    >
+                      <div className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
+                        isActive
+                          ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
+                          : isCompleted
+                          ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                          : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                      }`}>
+                        {isCompleted ? (
+                          <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <span className="text-[10px] font-bold">{idx + 1}</span>
+                        )}
+                      </div>
+                      <span className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
+                        isActive ? "text-violet-500" : "text-muted-foreground group-hover:text-foreground"
+                      }`}>{cat}</span>
+                    </button>
+                    {idx < CATEGORIES.length - 1 && (
+                      <div className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
+                        isCompleted ? "bg-violet-500/60" : "bg-border"
+                      }`} />
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* View toggle */}
