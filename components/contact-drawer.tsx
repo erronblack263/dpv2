@@ -252,7 +252,7 @@ export function ContactDrawer() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all hover:shadow-[0_0_28px_rgba(99,102,241,0.7)] hover:brightness-110 disabled:opacity-60"
+                  className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all hover:bg-violet-500 hover:shadow-[0_0_28px_rgba(168,85,247,0.6)] disabled:opacity-60"
                 >
                   <Send className="size-3.5" />
                   {status === "sending" ? "Sending..." : "Send Message"}
