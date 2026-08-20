@@ -405,10 +405,9 @@ export default function CertificatesPage() {
             </p>
           </div>
 
-          {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
             <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
-              {/* Stepper breadcrumb categories */}
+              
               <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
                 {CATEGORIES.map((cat, idx) => {
                   const isActive = activeCategory === cat;
