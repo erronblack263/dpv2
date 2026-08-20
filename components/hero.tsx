@@ -175,7 +175,7 @@ export function Hero() {
             <div>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground">
                 I&apos;m{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400">
+                <span className="text-violet-600 dark:text-violet-400">
                   <TypewriterText text="Witness H Musonza" />
                 </span>
               </h1>
