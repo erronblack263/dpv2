@@ -177,7 +177,7 @@ const SECTIONS: SectionData[] = [
     platform: "Android & IOS",
     role: "Fullstack Developer",
     duration: "65 weeks",
-    status: "Completed",
+    status: " 75% Completed",
     images: [
       {
         num: "01",
@@ -221,7 +221,7 @@ const SECTIONS: SectionData[] = [
     platform: "Android & IOS",
     role: "Fullstack Developer",
     duration: "3 Weeks",
-    status: "Completed",
+    status: "75% Completed",
     images: [
       {
         num: "01",
@@ -307,7 +307,7 @@ const SECTIONS: SectionData[] = [
     platform: "Android & IOS",
     role: "ML & Fullstack Engineer",
     duration: "4 Weeks",
-    status: "Completed",
+    status: "75% Completed",
     images: [
       {
         num: "01",
@@ -387,7 +387,7 @@ const SECTIONS: SectionData[] = [
     platform: "Android & IOS",
     role: "Fullstack Developer",
     duration: "2 Weeks",
-    status: "Completed",
+    status: "75% Completed",
     images: [
       {
         num: "01",
