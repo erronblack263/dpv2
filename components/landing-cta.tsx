@@ -18,7 +18,7 @@ export function LandingCta() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-1.5 text-xs font-semibold text-white shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all hover:shadow-[0_0_28px_rgba(99,102,241,0.75)] hover:brightness-110 shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-full bg-violet-600 px-4 py-1.5 text-xs font-semibold text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all hover:bg-violet-500 hover:shadow-[0_0_28px_rgba(168,85,247,0.6)] shrink-0"
           >
             Let&apos;s Talk
             <ArrowUpRight className="size-3.5" />

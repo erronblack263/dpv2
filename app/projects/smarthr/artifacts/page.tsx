@@ -100,14 +100,14 @@ const SECTIONS: SectionData[] = [
       {
         num: "01",
         caption: "SIGNUP PAGE",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785842017/smarthr_signup_screen_tlpfpf.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785842017/smarthr_signup_screen_tlpfpf.png",
       },
       {
         num: "02",
         caption: "SIGN IN",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785842011/smarthr_sign_in_screen_ml808d.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785842011/smarthr_sign_in_screen_ml808d.png",
       },
     ],
   },
@@ -125,62 +125,62 @@ const SECTIONS: SectionData[] = [
       {
         num: "01",
         caption: "Landing Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785842008/smarthr_xwyta5.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785842008/smarthr_xwyta5.png",
       },
       {
         num: "02",
         caption: "Analytics Overview",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/dashboard/analytics.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841967/smarthr_dashboard_analytics_auyiv8.png",
       },
       {
         num: "03",
         caption: "Headcount Report",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/dashboard/headcount.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841970/smarthr_headcount_report_lwq9ve.png",
       },
       {
         num: "04",
         caption: "Job Application Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841974/job_application_page_kjvzbm.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841974/job_application_page_kjvzbm.png",
       },
       {
         num: "05",
         caption: "Candidate Applications",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841954/candidate_applications_drawer_ngoodi.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841954/candidate_applications_drawer_ngoodi.png",
       },
       {
         num: "06",
         caption: "Jobs Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841955/candidate_jobs_page_dvfski.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841955/candidate_jobs_page_dvfski.png",
       },
       {
         num: "07",
         caption: "Profile Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841957/candidates_profile_page_nvwbda.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841957/candidates_profile_page_nvwbda.png",
       },
       {
         num: "08",
         caption: "Notifications Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841953/candidate_notifications_page_gzbzrq.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841953/candidate_notifications_page_gzbzrq.png",
       },
       {
         num: "09",
         caption: "Departments Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841989/recruiter_department_page_a3b9sf.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841989/recruiter_department_page_a3b9sf.png",
       },
       {
         num: "10",
         caption: "Interviews Page",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785841958/candidate_interviews_page_fbsg6u.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841958/candidate_interviews_page_fbsg6u.png",
       },
     ],
   },
@@ -198,44 +198,44 @@ const SECTIONS: SectionData[] = [
       {
         num: "01",
         caption: "Job Listings",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/recruitment/jobs.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841981/smarthr_recruitment_jobs_s0ynpe.png",
       },
       {
         num: "02",
         caption: "Candidate Pipeline",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/recruitment/pipeline.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841986/smarthr_candidate_pipeline_ab4dfd.png",
       },
       {
         num: "03",
         caption: "Candidate Profile",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/recruitment/profile.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841988/smarthr_candidate_profile_hafk5g.png",
       },
       {
         num: "04",
         caption: "Interview Scheduler",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/recruitment/scheduler.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841987/smarthr_interview_scheduler_l2j6o0.png",
       },
       {
         num: "05",
         caption: "ADMIN APPLICATION MANAGEMENT",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785879124/admin_apploications_management_review_pey7gr.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785879124/admin_apploications_management_review_pey7gr.png",
       },
       {
         num: "06",
         caption: "USR MANAGEMENT SYSTEM",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785879123/admin_user_management_page_xmcmt7.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785879123/admin_user_management_page_xmcmt7.png",
       },
       {
         num: "07",
         caption: "admin jobs management system",
-        resolution: "1440 × 900",
-        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1785879132/admin_jobs_management_page_giqmaw.png",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785879132/admin_jobs_management_page_giqmaw.png",
       },
     ],
   },
@@ -252,21 +252,33 @@ const SECTIONS: SectionData[] = [
     images: [
       {
         num: "01",
-        caption: "Assessment Builder",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/assessment/builder.jpg",
+        caption: "Assessment Form",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787143855/assesment_form_iveje5.png",
       },
       {
         num: "02",
-        caption: "Test Interface",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/assessment/test.jpg",
+        caption: "Assessment Breakdown Results",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787143847/assesment-breakdown_results_br6del.png",
       },
       {
         num: "03",
-        caption: "Results & Scoring",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/assessment/results.jpg",
+        caption: "Assessment Metrics",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787143847/assesement-metrics_fkwste.png",
+      },
+      {
+        num: "04",
+        caption: "Assessment Scoring Modal",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787143845/assesment-scoring_modal_vhhyzy.png",
+      },
+      {
+        num: "05",
+        caption: "Psychometric Test Submission",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786007170/psychometrci_test_submission_s5ed8j.png",
       },
     ],
   },
@@ -284,20 +296,20 @@ const SECTIONS: SectionData[] = [
       {
         num: "01",
         caption: "Employee Directory",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/employees/directory.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841960/smarthr_employee_directory_uxukug.png",
       },
       {
         num: "02",
         caption: "Employee Profile",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/employees/profile.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841961/smarthr_employee_profile_dnzdga.png",
       },
       {
         num: "03",
         caption: "Onboarding Flow",
-        resolution: "1440 × 900",
-        src: "/artifacts/smarthr/employees/onboarding.jpg",
+        resolution: "1200 × 900",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785841962/smarthr_employee_onboarding_ruxoej.png",
       },
     ],
   },
@@ -316,7 +328,10 @@ export default function SmartHRArtifactsPage() {
   function scrollScreenPrev() {
     const el = screenCarouselRef.current;
     if (!el) return;
-    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+    el.scrollBy({
+      left: -Math.round(el.clientWidth * 0.8),
+      behavior: "smooth",
+    });
   }
   function scrollScreenNext() {
     const el = screenCarouselRef.current;
@@ -646,16 +661,25 @@ export default function SmartHRArtifactsPage() {
             <div className="flex items-center gap-3">
               {/* Screen view toggle */}
               <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
-                <button onClick={() => setScreenView("grid")} title="Grid"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("grid")}
+                  title="Grid"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutGrid className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("tiles")} title="Tiles"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("tiles")}
+                  title="Tiles"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutDashboard className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("carousel")} title="Carousel"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("carousel")}
+                  title="Carousel"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <GalleryHorizontal className="size-3" />
                 </button>
               </div>
@@ -664,16 +688,27 @@ export default function SmartHRArtifactsPage() {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     {section.images.map((_, i) => (
-                      <button key={i} onClick={() => setActiveScreenIdx(i)}
+                      <button
+                        key={i}
+                        onClick={() => setActiveScreenIdx(i)}
                         className={`size-2 rounded-full transition-all ${i === activeScreenIdx ? "bg-violet-500 w-4" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
-                        aria-label={`Go to screen ${i + 1}`} />
+                        aria-label={`Go to screen ${i + 1}`}
+                      />
                     ))}
                   </div>
                   <div className="flex items-center gap-1 border-l border-border pl-3">
-                    <button onClick={prevScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Previous screen">
+                    <button
+                      onClick={prevScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Previous screen"
+                    >
                       <ChevronLeft className="size-4" />
                     </button>
-                    <button onClick={nextScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Next screen">
+                    <button
+                      onClick={nextScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Next screen"
+                    >
                       <ChevronRight className="size-4" />
                     </button>
                   </div>
@@ -791,31 +826,55 @@ export default function SmartHRArtifactsPage() {
           {/* Screen cards — carousel view */}
           {screenView === "carousel" && (
             <div className="relative">
-              <div ref={screenCarouselRef}
-                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16">
+              <div
+                ref={screenCarouselRef}
+                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+              >
                 {section.images.map((img, i) => (
-                  <div key={img.src} className="shrink-0 snap-center w-[85%] sm:w-[60%] lg:w-[42%]">
-                    <div onClick={() => { setActiveScreenIdx(i); setLightboxIdx(i); }}
+                  <div
+                    key={img.src}
+                    className="shrink-0 snap-center w-[85%] sm:w-[60%] lg:w-[42%]"
+                  >
+                    <div
+                      onClick={() => {
+                        setActiveScreenIdx(i);
+                        setLightboxIdx(i);
+                      }}
                       className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02] border border-zinc-800"
-                      style={{ aspectRatio: "16/10" }}>
+                      style={{ aspectRatio: "16/10" }}
+                    >
                       <div className="absolute inset-0 bg-zinc-900" />
-                      <img src={img.src} alt={img.caption} className="absolute inset-0 w-full h-full object-cover" />
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                       <div className="relative z-10 mt-auto p-4">
-                        <p className="text-xs font-bold text-white truncate">{img.caption}</p>
-                        <p className="text-[10px] text-violet-400 font-mono">{img.num} · {img.resolution}</p>
+                        <p className="text-xs font-bold text-white truncate">
+                          {img.caption}
+                        </p>
+                        <p className="text-[10px] text-violet-400 font-mono">
+                          {img.num} · {img.resolution}
+                        </p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
               <div className="flex items-center gap-2 absolute bottom-4 right-4">
-                <button onClick={scrollScreenPrev} aria-label="Previous"
-                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                <button
+                  onClick={scrollScreenPrev}
+                  aria-label="Previous"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                >
                   <ChevronLeft className="size-5" />
                 </button>
-                <button onClick={scrollScreenNext} aria-label="Next"
-                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all">
+                <button
+                  onClick={scrollScreenNext}
+                  aria-label="Next"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                >
                   <ChevronRight className="size-5" />
                 </button>
               </div>

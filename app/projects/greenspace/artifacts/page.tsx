@@ -183,31 +183,31 @@ const SECTIONS: SectionData[] = [
         num: "01",
         caption: "Splash Screen",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/auth/splash.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959614/splash_i9tcea.jpg",
       },
       {
         num: "02",
         caption: "Auth Selection",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/auth/auth_selection screen.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959141/auth_selection_screen_yx81mo.jpg",
       },
       {
         num: "03",
         caption: "Login Screen",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/auth/login screen.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959617/login_screen_vms3ca.jpg",
       },
       {
         num: "04",
         caption: "Sign Up Screen",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/auth/signup screen.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959610/signup_screen_ulvvbz.jpg",
       },
       {
         num: "05",
         caption: "Forgot Password",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/auth/4got pass.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959613/4got_pass_jgjg9h.jpg",
       },
     ],
   },
@@ -227,73 +227,73 @@ const SECTIONS: SectionData[] = [
         num: "01",
         caption: "Dashboard",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/dashboard screen.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959050/dashboard_screen_ncgdqw.jpg",
       },
       {
         num: "02",
         caption: "Events",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/events screen.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959051/events_screen_jeltgh.jpg",
       },
       {
         num: "03",
         caption: "Forum Main",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/forum screen (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959052/forum_screen_1_vj3t4q.jpg",
       },
       {
         num: "04",
         caption: "Forum Details",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/forum screen (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959053/forum_screen_2_loihvi.jpg",
       },
       {
         num: "05",
         caption: "Green Guardian Overview",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/green guardian.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959141/green_guardian_ozpcam.jpg",
       },
       {
         num: "06",
         caption: "Guardian Reports 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/green guardian reports (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959065/green_guardian_reports_1_u1lt7r.jpg",
       },
       {
         num: "07",
         caption: "Guardian Reports 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/green guardian reports (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959139/green_guardian_reports_2_gr6zig.jpg",
       },
       {
         num: "08",
         caption: "Image Reco Main",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/image reco scr.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959141/image_reco_scr_cidydq.jpg",
       },
       {
         num: "09",
         caption: "Image Reco Result",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/image reco.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959141/image_reco_jdfcs3.jpg",
       },
       {
         num: "10",
         caption: "Image Reco Detail",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/image recoo.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959810/image_recoo_uo885b.jpg",
       },
       {
         num: "11",
         caption: "News Feed 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/news screen (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959140/news_screen_2_m5xthq.jpg",
       },
       {
         num: "12",
-        caption: "News Feed 2",
+        caption: "Guardian Reports Full",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/dashboard/news screen (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959141/green_guardian_reports_1_aq1w9b.jpg",
       },
     ],
   },
@@ -313,67 +313,67 @@ const SECTIONS: SectionData[] = [
         num: "01",
         caption: "Barren Soil Classification",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/barren soil classification.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959039/barren_soil_classification_hxdulg.jpg",
       },
       {
         num: "02",
         caption: "Phase 1 — Barren",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/phase 1 barren (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959038/phase_1_barren_1_jswhpx.jpg",
       },
       {
         num: "03",
         caption: "Phase 1 — Semi Vegetative 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959040/phase_1_semi_vegetative_1_ndxcbw.jpg",
       },
       {
         num: "04",
         caption: "Phase 1 — Semi Vegetative 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959039/phase_1_semi_vegetative_2_mrljyw.jpg",
       },
       {
         num: "05",
         caption: "Phase 1 — Semi Vegetative 3",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/phase 1 semi vegetative (3).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959045/phase_1_semi_vegetative_3_x1d1ee.jpg",
       },
       {
         num: "06",
         caption: "Semi Vegetative Detail",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/semi vegetative detail.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959046/semi_vegetative_detail_gzhslv.jpg",
       },
       {
         num: "07",
         caption: "Suspected Fertile 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/suspected fertile (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959045/suspected_fertile_2_pqlcso.jpg",
       },
       {
         num: "08",
         caption: "Suspected Fertile 3",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/suspected fertile (3).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959049/suspected_fertile_3_vvfwp0.jpg",
       },
       {
         num: "09",
         caption: "Suspected Fertile Phase 1 — 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959049/suspected_fertile_phase_1_1_uu8m9v.jpg",
       },
       {
         num: "10",
         caption: "Suspected Fertile Phase 1 — 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959049/suspected_fertile_phase_1_2_jftamo.jpg",
       },
       {
         num: "11",
         caption: "Suspected Fertile Phase 1 — 3",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/image recognition engine/suspected fertile phase 1 (3).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959050/suspected_fertile_phase_1_3_sdmxhc.jpg",
       },
     ],
   },
@@ -393,49 +393,49 @@ const SECTIONS: SectionData[] = [
         num: "01",
         caption: "Profile Main 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/profile screen (1).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959037/profile_screen_1_iypxl8.jpg",
       },
       {
         num: "02",
         caption: "Profile Main 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/profile screen (2).jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959038/profile_screen_2_npqm0i.jpg",
       },
       {
         num: "03",
         caption: "Profile Edit",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/profile edit.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959037/profile_edit_tzygjf.jpg",
       },
       {
         num: "04",
         caption: "Reports Overview",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/reports.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959037/reports_xjjgki.jpg",
       },
       {
         num: "05",
         caption: "Reports Modal",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/reports modal.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959039/reports_modal_av19lc.jpg",
       },
       {
         num: "06",
         caption: "Visual Analytics 1",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/visual.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959038/visual_vgfgqw.jpg",
       },
       {
         num: "07",
         caption: "Visual Analytics 2",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/visual2.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959038/visual2_mheoo8.jpg",
       },
       {
         num: "08",
         caption: "Visual Analytics 3",
         resolution: "1080 × 2400",
-        src: "/artifacts/greenspace/profile screen and reports/visua3.jpg",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959038/visua3_vtv3f7.jpg",
       },
     ],
   },
@@ -469,7 +469,10 @@ export default function GreenSpaceArtifactsPage() {
   function scrollScreenPrev() {
     const el = screenCarouselRef.current;
     if (!el) return;
-    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+    el.scrollBy({
+      left: -Math.round(el.clientWidth * 0.8),
+      behavior: "smooth",
+    });
   }
   function scrollScreenNext() {
     const el = screenCarouselRef.current;
@@ -807,16 +810,25 @@ export default function GreenSpaceArtifactsPage() {
             <div className="flex items-center gap-3">
               {/* Screen view toggle */}
               <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1">
-                <button onClick={() => setScreenView("grid")} title="Grid"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("grid")}
+                  title="Grid"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "grid" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutGrid className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("tiles")} title="Tiles"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("tiles")}
+                  title="Tiles"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "tiles" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <LayoutDashboard className="size-3" />
                 </button>
-                <button onClick={() => setScreenView("carousel")} title="Carousel"
-                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                <button
+                  onClick={() => setScreenView("carousel")}
+                  title="Carousel"
+                  className={`p-1.5 rounded-md transition-colors ${screenView === "carousel" ? "bg-background text-emerald-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
                   <GalleryHorizontal className="size-3" />
                 </button>
               </div>
@@ -825,16 +837,27 @@ export default function GreenSpaceArtifactsPage() {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     {section.images.map((_, i) => (
-                      <button key={i} onClick={() => setActiveScreenIdx(i)}
+                      <button
+                        key={i}
+                        onClick={() => setActiveScreenIdx(i)}
                         className={`size-2 rounded-full transition-all ${i === activeScreenIdx ? "bg-emerald-500 w-4" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
-                        aria-label={`Go to screen ${i + 1}`} />
+                        aria-label={`Go to screen ${i + 1}`}
+                      />
                     ))}
                   </div>
                   <div className="flex items-center gap-1 border-l border-border pl-3">
-                    <button onClick={prevScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Previous screen">
+                    <button
+                      onClick={prevScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Previous screen"
+                    >
                       <ChevronLeft className="size-4" />
                     </button>
-                    <button onClick={nextScreen} className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" aria-label="Next screen">
+                    <button
+                      onClick={nextScreen}
+                      className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      aria-label="Next screen"
+                    >
                       <ChevronRight className="size-4" />
                     </button>
                   </div>
@@ -845,164 +868,188 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Grid of Mobile Screen Cards */}
           {screenView === "grid" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {section.images.map((img, i) => {
-              const isActive = i === activeScreenIdx;
-              return (
-                <div
-                  key={img.src}
-                  onClick={() => setActiveScreenIdx(i)}
-                  className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
-                    isActive
-                      ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
-                      : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"
-                  }`}
-                >
-                  {/* Number Badge Top Left */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <span
-                      className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${
-                        isActive
-                          ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-extrabold"
-                          : "bg-muted text-muted-foreground border border-border"
-                      }`}
-                    >
-                      {img.num}
-                    </span>
-                  </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {section.images.map((img, i) => {
+                const isActive = i === activeScreenIdx;
+                return (
+                  <div
+                    key={img.src}
+                    onClick={() => setActiveScreenIdx(i)}
+                    className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
+                      isActive
+                        ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
+                        : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"
+                    }`}
+                  >
+                    {/* Number Badge Top Left */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span
+                        className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${
+                          isActive
+                            ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-extrabold"
+                            : "bg-muted text-muted-foreground border border-border"
+                        }`}
+                      >
+                        {img.num}
+                      </span>
+                    </div>
 
-                  {/* Thumbnail Mockup Frame */}
-                  <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                    <img
-                      src={img.src}
-                      alt={img.caption}
-                      className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
-                    />
+                    {/* Thumbnail Mockup Frame */}
+                    <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                      />
 
-                    {/* Quick Lightbox View Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxIdx(i);
-                      }}
-                      className="absolute bottom-3 right-3 z-20 size-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all"
-                      title="Open full view"
-                    >
-                      <Eye className="size-4" />
-                    </button>
-                  </div>
+                      {/* Quick Lightbox View Button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxIdx(i);
+                        }}
+                        className="absolute bottom-3 right-3 z-20 size-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all"
+                        title="Open full view"
+                      >
+                        <Eye className="size-4" />
+                      </button>
+                    </div>
 
-                  {/* Caption Footer */}
-                  <div className="mt-3 flex flex-col gap-0.5">
-                    <p className="text-xs font-bold text-foreground truncate">
-                      {img.caption}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground font-mono">
-                      {img.resolution}
-                    </p>
+                    {/* Caption Footer */}
+                    <div className="mt-3 flex flex-col gap-0.5">
+                      <p className="text-xs font-bold text-foreground truncate">
+                        {img.caption}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground font-mono">
+                        {img.resolution}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           )}
 
           {/* Tiles View */}
           {screenView === "tiles" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {section.images.map((img, i) => {
-              const isActive = i === activeScreenIdx;
-              return (
-                <div
-                  key={img.src}
-                  onClick={() => setActiveScreenIdx(i)}
-                  className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
-                    isActive
-                      ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
-                      : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"
-                  }`}
-                >
-                  {/* Number Badge Top Left */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <span
-                      className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${
-                        isActive
-                          ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-extrabold"
-                          : "bg-muted text-muted-foreground border border-border"
-                      }`}
-                    >
-                      {img.num}
-                    </span>
-                  </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {section.images.map((img, i) => {
+                const isActive = i === activeScreenIdx;
+                return (
+                  <div
+                    key={img.src}
+                    onClick={() => setActiveScreenIdx(i)}
+                    className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
+                      isActive
+                        ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
+                        : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"
+                    }`}
+                  >
+                    {/* Number Badge Top Left */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span
+                        className={`inline-flex items-center justify-center size-6 rounded-lg text-[11px] font-bold ${
+                          isActive
+                            ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black font-extrabold"
+                            : "bg-muted text-muted-foreground border border-border"
+                        }`}
+                      >
+                        {img.num}
+                      </span>
+                    </div>
 
-                  {/* Thumbnail Mockup Frame */}
-                  <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                    <img
-                      src={img.src}
-                      alt={img.caption}
-                      className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
-                    />
+                    {/* Thumbnail Mockup Frame */}
+                    <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                      />
 
-                    {/* Quick Lightbox View Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxIdx(i);
-                      }}
-                      className="absolute bottom-3 right-3 z-20 size-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all"
-                      title="Open full view"
-                    >
-                      <Eye className="size-4" />
-                    </button>
-                  </div>
+                      {/* Quick Lightbox View Button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxIdx(i);
+                        }}
+                        className="absolute bottom-3 right-3 z-20 size-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-80 hover:opacity-100 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all"
+                        title="Open full view"
+                      >
+                        <Eye className="size-4" />
+                      </button>
+                    </div>
 
-                  {/* Caption Footer */}
-                  <div className="mt-3 flex flex-col gap-0.5">
-                    <p className="text-xs font-bold text-foreground truncate">
-                      {img.caption}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground font-mono">
-                      {img.resolution}
-                    </p>
+                    {/* Caption Footer */}
+                    <div className="mt-3 flex flex-col gap-0.5">
+                      <p className="text-xs font-bold text-foreground truncate">
+                        {img.caption}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground font-mono">
+                        {img.resolution}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           )}
 
           {/* Carousel View */}
           {screenView === "carousel" && (
-          <div className="relative">
-            <div ref={screenCarouselRef}
-              className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16">
-              {section.images.map((img, i) => (
-                <div key={img.src} className="shrink-0 snap-center w-[72%] sm:w-[45%] lg:w-[28%]">
-                  <div onClick={() => { setActiveScreenIdx(i); setLightboxIdx(i); }}
-                    className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
-                    style={{ height: "420px" }}>
-                    <div className="absolute inset-0 bg-zinc-900 rounded-2xl border border-zinc-800" />
-                    <img src={img.src} alt={img.caption} className="absolute inset-0 w-full h-full object-cover rounded-2xl" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent rounded-2xl" />
-                    <div className="relative z-10 mt-auto p-4">
-                      <p className="text-xs font-bold text-white truncate">{img.caption}</p>
-                      <p className="text-[10px] text-emerald-400 font-mono">{img.num} · {img.resolution}</p>
+            <div className="relative">
+              <div
+                ref={screenCarouselRef}
+                className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+              >
+                {section.images.map((img, i) => (
+                  <div
+                    key={img.src}
+                    className="shrink-0 snap-center w-[72%] sm:w-[45%] lg:w-[28%]"
+                  >
+                    <div
+                      onClick={() => {
+                        setActiveScreenIdx(i);
+                        setLightboxIdx(i);
+                      }}
+                      className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+                      style={{ height: "420px" }}
+                    >
+                      <div className="absolute inset-0 bg-zinc-900 rounded-2xl border border-zinc-800" />
+                      <img
+                        src={img.src}
+                        alt={img.caption}
+                        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent rounded-2xl" />
+                      <div className="relative z-10 mt-auto p-4">
+                        <p className="text-xs font-bold text-white truncate">
+                          {img.caption}
+                        </p>
+                        <p className="text-[10px] text-emerald-400 font-mono">
+                          {img.num} · {img.resolution}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                <button
+                  onClick={scrollScreenPrev}
+                  aria-label="Previous"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+                >
+                  <ChevronLeft className="size-5" />
+                </button>
+                <button
+                  onClick={scrollScreenNext}
+                  aria-label="Next"
+                  className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all"
+                >
+                  <ChevronRight className="size-5" />
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-2 absolute bottom-4 right-4">
-              <button onClick={scrollScreenPrev} aria-label="Previous"
-                className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all">
-                <ChevronLeft className="size-5" />
-              </button>
-              <button onClick={scrollScreenNext} aria-label="Next"
-                className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all">
-                <ChevronRight className="size-5" />
-              </button>
-            </div>
-          </div>
           )}
         </div>
 

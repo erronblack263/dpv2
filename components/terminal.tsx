@@ -143,7 +143,9 @@ export function Terminal() {
   const outputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    // Defer focus to avoid blocking first paint
+    const t = setTimeout(() => inputRef.current?.focus(), 500);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {

@@ -7,7 +7,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { ContactDrawer } from "@/components/contact-drawer";
 import "./globals.css";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+});
 export const metadata: Metadata = {
   title: "Witness H Musonza — Software Developer",
   description:

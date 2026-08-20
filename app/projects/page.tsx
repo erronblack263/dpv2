@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo, useRef } from "react";
+import React, { useState, useEffect, memo, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -262,13 +262,21 @@ const ListRow = memo(function ListRow({ project }: { project: Project }) {
 });
 
 /* ─── CAROUSEL card — tall portrait, text overlay ─────────── */
-const CarouselCard = memo(function CarouselCard({ project }: { project: Project }) {
+const CarouselCard = memo(function CarouselCard({
+  project,
+}: {
+  project: Project;
+}) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
-      style={{ height: "480px" }}>
+    <div
+      className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+      style={{ height: "480px" }}
+    >
       {/* Full-bleed gradient background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`}
+      />
       {/* Subtle overlay for text readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
       {/* Text content at bottom */}
@@ -276,22 +284,37 @@ const CarouselCard = memo(function CarouselCard({ project }: { project: Project 
         <span className="text-xs font-semibold text-white/60 tracking-wide">
           {tagParts[tagParts.length - 1]}
         </span>
-        <h3 className="text-2xl font-extrabold text-white leading-tight">{project.title}</h3>
-        <p className="text-sm text-white/70 line-clamp-2 mt-0.5">{project.description}</p>
+        <h3 className="text-2xl font-extrabold text-white leading-tight">
+          {project.title}
+        </h3>
+        <p className="text-sm text-white/70 line-clamp-2 mt-0.5">
+          {project.description}
+        </p>
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2 mt-3">
           {project.demo && project.demo !== "#" && (
-            <Link href={project.demo} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <Link
+              href={project.demo}
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <Play className="size-3" /> Video demo
             </Link>
           )}
           {project.artifacts && (
-            <Link href={project.artifacts} className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <Link
+              href={project.artifacts}
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <ImageIcon className="size-3" /> Artifacts
             </Link>
           )}
           {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
               <GitBranch className="size-3" /> GitHub
             </a>
           )}
@@ -382,49 +405,126 @@ export default function ProjectsPage() {
 
         {/* Filter tabs + view toggle */}
         <FadeInOnScroll delay={100}>
-          <div className="mt-6 flex items-center justify-between border-b border-border pb-3">
-            <div className="flex flex-wrap gap-6">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActive(cat)}
-                  className={`text-sm font-medium pb-1 transition-colors ${active === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  {cat}
-                </button>
-              ))}
+          <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
+            {/* Stepper breadcrumb categories */}
+            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
+              {CATEGORIES.map((cat, idx) => {
+                const isActive = active === cat;
+                const isCompleted = CATEGORIES.indexOf(active) > idx;
+                return (
+                  <div key={cat} className="flex items-center">
+                    <button
+                      onClick={() => setActive(cat)}
+                      className="flex flex-col items-center gap-1.5 group"
+                    >
+                      <div
+                        className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
+                          isActive
+                            ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
+                            : isCompleted
+                              ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                              : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                        }`}
+                      >
+                        {isCompleted ? (
+                          <svg
+                            className="size-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        ) : (
+                          <span className="text-[10px] font-bold">
+                            {idx + 1}
+                          </span>
+                        )}
+                      </div>
+                      <span
+                        className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
+                          isActive
+                            ? "text-violet-500"
+                            : "text-muted-foreground group-hover:text-foreground"
+                        }`}
+                      >
+                        {cat}
+                      </span>
+                    </button>
+                    {idx < CATEGORIES.length - 1 && (
+                      <div
+                        className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
+                          isCompleted ? "bg-violet-500/60" : "bg-border"
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
-            {/* View toggle */}
-            <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
-              <button
-                onClick={() => changeView("grid")}
-                title="Grid view"
-                className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <LayoutGrid className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("tiles")}
-                title="Tiles view"
-                className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <LayoutDashboard className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("carousel")}
-                title="Carousel view"
-                className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <GalleryHorizontal className="size-3.5" />
-              </button>
-              <button
-                onClick={() => changeView("list")}
-                title="List view"
-                className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <List className="size-3.5" />
-              </button>
+            {/* View toggle — stepper style */}
+            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
+              {(["grid", "tiles", "carousel", "list"] as const).map(
+                (v, idx) => {
+                  const labels: Record<string, string> = {
+                    grid: "Grid",
+                    tiles: "Tiles",
+                    carousel: "Carousel",
+                    list: "List",
+                  };
+                  const icons: Record<string, React.ReactNode> = {
+                    grid: <LayoutGrid className="size-3" />,
+                    tiles: <LayoutDashboard className="size-3" />,
+                    carousel: <GalleryHorizontal className="size-3" />,
+                    list: <List className="size-3" />,
+                  };
+                  const views = ["grid", "tiles", "carousel", "list"];
+                  const isActive = view === v;
+                  const isCompleted = views.indexOf(view) > idx;
+                  return (
+                    <div key={v} className="flex items-center">
+                      <button
+                        onClick={() => changeView(v)}
+                        className="flex flex-col items-center gap-1.5 group"
+                      >
+                        <div
+                          className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
+                            isActive
+                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                              : isCompleted
+                                ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                                : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                          }`}
+                        >
+                          {icons[v]}
+                        </div>
+                        <span
+                          className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
+                            isActive
+                              ? "text-violet-500"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          }`}
+                        >
+                          {labels[v]}
+                        </span>
+                      </button>
+                      {idx < 3 && (
+                        <div
+                          className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
+                            isCompleted ? "bg-violet-500/60" : "bg-border"
+                          }`}
+                        />
+                      )}
+                    </div>
+                  );
+                },
+              )}
             </div>
           </div>
         </FadeInOnScroll>
@@ -460,7 +560,10 @@ export default function ProjectsPage() {
                   className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
                 >
                   {filtered.map((p) => (
-                    <div key={p.title} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]">
+                    <div
+                      key={p.title}
+                      className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
+                    >
                       <CarouselCard project={p} />
                     </div>
                   ))}

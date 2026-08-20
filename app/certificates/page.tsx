@@ -1,17 +1,28 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, X, LayoutGrid, List, LayoutDashboard, ChevronLeft, ChevronRight, GalleryHorizontal } from "lucide-react";
+import {
+  ArrowLeft,
+  X,
+  LayoutGrid,
+  List,
+  LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
+  GalleryHorizontal,
+  Plus,
+  Minus,
+} from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 
 function TypewriterText({
   text,
   speed = 50,
-}: {
+}: Readonly<{
   text: string;
   speed?: number;
-}) {
+}>) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
     let cancelled = false;
@@ -51,7 +62,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating core Python programming concepts and practical development skills.",
     embed:
-      "https://drive.google.com/file/d/1yMP_8LuicNagfmQu8xnDF4TFWlY1u-Vh/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784812968/python_cert_koi3p2.png",
     gradient: "from-blue-800 via-blue-700 to-indigo-900",
   },
   {
@@ -61,7 +72,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating modern JavaScript patterns, application architecture and best practices.",
     embed:
-      "https://drive.google.com/file/d/1HS9VSHDdZuGyFOzplND_T2siJgwWNlLg/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804810/javascript_cert_cswyzj.png",
     gradient: "from-yellow-700 via-amber-600 to-orange-800",
   },
   {
@@ -71,7 +82,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating Dart programming concepts and practical development skills.",
     embed:
-      "https://drive.google.com/file/d/12Bb1J32eHv11NsQt4YGzMUnRDuzghHWj/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784813291/dart_cert_d6rilt.png",
     gradient: "from-cyan-700 via-teal-600 to-blue-900",
   },
   {
@@ -81,7 +92,7 @@ const allCerts: Cert[] = [
     description:
       "Verified Java programming certificate issued by Programming Hub.",
     embed:
-      "https://drive.google.com/file/d/1KnH91NPPXmguP8JtBlpfFfu2Fvcw2e09/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804534/java_cert_lhbtzk.png",
     gradient: "from-red-800 via-rose-700 to-orange-900",
   },
   {
@@ -91,7 +102,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating TypeScript development skills and typed JavaScript patterns.",
     embed:
-      "https://drive.google.com/file/d/1a0Ia1zohZPNSu9W7FkNT5rByB6rjFLED/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567138/typescript_x9kn53.jpg",
     gradient: "from-blue-700 via-sky-600 to-indigo-800",
   },
   {
@@ -101,7 +112,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating Spring Boot backend development and REST API design.",
     embed:
-      "https://drive.google.com/file/d/1Dfr3MiE4edrNApKehrTFgn0aQ2bB2mgC/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/spring_hjnllb.jpg",
     gradient: "from-green-800 via-emerald-700 to-green-900",
   },
   {
@@ -111,7 +122,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating React component architecture and modern frontend patterns.",
     embed:
-      "https://drive.google.com/file/d/1ajroacrHht3FVy9LJU7fMzJfAXMKWUSB/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567122/reat_vwgdna.jpg",
     gradient: "from-sky-600 via-cyan-500 to-blue-800",
   },
   {
@@ -121,7 +132,7 @@ const allCerts: Cert[] = [
     description:
       "Credential validating Next.js full-stack development and server-side rendering skills.",
     embed:
-      "https://drive.google.com/file/d/1n4mSLZ8BP6SmgtOpx0k17DoA7rMwzwLh/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567122/nextjs_xyas9v.jpg",
     gradient: "from-zinc-700 via-zinc-600 to-zinc-900",
   },
   {
@@ -131,7 +142,7 @@ const allCerts: Cert[] = [
     description:
       "Credential demonstrating cross-platform mobile app development with Flutter and Dart.",
     embed:
-      "https://drive.google.com/file/d/1O8r7n7cZmgBwsbNqWlB4JL3JrILYAQGc/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786622074/flutter_httcwn.png",
     gradient: "from-blue-600 via-indigo-500 to-violet-800",
   },
   {
@@ -141,12 +152,60 @@ const allCerts: Cert[] = [
     description:
       "Credential validating machine learning model development skills using PyTorch.",
     embed:
-      "https://drive.google.com/file/d/15qtgFGRdxyZLK_g72ExzG32eOUFD2zZf/preview",
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786567450/machine_learning_km7s6e.png",
     gradient: "from-orange-700 via-red-600 to-rose-900",
+  },
+  {
+    title: "DevOps Certification",
+    issuer: "Programming Hub",
+    category: "CI/CD",
+    description:
+      "Credential demonstrating system design principles, architecture patterns, and scalability practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/devops_qzj9xy.jpg",
+    gradient: "from-purple-800 via-purple-700 to-indigo-900",
+  },
+  {
+    title: "Web Development",
+    issuer: "Programming Hub",
+    category: "System Design",
+    description:
+      "Credential demonstrating advanced web development practices, modern frameworks, and best practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/web_dev_ymn5ue.jpg",
+    gradient: "from-emerald-700 via-teal-600 to-cyan-800",
+  },
+  {
+    title: "Agile Project Management",
+    issuer: "Programming Hub",
+    category: "System Design",
+    description:
+      "Credential demonstrating agile methodologies, project planning, and team collaboration practices.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786621461/agile_project_management_c2ohec.jpg",
+    gradient: "from-blue-700 via-indigo-600 to-purple-800",
+  },
+  {
+    title: "Cybersecurity",
+    issuer: "Programming Hub",
+    category: "Security",
+    description:
+      "Credential demonstrating security best practices, threat assessment, and cybersecurity principles.",
+    embed:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1786622806/cybersecurity_gtexg0.png",
+    gradient: "from-red-800 via-red-700 to-orange-900",
   },
 ];
 
-const CATEGORIES = ["All", "Programming", "Framework", "Machine Learning"];
+const CATEGORIES = [
+  "All",
+  "Programming",
+  "Framework",
+  "Machine Learning",
+  "System Design",
+  "CI/CD",
+  "Security",
+];
 
 /* ─── Cert icon ────────────────────────────────────────────────── */
 function CertIcon() {
@@ -172,10 +231,10 @@ function CertIcon() {
 function GridCard({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
       <div className="p-3 pb-0">
@@ -212,10 +271,10 @@ function GridCard({
 function ListRow({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
       <div
@@ -250,6 +309,7 @@ function ListRow({
         </p>
       </div>
       <button
+        type="button"
         onClick={() => onView(cert.embed)}
         className="shrink-0 flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
       >
@@ -263,10 +323,10 @@ function ListRow({
 function TileCard({
   cert,
   onView,
-}: {
+}: Readonly<{
   cert: Cert;
   onView: (e: string) => void;
-}) {
+}>) {
   return (
     <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-lg hover:-translate-y-0.5">
       <div
@@ -283,6 +343,7 @@ function TileCard({
         </h3>
         <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
         <button
+          type="button"
           onClick={() => onView(cert.embed)}
           className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
         >
@@ -298,12 +359,16 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [expandedCategories, setExpandedCategories] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   function scrollPrev() {
     const el = carouselRef.current;
     if (!el) return;
-    el.scrollBy({ left: -Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+    el.scrollBy({
+      left: -Math.round(el.clientWidth * 0.8),
+      behavior: "smooth",
+    });
   }
   function scrollNext() {
     const el = carouselRef.current;
@@ -342,49 +407,129 @@ export default function CertificatesPage() {
 
           {/* Filter tabs + view toggle */}
           <FadeInOnScroll>
-            <div className="mt-6 flex items-center justify-between border-b border-border pb-3">
-              <div className="flex flex-wrap gap-5">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`text-sm font-medium pb-1 transition-colors ${activeCategory === cat ? "text-violet-500 border-b-2 border-violet-500" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+            <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
+              {/* Stepper breadcrumb categories */}
+              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
+                {CATEGORIES.map((cat, idx) => {
+                  const isActive = activeCategory === cat;
+                  const isCompleted = CATEGORIES.indexOf(activeCategory) > idx;
+                  return (
+                    <div key={cat} className="flex items-center">
+                      {/* Node + Label */}
+                      <button
+                        type="button"
+                        onClick={() => setActiveCategory(cat)}
+                        className="flex flex-col items-center gap-1.5 group"
+                      >
+                        <div
+                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
+                            isActive
+                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
+                              : isCompleted
+                                ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                                : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                          }`}
+                        >
+                          {isCompleted ? (
+                            <svg
+                              className="size-4"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          ) : (
+                            <span className="text-[10px] font-bold">
+                              {idx + 1}
+                            </span>
+                          )}
+                        </div>
+                        <span
+                          className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
+                            isActive
+                              ? "text-violet-500"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          }`}
+                        >
+                          {cat}
+                        </span>
+                      </button>
+                      {/* Connector line */}
+                      {idx < CATEGORIES.length - 1 && (
+                        <div
+                          className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
+                            isCompleted ? "bg-violet-500/60" : "bg-border"
+                          }`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* View toggle */}
-              <div className="flex items-center gap-1 rounded-lg border border-border bg-muted p-1 shrink-0">
-                <button
-                  onClick={() => setView("grid")}
-                  title="Grid view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <LayoutGrid className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("tiles")}
-                  title="Tiles view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "tiles" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <LayoutDashboard className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("carousel")}
-                  title="Carousel view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "carousel" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <GalleryHorizontal className="size-3.5" />
-                </button>
-                <button
-                  onClick={() => setView("list")}
-                  title="List view"
-                  className={`p-1.5 rounded-md transition-colors ${view === "list" ? "bg-background text-violet-500 shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  <List className="size-3.5" />
-                </button>
+              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
+                {(["grid", "tiles", "carousel", "list"] as const).map(
+                  (v, idx) => {
+                    const labels: Record<string, string> = {
+                      grid: "Grid",
+                      tiles: "Tiles",
+                      carousel: "Carousel",
+                      list: "List",
+                    };
+                    const icons: Record<string, React.ReactNode> = {
+                      grid: <LayoutGrid className="size-3" />,
+                      tiles: <LayoutDashboard className="size-3" />,
+                      carousel: <GalleryHorizontal className="size-3" />,
+                      list: <List className="size-3" />,
+                    };
+                    const views = ["grid", "tiles", "carousel", "list"];
+                    const isActive = view === v;
+                    const isCompleted = views.indexOf(view) > idx;
+                    return (
+                      <div key={v} className="flex items-center">
+                        <button
+                          type="button"
+                          onClick={() => setView(v)}
+                          className="flex flex-col items-center gap-1.5 group"
+                        >
+                          <div
+                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
+                              isActive
+                                ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                                : isCompleted
+                                  ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                                  : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                            }`}
+                          >
+                            {icons[v]}
+                          </div>
+                          <span
+                            className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
+                              isActive
+                                ? "text-violet-500"
+                                : "text-muted-foreground group-hover:text-foreground"
+                            }`}
+                          >
+                            {labels[v]}
+                          </span>
+                        </button>
+                        {idx < 3 && (
+                          <div
+                            className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
+                              isCompleted ? "bg-violet-500/60" : "bg-border"
+                            }`}
+                          />
+                        )}
+                      </div>
+                    );
+                  },
+                )}
               </div>
             </div>
           </FadeInOnScroll>
@@ -420,21 +565,35 @@ export default function CertificatesPage() {
                     className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
                   >
                     {filtered.map((cert) => (
-                      <div key={cert.embed} className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]">
+                      <div
+                        key={cert.embed}
+                        className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]"
+                      >
                         {/* Tall portrait carousel card */}
                         <div
                           className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
                           style={{ height: "480px" }}
                           onClick={() => setSelected(cert.embed)}
                         >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`} />
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`}
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                           <div className="relative z-10 mt-auto p-6 flex flex-col gap-1.5">
-                            <span className="text-xs font-semibold text-white/60 tracking-wide">{cert.category}</span>
-                            <h3 className="text-2xl font-extrabold text-white leading-tight">{cert.title}</h3>
-                            <p className="text-sm text-white/70 mt-0.5">{cert.issuer}</p>
+                            <span className="text-xs font-semibold text-white/60 tracking-wide">
+                              {cert.category}
+                            </span>
+                            <h3 className="text-2xl font-extrabold text-white leading-tight">
+                              {cert.title}
+                            </h3>
+                            <p className="text-sm text-white/70 mt-0.5">
+                              {cert.issuer}
+                            </p>
                             <button
-                              onClick={(e) => { e.stopPropagation(); setSelected(cert.embed); }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelected(cert.embed);
+                              }}
                               className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
                             >
                               View certificate
@@ -447,6 +606,7 @@ export default function CertificatesPage() {
                   {/* Apple-style circular arrows — bottom right */}
                   <div className="flex items-center gap-2 absolute bottom-4 right-4">
                     <button
+                      type="button"
                       onClick={scrollPrev}
                       aria-label="Previous"
                       className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
@@ -454,6 +614,7 @@ export default function CertificatesPage() {
                       <ChevronLeft className="size-5" />
                     </button>
                     <button
+                      type="button"
                       onClick={scrollNext}
                       aria-label="Next"
                       className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
@@ -485,19 +646,18 @@ export default function CertificatesPage() {
             onKeyDown={(e) => e.stopPropagation()}
           >
             <button
+              type="button"
               onClick={() => setSelected(null)}
               className="absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-full bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Close"
             >
               <X className="size-4" />
             </button>
-            <iframe
+            <img
               src={selected}
-              className="w-full"
-              style={{ height: "80vh" }}
-              allow="autoplay"
-              loading="lazy"
-              title="Certificate Preview"
+              alt="Certificate Preview"
+              className="w-full h-auto object-contain"
+              style={{ maxHeight: "80vh" }}
             />
           </div>
         </div>
