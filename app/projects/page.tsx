@@ -122,7 +122,7 @@ const PROJECTS: Project[] = [
     tech: ["Next.js", "OpenAI", "TypeScript", "Tailwind CSS"],
     category: "Web platforms",
     gradient: "from-rose-800 via-pink-700 to-purple-900",
-    demo: "#",
+    demo: "/projects/ai-chat-assistant",
     github: "#",
   },
   {
@@ -134,6 +134,7 @@ const PROJECTS: Project[] = [
     category: "Web platforms",
     gradient: "from-cyan-700 via-teal-600 to-blue-900",
     demo: "#",
+    artifacts: "/projects/weather-dashboard/artifacts",
     github: "#",
   },
 ];
