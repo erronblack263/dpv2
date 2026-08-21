@@ -112,7 +112,7 @@ const PROJECTS: Project[] = [
     category: "Web platforms",
     gradient: "from-violet-800 via-purple-700 to-indigo-900",
     demo: "#",
-    github: "#",
+    github: "/projects/portfolio-cms",
   },
   {
     title: "AI Chat Assistant",
@@ -160,15 +160,24 @@ function ActionButtons({ project }: { project: Project }) {
           <ImageIcon className="size-3" /> Artifacts
         </Link>
       )}
-      {project.github && (
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
-        >
-          <GitBranch className="size-3" /> GitHub
-        </a>
+      {project.github && project.github !== "#" && (
+        project.github.startsWith("/") ? (
+          <Link
+            href={project.github}
+            className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            <GitBranch className="size-3" /> GitHub
+          </Link>
+        ) : (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            <GitBranch className="size-3" /> GitHub
+          </a>
+        )
       )}
     </div>
   );
