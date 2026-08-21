@@ -346,6 +346,15 @@ export default function SmartHRArtifactsPage() {
 
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
+  // Preload adjacent images for instant cycling
+  useEffect(() => {
+    const preload = (src: string) => { const img = new Image(); img.src = src; };
+    const prev = section.images[(activeScreenIdx - 1 + section.images.length) % section.images.length];
+    const next = section.images[(activeScreenIdx + 1) % section.images.length];
+    if (prev) preload(prev.src);
+    if (next) preload(next.src);
+  }, [activeScreenIdx, section.images]);
+
   function nextScreen() {
     setActiveScreenIdx((i) => (i + 1) % section.images.length);
   }
