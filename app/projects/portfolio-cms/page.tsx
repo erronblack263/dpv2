@@ -46,17 +46,6 @@ export default function PortfolioCMSComingSoon() {
           </p>
         </div>
 
-        {/* Progress bar */}
-        <div className="w-full max-w-xs flex flex-col gap-2">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Development progress</span>
-            <span className="font-semibold text-violet-500">35%</span>
-          </div>
-          <div className="h-2 rounded-full bg-muted overflow-hidden">
-            <div className="h-full w-[45%] rounded-full bg-gradient-to-r from-violet-600 to-violet-400 transition-all duration-1000" />
-          </div>
-        </div>
-
         {/* Tech stack */}
         <div className="flex flex-wrap justify-center gap-2">
           {["Next.js", "Spring Boot", "PostgreSQL", "TypeScript"].map((t) => (
@@ -88,9 +77,7 @@ export default function PortfolioCMSComingSoon() {
         </div>
 
         {/* Footer note */}
-        <p className="text-xs text-muted-foreground mt-2">
-          Expected release · Q4 2026
-        </p>
+       
       </div>
     </div>
   );
