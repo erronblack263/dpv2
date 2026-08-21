@@ -169,6 +169,16 @@ function GraduationCard() {
   const [open, setOpen] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
+  // Preload adjacent images for instant cycling
+  useEffect(() => {
+    if (lightbox === null) return;
+    const preload = (src: string) => { const img = new window.Image(); img.src = src; };
+    const prev = GRAD_PHOTOS[(lightbox - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length];
+    const next = GRAD_PHOTOS[(lightbox + 1) % GRAD_PHOTOS.length];
+    preload(prev.src);
+    preload(next.src);
+  }, [lightbox]);
+
   // Keyboard navigation for lightbox
   useEffect(() => {
     if (lightbox === null) return;
@@ -217,7 +227,10 @@ function GraduationCard() {
 
           {/* Expand / collapse trigger */}
           <button
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => setOpen((v) => {
+              if (!v) GRAD_PHOTOS.forEach(p => { const img = new window.Image(); img.src = p.src; });
+              return !v;
+            })}
             aria-expanded={open}
             className="flex items-center gap-2 self-start text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
           >
@@ -285,7 +298,7 @@ function GraduationCard() {
             {/* Main image */}
             <div className="relative w-full max-h-[75vh] flex items-center justify-center">
               <img
-                src={GRAD_PHOTOS[lightbox].src.replace("w_800", "w_1600")}
+                src={GRAD_PHOTOS[lightbox].src}
                 alt={GRAD_PHOTOS[lightbox].alt}
                 className="max-h-[75vh] max-w-full object-contain rounded-2xl shadow-2xl"
               />
@@ -329,10 +342,11 @@ function GraduationCard() {
           {/* Close button */}
           <button
             onClick={() => setLightbox(null)}
-            className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm text-lg font-bold"
+            className="absolute top-16 right-4 flex items-center gap-2 rounded-full bg-red-600 hover:bg-red-500 text-white px-4 py-2 text-xs font-bold shadow-xl border border-white/20 transition-all cursor-pointer"
             aria-label="Close lightbox"
           >
-            ✕
+            <span className="text-base font-bold">✕</span>
+            <span>Close</span>
           </button>
         </div>
       )}
