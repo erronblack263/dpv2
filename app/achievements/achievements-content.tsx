@@ -159,7 +159,7 @@ function GraduationCard() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)]">
+    <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
       {/* Background glow */}
       <div
         className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
@@ -323,7 +323,7 @@ export function AchievementsContent() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16 items-stretch">
 
           {/* GreenSpace award card */}
-          <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card to-card dark:from-violet-500/[0.08] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full">
+          <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card to-card dark:from-violet-500/[0.08] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
             {/* Background glow */}
             <div
               className="absolute -top-24 -right-24 size-72 rounded-full pointer-events-none"

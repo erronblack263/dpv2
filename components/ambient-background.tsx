@@ -5,7 +5,7 @@ export function AmbientBackground() {
       className="pointer-events-none fixed inset-0 overflow-hidden dark:block hidden"
       style={{ zIndex: 0 }}
     >
-      {/* Top-right purple bloom (behind terminal) */}
+
       <div
         style={{
           position: "absolute",
@@ -20,7 +20,6 @@ export function AmbientBackground() {
         }}
       />
 
-      {/* Mid-left cyan bloom (behind avatar) */}
       <div
         style={{
           position: "absolute",
@@ -35,7 +34,6 @@ export function AmbientBackground() {
         }}
       />
 
-      {/* Bottom teal bloom */}
       <div
         style={{
           position: "absolute",
@@ -49,8 +47,7 @@ export function AmbientBackground() {
           filter: "blur(70px)",
         }}
       />
-
-      {/* Soft center violet wash */}
+      
       <div
         style={{
           position: "absolute",
