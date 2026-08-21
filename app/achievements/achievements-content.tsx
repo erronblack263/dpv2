@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { Medal, Trophy, Star, Sparkles, ChevronRight, BadgeCheck, GraduationCap, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
@@ -153,92 +154,192 @@ function TimelineItem({
 }
 
 /* ─────────────────────────────────────────────
-   Graduation card with collapsible gallery
+   Graduation card with collapsible gallery + lightbox
    ───────────────────────────────────────────── */
+
+const GRAD_PHOTOS = [
+  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308624/20251125_095039_bovnbc.heic", alt: "Graduation ceremony" },
+  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308550/20251125_092425_ku77yl.heic", alt: "Graduation day" },
+  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308582/20251125_111457_cki3uj.jpg", alt: "Graduation celebration" },
+  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308297/IMGL9986_uynqcz.jpg", alt: "Graduation portrait" },
+  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308331/IMGL9987_lpotiw.jpg", alt: "Graduation photo" },
+];
+
 function GraduationCard() {
   const [open, setOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length);
+      if (e.key === "ArrowLeft") setLightbox((i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightbox]);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
-      {/* Background glow */}
-      <div
-        className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative flex flex-col gap-5">
-        {/* Header row */}
-        <div className="flex items-start gap-4">
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-[0_0_30px_rgba(16,185,129,0.4)]">
-            <GraduationCap className="size-7" />
-          </div>
-          <div className="flex-1">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-0.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 tracking-wide mb-2">
-              <Sparkles className="size-3" />
-              MILESTONE
-            </span>
-            <h2 className="text-xl font-extrabold text-foreground leading-snug">
-              Graduation — Class of 2026
-            </h2>
-          </div>
-        </div>
-
-        {/* Body */}
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Graduated in the <strong className="text-foreground">Software Engineering</strong> field
-          from <strong className="text-foreground">Telone Center for Learning</strong>, Class of 2026 —
-          the culmination of years of rigorous study, hands-on projects, and continuous growth.
-        </p>
-
-        {/* Expand / collapse trigger */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          className="flex items-center gap-2 self-start text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
-        >
-          <span>{open ? "Hide gallery" : "View graduation gallery"}</span>
-          <ChevronDown
-            className="size-4 transition-transform duration-300"
-            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-          />
-        </button>
-
-        {/* Collapsible gallery */}
+    <>
+      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
+        {/* Background glow */}
         <div
-          className="overflow-hidden transition-all duration-500 ease-in-out"
-          style={{ maxHeight: open ? "600px" : "0px", opacity: open ? 1 : 0 }}
-        >
-          <div className="pt-1">
-            <h3 className="text-xs font-semibold text-foreground mb-3 uppercase tracking-wide">
-              Graduation Gallery
-            </h3>
-            <div className="grid grid-cols-3 gap-2">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div
-                  key={i}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-muted/50 dark:bg-white/[0.03] flex items-center justify-center transition-all hover:border-emerald-500/30 hover:shadow-[0_0_16px_rgba(16,185,129,0.1)]"
-                >
-                  {/* Replace with: <Image src="/graduation-{i}.jpg" alt="Graduation photo" fill className="object-cover" /> */}
-                  <div className="flex flex-col items-center gap-1 text-muted-foreground/40">
-                    <GraduationCap className="size-5" />
-                    <span className="text-[9px] font-medium">Photo {i}</span>
-                  </div>
-                </div>
-              ))}
+          className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)", filter: "blur(40px)" }}
+          aria-hidden="true"
+        />
+
+        <div className="relative flex flex-col gap-5">
+          {/* Header row */}
+          <div className="flex items-start gap-4">
+            <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-[0_0_30px_rgba(16,185,129,0.4)]">
+              <GraduationCap className="size-7" />
             </div>
-            <p className="mt-2 text-[11px] text-muted-foreground italic">
-              Drop your graduation photos here.
-            </p>
+            <div className="flex-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-0.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 tracking-wide mb-2">
+                <Sparkles className="size-3" />
+                MILESTONE
+              </span>
+              <h2 className="text-xl font-extrabold text-foreground leading-snug">
+                Graduation — Class of 2026
+              </h2>
+            </div>
+          </div>
+
+          {/* Body */}
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Graduated in the <strong className="text-foreground">Software Engineering</strong> field
+            from <strong className="text-foreground">Telone Center for Learning</strong>, Class of 2026 —
+            the culmination of years of rigorous study, hands-on projects, and continuous growth.
+          </p>
+
+          {/* Expand / collapse trigger */}
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            className="flex items-center gap-2 self-start text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+          >
+            <span>{open ? "Hide gallery" : "View graduation gallery"}</span>
+            <ChevronDown
+              className="size-4 transition-transform duration-300"
+              style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+            />
+          </button>
+
+          {/* Collapsible gallery */}
+          <div
+            className="overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: open ? "600px" : "0px", opacity: open ? 1 : 0 }}
+          >
+            <div className="pt-1">
+              <h3 className="text-xs font-semibold text-foreground mb-3 uppercase tracking-wide">
+                Graduation Gallery
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {GRAD_PHOTOS.map(({ src, alt }, idx) => (
+                  <button
+                    key={src}
+                    onClick={() => setLightbox(idx)}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border transition-all hover:border-emerald-500/40 hover:shadow-[0_0_16px_rgba(16,185,129,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    aria-label={`Open ${alt} in fullscreen`}
+                  >
+                    <img
+                      src={src}
+                      alt={alt}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    {/* Hover overlay hint */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-[10px] font-semibold bg-black/50 px-2 py-1 rounded-full">
+                        View
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* ── Lightbox ──────────────────────────────────────────── */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center"
+          style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)" }}
+          onClick={() => setLightbox(null)}
+        >
+          {/* Image container — stop propagation so clicks on image don't close */}
+          <div
+            className="relative max-w-4xl w-full mx-4 flex flex-col items-center gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Counter */}
+            <p className="text-white/60 text-xs font-medium tracking-wide">
+              {lightbox + 1} / {GRAD_PHOTOS.length}
+            </p>
+
+            {/* Main image */}
+            <div className="relative w-full max-h-[75vh] flex items-center justify-center">
+              <img
+                src={GRAD_PHOTOS[lightbox].src.replace("w_800", "w_1600")}
+                alt={GRAD_PHOTOS[lightbox].alt}
+                className="max-h-[75vh] max-w-full object-contain rounded-2xl shadow-2xl"
+              />
+            </div>
+
+            {/* Caption */}
+            <p className="text-white/70 text-sm">{GRAD_PHOTOS[lightbox].alt}</p>
+
+            {/* Thumbnail strip */}
+            <div className="flex gap-2 mt-1">
+              {GRAD_PHOTOS.map(({ src, alt }, idx) => (
+                <button
+                  key={src}
+                  onClick={() => setLightbox(idx)}
+                  className={`relative size-12 overflow-hidden rounded-lg border-2 transition-all ${idx === lightbox ? "border-emerald-400 scale-110" : "border-white/20 opacity-60 hover:opacity-100"}`}
+                >
+                  <img src={src} alt={alt} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Prev button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm"
+            aria-label="Previous photo"
+          >
+            <ChevronRight className="size-5 rotate-180" />
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+
+          {/* Close button */}
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm text-lg font-bold"
+            aria-label="Close lightbox"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </>
   );
 }
+
 
 /* ─────────────────────────────────────────────
    Main page content
