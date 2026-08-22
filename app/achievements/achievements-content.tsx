@@ -503,10 +503,10 @@ export function AchievementsContent() {
             containerClassName="!absolute top-0 left-1/2 !right-auto !w-screen !h-full -translate-x-1/2 pointer-events-none"
             className="hidden"
             backgroundFill={bgFill}
-            waveOpacity={isDark ? 0.32 : 0.22}
-            blur={14}
+            waveOpacity={isDark ? 0.55 : 0.4}
+            blur={10}
             speed="slow"
-            waveWidth={38}
+            waveWidth={52}
             fitContainer
             colors={isDark ? DARK_WAVE_COLORS : LIGHT_WAVE_COLORS}
           />
