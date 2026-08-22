@@ -2,12 +2,18 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import { Medal, Trophy, Star, Sparkles, ChevronRight, BadgeCheck, GraduationCap, ChevronDown } from "lucide-react";
+import {
+  Medal,
+  Trophy,
+  Star,
+  Sparkles,
+  ChevronRight,
+  BadgeCheck,
+  GraduationCap,
+  ChevronDown,
+} from "lucide-react";
 import Link from "next/link";
 
-/* ─────────────────────────────────────────────
-   Animated counter hook
-   ───────────────────────────────────────────── */
 function useCountUp(target: number, duration = 1800) {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -32,7 +38,7 @@ function useCountUp(target: number, duration = 1800) {
         }, 16);
         observer.disconnect();
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -41,9 +47,6 @@ function useCountUp(target: number, duration = 1800) {
   return { value, ref };
 }
 
-/* ─────────────────────────────────────────────
-   Stats card
-   ───────────────────────────────────────────── */
 function StatCard({
   icon: Icon,
   value,
@@ -70,15 +73,11 @@ function StatCard({
           <p className="text-sm text-muted-foreground">{label}</p>
         </div>
       </div>
-      {/* Subtle shimmer on hover */}
       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   Timeline item
-   ───────────────────────────────────────────── */
 function TimelineItem({
   year,
   title,
@@ -105,7 +104,7 @@ function TimelineItem({
           obs.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -121,9 +120,7 @@ function TimelineItem({
         transition: `opacity 0.6s ${idx * 0.15}s, transform 0.6s ${idx * 0.15}s`,
       }}
     >
-      {/* Timeline line */}
       <div className="absolute left-3 sm:left-4 top-0 bottom-0 w-px bg-border" />
-      {/* Timeline dot */}
       <div
         className={`absolute left-[6px] sm:left-[10px] top-1.5 size-3.5 rounded-full border-2 ${
           highlight
@@ -152,40 +149,54 @@ function TimelineItem({
     </div>
   );
 }
-
-/* ─────────────────────────────────────────────
-   Graduation card with collapsible gallery + lightbox
-   ───────────────────────────────────────────── */
-
 const GRAD_PHOTOS = [
-  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308624/20251125_095039_bovnbc.heic", alt: "Graduation ceremony" },
-  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308550/20251125_092425_ku77yl.heic", alt: "Graduation day" },
-  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308582/20251125_111457_cki3uj.jpg", alt: "Graduation celebration" },
-  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308297/IMGL9986_uynqcz.jpg", alt: "Graduation portrait" },
-  { src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308331/IMGL9987_lpotiw.jpg", alt: "Graduation photo" },
+  {
+    src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308624/20251125_095039_bovnbc.heic",
+    alt: "Graduation ceremony",
+  },
+  {
+    src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308550/20251125_092425_ku77yl.heic",
+    alt: "Graduation day",
+  },
+  {
+    src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308582/20251125_111457_cki3uj.jpg",
+    alt: "Graduation celebration",
+  },
+  {
+    src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308297/IMGL9986_uynqcz.jpg",
+    alt: "Graduation portrait",
+  },
+  {
+    src: "https://res.cloudinary.com/virfpzu4/image/upload/f_jpg,q_auto,w_800,c_fill/v1787308331/IMGL9987_lpotiw.jpg",
+    alt: "Graduation photo",
+  },
 ];
 
 function GraduationCard() {
   const [open, setOpen] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  // Preload adjacent images for instant cycling
   useEffect(() => {
     if (lightbox === null) return;
-    const preload = (src: string) => { const img = new window.Image(); img.src = src; };
-    const prev = GRAD_PHOTOS[(lightbox - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length];
+    const preload = (src: string) => {
+      const img = new window.Image();
+      img.src = src;
+    };
+    const prev =
+      GRAD_PHOTOS[(lightbox - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length];
     const next = GRAD_PHOTOS[(lightbox + 1) % GRAD_PHOTOS.length];
     preload(prev.src);
     preload(next.src);
   }, [lightbox]);
 
-  // Keyboard navigation for lightbox
   useEffect(() => {
     if (lightbox === null) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightbox(null);
-      if (e.key === "ArrowRight") setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length);
-      if (e.key === "ArrowLeft") setLightbox((i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length);
+      if (e.key === "ArrowRight")
+        setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length);
+      if (e.key === "ArrowLeft")
+        setLightbox((i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -194,15 +205,17 @@ function GraduationCard() {
   return (
     <>
       <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
-        {/* Background glow */}
         <div
           className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)", filter: "blur(40px)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)",
+            filter: "blur(40px)",
+          }}
           aria-hidden="true"
         />
 
         <div className="relative flex flex-col gap-5">
-          {/* Header row */}
           <div className="flex items-start gap-4">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-[0_0_30px_rgba(16,185,129,0.4)]">
               <GraduationCap className="size-7" />
@@ -213,24 +226,33 @@ function GraduationCard() {
                 MILESTONE
               </span>
               <h2 className="text-xl font-extrabold text-foreground leading-snug">
-                Graduation — Class of 2026
+                Graduation — Class of 2025
               </h2>
             </div>
           </div>
 
-          {/* Body */}
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Graduated in the <strong className="text-foreground">Software Engineering</strong> field
-            from <strong className="text-foreground">Telone Center for Learning</strong>, Class of 2026 —
-            the culmination of years of rigorous study, hands-on projects, and continuous growth.
+            Graduated in the{" "}
+            <strong className="text-foreground">Software Engineering</strong>{" "}
+            field from{" "}
+            <strong className="text-foreground">
+              Telone Center for Learning
+            </strong>
+            , Class of 2025 — the culmination of years of rigorous study,
+            hands-on projects, and continuous growth.
           </p>
 
-          {/* Expand / collapse trigger */}
           <button
-            onClick={() => setOpen((v) => {
-              if (!v) GRAD_PHOTOS.forEach(p => { const img = new window.Image(); img.src = p.src; });
-              return !v;
-            })}
+            onClick={() =>
+              setOpen((v) => {
+                if (!v)
+                  GRAD_PHOTOS.forEach((p) => {
+                    const img = new window.Image();
+                    img.src = p.src;
+                  });
+                return !v;
+              })
+            }
             aria-expanded={open}
             className="flex items-center gap-2 self-start text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
           >
@@ -241,7 +263,6 @@ function GraduationCard() {
             />
           </button>
 
-          {/* Collapsible gallery */}
           <div
             className="overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: open ? "600px" : "0px", opacity: open ? 1 : 0 }}
@@ -278,14 +299,15 @@ function GraduationCard() {
         </div>
       </div>
 
-      {/* ── Lightbox ──────────────────────────────────────────── */}
       {lightbox !== null && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)" }}
+          style={{
+            background: "rgba(0,0,0,0.92)",
+            backdropFilter: "blur(12px)",
+          }}
           onClick={() => setLightbox(null)}
         >
-          {/* Image container — stop propagation so clicks on image don't close */}
           <div
             className="relative max-w-4xl w-full mx-4 flex flex-col items-center gap-4"
             onClick={(e) => e.stopPropagation()}
@@ -315,7 +337,11 @@ function GraduationCard() {
                   onClick={() => setLightbox(idx)}
                   className={`relative size-12 overflow-hidden rounded-lg border-2 transition-all ${idx === lightbox ? "border-emerald-400 scale-110" : "border-white/20 opacity-60 hover:opacity-100"}`}
                 >
-                  <img src={src} alt={alt} className="w-full h-full object-cover" />
+                  <img
+                    src={src}
+                    alt={alt}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>
@@ -323,7 +349,12 @@ function GraduationCard() {
 
           {/* Prev button */}
           <button
-            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox(
+                (i) => (i! - 1 + GRAD_PHOTOS.length) % GRAD_PHOTOS.length,
+              );
+            }}
             className="absolute left-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm"
             aria-label="Previous photo"
           >
@@ -332,7 +363,10 @@ function GraduationCard() {
 
           {/* Next button */}
           <button
-            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((i) => (i! + 1) % GRAD_PHOTOS.length);
+            }}
             className="absolute right-4 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm"
             aria-label="Next photo"
           >
@@ -353,7 +387,6 @@ function GraduationCard() {
     </>
   );
 }
-
 
 /* ─────────────────────────────────────────────
    Main page content
@@ -398,10 +431,7 @@ export function AchievementsContent() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-8">
-          <Link
-            href="/"
-            className="hover:text-foreground transition-colors"
-          >
+          <Link href="/" className="hover:text-foreground transition-colors">
             Home
           </Link>
           <ChevronRight className="size-3" />
@@ -436,7 +466,6 @@ export function AchievementsContent() {
 
         {/* ── Achievement cards — side by side on desktop ──────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16 items-stretch">
-
           {/* GreenSpace award card */}
           <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card to-card dark:from-violet-500/[0.08] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
             {/* Background glow */}
@@ -469,23 +498,35 @@ export function AchievementsContent() {
 
               {/* Body */}
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Awarded <strong className="text-foreground">Best Innovative Project by a Male Student in Software Engineering</strong> by{" "}
-                <strong className="text-foreground">Telone Center for Learning</strong> for the{" "}
-                <strong className="text-foreground">GreenSpace</strong> project — recognised for exceptional technical innovation, real-world impact, and creative problem-solving. Presented to project creator <strong className="text-foreground">Witness Musonza</strong>.
+                Awarded{" "}
+                <strong className="text-foreground">
+                  Best Innovative Project by a Male Student in Software
+                  Engineering
+                </strong>{" "}
+                by{" "}
+                <strong className="text-foreground">
+                  Telone Center for Learning
+                </strong>{" "}
+                for the <strong className="text-foreground">GreenSpace</strong>{" "}
+                project — recognised for exceptional technical innovation,
+                real-world impact, and creative problem-solving. Presented to
+                project creator{" "}
+                <strong className="text-foreground">Witness Musonza</strong>.
               </p>
             </div>
           </div>
 
           {/* Graduation card */}
           <GraduationCard />
-
         </div>
-
-
 
         {/* ── Stats row ──────────────────────────────────────────── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
-          <StatCard icon={Trophy} value={1} label="Best Innovative Project Awards" />
+          <StatCard
+            icon={Trophy}
+            value={1}
+            label="Best Innovative Project Awards"
+          />
           <StatCard icon={Star} value={10} label="Projects Delivered" />
           <StatCard icon={BadgeCheck} value={5} label="Certifications Earned" />
         </div>

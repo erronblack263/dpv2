@@ -5,7 +5,6 @@ export function AmbientBackground() {
       className="pointer-events-none fixed inset-0 overflow-hidden dark:block hidden"
       style={{ zIndex: 0 }}
     >
-
       <div
         style={{
           position: "absolute",
@@ -47,7 +46,7 @@ export function AmbientBackground() {
           filter: "blur(70px)",
         }}
       />
-      
+
       <div
         style={{
           position: "absolute",

@@ -382,8 +382,14 @@ export default function WelfareTrackerArtifactsPage() {
 
   // Preload adjacent images for instant cycling
   useEffect(() => {
-    const preload = (src: string) => { const img = new Image(); img.src = src; };
-    const prev = section.images[(activeScreenIdx - 1 + section.images.length) % section.images.length];
+    const preload = (src: string) => {
+      const img = new Image();
+      img.src = src;
+    };
+    const prev =
+      section.images[
+        (activeScreenIdx - 1 + section.images.length) % section.images.length
+      ];
     const next = section.images[(activeScreenIdx + 1) % section.images.length];
     if (prev) preload(prev.src);
     if (next) preload(next.src);

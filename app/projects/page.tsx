@@ -161,8 +161,9 @@ function ActionButtons({ project }: { project: Project }) {
           <ImageIcon className="size-3" /> Artifacts
         </Link>
       )}
-      {project.github && project.github !== "#" && (
-        project.github.startsWith("/") ? (
+      {project.github &&
+        project.github !== "#" &&
+        (project.github.startsWith("/") ? (
           <Link
             href={project.github}
             className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
@@ -178,8 +179,7 @@ function ActionButtons({ project }: { project: Project }) {
           >
             <GitBranch className="size-3" /> GitHub
           </a>
-        )
-      )}
+        ))}
     </div>
   );
 }
