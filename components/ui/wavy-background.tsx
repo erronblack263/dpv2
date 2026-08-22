@@ -73,6 +73,7 @@ export const WavyBackground = ({
     let isMobile = false;
     let prefersReducedMotion = false;
     let avatarBaseline = 0;
+    let isDocumentVisible = document.visibilityState === "visible";
 
     const getSpeed = () => {
       if (prefersReducedMotion) return 0;
@@ -130,6 +131,8 @@ export const WavyBackground = ({
     };
 
     const render = () => {
+      if (!isDocumentVisible) return;
+
       ntRef.current += getSpeed();
 
       ctx.globalAlpha = 1;
@@ -185,6 +188,12 @@ export const WavyBackground = ({
     });
     render();
 
+    const onVisibilityChange = () => {
+      isDocumentVisible = document.visibilityState === "visible";
+      if (isDocumentVisible) render();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     const mqMobile = window.matchMedia("(max-width: 1024px)");
     const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => resize();
@@ -200,6 +209,7 @@ export const WavyBackground = ({
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", updateAvatarBaseline);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       mqMobile.removeEventListener?.("change", onChange);
       mqMotion.removeEventListener?.("change", onChange);
       ro.disconnect();
