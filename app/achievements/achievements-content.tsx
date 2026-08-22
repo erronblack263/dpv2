@@ -2,6 +2,8 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import {
   Medal,
   Trophy,
@@ -13,6 +15,29 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
+
+const WavyBackground = dynamic(
+  () =>
+    import("@/components/ui/wavy-background").then((mod) => ({
+      default: mod.WavyBackground,
+    })),
+  { ssr: false },
+);
+
+const DARK_WAVE_COLORS = [
+  "#38bdf8",
+  "#818cf8",
+  "#a78bfa",
+  "#6366f1",
+  "#22d3ee",
+];
+const LIGHT_WAVE_COLORS = [
+  "#6366f1",
+  "#818cf8",
+  "#38bdf8",
+  "#a78bfa",
+  "#22d3ee",
+];
 
 function useCountUp(target: number, duration = 1800) {
   const [value, setValue] = useState(0);
@@ -204,7 +229,7 @@ function GraduationCard() {
 
   return (
     <>
-      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card to-card dark:from-emerald-500/[0.06] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
+      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card/90 to-card/90 dark:from-emerald-500/[0.06] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
         <div
           className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
           style={{
@@ -392,8 +417,16 @@ function GraduationCard() {
    Main page content
    ───────────────────────────────────────────── */
 export function AchievementsContent() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const isDark = !mounted || resolvedTheme === "dark";
+  const bgFill = isDark ? "#000000" : "#f1f5f9";
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen overflow-hidden bg-background" style={{ backgroundColor: bgFill }}>
       {/* ── Ambient light beams (purple diagonal, matching hero-landing) ── */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
         <div
@@ -465,9 +498,21 @@ export function AchievementsContent() {
         </div>
 
         {/* ── Achievement cards — side by side on desktop ──────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16 items-stretch">
+        <div className="relative isolate grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16 items-stretch">
+          <WavyBackground
+            containerClassName="!absolute top-0 left-1/2 !right-auto !w-screen !h-full -translate-x-1/2 pointer-events-none"
+            className="hidden"
+            backgroundFill={bgFill}
+            waveOpacity={isDark ? 0.32 : 0.22}
+            blur={14}
+            speed="slow"
+            waveWidth={38}
+            fitContainer
+            colors={isDark ? DARK_WAVE_COLORS : LIGHT_WAVE_COLORS}
+          />
+
           {/* GreenSpace award card */}
-          <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card to-card dark:from-violet-500/[0.08] dark:via-card dark:to-card p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
+          <div className="relative z-10 overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card/90 to-card/90 dark:from-violet-500/[0.08] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
             {/* Background glow */}
             <div
               className="absolute -top-24 -right-24 size-72 rounded-full pointer-events-none"
@@ -517,7 +562,9 @@ export function AchievementsContent() {
           </div>
 
           {/* Graduation card */}
-          <GraduationCard />
+          <div className="relative z-10">
+            <GraduationCard />
+          </div>
         </div>
 
         {/* ── Stats row ──────────────────────────────────────────── */}
