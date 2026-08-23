@@ -40,6 +40,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const [isMuted, setIsMuted] = useState(false);
   const [buffering, setBuffering] = useState(false);
   const [bufferProgress, setBufferProgress] = useState(0);
+  const [mediaError, setMediaError] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cssFullscreen, setCssFullscreen] = useState(false);
@@ -219,10 +220,16 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
 
   const handlePlaying = useCallback(() => {
     setBuffering(false);
+    setMediaError(false);
     setIsPlaying(true);
     clearNetworkToast();
     setToast({ visible: false, dismissed: false });
   }, [clearNetworkToast]);
+
+  const handleError = useCallback(() => {
+    setBuffering(false);
+    setMediaError(true);
+  }, []);
 
   const handleProgress = useCallback(() => {
     const el = videoRef.current;
@@ -274,7 +281,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         ref={videoRef}
         src={src}
         playsInline
-        preload="metadata"
+        preload="auto"
         poster={thumbnail}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
@@ -282,9 +289,29 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         onPlaying={handlePlaying}
         onProgress={handleProgress}
         onEnded={handleEnded}
+        onError={handleError}
         onClick={togglePlay}
         className={`cursor-pointer bg-black ${videoFitClass}`}
       />
+
+      {mediaError && (
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-2 bg-black/75 px-4 text-center">
+          <span className="text-xs font-semibold text-white">
+            Video playback paused
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              setMediaError(false);
+              videoRef.current?.load();
+              videoRef.current?.play().catch(() => {});
+            }}
+            className="rounded-full bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-black hover:bg-emerald-400"
+          >
+            Retry video
+          </button>
+        </div>
+      )}
 
       {!started && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[1px]">

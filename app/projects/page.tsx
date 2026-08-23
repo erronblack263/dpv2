@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, memo, useRef } from "react";
 import Link from "next/link";
+import { animate, stagger } from "animejs";
 import {
   ArrowLeft,
   ArrowRight,
@@ -198,7 +199,7 @@ function ActionButtons({ project }: { project: Project }) {
 const GridCard = memo(function GridCard({ project }: { project: Project }) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-violet-500/40 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)] hover:-translate-y-0.5">
+    <div data-project-card className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.06)] hover:border-violet-500/40 hover:shadow-[0_18px_40px_rgba(124,58,237,0.16)] hover:-translate-y-0.5">
       <div className="p-3 pb-0">
         <div
           className={`relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${project.gradient} overflow-hidden`}
@@ -242,7 +243,7 @@ const GridCard = memo(function GridCard({ project }: { project: Project }) {
 /* ─── LIST row ────────────────────────────────────────────────── */
 const ListRow = memo(function ListRow({ project }: { project: Project }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
+    <div data-project-card className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
       {/* Left: swatch + info */}
       <div className="flex items-start gap-3 flex-1 min-w-0">
         <div
@@ -345,7 +346,7 @@ const CarouselCard = memo(function CarouselCard({
 });
 const TileCard = memo(function TileCard({ project }: { project: Project }) {
   return (
-    <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-[0_8px_24px_rgba(124,58,237,0.12)] hover:-translate-y-0.5">
+    <div data-project-card className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-[0_8px_24px_rgba(124,58,237,0.12)] hover:-translate-y-0.5">
       <div className={`w-full h-20 bg-gradient-to-br ${project.gradient}`} />
       <div className="p-3 flex flex-col gap-1.5">
         <span className="text-[10px] font-semibold text-violet-500">
@@ -399,6 +400,25 @@ export default function ProjectsPage() {
     active === "All work"
       ? PROJECTS
       : PROJECTS.filter((p) => p.category === active);
+
+  useEffect(() => {
+    const cards = document.querySelectorAll<HTMLElement>(
+      "[data-project-card]",
+    );
+    if (!cards.length) return;
+
+    const animation = animate(cards, {
+      opacity: [0, 1],
+      translateY: [18, 0],
+      delay: stagger(70),
+      duration: 520,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [active, view]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -581,6 +601,7 @@ export default function ProjectsPage() {
                 >
                   {filtered.map((p) => (
                     <div
+                      data-project-card
                       key={p.title}
                       className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
                     >

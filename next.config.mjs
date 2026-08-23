@@ -11,7 +11,7 @@ const nextConfig = {
     unoptimized: false,
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 86400,
-    qualities: [100, 75],
+    qualities: [100, 75, 65],
     remotePatterns: [
       { protocol: "https", hostname: "cdn.jsdelivr.net" },
       { protocol: "https", hostname: "res.cloudinary.com" },

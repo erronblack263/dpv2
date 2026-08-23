@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect } from "react";
+import { animate, stagger } from "animejs";
 import { ArrowUpRight, Code2, Database, Pencil, Cloud } from "lucide-react";
 
 const services = [
@@ -44,6 +48,23 @@ const services = [
 ];
 
 export function WhatIDo() {
+  useEffect(() => {
+    const cards = document.querySelectorAll<HTMLElement>("[data-home-service]");
+    if (!cards.length) return;
+
+    const animation = animate(cards, {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      delay: stagger(90, { start: 520 }),
+      duration: 580,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, []);
+
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-1 sm:pt-1.5 pb-2 sm:pb-3">
       <div className="text-center mb-2.5 sm:mb-3">
@@ -60,6 +81,7 @@ export function WhatIDo() {
           ({ icon: Icon, title, tagline, description, iconBg, iconGlow }) => (
             <article
               key={title}
+              data-home-service
               className="group relative overflow-hidden rounded-xl border border-border bg-card/60 dark:bg-black/30 backdrop-blur-2xl p-4 transition-all duration-300 hover:border-violet-400/30 hover:bg-card dark:hover:bg-black/40 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent pointer-events-none" />

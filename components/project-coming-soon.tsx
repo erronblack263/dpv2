@@ -14,6 +14,8 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { useEffect } from "react";
+import { animate, stagger } from "animejs";
 import { openContactDrawer } from "@/components/contact-drawer";
 
 type ProjectIconName = "code" | "message";
@@ -48,6 +50,32 @@ export function ProjectComingSoonPage({
 }: ProjectComingSoonPageProps) {
   const [notified, setNotified] = useState(false);
   const Icon = ICON_MAP[icon];
+
+  useEffect(() => {
+    const mockup = document.querySelector<HTMLElement>(
+      "[data-coming-soon-mockup]",
+    );
+    const pills = document.querySelectorAll<HTMLElement>(
+      "[data-coming-soon-pill]",
+    );
+    const cta = document.querySelector<HTMLElement>("[data-coming-soon-cta]");
+    const elements = [mockup, ...pills, cta].filter(
+      (element): element is HTMLElement => Boolean(element),
+    );
+    if (!elements.length) return;
+
+    const animation = animate(elements, {
+      opacity: [0, 1],
+      translateY: [14, 0],
+      delay: stagger(70),
+      duration: 560,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, []);
 
   if (variant === "ai") {
     return (
@@ -96,7 +124,7 @@ export function ProjectComingSoonPage({
                 ))}
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div data-coming-soon-cta className="flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={() => {
                     setNotified(true);
@@ -132,6 +160,7 @@ export function ProjectComingSoonPage({
                 {FEATURE_HIGHLIGHTS.map(({ label, icon: FeatureIcon }) => (
                   <div
                     key={label}
+                      data-coming-soon-pill
                     className="flex items-center gap-2 rounded-2xl border border-border bg-card/70 px-3 py-2 text-sm text-muted-foreground backdrop-blur-sm"
                   >
                     <span className="flex size-8 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
@@ -147,7 +176,7 @@ export function ProjectComingSoonPage({
               <div className="absolute -left-8 top-12 h-52 w-52 rounded-full bg-violet-500/20 blur-[100px]" />
               <div className="absolute -right-4 bottom-8 h-52 w-52 rounded-full bg-cyan-500/20 blur-[100px]" />
 
-              <div className="relative overflow-hidden rounded-[28px] border border-border bg-card/70 p-4 shadow-[0_25px_70px_rgba(76,29,149,0.25)] backdrop-blur-xl">
+              <div data-coming-soon-mockup className="relative overflow-hidden rounded-[28px] border border-border bg-card/70 p-4 shadow-[0_25px_70px_rgba(76,29,149,0.25)] backdrop-blur-xl">
                 <div className="mb-4 flex items-center justify-between rounded-2xl border border-border bg-background/80 px-3 py-2">
                   <div className="flex items-center gap-2">
                     <span className="flex size-8 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
@@ -258,7 +287,7 @@ export function ProjectComingSoonPage({
           ))}
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
+        <div data-coming-soon-cta className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
           <button
             onClick={() => {
               setNotified(true);

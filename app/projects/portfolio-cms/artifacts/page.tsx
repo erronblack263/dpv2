@@ -19,6 +19,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
+import { useEffect } from "react";
+import { animate, stagger } from "animejs";
 
 type Artifact = {
   title: string;
@@ -145,6 +147,44 @@ export default function SageOSArtifactsPage() {
     (galleryPage + 1) * galleryPageSize,
   );
 
+  useEffect(() => {
+    const monitor = document.querySelector<HTMLElement>("[data-sage-monitor]");
+    if (!monitor) return;
+
+    const animation = animate(monitor, {
+      opacity: [0.35, 1],
+      translateY: [8, 0],
+      scale: [0.985, 1],
+      duration: 440,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [activeArtifact]);
+
+  useEffect(() => {
+    const tabs = document.querySelectorAll<HTMLElement>("[data-sage-tab]");
+    const images = document.querySelectorAll<HTMLElement>("[data-sage-gallery-image]");
+    if (!tabs.length && !images.length) return;
+
+    const animation = animate(
+      [...tabs, ...images],
+      {
+        opacity: [0, 1],
+        translateY: [8, 0],
+        delay: stagger(45),
+        duration: 360,
+        ease: "outCubic",
+      },
+    );
+
+    return () => {
+      animation.cancel();
+    };
+  }, [activeArtifact, galleryPage]);
+
   return (
     <div className="min-h-screen bg-background text-foreground pb-16">
       <div className="sticky top-4 z-30 w-full border-b border-border bg-card/95 px-4 py-1 backdrop-blur-md sm:px-8 lg:px-12">
@@ -153,6 +193,7 @@ export default function SageOSArtifactsPage() {
             {ARTIFACTS.map((item, index) => (
               <button
                 key={item.title}
+                data-sage-tab
                 type="button"
                 onClick={() => setActiveArtifact(index)}
                 className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-xs font-semibold transition-all ${
@@ -219,7 +260,7 @@ export default function SageOSArtifactsPage() {
 
           </section>
 
-          <section className="relative flex min-h-[430px] items-center justify-center overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-violet-500/[0.08] via-card to-cyan-500/[0.06] p-5 shadow-[0_0_70px_rgba(124,58,237,0.12)]">
+          <section data-sage-monitor className="relative flex min-h-[430px] items-center justify-center overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-violet-500/[0.08] via-card to-cyan-500/[0.06] p-5 shadow-[0_0_70px_rgba(124,58,237,0.12)]">
             <div className="absolute -left-20 top-12 size-56 rounded-full bg-violet-500/20 blur-[90px]" />
             <div className="absolute -right-20 bottom-4 size-56 rounded-full bg-cyan-500/15 blur-[90px]" />
 
@@ -333,6 +374,7 @@ export default function SageOSArtifactsPage() {
             {visibleGalleryImages.map(({ src, title }, index) => (
               <div
                 key={src}
+                data-sage-gallery-image
                 className="group relative flex max-w-[320px] flex-col rounded-2xl border border-violet-500 bg-card p-3 shadow-[0_0_25px_rgba(124,58,237,0.2)] ring-1 ring-violet-500/40"
               >
                 <div className="absolute left-5 top-5 z-20 flex size-6 items-center justify-center rounded-lg bg-violet-600 text-[11px] font-bold text-white">

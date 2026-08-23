@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { animate, stagger } from "animejs";
 import {
   ArrowLeft,
   ArrowRight,
@@ -129,6 +130,43 @@ export default function GreenSpaceDemoPage() {
 
   const currentVideo = VIDEOS[activeVideoIdx];
 
+  useEffect(() => {
+    const videoPreview = document.querySelector<HTMLElement>(
+      "[data-demo-video]",
+    );
+    if (!videoPreview) return;
+
+    const animation = animate(videoPreview, {
+      opacity: [0.35, 1],
+      scale: [0.985, 1],
+      duration: 420,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [activeVideoIdx]);
+
+  useEffect(() => {
+    const details = document.querySelectorAll<HTMLElement>(
+      "[data-demo-details], [data-demo-workflow]",
+    );
+    if (!details.length) return;
+
+    const animation = animate(details, {
+      opacity: [0, 1],
+      translateY: [10, 0],
+      delay: stagger(55),
+      duration: 420,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [activeVideoIdx]);
+
   function toggleBookmark(id: string, e: React.MouseEvent) {
     e.stopPropagation();
     setBookmarked((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -198,7 +236,7 @@ export default function GreenSpaceDemoPage() {
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-2">
-            <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none">
+            <div data-demo-video className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none">
               <div className="absolute inset-0">
                 <VideoPlayer
                   key={currentVideo.src}
@@ -210,7 +248,7 @@ export default function GreenSpaceDemoPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md flex items-center justify-between gap-3">
+            <div data-demo-details className="rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <h3 className="text-xs font-bold text-foreground truncate">
                   {currentVideo.title}
@@ -415,7 +453,7 @@ export default function GreenSpaceDemoPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-3 flex">
+          <div data-demo-workflow className="lg:col-span-3 flex">
             <div className="rounded-xl border border-border bg-card p-3.5 backdrop-blur-md shadow-xl w-full flex flex-col">
               <div className="flex items-center gap-2 border-b border-border pb-2 mb-3 shrink-0">
                 <Target className="size-3.5 text-emerald-500" />
