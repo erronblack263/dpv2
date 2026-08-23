@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
+import { animate, stagger } from "animejs";
 import {
   Medal,
   Trophy,
@@ -85,6 +86,7 @@ function StatCard({
   return (
     <div
       ref={ref}
+      data-achievement-surface
       className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 dark:bg-white/[0.03] backdrop-blur-md p-6 transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(124,58,237,0.12)]"
     >
       <div className="flex items-center gap-4">
@@ -229,7 +231,7 @@ function GraduationCard() {
 
   return (
     <>
-      <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card/90 to-card/90 dark:from-emerald-500/[0.06] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
+      <div data-achievement-surface className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50/80 via-card/90 to-card/90 dark:from-emerald-500/[0.06] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(16,185,129,0.08)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(16,185,129,0.25)] hover:border-emerald-500/50">
         <div
           className="absolute -top-24 -left-24 size-72 rounded-full pointer-events-none"
           style={{
@@ -422,6 +424,25 @@ export function AchievementsContent() {
 
   useEffect(() => setMounted(true), []);
 
+  useEffect(() => {
+    const surfaces = document.querySelectorAll<HTMLElement>(
+      "[data-achievement-surface]",
+    );
+    if (!surfaces.length) return;
+
+    const animation = animate(surfaces, {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      delay: stagger(90),
+      duration: 650,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, []);
+
   const isDark = !mounted || resolvedTheme === "dark";
   const bgFill = isDark ? "#000000" : "#f1f5f9";
 
@@ -512,7 +533,7 @@ export function AchievementsContent() {
           />
 
           {/* GreenSpace award card */}
-          <div className="relative z-10 overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card/90 to-card/90 dark:from-violet-500/[0.08] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
+          <div data-achievement-surface className="relative z-10 overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-50/80 via-card/90 to-card/90 dark:from-violet-500/[0.08] dark:via-card/80 dark:to-card/80 p-7 shadow-[0_0_60px_rgba(139,92,246,0.1)] h-full transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.35)] hover:border-violet-500/50">
             {/* Background glow */}
             <div
               className="absolute -top-24 -right-24 size-72 rounded-full pointer-events-none"

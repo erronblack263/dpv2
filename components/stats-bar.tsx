@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect } from "react";
+import { animate, stagger } from "animejs";
 import { Code2, Star, Rocket, Users } from "lucide-react";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 
@@ -44,6 +48,23 @@ const stats = [
 ];
 
 export function StatsBar() {
+  useEffect(() => {
+    const cards = document.querySelectorAll<HTMLElement>("[data-home-stat]");
+    if (!cards.length) return;
+
+    const animation = animate(cards, {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      delay: stagger(90, { start: 220 }),
+      duration: 580,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, []);
+
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3 pb-0.5">
       <div
@@ -69,6 +90,7 @@ export function StatsBar() {
               }) => (
                 <CardSpotlight
                   key={label}
+                  data-home-stat
                   className="p-4 sm:p-4.5 border border-border bg-card/60 dark:bg-black/30 backdrop-blur-2xl transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl"
                   radius={280}
                   color="rgba(79, 70, 229, 0.12)"

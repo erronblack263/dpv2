@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { animate } from "animejs";
 import { Mail, FolderGit2 } from "lucide-react";
 import {
   GitHubIcon,
@@ -91,12 +92,40 @@ const socials = [
 ];
 
 export function Hero() {
+  useEffect(() => {
+    const headline = document.querySelector<HTMLElement>(
+      "[data-hero-headline]",
+    );
+    const mockup = document.querySelector<HTMLElement>("[data-hero-mockup]");
+    if (!headline || !mockup) return;
+
+    const headlineAnimation = animate(headline, {
+      opacity: [0, 1],
+      translateY: [18, 0],
+      duration: 700,
+      ease: "outCubic",
+    });
+    const mockupAnimation = animate(mockup, {
+      opacity: [0, 1],
+      translateX: [28, 0],
+      scale: [0.97, 1],
+      delay: 180,
+      duration: 800,
+      ease: "outCubic",
+    });
+
+    return () => {
+      headlineAnimation.cancel();
+      mockupAnimation.cancel();
+    };
+  }, []);
+
   return (
     <section
       id="home"
       className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6"
     >
-      <div className="overflow-hidden rounded-[28px] border border-border bg-card/40 dark:bg-black/20 md:bg-card/70 md:dark:bg-black/35 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.2)] dark:shadow-[0_0_60px_rgba(0,0,0,0.35)] p-5 sm:p-6 lg:p-7">
+          <div data-hero-mockup className="overflow-hidden rounded-[28px] border border-border bg-card/40 dark:bg-black/20 md:bg-card/70 md:dark:bg-black/35 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.2)] dark:shadow-[0_0_60px_rgba(0,0,0,0.35)] p-5 sm:p-6 lg:p-7">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] xl:grid-cols-[290px_1fr_310px] lg:items-center gap-5 lg:gap-6">
           {/* Avatar */}
           <div
@@ -173,7 +202,7 @@ export function Hero() {
             </p>
 
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground">
+              <h1 data-hero-headline className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground">
                 I&apos;m{" "}
                 <span className="text-violet-600 dark:text-violet-400">
                   <TypewriterText text="Witness H Musonza" />
