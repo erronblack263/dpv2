@@ -21,6 +21,7 @@ export const WavyBackground = ({
   blur = 10,
   speed = "fast",
   waveOpacity = 0.5,
+  fitContainer = false,
   ...props
 }: {
   children?: React.ReactNode;
@@ -32,6 +33,7 @@ export const WavyBackground = ({
   blur?: number;
   speed?: "slow" | "fast";
   waveOpacity?: number;
+  fitContainer?: boolean;
   [key: string]: unknown;
 }) => {
   const noise = createNoise3D();
@@ -46,6 +48,7 @@ export const WavyBackground = ({
   const blurRef = useRef(blur);
   const waveWidthRef = useRef(waveWidth || 50);
   const speedRef = useRef(speed);
+  const fitContainerRef = useRef(fitContainer);
 
   useEffect(() => {
     backgroundFillRef.current = backgroundFill || "black";
@@ -54,7 +57,8 @@ export const WavyBackground = ({
     blurRef.current = blur;
     waveWidthRef.current = waveWidth || 50;
     speedRef.current = speed;
-  }, [backgroundFill, waveOpacity, colors, blur, waveWidth, speed]);
+    fitContainerRef.current = fitContainer;
+  }, [backgroundFill, waveOpacity, colors, blur, waveWidth, speed, fitContainer]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -69,6 +73,7 @@ export const WavyBackground = ({
     let isMobile = false;
     let prefersReducedMotion = false;
     let avatarBaseline = 0;
+    let isDocumentVisible = document.visibilityState === "visible";
 
     const getSpeed = () => {
       if (prefersReducedMotion) return 0;
@@ -126,6 +131,8 @@ export const WavyBackground = ({
     };
 
     const render = () => {
+      if (!isDocumentVisible) return;
+
       ntRef.current += getSpeed();
 
       ctx.globalAlpha = 1;
@@ -154,11 +161,13 @@ export const WavyBackground = ({
         window.innerWidth,
         Math.floor(rect.width) || window.innerWidth,
       );
-      h = Math.max(
-        window.innerHeight,
-        Math.floor(rect.height) || window.innerHeight,
-        container.scrollHeight || 0,
-      );
+      h = fitContainerRef.current
+        ? Math.max(1, Math.floor(rect.height))
+        : Math.max(
+            window.innerHeight,
+            Math.floor(rect.height) || window.innerHeight,
+            container.scrollHeight || 0,
+          );
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.floor(w * dpr);
@@ -179,6 +188,12 @@ export const WavyBackground = ({
     });
     render();
 
+    const onVisibilityChange = () => {
+      isDocumentVisible = document.visibilityState === "visible";
+      if (isDocumentVisible) render();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     const mqMobile = window.matchMedia("(max-width: 1024px)");
     const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => resize();
@@ -194,6 +209,7 @@ export const WavyBackground = ({
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", updateAvatarBaseline);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       mqMobile.removeEventListener?.("change", onChange);
       mqMotion.removeEventListener?.("change", onChange);
       ro.disconnect();

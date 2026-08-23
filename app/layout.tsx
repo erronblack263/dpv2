@@ -19,11 +19,8 @@ export const metadata: Metadata = {
     "Portfolio of Witness Musonza, a fullstack software developer crafting seamless user experiences.",
 };
 export const viewport: Viewport = {
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  colorScheme: "dark",
+  themeColor: "black",
 };
 
 export default function RootLayout({
@@ -40,8 +37,8 @@ export default function RootLayout({
       <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden flex flex-col justify-between">

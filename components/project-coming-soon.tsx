@@ -110,7 +110,8 @@ export function ProjectComingSoonPage({
                 >
                   {notified ? (
                     <>
-                      <CheckCircle2 className="size-4" /> You&apos;re on the list!
+                      <CheckCircle2 className="size-4" /> You&apos;re on the
+                      list!
                     </>
                   ) : (
                     <>
@@ -153,8 +154,12 @@ export function ProjectComingSoonPage({
                       <Icon className="size-4" />
                     </span>
                     <div>
-                      <div className="text-sm font-semibold text-foreground">{title}</div>
-                      <div className="text-[10px] text-muted-foreground">Live preview</div>
+                      <div className="text-sm font-semibold text-foreground">
+                        {title}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">
+                        Live preview
+                      </div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -169,13 +174,15 @@ export function ProjectComingSoonPage({
                       AI
                     </div>
                     <div className="max-w-[80%] rounded-2xl rounded-tl-md bg-violet-500/10 px-3 py-2 text-sm text-foreground">
-                      Summarize my latest project updates and suggest a launch plan.
+                      Summarize my latest project updates and suggest a launch
+                      plan.
                     </div>
                   </div>
 
                   <div className="flex items-start justify-end gap-2">
                     <div className="max-w-[80%] rounded-2xl rounded-tr-md bg-violet-600 px-3 py-2 text-sm text-white shadow-lg shadow-violet-500/20">
-                      I can help draft a launch brief, highlight milestones, and prepare stakeholder-ready summaries.
+                      I can help draft a launch brief, highlight milestones, and
+                      prepare stakeholder-ready summaries.
                     </div>
                   </div>
 
@@ -184,13 +191,17 @@ export function ProjectComingSoonPage({
                       <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                         <Gauge className="size-3.5" /> Speed
                       </div>
-                      <div className="text-xl font-bold text-foreground">3.2s</div>
+                      <div className="text-xl font-bold text-foreground">
+                        3.2s
+                      </div>
                     </div>
                     <div className="rounded-2xl border border-border bg-card p-3">
                       <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                         <Sparkles className="size-3.5" /> Accuracy
                       </div>
-                      <div className="text-xl font-bold text-foreground">96%</div>
+                      <div className="text-xl font-bold text-foreground">
+                        96%
+                      </div>
                     </div>
                   </div>
                 </div>

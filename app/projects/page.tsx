@@ -44,7 +44,11 @@ function TypewriterText({
   return <span>{displayed}</span>;
 }
 
-type Category = "All work" | "Web platforms" | "Mobile";
+type Category =
+  | "All work"
+  | "Web platforms"
+  | "Mobile"
+  | "Systems programming";
 type ViewMode = "grid" | "list" | "tiles" | "carousel";
 
 interface Project {
@@ -104,14 +108,15 @@ const PROJECTS: Project[] = [
     github: "#",
   },
   {
-    title: "Portfolio CMS",
-    tagline: "Web platforms · Content",
+    title: "SageOS",
+    tagline: "Systems programming · Operating System",
     description:
-      "A headless CMS for managing portfolio content with a drag-and-drop page builder and live preview.",
-    tech: ["Next.js", "Spring Boot", "PostgreSQL", "TypeScript"],
-    category: "Web platforms",
+      "A custom operating system made from scratch, exploring low-level systems programming, memory management, process scheduling, and kernel development.",
+    tech: ["C", "Assembly", "Systems Programming", "Kernel Development"],
+    category: "Systems programming",
     gradient: "from-violet-800 via-purple-700 to-indigo-900",
     demo: "#",
+    artifacts: "/projects/portfolio-cms/artifacts",
     github: "/projects/portfolio-cms",
   },
   {
@@ -139,7 +144,12 @@ const PROJECTS: Project[] = [
   },
 ];
 
-const CATEGORIES: Category[] = ["All work", "Web platforms", "Mobile"];
+const CATEGORIES: Category[] = [
+  "All work",
+  "Web platforms",
+  "Mobile",
+  "Systems programming",
+];
 
 /* ─── Shared action buttons ───────────────────────────────────── */
 function ActionButtons({ project }: { project: Project }) {
@@ -161,8 +171,9 @@ function ActionButtons({ project }: { project: Project }) {
           <ImageIcon className="size-3" /> Artifacts
         </Link>
       )}
-      {project.github && project.github !== "#" && (
-        project.github.startsWith("/") ? (
+      {project.github &&
+        project.github !== "#" &&
+        (project.github.startsWith("/") ? (
           <Link
             href={project.github}
             className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
@@ -178,8 +189,7 @@ function ActionButtons({ project }: { project: Project }) {
           >
             <GitBranch className="size-3" /> GitHub
           </a>
-        )
-      )}
+        ))}
     </div>
   );
 }

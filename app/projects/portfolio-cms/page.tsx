@@ -3,9 +3,9 @@ import { ProjectComingSoonPage } from "@/components/project-coming-soon";
 export default function PortfolioCMSComingSoon() {
   return (
     <ProjectComingSoonPage
-      title="Portfolio CMS"
-      description="A headless CMS for managing portfolio content with a drag-and-drop page builder and live preview. Built with Next.js, Spring Boot, PostgreSQL and TypeScript."
-      tech={["Next.js", "Spring Boot", "PostgreSQL", "TypeScript"]}
+      title="SageOS"
+      description="A custom operating system made from scratch, exploring low-level systems programming, memory management, process scheduling, and kernel development."
+      tech={["C", "Assembly", "Systems Programming", "Kernel Development"]}
       icon="code"
     />
   );
