@@ -15,6 +15,7 @@ export function ContactDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,6 +28,7 @@ export function ContactDrawer() {
       setIsOpen(true);
       setSubmitted(false);
       setStatus("idle");
+      setErrorMessage("");
     }
 
     function handleKeyDown(e: KeyboardEvent) {
@@ -47,6 +49,7 @@ export function ContactDrawer() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage("");
 
     try {
       const res = await fetch("/api/send", {
@@ -71,41 +74,15 @@ export function ContactDrawer() {
           setFormData({ name: "", email: "", subject: "", message: "" });
         }, 3000);
       } else {
-        // Fallback to mailto if API key is not set
-        const mailtoSubject = encodeURIComponent(
-          formData.subject ||
-            `Message from ${formData.name || "Portfolio Visitor"}`,
+        const result = await res.json().catch(() => null);
+        setStatus("error");
+        setErrorMessage(
+          result?.error || "Unable to send your message. Please try again.",
         );
-        const mailtoBody = encodeURIComponent(
-          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
-        );
-        window.location.href = `mailto:musonzahw@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
-        setStatus("sent");
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setStatus("idle");
-          setIsOpen(false);
-          setFormData({ name: "", email: "", subject: "", message: "" });
-        }, 3000);
       }
     } catch {
-      const mailtoSubject = encodeURIComponent(
-        formData.subject ||
-          `Message from ${formData.name || "Portfolio Visitor"}`,
-      );
-      const mailtoBody = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
-      );
-      window.location.href = `mailto:musonzahw@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
-      setStatus("sent");
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setStatus("idle");
-        setIsOpen(false);
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      }, 3000);
+      setStatus("error");
+      setErrorMessage("Unable to connect to the email service. Please try again.");
     }
   };
 
@@ -257,6 +234,11 @@ export function ContactDrawer() {
                   <Send className="size-3.5" />
                   {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
+                {status === "error" && (
+                  <p role="alert" className="text-xs text-red-400">
+                    {errorMessage}
+                  </p>
+                )}
               </form>
             )}
           </div>
