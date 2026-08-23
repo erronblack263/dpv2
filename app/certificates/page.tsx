@@ -11,10 +11,9 @@ import {
   ChevronLeft,
   ChevronRight,
   GalleryHorizontal,
-  Plus,
-  Minus,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
+import { animate, stagger } from "animejs";
 
 function TypewriterText({
   text,
@@ -207,6 +206,26 @@ const CATEGORIES = [
   "Security",
 ];
 
+function getStepClass(isActive: boolean, isCompleted: boolean) {
+  if (isActive) {
+    return "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]";
+  }
+  if (isCompleted) {
+    return "bg-violet-600/20 border-violet-500 text-violet-500";
+  }
+  return "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400";
+}
+
+function getViewStepClass(isActive: boolean, isCompleted: boolean) {
+  if (isActive) {
+    return "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]";
+  }
+  if (isCompleted) {
+    return "bg-violet-600/20 border-violet-500 text-violet-500";
+  }
+  return "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400";
+}
+
 /* ─── Cert icon ────────────────────────────────────────────────── */
 function CertIcon() {
   return (
@@ -236,7 +255,7 @@ function GridCard({
   onView: (e: string) => void;
 }>) {
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-violet-500/40 hover:shadow-2xl hover:-translate-y-0.5">
+    <div data-certificate-surface className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-violet-500/50 hover:shadow-[0_0_32px_rgba(124,58,237,0.16)] hover:-translate-y-1">
       <div className="p-3 pb-0">
         <div
           className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
@@ -256,6 +275,7 @@ function GridCard({
         </p>
         <div className="mt-auto pt-3">
           <button
+            type="button"
             onClick={() => onView(cert.embed)}
             className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
           >
@@ -276,7 +296,7 @@ function ListRow({
   onView: (e: string) => void;
 }>) {
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/40 hover:bg-accent/30">
+    <div data-certificate-surface className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all hover:border-violet-500/50 hover:bg-accent/30 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]">
       <div
         className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
       >
@@ -328,7 +348,7 @@ function TileCard({
   onView: (e: string) => void;
 }>) {
   return (
-    <div className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/40 hover:shadow-lg hover:-translate-y-0.5">
+    <div data-certificate-surface className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all hover:border-violet-500/50 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)] hover:-translate-y-1">
       <div
         className={`w-full h-16 bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
       >
@@ -359,8 +379,27 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [expandedCategories, setExpandedCategories] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const surfaces = document.querySelectorAll<HTMLElement>(
+      "[data-certificate-surface]",
+    );
+    if (!surfaces.length) return;
+
+    const animation = animate(surfaces, {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      scale: [0.98, 1],
+      delay: stagger(55),
+      duration: 650,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [view, activeCategory]);
 
   function scrollPrev() {
     const el = carouselRef.current;
@@ -383,8 +422,12 @@ export default function CertificatesPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-background text-foreground">
-        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
+      <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+        <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
+          <div className="absolute -top-[10%] left-[8%] h-[120%] w-px rotate-[32deg] bg-gradient-to-b from-transparent via-violet-300/80 to-transparent blur-[0.5px]" />
+          <div className="absolute -top-[10%] left-[4%] h-[110%] w-[220px] rotate-[32deg] bg-gradient-to-b from-transparent via-violet-500/20 to-transparent blur-[55px]" />
+        </div>
+        <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
           <Link
             href="/"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
@@ -397,7 +440,9 @@ export default function CertificatesPage() {
               Professional development · {allCerts.length} credentials
             </p>
             <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              <TypewriterText text="Certificates and credentials." />
+              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-400 bg-clip-text text-transparent">
+                <TypewriterText text="Certificates and credentials." />
+              </span>
             </h1>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               A growing record of focused learning across software engineering,
@@ -421,11 +466,7 @@ export default function CertificatesPage() {
                       >
                         <div
                           className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
-                            isActive
-                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
-                              : isCompleted
-                                ? "bg-violet-600/20 border-violet-500 text-violet-500"
-                                : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                            getStepClass(isActive, isCompleted)
                           }`}
                         >
                           {isCompleted ? (
@@ -498,11 +539,7 @@ export default function CertificatesPage() {
                         >
                           <div
                             className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
-                              isActive
-                                ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
-                                : isCompleted
-                                  ? "bg-violet-600/20 border-violet-500 text-violet-500"
-                                  : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                              getViewStepClass(isActive, isCompleted)
                             }`}
                           >
                             {icons[v]}
@@ -588,6 +625,7 @@ export default function CertificatesPage() {
                               {cert.issuer}
                             </p>
                             <button
+                              type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelected(cert.embed);
