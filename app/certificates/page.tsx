@@ -11,6 +11,8 @@ import {
   ChevronLeft,
   ChevronRight,
   GalleryHorizontal,
+  CalendarDays,
+  Award,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 import { animate, stagger } from "animejs";
@@ -51,6 +53,7 @@ interface Cert {
   description: string;
   embed: string;
   gradient: string;
+  achieved?: string;
 }
 
 const allCerts: Cert[] = [
@@ -252,7 +255,7 @@ function GridCard({
   onView,
 }: Readonly<{
   cert: Cert;
-  onView: (e: string) => void;
+  onView: (cert: Cert) => void;
 }>) {
   return (
     <div data-certificate-surface className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-violet-500/50 hover:shadow-[0_0_32px_rgba(124,58,237,0.16)] hover:-translate-y-1">
@@ -276,7 +279,7 @@ function GridCard({
         <div className="mt-auto pt-3">
           <button
             type="button"
-            onClick={() => onView(cert.embed)}
+            onClick={() => onView(cert)}
             className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent"
           >
             View certificate
@@ -293,7 +296,7 @@ function ListRow({
   onView,
 }: Readonly<{
   cert: Cert;
-  onView: (e: string) => void;
+  onView: (cert: Cert) => void;
 }>) {
   return (
     <div data-certificate-surface className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all hover:border-violet-500/50 hover:bg-accent/30 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]">
@@ -330,7 +333,7 @@ function ListRow({
       </div>
       <button
         type="button"
-        onClick={() => onView(cert.embed)}
+        onClick={() => onView(cert)}
         className="shrink-0 flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
       >
         View
@@ -345,7 +348,7 @@ function TileCard({
   onView,
 }: Readonly<{
   cert: Cert;
-  onView: (e: string) => void;
+  onView: (cert: Cert) => void;
 }>) {
   return (
     <div data-certificate-surface className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all hover:border-violet-500/50 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)] hover:-translate-y-1">
@@ -364,7 +367,7 @@ function TileCard({
         <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
         <button
           type="button"
-          onClick={() => onView(cert.embed)}
+          onClick={() => onView(cert)}
           className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
         >
           View →
@@ -376,10 +379,15 @@ function TileCard({
 
 /* ─── Page ─────────────────────────────────────────────────────── */
 export default function CertificatesPage() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Cert | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
   const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", selected !== null);
+    return () => document.body.classList.remove("modal-open");
+  }, [selected]);
 
   useEffect(() => {
     const surfaces = document.querySelectorAll<HTMLElement>(
@@ -423,10 +431,6 @@ export default function CertificatesPage() {
   return (
     <>
       <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
-        <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
-          <div className="absolute -top-[10%] left-[8%] h-[120%] w-px rotate-[32deg] bg-gradient-to-b from-transparent via-violet-300/80 to-transparent blur-[0.5px]" />
-          <div className="absolute -top-[10%] left-[4%] h-[110%] w-[220px] rotate-[32deg] bg-gradient-to-b from-transparent via-violet-500/20 to-transparent blur-[55px]" />
-        </div>
         <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
           <Link
             href="/"
@@ -440,9 +444,7 @@ export default function CertificatesPage() {
               Professional development · {allCerts.length} credentials
             </p>
             <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-400 bg-clip-text text-transparent">
-                <TypewriterText text="Certificates and credentials." />
-              </span>
+              <TypewriterText text="Certificates and credentials." />
             </h1>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               A growing record of focused learning across software engineering,
@@ -608,7 +610,7 @@ export default function CertificatesPage() {
                         <div
                           className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
                           style={{ height: "480px" }}
-                          onClick={() => setSelected(cert.embed)}
+                          onClick={() => setSelected(cert)}
                         >
                           <div
                             className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`}
@@ -628,7 +630,7 @@ export default function CertificatesPage() {
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setSelected(cert.embed);
+                                setSelected(cert);
                               }}
                               className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
                             >
@@ -665,36 +667,72 @@ export default function CertificatesPage() {
         </div>
       </div>
 
-      {/* Certificate modal */}
+      {/* Certificate details drawer */}
       {selected && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Certificate preview"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-          onClick={() => setSelected(null)}
-          onKeyDown={(e) => e.key === "Escape" && setSelected(null)}
-          tabIndex={-1}
-        >
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          <button
+            type="button"
+            aria-label="Close certificate details"
+            className="fixed inset-0 cursor-default bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={() => setSelected(null)}
+          />
           <div
-            className="relative w-full max-w-4xl rounded-2xl overflow-hidden bg-card shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selected.title} certificate details`}
+            className="fixed inset-y-0 right-0 flex w-full max-w-xl flex-col overflow-y-auto border-l border-border bg-background/95 p-6 text-foreground shadow-2xl backdrop-blur-2xl animate-in slide-in-from-right duration-300 sm:p-8"
           >
             <button
               type="button"
               onClick={() => setSelected(null)}
-              className="absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-full bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Close"
+              className="ml-auto flex size-9 items-center justify-center rounded-xl border border-border bg-card/60 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label="Close certificate details"
             >
               <X className="size-4" />
             </button>
-            <img
-              src={selected}
-              alt="Certificate Preview"
-              className="w-full h-auto object-contain"
-              style={{ maxHeight: "80vh" }}
-            />
+            <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card/50 p-2 shadow-lg">
+              <img
+                src={selected.embed}
+                alt={`${selected.title} certificate`}
+                className="w-full rounded-xl object-contain"
+                style={{ maxHeight: "42vh" }}
+              />
+            </div>
+            <div className="mt-7">
+              <p className="text-xs font-semibold uppercase tracking-wider text-violet-500">
+                Certificate details
+              </p>
+              <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+                {selected.title}
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Issued by {selected.issuer}
+              </p>
+            </div>
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              <div className="rounded-xl border border-border bg-card/60 p-4">
+                <Award className="size-5 text-violet-500" />
+                <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Type
+                </p>
+                <p className="mt-1 text-sm font-bold">{selected.category}</p>
+              </div>
+              <div className="rounded-xl border border-border bg-card/60 p-4">
+                <CalendarDays className="size-5 text-violet-500" />
+                <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Achieved
+                </p>
+                <p className="mt-1 text-sm font-bold">
+                  {selected.achieved ?? "Date not specified"}
+                </p>
+              </div>
+            </div>
+            <div className="mt-7 border-t border-border pt-6">
+              <p className="text-sm font-semibold">About this credential</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {selected.description}
+              </p>
+            </div>
           </div>
         </div>
       )}
