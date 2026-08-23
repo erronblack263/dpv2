@@ -29,14 +29,6 @@ function formatTime(seconds: number): string {
   return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 
-function isTouchDevice() {
-  if (typeof window === "undefined") return false;
-  return (
-    window.matchMedia("(pointer: coarse)").matches ||
-    navigator.maxTouchPoints > 0
-  );
-}
-
 export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +44,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cssFullscreen, setCssFullscreen] = useState(false);
   const [isPortraitVideo, setIsPortraitVideo] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [toast, setToast] = useState<{ visible: boolean; dismissed: boolean }>({
     visible: false,
     dismissed: false,
@@ -61,10 +52,6 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const networkTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    setIsMobile(isTouchDevice());
-  }, []);
 
   const showNetworkToast = useCallback(() => {
     toastTimer.current && clearTimeout(toastTimer.current);
@@ -149,45 +136,11 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
       return;
     }
 
-    // Mobile / touch: prefer CSS fullscreen so portrait videos can fill the phone screen
-    if (isMobile || isTouchDevice()) {
-      setCssFullscreen(true);
-      setIsFullscreen(true);
-      return;
-    }
-
-    try {
-      const el = container as HTMLElement & {
-        requestFullscreen?: () => Promise<void>;
-        webkitRequestFullscreen?: () => Promise<void> | void;
-      };
-      if (el.requestFullscreen) {
-        await el.requestFullscreen();
-        setIsFullscreen(true);
-        return;
-      }
-      if (el.webkitRequestFullscreen) {
-        await el.webkitRequestFullscreen();
-        setIsFullscreen(true);
-        return;
-      }
-    } catch {
-      /* fall through */
-    }
-
-    const iosVideo = video as HTMLVideoElement & {
-      webkitEnterFullscreen?: () => void;
-    };
-    if (typeof iosVideo.webkitEnterFullscreen === "function") {
-      try {
-        iosVideo.webkitEnterFullscreen();
-        return;
-      } catch {}
-    }
-
+    // Keep the recording inside a controlled overlay so portrait videos retain
+    // their phone-like shape instead of expanding into native browser fullscreen.
     setCssFullscreen(true);
     setIsFullscreen(true);
-  }, [isFullscreen, cssFullscreen, exitFullscreen, isMobile]);
+  }, [isFullscreen, cssFullscreen, exitFullscreen]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -298,9 +251,9 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
   const expanded = isFullscreen || cssFullscreen;
 
   const videoFitClass = expanded
-    ? isMobile || isPortraitVideo
-      ? "w-full h-full object-cover"
-      : "max-w-full max-h-full w-auto h-auto object-contain"
+    ? isPortraitVideo
+      ? "h-[88dvh] w-auto max-w-[92vw] rounded-2xl object-contain shadow-[0_0_0_8px_rgba(24,24,27,0.9),0_25px_80px_rgba(0,0,0,0.75)]"
+      : "max-w-[92vw] max-h-[88dvh] w-auto h-auto rounded-2xl object-contain shadow-[0_0_0_8px_rgba(24,24,27,0.9),0_25px_80px_rgba(0,0,0,0.75)]"
     : isPortraitVideo
       ? "w-full h-full object-contain"
       : "w-full h-full object-cover";
@@ -313,7 +266,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
       onMouseLeave={() => isPlaying && !cssFullscreen && setShowControls(false)}
       className={`bg-black overflow-hidden flex items-center justify-center group select-none ${
         cssFullscreen
-          ? "fixed inset-0 z-[200] w-screen h-[100dvh] rounded-none"
+          ? "fixed inset-0 z-[200] w-screen h-[100dvh] rounded-none bg-black/90 p-4 sm:p-8 backdrop-blur-sm"
           : `relative w-full h-full ${expanded ? "rounded-none" : "rounded-xl"}`
       }`}
     >
