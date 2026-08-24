@@ -281,7 +281,7 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
         ref={videoRef}
         src={src}
         playsInline
-        preload="auto"
+        preload="metadata"
         poster={thumbnail}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
