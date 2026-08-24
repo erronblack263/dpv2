@@ -370,14 +370,15 @@ export default function SageOSArtifactsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {visibleGalleryImages.map(({ src, title }, index) => (
               <div
                 key={src}
                 data-sage-gallery-image
-                className="group relative flex max-w-[320px] flex-col rounded-2xl border border-violet-500 bg-card p-3 shadow-[0_0_25px_rgba(124,58,237,0.2)] ring-1 ring-violet-500/40"
+                onClick={() => setLightboxSrc(src)}
+                className="group relative flex min-w-0 flex-col rounded-xl border border-violet-500 bg-card p-2 shadow-[0_0_25px_rgba(124,58,237,0.2)] ring-1 ring-violet-500/40 sm:rounded-2xl sm:p-3"
               >
-                <div className="absolute left-5 top-5 z-20 flex size-6 items-center justify-center rounded-lg bg-violet-600 text-[11px] font-bold text-white">
+                <div className="absolute left-3 top-3 z-20 flex size-5 items-center justify-center rounded-md bg-violet-600 text-[9px] font-bold text-white sm:left-5 sm:top-5 sm:size-6 sm:rounded-lg sm:text-[11px]">
                   {(galleryPage * galleryPageSize + index + 1)
                     .toString()
                     .padStart(2, "0")}
@@ -401,11 +402,11 @@ export default function SageOSArtifactsPage() {
                     <Eye className="size-3.5" />
                   </button>
                 </div>
-                <div className="mt-2.5 flex flex-col gap-0.5">
-                  <p className="truncate text-xs font-bold text-foreground">
+                <div className="mt-2 flex min-w-0 flex-col gap-0.5 sm:mt-2.5">
+                  <p className="truncate text-[11px] font-bold text-foreground sm:text-xs">
                     {title}
                   </p>
-                  <p className="font-mono text-[10px] text-muted-foreground">
+                  <p className="truncate font-mono text-[9px] text-muted-foreground sm:text-[10px]">
                     SageOS desktop interface
                   </p>
                 </div>

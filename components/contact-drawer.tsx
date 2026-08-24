@@ -67,12 +67,6 @@ export function ContactDrawer() {
       if (res.ok) {
         setStatus("sent");
         setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setStatus("idle");
-          setIsOpen(false);
-          setFormData({ name: "", email: "", subject: "", message: "" });
-        }, 3000);
       } else {
         const result = await res.json().catch(() => null);
         setStatus("error");
@@ -99,7 +93,7 @@ export function ContactDrawer() {
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         {/* Drawer panel */}
-        <div className="w-screen max-w-md bg-background/95 dark:bg-[#090a14]/95 backdrop-blur-2xl border-l border-border dark:border-white/10 shadow-2xl p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300 text-foreground">
+        <div className="w-screen max-w-md bg-background/95 backdrop-blur-2xl border-l border-border shadow-2xl p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300 text-foreground">
           {/* Header */}
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-border/60 dark:border-white/10">
@@ -118,6 +112,7 @@ export function ContactDrawer() {
               </div>
 
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
                 className="flex size-8 items-center justify-center rounded-lg border border-border bg-card/60 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
                 aria-label="Close drawer"
@@ -137,6 +132,13 @@ export function ContactDrawer() {
                   <strong>musonzahw@gmail.com</strong>. Witness will get back to
                   you shortly.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-3 inline-flex items-center justify-center rounded-full bg-violet-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all hover:bg-violet-500 hover:shadow-[0_0_28px_rgba(168,85,247,0.6)]"
+                >
+                  Close drawer
+                </button>
               </div>
             ) : (
               <form
@@ -148,7 +150,7 @@ export function ContactDrawer() {
                   <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
                     To (Recipient)
                   </label>
-                  <div className="flex items-center gap-2 rounded-xl border border-border/80 dark:border-white/10 bg-muted/50 dark:bg-white/5 px-3.5 py-2 text-xs font-medium text-foreground">
+                  <div className="flex items-center gap-2 rounded-xl border border-border/80 bg-muted/50 px-3.5 py-2 text-xs font-medium text-foreground">
                     <Mail className="size-3.5 text-violet-500 shrink-0" />
                     <span className="font-semibold text-violet-600 dark:text-violet-400">
                       musonzahw@gmail.com
@@ -172,7 +174,7 @@ export function ContactDrawer() {
                       setFormData({ ...formData, name: e.target.value })
                     }
                     placeholder="e.g. Alex Smith"
-                    className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
+                    className="w-full rounded-xl border border-border/80 bg-card px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
                 </div>
 
@@ -189,7 +191,7 @@ export function ContactDrawer() {
                       setFormData({ ...formData, email: e.target.value })
                     }
                     placeholder="alex@example.com"
-                    className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-semibold text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
+                    className="w-full rounded-xl border border-border/80 bg-card px-3.5 py-2 text-xs font-semibold text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
                 </div>
 
@@ -205,7 +207,7 @@ export function ContactDrawer() {
                       setFormData({ ...formData, subject: e.target.value })
                     }
                     placeholder="Project Inquiry / Collaboration"
-                    className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
+                    className="w-full rounded-xl border border-border/80 bg-card px-3.5 py-2 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60"
                   />
                 </div>
 
@@ -222,7 +224,7 @@ export function ContactDrawer() {
                       setFormData({ ...formData, message: e.target.value })
                     }
                     placeholder="Tell me about your project, timeline, stack, or idea..."
-                    className="w-full rounded-xl border border-border/80 dark:border-white/10 bg-card dark:bg-white/5 p-3.5 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60 resize-none leading-relaxed"
+                    className="w-full rounded-xl border border-border/80 bg-card p-3.5 text-xs font-medium text-foreground outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted-foreground/60 resize-none leading-relaxed"
                   />
                 </div>
 
@@ -244,7 +246,7 @@ export function ContactDrawer() {
           </div>
 
           {/* Footer note */}
-          <div className="pt-4 border-t border-border/40 dark:border-white/10 mt-6 text-center">
+          <div className="pt-4 border-t border-border/40 mt-6 text-center">
             <p className="text-[11px] text-muted-foreground">
               Prefer direct mail? Reach Witness at{" "}
               <a

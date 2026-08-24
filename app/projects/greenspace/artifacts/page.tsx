@@ -25,6 +25,7 @@ import {
   LayoutDashboard,
   GalleryHorizontal,
 } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const CURSOR_COLORS = ["#10b981", "#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b"];
 
@@ -463,6 +464,45 @@ export default function GreenSpaceArtifactsPage() {
 
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
+  useEffect(() => {
+    const galleryItems = document.querySelectorAll<HTMLElement>(
+      "[data-greenspace-gallery-item]",
+    );
+    if (!galleryItems.length) return;
+
+    const animation = animate(galleryItems, {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      scale: [0.98, 1],
+      delay: stagger(55),
+      duration: 500,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, screenView]);
+
+  useEffect(() => {
+    const currentScreenElement = document.querySelector<HTMLElement>(
+      "[data-greenspace-current-screen]",
+    );
+    if (!currentScreenElement) return;
+
+    const animation = animate(currentScreenElement, {
+      opacity: [0.35, 1],
+      translateY: [8, 0],
+      scale: [0.985, 1],
+      duration: 440,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, activeScreenIdx]);
+
   // Preload adjacent images for instant cycling
   useEffect(() => {
     const preload = (src: string) => {
@@ -679,6 +719,7 @@ export default function GreenSpaceArtifactsPage() {
               {/* Display Screen */}
               <div className="relative w-full h-full rounded-[34px] overflow-hidden bg-zinc-900">
                 <img
+                  data-greenspace-current-screen
                   src={currentScreen.src}
                   alt={currentScreen.caption}
                   className="w-full h-full object-cover transition-opacity duration-300"
@@ -888,13 +929,16 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Grid of Mobile Screen Cards */}
           {screenView === "grid" && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div data-greenspace-gallery-item className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
@@ -952,13 +996,16 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Tiles View */}
           {screenView === "tiles" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div data-greenspace-gallery-item className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
@@ -1016,7 +1063,7 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Carousel View */}
           {screenView === "carousel" && (
-            <div className="relative">
+            <div data-greenspace-gallery-item className="relative">
               <div
                 ref={screenCarouselRef}
                 className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"

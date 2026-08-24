@@ -3,9 +3,9 @@ import { ProjectComingSoonPage } from "@/components/project-coming-soon";
 export default function WeatherDashboardArtifacts() {
   return (
     <ProjectComingSoonPage
-      title="Weather Dashboard"
-      description="Real-time weather dashboard with location search, 7-day forecasts, and interactive map overlays built for quick decision-making and rich weather exploration."
-      tech={["React", "Python", "REST API", "Leaflet", "Forecasting"]}
+      title="Sage Inventory Management System"
+      description="A C# inventory management system backed by MySQL Server, with full CRUD functions for creating, viewing, updating, and deleting product records."
+      tech={["C#", "MySQL Server", "CRUD", "Desktop Application"]}
       icon="code"
     />
   );
