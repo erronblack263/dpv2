@@ -23,6 +23,7 @@ import {
   LayoutDashboard,
   GalleryHorizontal,
 } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 function ReactIcon({ className = "size-4" }: { className?: string }) {
   return (
@@ -351,6 +352,45 @@ export default function SmartHRArtifactsPage() {
 
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
+  useEffect(() => {
+    const galleryItems = document.querySelectorAll<HTMLElement>(
+      "[data-smarthr-gallery-item]",
+    );
+    if (!galleryItems.length) return;
+
+    const animation = animate(galleryItems, {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      scale: [0.98, 1],
+      delay: stagger(55),
+      duration: 500,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, screenView]);
+
+  useEffect(() => {
+    const currentScreenElement = document.querySelector<HTMLElement>(
+      "[data-smarthr-current-screen]",
+    );
+    if (!currentScreenElement) return;
+
+    const animation = animate(currentScreenElement, {
+      opacity: [0.35, 1],
+      translateY: [8, 0],
+      scale: [0.985, 1],
+      duration: 440,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, activeScreenIdx]);
+
   // Preload adjacent images for instant cycling
   useEffect(() => {
     const preload = (src: string) => {
@@ -551,6 +591,7 @@ export default function SmartHRArtifactsPage() {
                 {/* Screen content */}
                 <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
                   <img
+                    data-smarthr-current-screen
                     src={currentScreen.src}
                     alt={currentScreen.caption}
                     className="w-full h-full object-cover transition-opacity duration-300"
@@ -739,7 +780,7 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — grid view */}
           {screenView === "grid" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div data-smarthr-gallery-item className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -795,7 +836,7 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — tiles view */}
           {screenView === "tiles" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div data-smarthr-gallery-item className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -851,7 +892,7 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — carousel view */}
           {screenView === "carousel" && (
-            <div className="relative">
+            <div data-smarthr-gallery-item className="relative">
               <div
                 ref={screenCarouselRef}
                 className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"

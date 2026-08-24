@@ -25,6 +25,7 @@ import {
   LayoutDashboard,
   GalleryHorizontal,
 } from "lucide-react";
+import { animate, stagger } from "animejs";
 type ScreenViewMode = "grid" | "tiles" | "carousel";
 
 const CURSOR_COLORS = ["#0284c7", "#8b5cf6", "#06b6d4", "#f43f5e", "#10b981"];
@@ -380,6 +381,45 @@ export default function WelfareTrackerArtifactsPage() {
 
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
+  useEffect(() => {
+    const galleryItems = document.querySelectorAll<HTMLElement>(
+      "[data-welfare-gallery-item]",
+    );
+    if (!galleryItems.length) return;
+
+    const animation = animate(galleryItems, {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      scale: [0.98, 1],
+      delay: stagger(55),
+      duration: 500,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, screenView]);
+
+  useEffect(() => {
+    const currentScreenElement = document.querySelector<HTMLElement>(
+      "[data-welfare-current-screen]",
+    );
+    if (!currentScreenElement) return;
+
+    const animation = animate(currentScreenElement, {
+      opacity: [0.35, 1],
+      translateY: [8, 0],
+      scale: [0.985, 1],
+      duration: 440,
+      ease: "outCubic",
+    });
+
+    return () => {
+      animation.cancel();
+    };
+  }, [sectionIdx, activeScreenIdx]);
+
   // Preload adjacent images for instant cycling
   useEffect(() => {
     const preload = (src: string) => {
@@ -587,6 +627,7 @@ export default function WelfareTrackerArtifactsPage() {
               {/* Display Screen */}
               <div className="relative w-full h-full rounded-[34px] overflow-hidden bg-zinc-900">
                 <img
+                  data-welfare-current-screen
                   src={currentScreen.src}
                   alt={currentScreen.caption}
                   className="w-full h-full object-cover transition-opacity duration-300"
@@ -802,7 +843,7 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Grid view */}
           {screenView === "grid" && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div data-welfare-gallery-item className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -869,7 +910,7 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Tiles view — larger 2-col grid */}
           {screenView === "tiles" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div data-welfare-gallery-item className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -936,7 +977,7 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Carousel view */}
           {screenView === "carousel" && (
-            <div className="relative">
+            <div data-welfare-gallery-item className="relative">
               <div
                 ref={screenCarouselRef}
                 className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
