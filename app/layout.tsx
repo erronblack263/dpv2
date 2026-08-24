@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ContactDrawer } from "@/components/contact-drawer";
+import { NetworkStatus } from "@/components/network-status";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
     "Portfolio of Witness Musonza, a fullstack software developer crafting seamless user experiences.",
 };
 export const viewport: Viewport = {
-  colorScheme: "dark",
-  themeColor: "black",
+  colorScheme: "light dark",
+  themeColor: "#f7f9fc",
 };
 
 export default function RootLayout({
@@ -37,8 +38,8 @@ export default function RootLayout({
       <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden flex flex-col justify-between">
@@ -51,6 +52,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
             <ContactDrawer />
+            <NetworkStatus />
           </div>
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
