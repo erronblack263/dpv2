@@ -375,6 +375,7 @@ export default function SageOSArtifactsPage() {
               <div
                 key={src}
                 data-sage-gallery-image
+                onClick={() => setLightboxSrc(src)}
                 className="group relative flex min-w-0 flex-col rounded-xl border border-violet-500 bg-card p-2 shadow-[0_0_25px_rgba(124,58,237,0.2)] ring-1 ring-violet-500/40 sm:rounded-2xl sm:p-3"
               >
                 <div className="absolute left-3 top-3 z-20 flex size-5 items-center justify-center rounded-md bg-violet-600 text-[9px] font-bold text-white sm:left-5 sm:top-5 sm:size-6 sm:rounded-lg sm:text-[11px]">

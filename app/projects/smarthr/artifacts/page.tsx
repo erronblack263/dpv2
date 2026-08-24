@@ -325,6 +325,11 @@ export default function SmartHRArtifactsPage() {
   const [screenView, setScreenView] = useState<ScreenViewMode>("grid");
   const screenCarouselRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", lightboxIdx !== null);
+    return () => document.body.classList.remove("modal-open");
+  }, [lightboxIdx]);
+
   function scrollScreenPrev() {
     const el = screenCarouselRef.current;
     if (!el) return;
@@ -740,7 +745,10 @@ export default function SmartHRArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${isActive ? "border-violet-500 bg-card shadow-[0_0_25px_rgba(124,58,237,0.25)] ring-1 ring-violet-500/50" : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"}`}
                   >
                     <div className="absolute top-4 left-4 z-20">
@@ -793,7 +801,10 @@ export default function SmartHRArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${isActive ? "border-violet-500 bg-card shadow-[0_0_25px_rgba(124,58,237,0.25)] ring-1 ring-violet-500/50" : "border-border bg-card/60 hover:border-accent-foreground/30 hover:bg-card"}`}
                   >
                     <div className="absolute top-4 left-4 z-20">
@@ -948,6 +959,7 @@ export default function SmartHRArtifactsPage() {
           onClick={() => setLightboxIdx(null)}
         >
           <button
+            type="button"
             onClick={() => setLightboxIdx(null)}
             className="absolute top-4 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-red-600 hover:bg-red-500 text-white border border-white/30 px-4 py-2 text-xs font-bold shadow-xl cursor-pointer"
           >
@@ -955,6 +967,7 @@ export default function SmartHRArtifactsPage() {
             <span>Close</span>
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               setLightboxIdx(
@@ -984,6 +997,7 @@ export default function SmartHRArtifactsPage() {
                 {section.images[lightboxIdx].resolution}
               </p>
               <button
+                type="button"
                 onClick={() => setLightboxIdx(null)}
                 className="mt-2 inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-red-600 text-white border border-white/20 px-5 py-1.5 text-xs font-bold transition-all cursor-pointer"
               >
@@ -992,6 +1006,7 @@ export default function SmartHRArtifactsPage() {
             </div>
           </div>
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               setLightboxIdx((lightboxIdx + 1) % section.images.length);

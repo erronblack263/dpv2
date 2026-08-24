@@ -894,7 +894,10 @@ export default function GreenSpaceArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"
@@ -958,7 +961,10 @@ export default function GreenSpaceArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-emerald-500 bg-card shadow-[0_0_25px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/50"

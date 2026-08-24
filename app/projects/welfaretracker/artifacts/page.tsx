@@ -808,7 +808,10 @@ export default function WelfareTrackerArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-sky-500 bg-card shadow-[0_0_25px_rgba(14,165,233,0.25)] ring-1 ring-sky-500/50"
@@ -872,7 +875,10 @@ export default function WelfareTrackerArtifactsPage() {
                 return (
                   <div
                     key={img.src}
-                    onClick={() => setActiveScreenIdx(i)}
+                    onClick={() => {
+                      setActiveScreenIdx(i);
+                      setLightboxIdx(i);
+                    }}
                     className={`group relative flex flex-col rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${
                       isActive
                         ? "border-sky-500 bg-card shadow-[0_0_25px_rgba(14,165,233,0.25)] ring-1 ring-sky-500/50"
