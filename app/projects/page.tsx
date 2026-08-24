@@ -132,7 +132,7 @@ const PROJECTS: Project[] = [
     github: "#",
   },
   {
-    title: "Reda Inventory Management System",
+    title: "Sage Inventory Management System",
     tagline: "Desktop · Inventory Management",
     description:
       "A C# inventory management system backed by MySQL Server, with full CRUD functions for creating, viewing, updating, and deleting product records.",
