@@ -125,7 +125,10 @@ export function Hero() {
       id="home"
       className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6"
     >
-          <div data-hero-mockup className="overflow-hidden rounded-[28px] border border-border bg-card/40 dark:bg-black/20 md:bg-card/70 md:dark:bg-black/35 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.2)] dark:shadow-[0_0_60px_rgba(0,0,0,0.35)] p-5 sm:p-6 lg:p-7">
+      <div
+        data-hero-mockup
+        className="overflow-hidden rounded-[28px] border border-border bg-card/40 dark:bg-black/20 md:bg-card/70 md:dark:bg-black/35 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.2)] dark:shadow-[0_0_60px_rgba(0,0,0,0.35)] p-5 sm:p-6 lg:p-7"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] xl:grid-cols-[290px_1fr_310px] lg:items-center gap-5 lg:gap-6">
           {/* Avatar */}
           <div
@@ -202,7 +205,10 @@ export function Hero() {
             </p>
 
             <div>
-              <h1 data-hero-headline className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground">
+              <h1
+                data-hero-headline
+                className="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-foreground"
+              >
                 I&apos;m{" "}
                 <span className="text-violet-600 dark:text-violet-400">
                   <TypewriterText text="Witness H Musonza" />

@@ -21,7 +21,8 @@ function getNetworkState(): NetworkState {
   const connection = (navigator as Navigator & { connection?: Connection })
     .connection;
   const isSlowType =
-    connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g";
+    connection?.effectiveType === "slow-2g" ||
+    connection?.effectiveType === "2g";
   const isLowBandwidth =
     typeof connection?.downlink === "number" && connection.downlink < 1.5;
 
@@ -34,12 +35,17 @@ export function NetworkStatus() {
   const retryCheckRef = useRef<(() => void | Promise<void>) | null>(null);
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== "production") return;
+
     let heartbeatInFlight = false;
 
     const setReachability = (reachable: boolean) => {
       setDismissed(false);
       setNetworkState((currentState) => {
-        if (reachable && (currentState === "offline" || currentState === "poor")) {
+        if (
+          reachable &&
+          (currentState === "offline" || currentState === "poor")
+        ) {
           return "restored";
         }
         if (!reachable) return "offline";
@@ -113,10 +119,13 @@ export function NetworkStatus() {
   }, []);
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== "production") return;
     if (networkState !== "restored") return;
     const timeout = window.setTimeout(() => setNetworkState("online"), 3500);
     return () => window.clearTimeout(timeout);
   }, [networkState]);
+
+  if (process.env.NODE_ENV !== "production") return null;
 
   if (networkState === "offline") {
     return (
@@ -155,19 +164,13 @@ export function NetworkStatus() {
 
   if (dismissed || networkState === "online") return null;
 
-  const isOffline = networkState === "offline";
   const isRestored = networkState === "restored";
   let icon = <LoaderCircle className="size-4 animate-spin" />;
   let message = "Poor network connection. Some features may be unavailable.";
   let colorClass =
     "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300";
 
-  if (isOffline) {
-    icon = <WifiOff className="size-4" />;
-    message = "Network unavailable. Reconnecting...";
-    colorClass =
-      "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300";
-  } else if (isRestored) {
+  if (isRestored) {
     icon = <Wifi className="size-4" />;
     message = "Connection restored.";
     colorClass =

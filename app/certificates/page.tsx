@@ -258,7 +258,10 @@ function GridCard({
   onView: (cert: Cert) => void;
 }>) {
   return (
-    <div data-certificate-surface className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-violet-500/50 hover:shadow-[0_0_32px_rgba(124,58,237,0.16)] hover:-translate-y-1">
+    <div
+      data-certificate-surface
+      className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-violet-500/50 hover:shadow-[0_0_32px_rgba(124,58,237,0.16)] hover:-translate-y-1"
+    >
       <div className="p-3 pb-0">
         <div
           className={`w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
@@ -299,7 +302,10 @@ function ListRow({
   onView: (cert: Cert) => void;
 }>) {
   return (
-    <div data-certificate-surface className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all hover:border-violet-500/50 hover:bg-accent/30 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]">
+    <div
+      data-certificate-surface
+      className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all hover:border-violet-500/50 hover:bg-accent/30 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]"
+    >
       <div
         className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
       >
@@ -351,7 +357,10 @@ function TileCard({
   onView: (cert: Cert) => void;
 }>) {
   return (
-    <div data-certificate-surface className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all hover:border-violet-500/50 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)] hover:-translate-y-1">
+    <div
+      data-certificate-surface
+      className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all hover:border-violet-500/50 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)] hover:-translate-y-1"
+    >
       <div
         className={`w-full h-16 bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
       >
@@ -382,6 +391,7 @@ export default function CertificatesPage() {
   const [selected, setSelected] = useState<Cert | null>(null);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [listPage, setListPage] = useState(1);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -427,6 +437,16 @@ export default function CertificatesPage() {
     activeCategory === "All"
       ? allCerts
       : allCerts.filter((c) => c.category === activeCategory);
+  const listPageSize = 6;
+  const listPageCount = Math.max(1, Math.ceil(filtered.length / listPageSize));
+  const visibleListCertificates = filtered.slice(
+    (listPage - 1) * listPageSize,
+    listPage * listPageSize,
+  );
+
+  useEffect(() => {
+    setListPage(1);
+  }, [activeCategory]);
 
   return (
     <>
@@ -467,9 +487,10 @@ export default function CertificatesPage() {
                         className="flex flex-col items-center gap-1.5 group"
                       >
                         <div
-                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
-                            getStepClass(isActive, isCompleted)
-                          }`}
+                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${getStepClass(
+                            isActive,
+                            isCompleted,
+                          )}`}
                         >
                           {isCompleted ? (
                             <svg
@@ -540,9 +561,10 @@ export default function CertificatesPage() {
                           className="flex flex-col items-center gap-1.5 group"
                         >
                           <div
-                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
-                              getViewStepClass(isActive, isCompleted)
-                            }`}
+                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${getViewStepClass(
+                              isActive,
+                              isCompleted,
+                            )}`}
                           >
                             {icons[v]}
                           </div>
@@ -581,10 +603,41 @@ export default function CertificatesPage() {
               </div>
             )}
             {view === "list" && (
-              <div className="mt-6 flex flex-col gap-2">
-                {filtered.map((cert) => (
-                  <ListRow key={cert.embed} cert={cert} onView={setSelected} />
-                ))}
+              <div className="mt-6">
+                <div className="flex flex-col gap-2">
+                  {visibleListCertificates.map((cert) => (
+                    <ListRow
+                      key={cert.embed}
+                      cert={cert}
+                      onView={setSelected}
+                    />
+                  ))}
+                </div>
+                {listPageCount > 1 && (
+                  <div className="mt-4 flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setListPage((page) => page - 1)}
+                      disabled={listPage === 1}
+                      aria-label="Previous certificates page"
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                    >
+                      <ChevronLeft className="size-4" />
+                    </button>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Page {listPage} of {listPageCount}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setListPage((page) => page + 1)}
+                      disabled={listPage === listPageCount}
+                      aria-label="Next certificates page"
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                    >
+                      <ChevronRight className="size-4" />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
             {view === "tiles" && (

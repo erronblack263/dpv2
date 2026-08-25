@@ -843,7 +843,10 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Grid view */}
           {screenView === "grid" && (
-            <div data-welfare-gallery-item className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div
+              data-welfare-gallery-item
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -910,7 +913,10 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Tiles view — larger 2-col grid */}
           {screenView === "tiles" && (
-            <div data-welfare-gallery-item className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              data-welfare-gallery-item
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (

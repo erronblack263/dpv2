@@ -780,7 +780,10 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — grid view */}
           {screenView === "grid" && (
-            <div data-smarthr-gallery-item className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div
+              data-smarthr-gallery-item
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -836,7 +839,10 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — tiles view */}
           {screenView === "tiles" && (
-            <div data-smarthr-gallery-item className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              data-smarthr-gallery-item
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
