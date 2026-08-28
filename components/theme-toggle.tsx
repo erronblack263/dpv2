@@ -10,7 +10,7 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
-  const activeTheme = mounted ? resolvedTheme : "dark";
+  const activeTheme = mounted ? resolvedTheme : undefined;
 
   return (
     <div

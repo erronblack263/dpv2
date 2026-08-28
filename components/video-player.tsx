@@ -138,8 +138,16 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
       return;
     }
 
-    // Keep the recording inside a controlled overlay so portrait videos retain
-    // their phone-like shape instead of expanding into native browser fullscreen.
+    try {
+      if (container.requestFullscreen) {
+        await container.requestFullscreen();
+        setIsFullscreen(true);
+        return;
+      }
+    } catch {
+      // Fall back to the controlled overlay when native fullscreen is blocked.
+    }
+
     setCssFullscreen(true);
     setIsFullscreen(true);
   }, [isFullscreen, cssFullscreen, exitFullscreen]);
@@ -433,7 +441,11 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
               </button>
 
               <button
-                onClick={handleFullscreen}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  void handleFullscreen();
+                }}
                 className="p-1 rounded-md text-white hover:text-emerald-400 transition-colors"
                 aria-label={expanded ? "Exit fullscreen" : "Fullscreen"}
               >
