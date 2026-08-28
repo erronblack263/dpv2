@@ -76,7 +76,9 @@ export function ContactDrawer() {
       }
     } catch {
       setStatus("error");
-      setErrorMessage("Unable to connect to the email service. Please try again.");
+      setErrorMessage(
+        "Unable to connect to the email service. Please try again.",
+      );
     }
   };
 

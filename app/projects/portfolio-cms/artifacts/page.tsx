@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,6 +20,7 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { animate, stagger } from "animejs";
+import { NextImageWithSkeleton } from "@/components/skeleton";
 
 type Artifact = {
   title: string;
@@ -166,19 +166,18 @@ export default function SageOSArtifactsPage() {
 
   useEffect(() => {
     const tabs = document.querySelectorAll<HTMLElement>("[data-sage-tab]");
-    const images = document.querySelectorAll<HTMLElement>("[data-sage-gallery-image]");
+    const images = document.querySelectorAll<HTMLElement>(
+      "[data-sage-gallery-image]",
+    );
     if (!tabs.length && !images.length) return;
 
-    const animation = animate(
-      [...tabs, ...images],
-      {
-        opacity: [0, 1],
-        translateY: [8, 0],
-        delay: stagger(45),
-        duration: 360,
-        ease: "outCubic",
-      },
-    );
+    const animation = animate([...tabs, ...images], {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      delay: stagger(45),
+      duration: 360,
+      ease: "outCubic",
+    });
 
     return () => {
       animation.cancel();
@@ -242,7 +241,9 @@ export default function SageOSArtifactsPage() {
               A custom operating system made from scratch
             </p>
             <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              A ground-up exploration of operating system design, from bootstrapping and kernel architecture to memory management and process scheduling.
+              A ground-up exploration of operating system design, from
+              bootstrapping and kernel architecture to memory management and
+              process scheduling.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
@@ -257,10 +258,12 @@ export default function SageOSArtifactsPage() {
                 ),
               )}
             </div>
-
           </section>
 
-          <section data-sage-monitor className="relative flex min-h-[430px] items-center justify-center overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-violet-500/[0.08] via-card to-cyan-500/[0.06] p-5 shadow-[0_0_70px_rgba(124,58,237,0.12)]">
+          <section
+            data-sage-monitor
+            className="relative flex min-h-[430px] items-center justify-center overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-violet-500/[0.08] via-card to-cyan-500/[0.06] p-5 shadow-[0_0_70px_rgba(124,58,237,0.12)]"
+          >
             <div className="absolute -left-20 top-12 size-56 rounded-full bg-violet-500/20 blur-[90px]" />
             <div className="absolute -right-20 bottom-4 size-56 rounded-full bg-cyan-500/15 blur-[90px]" />
 
@@ -273,7 +276,7 @@ export default function SageOSArtifactsPage() {
                     className="group relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10 bg-[#080b12]"
                     aria-label="Open SageOS Home Screen image"
                   >
-                    <Image
+                    <NextImageWithSkeleton
                       src={activeImage.src}
                       alt={activeImage.title}
                       fill
@@ -281,6 +284,7 @@ export default function SageOSArtifactsPage() {
                       quality={75}
                       sizes="(max-width: 1024px) 90vw, 45vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      wrapperClassName="absolute inset-0"
                     />
                     <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] font-semibold text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                       Open full image
@@ -301,12 +305,15 @@ export default function SageOSArtifactsPage() {
                       <p className="text-slate-500">[ OK ] Enabling paging</p>
                       <p className="text-emerald-400">[ OK ] Starting kernel</p>
                       <p className="pt-3 text-cyan-300">
-                        sage@kernel:~$ {artifact.title.toLowerCase().replace(" ", "-")}
+                        sage@kernel:~${" "}
+                        {artifact.title.toLowerCase().replace(" ", "-")}
                       </p>
                       <p className="max-w-lg leading-relaxed text-slate-400">
                         {artifact.description}
                       </p>
-                      <p className="pt-3 text-violet-300">status: experimental</p>
+                      <p className="pt-3 text-violet-300">
+                        status: experimental
+                      </p>
                       <span className="inline-block h-4 w-2 animate-pulse bg-cyan-300 align-middle" />
                     </div>
                   </div>
@@ -341,7 +348,9 @@ export default function SageOSArtifactsPage() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setGalleryPage((page) => Math.max(0, page - 1))}
+                  onClick={() =>
+                    setGalleryPage((page) => Math.max(0, page - 1))
+                  }
                   disabled={galleryPage === 0}
                   className="flex size-7 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-30"
                   title="Previous gallery page"
@@ -384,13 +393,14 @@ export default function SageOSArtifactsPage() {
                     .padStart(2, "0")}
                 </div>
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
-                  <Image
+                  <NextImageWithSkeleton
                     src={src}
                     alt={title}
                     fill
                     quality={75}
                     sizes="320px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    wrapperClassName="absolute inset-0"
                   />
                   <button
                     type="button"
@@ -452,13 +462,14 @@ export default function SageOSArtifactsPage() {
             className="relative h-[80vh] w-full max-w-6xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <Image
+            <NextImageWithSkeleton
               src={lightboxSrc}
               alt="SageOS artifact preview"
               fill
               quality={100}
               sizes="95vw"
               className="object-contain"
+              wrapperClassName="absolute inset-0"
             />
           </div>
         </div>

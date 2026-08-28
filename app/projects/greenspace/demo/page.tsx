@@ -131,9 +131,8 @@ export default function GreenSpaceDemoPage() {
   const currentVideo = VIDEOS[activeVideoIdx];
 
   useEffect(() => {
-    const videoPreview = document.querySelector<HTMLElement>(
-      "[data-demo-video]",
-    );
+    const videoPreview =
+      document.querySelector<HTMLElement>("[data-demo-video]");
     if (!videoPreview) return;
 
     const animation = animate(videoPreview, {
@@ -236,7 +235,10 @@ export default function GreenSpaceDemoPage() {
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-2">
-            <div data-demo-video className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none">
+            <div
+              data-demo-video
+              className="relative w-full max-w-md mx-auto lg:max-w-none lg:mx-0 rounded-xl overflow-hidden border border-emerald-500/25 bg-black shadow-[0_0_40px_rgba(0,0,0,0.55)] aspect-[9/16] max-h-[70vh] sm:aspect-video sm:max-h-none"
+            >
               <div className="absolute inset-0">
                 <VideoPlayer
                   key={currentVideo.src}
@@ -248,7 +250,10 @@ export default function GreenSpaceDemoPage() {
               </div>
             </div>
 
-            <div data-demo-details className="rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md flex items-center justify-between gap-3">
+            <div
+              data-demo-details
+              className="rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md flex items-center justify-between gap-3"
+            >
               <div className="min-w-0">
                 <h3 className="text-xs font-bold text-foreground truncate">
                   {currentVideo.title}

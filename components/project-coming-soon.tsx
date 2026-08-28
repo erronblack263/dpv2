@@ -124,7 +124,10 @@ export function ProjectComingSoonPage({
                 ))}
               </div>
 
-              <div data-coming-soon-cta className="flex flex-col gap-3 sm:flex-row">
+              <div
+                data-coming-soon-cta
+                className="flex flex-col gap-3 sm:flex-row"
+              >
                 <button
                   onClick={() => {
                     setNotified(true);
@@ -160,7 +163,7 @@ export function ProjectComingSoonPage({
                 {FEATURE_HIGHLIGHTS.map(({ label, icon: FeatureIcon }) => (
                   <div
                     key={label}
-                      data-coming-soon-pill
+                    data-coming-soon-pill
                     className="flex items-center gap-2 rounded-2xl border border-border bg-card/70 px-3 py-2 text-sm text-muted-foreground backdrop-blur-sm"
                   >
                     <span className="flex size-8 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
@@ -176,7 +179,10 @@ export function ProjectComingSoonPage({
               <div className="absolute -left-8 top-12 h-52 w-52 rounded-full bg-violet-500/20 blur-[100px]" />
               <div className="absolute -right-4 bottom-8 h-52 w-52 rounded-full bg-cyan-500/20 blur-[100px]" />
 
-              <div data-coming-soon-mockup className="relative overflow-hidden rounded-[28px] border border-border bg-card/70 p-4 shadow-[0_25px_70px_rgba(76,29,149,0.25)] backdrop-blur-xl">
+              <div
+                data-coming-soon-mockup
+                className="relative overflow-hidden rounded-[28px] border border-border bg-card/70 p-4 shadow-[0_25px_70px_rgba(76,29,149,0.25)] backdrop-blur-xl"
+              >
                 <div className="mb-4 flex items-center justify-between rounded-2xl border border-border bg-background/80 px-3 py-2">
                   <div className="flex items-center gap-2">
                     <span className="flex size-8 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
@@ -287,7 +293,10 @@ export function ProjectComingSoonPage({
           ))}
         </div>
 
-        <div data-coming-soon-cta className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
+        <div
+          data-coming-soon-cta
+          className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center"
+        >
           <button
             onClick={() => {
               setNotified(true);

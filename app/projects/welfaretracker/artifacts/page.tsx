@@ -26,6 +26,7 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 import { animate, stagger } from "animejs";
+import { ImageWithSkeleton } from "@/components/skeleton";
 type ScreenViewMode = "grid" | "tiles" | "carousel";
 
 const CURSOR_COLORS = ["#0284c7", "#8b5cf6", "#06b6d4", "#f43f5e", "#10b981"];
@@ -626,11 +627,12 @@ export default function WelfareTrackerArtifactsPage() {
 
               {/* Display Screen */}
               <div className="relative w-full h-full rounded-[34px] overflow-hidden bg-zinc-900">
-                <img
+                <ImageWithSkeleton
                   data-welfare-current-screen
                   src={currentScreen.src}
                   alt={currentScreen.caption}
                   className="w-full h-full object-cover transition-opacity duration-300"
+                  wrapperClassName="h-full w-full"
                 />
 
                 {/* Overlay Caption Badge inside Phone */}
@@ -843,7 +845,10 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Grid view */}
           {screenView === "grid" && (
-            <div data-welfare-gallery-item className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div
+              data-welfare-gallery-item
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -874,10 +879,11 @@ export default function WelfareTrackerArtifactsPage() {
 
                     {/* Thumbnail Mockup Frame */}
                     <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="absolute inset-0"
                       />
 
                       {/* Quick Lightbox View Button */}
@@ -910,7 +916,10 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Tiles view — larger 2-col grid */}
           {screenView === "tiles" && (
-            <div data-welfare-gallery-item className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              data-welfare-gallery-item
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            >
               {section.images.map((img, i) => {
                 const isActive = i === activeScreenIdx;
                 return (
@@ -941,10 +950,11 @@ export default function WelfareTrackerArtifactsPage() {
 
                     {/* Thumbnail Mockup Frame */}
                     <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="absolute inset-0"
                       />
 
                       {/* Quick Lightbox View Button */}
@@ -997,10 +1007,11 @@ export default function WelfareTrackerArtifactsPage() {
                       style={{ height: "420px" }}
                     >
                       <div className="absolute inset-0 bg-zinc-900 rounded-2xl border border-zinc-800" />
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+                        wrapperClassName="absolute inset-0"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent rounded-2xl" />
                       <div className="relative z-10 mt-auto p-4">
@@ -1121,10 +1132,11 @@ export default function WelfareTrackerArtifactsPage() {
             onClick={(e) => e.stopPropagation()}
             className="relative flex flex-col items-center max-h-[85vh] max-w-xl"
           >
-            <img
+            <ImageWithSkeleton
               src={section.images[lightboxIdx].src}
               alt={section.images[lightboxIdx].caption}
               className="max-h-[70vh] sm:max-h-[75vh] w-auto rounded-2xl object-contain shadow-2xl border border-zinc-800"
+              wrapperClassName="max-h-[70vh] sm:max-h-[75vh] w-auto"
             />
             <div className="mt-3 flex flex-col items-center gap-1 text-center">
               <p className="text-sm font-bold text-white">

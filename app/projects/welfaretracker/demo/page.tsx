@@ -32,10 +32,7 @@ function streamUrl(src: string) {
 
 function cloudinaryThumb(videoUrl: string) {
   return videoUrl
-    .replace(
-      "/video/upload/",
-      "/video/upload/so_0,w_600,q_auto,f_auto/",
-    )
+    .replace("/video/upload/", "/video/upload/so_0,w_600,q_auto,f_auto/")
     .replace(/\.mp4$/, ".jpg");
 }
 
@@ -43,7 +40,8 @@ const DEMO_FRAMES = [
   {
     title: "Safe Zone Setup",
     category: "Safety setup",
-    description: "Set up a safe zone and configure the field check-in boundary.",
+    description:
+      "Set up a safe zone and configure the field check-in boundary.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784633671/check_in_pivmdg.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787479196/parent-setting_up_sz_j9wopf.mp4",
@@ -63,7 +61,8 @@ const DEMO_FRAMES = [
   {
     title: "Parent SOS Alert",
     category: "Emergency response",
-    description: "A parent-facing SOS alert flow for raising and coordinating emergency support.",
+    description:
+      "A parent-facing SOS alert flow for raising and coordinating emergency support.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784633670/sos-alert_tcqzwh.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787484343/parent_sos_alert_sijc1u.mp4",
@@ -73,7 +72,8 @@ const DEMO_FRAMES = [
   {
     title: "2D/3D Map View",
     category: "Location tracking",
-    description: "Teams can review location context and coordinate support across 2D and 3D map views.",
+    description:
+      "Teams can review location context and coordinate support across 2D and 3D map views.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784715547/location_details_vam4jx.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787481033/map-view_ijp0kd.mp4",
@@ -83,7 +83,8 @@ const DEMO_FRAMES = [
   {
     title: "Geofence Screen",
     category: "Location tracking",
-    description: "Configure and monitor location boundaries for safer field operations.",
+    description:
+      "Configure and monitor location boundaries for safer field operations.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784715547/location_details_vam4jx.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787483668/geofence_a8tqxs.mp4",
@@ -93,7 +94,8 @@ const DEMO_FRAMES = [
   {
     title: "Child Check In",
     category: "Check-in flows",
-    description: "A guided child check-in flow for safer field welfare tracking.",
+    description:
+      "A guided child check-in flow for safer field welfare tracking.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784633671/check_in_pivmdg.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787481621/safety-check_in_moel4w.mp4",
@@ -103,7 +105,8 @@ const DEMO_FRAMES = [
   {
     title: "Parent Schedule Check In",
     category: "Check-in flows",
-    description: "A scheduled parent check-in flow for coordinated welfare monitoring.",
+    description:
+      "A scheduled parent check-in flow for coordinated welfare monitoring.",
     src: "https://res.cloudinary.com/virfpzu4/image/upload/w_900,q_auto,f_auto/v1784633671/check_in_pivmdg.jpg",
     video:
       "https://res.cloudinary.com/virfpzu4/video/upload/v1787482194/parent-schedule-check_in_owf772.mp4",
@@ -121,20 +124,39 @@ const DEMO_CATEGORIES = [
 ] as const;
 
 const WORKFLOW = [
-  { title: "Check in", description: "Staff share their field status", icon: Smartphone },
-  { title: "Track location", description: "Teams see live location context", icon: MapPin },
-  { title: "Raise an alert", description: "Emergency support is one tap away", icon: ShieldAlert },
-  { title: "Coordinate response", description: "Managers act with clear context", icon: Users },
+  {
+    title: "Check in",
+    description: "Staff share their field status",
+    icon: Smartphone,
+  },
+  {
+    title: "Track location",
+    description: "Teams see live location context",
+    icon: MapPin,
+  },
+  {
+    title: "Raise an alert",
+    description: "Emergency support is one tap away",
+    icon: ShieldAlert,
+  },
+  {
+    title: "Coordinate response",
+    description: "Managers act with clear context",
+    icon: Users,
+  },
 ];
 
 export default function WelfareTrackerDemoPage() {
-  const [activeCategory, setActiveCategory] = useState<(typeof DEMO_CATEGORIES)[number]>("All demos");
+  const [activeCategory, setActiveCategory] =
+    useState<(typeof DEMO_CATEGORIES)[number]>("All demos");
   const [activeFrame, setActiveFrame] = useState(0);
   const [previewPage, setPreviewPage] = useState(0);
   const filteredFrames =
     activeCategory === "All demos"
       ? DEMO_FRAMES
-      : DEMO_FRAMES.filter((demoFrame) => demoFrame.category === activeCategory);
+      : DEMO_FRAMES.filter(
+          (demoFrame) => demoFrame.category === activeCategory,
+        );
   const frame = filteredFrames[activeFrame] ?? filteredFrames[0];
   const previewPageSize = 3;
   const previewPageCount = Math.ceil(filteredFrames.length / previewPageSize);
@@ -195,7 +217,9 @@ export default function WelfareTrackerDemoPage() {
   }
 
   function previousFrame() {
-    setActiveFrame((index) => (index - 1 + filteredFrames.length) % filteredFrames.length);
+    setActiveFrame(
+      (index) => (index - 1 + filteredFrames.length) % filteredFrames.length,
+    );
   }
 
   return (
@@ -222,7 +246,9 @@ export default function WelfareTrackerDemoPage() {
                 for the field.
               </h1>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-                A welfare management system built to help field teams check in, share location context, and respond quickly when support is needed.
+                A welfare management system built to help field teams check in,
+                share location context, and respond quickly when support is
+                needed.
               </p>
 
               <div className="mt-5 flex flex-wrap gap-1.5">
@@ -240,7 +266,10 @@ export default function WelfareTrackerDemoPage() {
           </section>
 
           <section className="flex flex-col gap-2 lg:col-span-5">
-            <div data-demo-video className="relative flex aspect-[9/16] max-h-[70vh] w-full items-center justify-center overflow-hidden rounded-xl border border-sky-500/25 bg-slate-950 shadow-[0_0_40px_rgba(14,165,233,0.18)] sm:aspect-video sm:max-h-none">
+            <div
+              data-demo-video
+              className="relative flex aspect-[9/16] max-h-[70vh] w-full items-center justify-center overflow-hidden rounded-xl border border-sky-500/25 bg-slate-950 shadow-[0_0_40px_rgba(14,165,233,0.18)] sm:aspect-video sm:max-h-none"
+            >
               <Image
                 src={"video" in frame && frame.video ? frame.poster : frame.src}
                 alt={frame.title}
@@ -267,51 +296,107 @@ export default function WelfareTrackerDemoPage() {
                       <Play className="ml-1 size-7 fill-current" />
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-white">Preview frame</p>
-                      <p className="mt-1 text-xs text-slate-300">{frame.title}</p>
+                      <p className="text-sm font-bold text-white">
+                        Preview frame
+                      </p>
+                      <p className="mt-1 text-xs text-slate-300">
+                        {frame.title}
+                      </p>
                     </div>
                   </div>
                 </>
               )}
             </div>
 
-            <div data-demo-details className="flex items-center justify-between rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md">
+            <div
+              data-demo-details
+              className="flex items-center justify-between rounded-xl border border-border bg-card/80 p-3 backdrop-blur-md"
+            >
               <div className="min-w-0">
-                <h2 className="truncate text-xs font-bold text-foreground">{frame.title}</h2>
-                <p className="mt-0.5 line-clamp-1 text-[10px] text-muted-foreground">{frame.description}</p>
+                <h2 className="truncate text-xs font-bold text-foreground">
+                  {frame.title}
+                </h2>
+                <p className="mt-0.5 line-clamp-1 text-[10px] text-muted-foreground">
+                  {frame.description}
+                </p>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
-                <span className="font-mono text-[11px] font-bold">{activeFrame + 1}/{filteredFrames.length}</span>
-                <button type="button" onClick={previousFrame} className="rounded-md border border-sky-500/30 bg-sky-500/10 p-1 text-sky-500 hover:bg-sky-500/20" aria-label="Previous preview">
+                <span className="font-mono text-[11px] font-bold">
+                  {activeFrame + 1}/{filteredFrames.length}
+                </span>
+                <button
+                  type="button"
+                  onClick={previousFrame}
+                  className="rounded-md border border-sky-500/30 bg-sky-500/10 p-1 text-sky-500 hover:bg-sky-500/20"
+                  aria-label="Previous preview"
+                >
                   <ChevronLeft className="size-3.5" />
                 </button>
-                <button type="button" onClick={nextFrame} className="rounded-md border border-sky-500/30 bg-sky-500/10 p-1 text-sky-500 hover:bg-sky-500/20" aria-label="Next preview">
+                <button
+                  type="button"
+                  onClick={nextFrame}
+                  className="rounded-md border border-sky-500/30 bg-sky-500/10 p-1 text-sky-500 hover:bg-sky-500/20"
+                  aria-label="Next preview"
+                >
                   <ChevronRight className="size-3.5" />
                 </button>
               </div>
             </div>
           </section>
 
-          <aside data-demo-details className="flex flex-col gap-3 lg:col-span-3">
+          <aside
+            data-demo-details
+            className="flex flex-col gap-3 lg:col-span-3"
+          >
             <div className="rounded-xl border border-border bg-card p-4 shadow-xl">
               <div className="mb-3 flex items-center gap-2 border-b border-border pb-2.5">
                 <Calendar className="size-3.5 text-sky-500" />
-                <h2 className="text-xs font-bold tracking-wide">Project Details</h2>
+                <h2 className="text-xs font-bold tracking-wide">
+                  Project Details
+                </h2>
               </div>
               <div className="flex flex-col gap-3 text-[11px] text-muted-foreground">
-                <div className="flex justify-between gap-3"><span className="flex items-center gap-1.5"><Layers className="size-3.5" /> Category</span><strong className="text-foreground">Welfare</strong></div>
-                <div className="flex justify-between gap-3"><span className="flex items-center gap-1.5"><Smartphone className="size-3.5" /> Platform</span><strong className="text-foreground">Mobile</strong></div>
-                <div className="flex justify-between gap-3"><span className="flex items-center gap-1.5"><FolderOpen className="size-3.5" /> Framework</span><strong className="text-foreground">Flutter</strong></div>
-                <div className="flex justify-between gap-3"><span className="flex items-center gap-1.5"><Clock className="size-3.5" /> Status</span><strong className="text-yellow-500">In progress</strong></div>
+                <div className="flex justify-between gap-3">
+                  <span className="flex items-center gap-1.5">
+                    <Layers className="size-3.5" /> Category
+                  </span>
+                  <strong className="text-foreground">Welfare</strong>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <span className="flex items-center gap-1.5">
+                    <Smartphone className="size-3.5" /> Platform
+                  </span>
+                  <strong className="text-foreground">Mobile</strong>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <span className="flex items-center gap-1.5">
+                    <FolderOpen className="size-3.5" /> Framework
+                  </span>
+                  <strong className="text-foreground">Flutter</strong>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="size-3.5" /> Status
+                  </span>
+                  <strong className="text-yellow-500">In progress</strong>
+                </div>
               </div>
             </div>
 
-            <Link href="/projects/welfaretracker/artifacts" className="group rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 transition-colors hover:bg-yellow-500/15">
+            <Link
+              href="/projects/welfaretracker/artifacts"
+              className="group rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 transition-colors hover:bg-yellow-500/15"
+            >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-yellow-500">Explore screen artifacts</span>
+                <span className="text-xs font-bold text-yellow-500">
+                  Explore screen artifacts
+                </span>
                 <ArrowRight className="size-4 text-yellow-500 transition-transform group-hover:translate-x-1" />
               </div>
-              <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">Browse the authentication, tracking, SOS, profile, and theme screens.</p>
+              <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
+                Browse the authentication, tracking, SOS, profile, and theme
+                screens.
+              </p>
             </Link>
           </aside>
         </div>
@@ -346,7 +431,9 @@ export default function WelfareTrackerDemoPage() {
                   </span>
                 </button>
                 {index < DEMO_CATEGORIES.length - 1 && (
-                  <span className={`mx-2 mb-4 h-0.5 w-6 rounded-full sm:w-10 ${isCompleted ? "bg-sky-500/60" : "bg-border"}`} />
+                  <span
+                    className={`mx-2 mb-4 h-0.5 w-6 rounded-full sm:w-10 ${isCompleted ? "bg-sky-500/60" : "bg-border"}`}
+                  />
                 )}
               </div>
             );
@@ -355,9 +442,13 @@ export default function WelfareTrackerDemoPage() {
 
         <section className="mt-5 rounded-xl border border-border bg-card/60 p-3.5 backdrop-blur-md sm:p-4">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">Demo preview frames</h2>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">
+              Demo preview frames
+            </h2>
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-              <span>{filteredFrames.length} videos in {activeCategory}</span>
+              <span>
+                {filteredFrames.length} videos in {activeCategory}
+              </span>
               {previewPageCount > 1 && (
                 <span className="flex items-center gap-1.5 border-l border-border pl-2">
                   <button
@@ -369,7 +460,9 @@ export default function WelfareTrackerDemoPage() {
                   >
                     <ChevronLeft className="size-3.5" />
                   </button>
-                  <span className="font-mono">{previewPage + 1}/{previewPageCount}</span>
+                  <span className="font-mono">
+                    {previewPage + 1}/{previewPageCount}
+                  </span>
                   <button
                     type="button"
                     onClick={() => changePreviewPage(previewPage + 1)}
@@ -387,30 +480,54 @@ export default function WelfareTrackerDemoPage() {
             {visibleFrames.map((demoFrame, index) => {
               const previewSrc =
                 "video" in demoFrame && demoFrame.video
-                  ? demoFrame.poster ?? cloudinaryThumb(demoFrame.video)
+                  ? (demoFrame.poster ?? cloudinaryThumb(demoFrame.video))
                   : demoFrame.src;
 
               return (
-              <button data-demo-preview-card key={demoFrame.title} type="button" onClick={() => setActiveFrame(previewPage * previewPageSize + index)} className={`group relative overflow-hidden rounded-xl border p-2 text-left transition-all ${previewPage * previewPageSize + index === activeFrame ? "border-sky-500 bg-sky-500/10 shadow-[0_0_20px_rgba(14,165,233,0.18)]" : "border-border bg-background/50 hover:border-sky-500/40"}`}>
-                <div className="relative aspect-video overflow-hidden rounded-lg bg-slate-950">
-                  <Image src={previewSrc} alt={demoFrame.title} fill quality={65} sizes="(max-width: 640px) 90vw, 30vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-slate-950/25" />
-                  <span className="absolute left-2 top-2 rounded-md bg-slate-950/75 px-1.5 py-0.5 font-mono text-[9px] text-white">0{previewPage * previewPageSize + index + 1}</span>
-                  {"video" in demoFrame && demoFrame.video && (
-                    <span className="absolute bottom-2 right-2 rounded-md bg-sky-400 px-1.5 py-0.5 text-[9px] font-bold text-slate-950">VIDEO</span>
-                  )}
-                </div>
-                <p className="mt-2 truncate text-[11px] font-bold">{demoFrame.title}</p>
-                <span className="mt-1 inline-flex w-fit rounded-full border border-sky-500/25 bg-sky-500/10 px-2 py-0.5 text-[9px] font-semibold text-sky-500">
-                  {demoFrame.category}
-                </span>
-              </button>
+                <button
+                  data-demo-preview-card
+                  key={demoFrame.title}
+                  type="button"
+                  onClick={() =>
+                    setActiveFrame(previewPage * previewPageSize + index)
+                  }
+                  className={`group relative overflow-hidden rounded-xl border p-2 text-left transition-all ${previewPage * previewPageSize + index === activeFrame ? "border-sky-500 bg-sky-500/10 shadow-[0_0_20px_rgba(14,165,233,0.18)]" : "border-border bg-background/50 hover:border-sky-500/40"}`}
+                >
+                  <div className="relative aspect-video overflow-hidden rounded-lg bg-slate-950">
+                    <Image
+                      src={previewSrc}
+                      alt={demoFrame.title}
+                      fill
+                      quality={65}
+                      sizes="(max-width: 640px) 90vw, 30vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-slate-950/25" />
+                    <span className="absolute left-2 top-2 rounded-md bg-slate-950/75 px-1.5 py-0.5 font-mono text-[9px] text-white">
+                      0{previewPage * previewPageSize + index + 1}
+                    </span>
+                    {"video" in demoFrame && demoFrame.video && (
+                      <span className="absolute bottom-2 right-2 rounded-md bg-sky-400 px-1.5 py-0.5 text-[9px] font-bold text-slate-950">
+                        VIDEO
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 truncate text-[11px] font-bold">
+                    {demoFrame.title}
+                  </p>
+                  <span className="mt-1 inline-flex w-fit rounded-full border border-sky-500/25 bg-sky-500/10 px-2 py-0.5 text-[9px] font-semibold text-sky-500">
+                    {demoFrame.category}
+                  </span>
+                </button>
               );
             })}
           </div>
         </section>
 
-        <section data-demo-workflow className="mt-5 rounded-xl border border-border bg-card p-4 shadow-xl">
+        <section
+          data-demo-workflow
+          className="mt-5 rounded-xl border border-border bg-card p-4 shadow-xl"
+        >
           <div className="mb-4 flex items-center gap-2 border-b border-border pb-3">
             <ShieldAlert className="size-3.5 text-yellow-500" />
             <h2 className="text-xs font-bold tracking-wide">Safety workflow</h2>
@@ -418,8 +535,17 @@ export default function WelfareTrackerDemoPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {WORKFLOW.map(({ title, description, icon: Icon }, index) => (
               <div key={title} className="flex items-start gap-2.5">
-                <span className={`flex size-7 shrink-0 items-center justify-center rounded-full text-slate-950 ${index % 2 === 0 ? "bg-sky-400" : "bg-yellow-400"}`}><Icon className="size-3.5" /></span>
-                <div><h3 className="text-[11px] font-bold">{title}</h3><p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">{description}</p></div>
+                <span
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-full text-slate-950 ${index % 2 === 0 ? "bg-sky-400" : "bg-yellow-400"}`}
+                >
+                  <Icon className="size-3.5" />
+                </span>
+                <div>
+                  <h3 className="text-[11px] font-bold">{title}</h3>
+                  <p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -427,7 +553,8 @@ export default function WelfareTrackerDemoPage() {
 
         <div className="mt-5 flex items-center gap-2 border-t border-border pt-4 text-[11px] text-muted-foreground">
           <CheckCircle2 className="size-4 text-sky-500" />
-          Safe Zone Setup recording available; more demo videos will be added as they are captured.
+          Safe Zone Setup recording available; more demo videos will be added as
+          they are captured.
         </div>
       </div>
     </div>

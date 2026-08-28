@@ -58,7 +58,15 @@ export const WavyBackground = ({
     waveWidthRef.current = waveWidth || 50;
     speedRef.current = speed;
     fitContainerRef.current = fitContainer;
-  }, [backgroundFill, waveOpacity, colors, blur, waveWidth, speed, fitContainer]);
+  }, [
+    backgroundFill,
+    waveOpacity,
+    colors,
+    blur,
+    waveWidth,
+    speed,
+    fitContainer,
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

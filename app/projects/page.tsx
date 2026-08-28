@@ -45,11 +45,7 @@ function TypewriterText({
   return <span>{displayed}</span>;
 }
 
-type Category =
-  | "All work"
-  | "Web platforms"
-  | "Mobile"
-  | "Systems programming";
+type Category = "All work" | "Web platforms" | "Mobile" | "Systems programming";
 type ViewMode = "grid" | "list" | "tiles" | "carousel";
 
 interface Project {
@@ -199,7 +195,10 @@ function ActionButtons({ project }: { project: Project }) {
 const GridCard = memo(function GridCard({ project }: { project: Project }) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div data-project-card className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(49,91,255,0.08)] hover:border-[#315BFF]/60 hover:shadow-[0_18px_40px_rgba(49,91,255,0.22),0_0_28px_rgba(109,74,255,0.16)] hover:-translate-y-0.5">
+    <div
+      data-project-card
+      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(49,91,255,0.08)] hover:border-[#315BFF]/60 hover:shadow-[0_18px_40px_rgba(49,91,255,0.22),0_0_28px_rgba(109,74,255,0.16)] hover:-translate-y-0.5"
+    >
       <div className="p-3 pb-0">
         <div
           className={`relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${project.gradient} overflow-hidden`}
@@ -243,7 +242,10 @@ const GridCard = memo(function GridCard({ project }: { project: Project }) {
 /* ─── LIST row ────────────────────────────────────────────────── */
 const ListRow = memo(function ListRow({ project }: { project: Project }) {
   return (
-    <div data-project-card className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-[#315BFF]/60 hover:bg-accent/30 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)]">
+    <div
+      data-project-card
+      className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-[#315BFF]/60 hover:bg-accent/30 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)]"
+    >
       {/* Left: swatch + info */}
       <div className="flex items-start gap-3 flex-1 min-w-0">
         <div
@@ -346,7 +348,10 @@ const CarouselCard = memo(function CarouselCard({
 });
 const TileCard = memo(function TileCard({ project }: { project: Project }) {
   return (
-    <div data-project-card className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[#315BFF]/60 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)] hover:-translate-y-0.5">
+    <div
+      data-project-card
+      className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[#315BFF]/60 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)] hover:-translate-y-0.5"
+    >
       <div className={`w-full h-20 bg-gradient-to-br ${project.gradient}`} />
       <div className="p-3 flex flex-col gap-1.5">
         <span className="text-[10px] font-semibold text-violet-500">
@@ -369,6 +374,7 @@ const TileCard = memo(function TileCard({ project }: { project: Project }) {
 /* ─── Page ────────────────────────────────────────────────────── */
 export default function ProjectsPage() {
   const [active, setActive] = useState<Category>("All work");
+  const [listPage, setListPage] = useState(1);
   const [view, setView] = useState<ViewMode>(() => {
     if (typeof window !== "undefined") {
       return (sessionStorage.getItem("projects-view") as ViewMode) || "grid";
@@ -400,11 +406,19 @@ export default function ProjectsPage() {
     active === "All work"
       ? PROJECTS
       : PROJECTS.filter((p) => p.category === active);
+  const listPageSize = 4;
+  const listPageCount = Math.max(1, Math.ceil(filtered.length / listPageSize));
+  const visibleListProjects = filtered.slice(
+    (listPage - 1) * listPageSize,
+    listPage * listPageSize,
+  );
 
   useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>(
-      "[data-project-card]",
-    );
+    setListPage(1);
+  }, [active]);
+
+  useEffect(() => {
+    const cards = document.querySelectorAll<HTMLElement>("[data-project-card]");
     if (!cards.length) return;
 
     const animation = animate(cards, {
@@ -579,10 +593,37 @@ export default function ProjectsPage() {
             </div>
           )}
           {view === "list" && (
-            <div className="mt-6 flex flex-col gap-2">
-              {filtered.map((p) => (
-                <ListRow key={p.title} project={p} />
-              ))}
+            <div className="mt-6">
+              <div className="flex flex-col gap-2">
+                {visibleListProjects.map((p) => (
+                  <ListRow key={p.title} project={p} />
+                ))}
+              </div>
+              {listPageCount > 1 && (
+                <div className="mt-4 flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setListPage((page) => page - 1)}
+                    disabled={listPage === 1}
+                    aria-label="Previous projects page"
+                    className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </button>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Page {listPage} of {listPageCount}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setListPage((page) => page + 1)}
+                    disabled={listPage === listPageCount}
+                    aria-label="Next projects page"
+                    className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
           {view === "tiles" && (
