@@ -11,6 +11,7 @@ import {
   Settings,
   WifiOff,
 } from "lucide-react";
+import { ImageWithSkeleton } from "@/components/skeleton";
 
 interface VideoPlayerProps {
   readonly src: string;
@@ -315,12 +316,13 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
 
       {!started && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[1px]">
-          <img
+          <ImageWithSkeleton
             src={thumbnail}
             alt={title}
-            className={`absolute inset-0 w-full h-full ${
+            className={`w-full h-full ${
               isPortraitVideo ? "object-contain" : "object-cover"
             }`}
+            wrapperClassName="absolute inset-0"
           />
           <div className="absolute inset-0 bg-black/40" />
 
