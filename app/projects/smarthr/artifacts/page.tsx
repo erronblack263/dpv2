@@ -24,6 +24,7 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 import { animate, stagger } from "animejs";
+import { ImageWithSkeleton } from "@/components/skeleton";
 
 function ReactIcon({ className = "size-4" }: { className?: string }) {
   return (
@@ -590,11 +591,12 @@ export default function SmartHRArtifactsPage() {
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 size-1.5 rounded-full bg-zinc-700" />
                 {/* Screen content */}
                 <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
-                  <img
+                  <ImageWithSkeleton
                     data-smarthr-current-screen
                     src={currentScreen.src}
                     alt={currentScreen.caption}
                     className="w-full h-full object-cover transition-opacity duration-300"
+                    wrapperClassName="h-full w-full"
                   />
                   {/* Caption overlay */}
                   <div className="absolute bottom-2 left-2 right-2 z-20 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 px-3 py-2 text-center text-white">
@@ -807,10 +809,11 @@ export default function SmartHRArtifactsPage() {
                       className="relative w-full rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800"
                       style={{ aspectRatio: "16/10" }}
                     >
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="absolute inset-0"
                       />
                       <button
                         onClick={(e) => {
@@ -866,10 +869,11 @@ export default function SmartHRArtifactsPage() {
                       className="relative w-full rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800"
                       style={{ aspectRatio: "16/10" }}
                     >
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="absolute inset-0"
                       />
                       <button
                         onClick={(e) => {
@@ -917,10 +921,11 @@ export default function SmartHRArtifactsPage() {
                       style={{ aspectRatio: "16/10" }}
                     >
                       <div className="absolute inset-0 bg-zinc-900" />
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="absolute inset-0 w-full h-full object-cover"
+                        wrapperClassName="absolute inset-0"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                       <div className="relative z-10 mt-auto p-4">
@@ -1030,10 +1035,11 @@ export default function SmartHRArtifactsPage() {
             onClick={(e) => e.stopPropagation()}
             className="relative flex flex-col items-center max-w-4xl w-full max-h-[85vh]"
           >
-            <img
+            <ImageWithSkeleton
               src={section.images[lightboxIdx].src}
               alt={section.images[lightboxIdx].caption}
               className="max-h-[70vh] w-auto rounded-2xl object-contain shadow-2xl border border-zinc-800"
+              wrapperClassName="max-h-[70vh] w-auto"
             />
             <div className="mt-3 flex flex-col items-center gap-1 text-center">
               <p className="text-sm font-bold text-white">

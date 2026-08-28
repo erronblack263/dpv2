@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,6 +20,7 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { animate, stagger } from "animejs";
+import { NextImageWithSkeleton } from "@/components/skeleton";
 
 type Artifact = {
   title: string;
@@ -276,7 +276,7 @@ export default function SageOSArtifactsPage() {
                     className="group relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10 bg-[#080b12]"
                     aria-label="Open SageOS Home Screen image"
                   >
-                    <Image
+                    <NextImageWithSkeleton
                       src={activeImage.src}
                       alt={activeImage.title}
                       fill
@@ -284,6 +284,7 @@ export default function SageOSArtifactsPage() {
                       quality={75}
                       sizes="(max-width: 1024px) 90vw, 45vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      wrapperClassName="absolute inset-0"
                     />
                     <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] font-semibold text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                       Open full image
@@ -392,13 +393,14 @@ export default function SageOSArtifactsPage() {
                     .padStart(2, "0")}
                 </div>
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
-                  <Image
+                  <NextImageWithSkeleton
                     src={src}
                     alt={title}
                     fill
                     quality={75}
                     sizes="320px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    wrapperClassName="absolute inset-0"
                   />
                   <button
                     type="button"
@@ -460,13 +462,14 @@ export default function SageOSArtifactsPage() {
             className="relative h-[80vh] w-full max-w-6xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <Image
+            <NextImageWithSkeleton
               src={lightboxSrc}
               alt="SageOS artifact preview"
               fill
               quality={100}
               sizes="95vw"
               className="object-contain"
+              wrapperClassName="absolute inset-0"
             />
           </div>
         </div>

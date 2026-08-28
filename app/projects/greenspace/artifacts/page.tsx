@@ -26,6 +26,7 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 import { animate, stagger } from "animejs";
+import { ImageWithSkeleton } from "@/components/skeleton";
 
 const CURSOR_COLORS = ["#10b981", "#8b5cf6", "#06b6d4", "#f43f5e", "#f59e0b"];
 
@@ -440,6 +441,50 @@ const SECTIONS: SectionData[] = [
       },
     ],
   },
+  {
+    title: "Project Documents",
+    tagline: "Computer Vision Documentation",
+    description:
+      "Project documentation for the YOLO detection workflow used by the GreenSpace image recognition engine.",
+    tags: ["YOLO", "PyTorch", "Computer Vision", "2026"],
+    category: "Project Documents",
+    platform: "Machine Learning",
+    role: "ML & Fullstack Engineer",
+    duration: "4 Weeks",
+    status: "75% Completed",
+    images: [
+      {
+        num: "01",
+        caption: "YOLO Detection",
+        resolution: "Project Document",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787949401/yolo-detection_1_kipcrq.png",
+      },
+      {
+        num: "02",
+        caption: "Barren Soil Detection",
+        resolution: "Project Document",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787949400/barren_susdk1.png",
+      },
+      {
+        num: "03",
+        caption: "Semi-Vegetative Detection",
+        resolution: "Project Document",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787949401/semi-vegetative_o9xdwz.png",
+      },
+      {
+        num: "04",
+        caption: "Suspected Fertile Detection",
+        resolution: "Project Document",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787949400/suspected_fertile_uhvyhz.png",
+      },
+      {
+        num: "05",
+        caption: "Object Detection",
+        resolution: "Project Document",
+        src: "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787949400/object-detection_dmyfln.png",
+      },
+    ],
+  },
 ];
 
 type ScreenViewMode = "grid" | "tiles" | "carousel";
@@ -718,11 +763,12 @@ export default function GreenSpaceArtifactsPage() {
 
               {/* Display Screen */}
               <div className="relative w-full h-full rounded-[34px] overflow-hidden bg-zinc-900">
-                <img
+                <ImageWithSkeleton
                   data-greenspace-current-screen
                   src={currentScreen.src}
                   alt={currentScreen.caption}
                   className="w-full h-full object-cover transition-opacity duration-300"
+                  wrapperClassName="h-full w-full"
                 />
 
                 {/* Overlay Caption Badge inside Phone */}
@@ -963,10 +1009,11 @@ export default function GreenSpaceArtifactsPage() {
 
                     {/* Thumbnail Mockup Frame */}
                     <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="absolute inset-0"
                       />
 
                       {/* Quick Lightbox View Button */}
@@ -1088,10 +1135,11 @@ export default function GreenSpaceArtifactsPage() {
                       style={{ height: "420px" }}
                     >
                       <div className="absolute inset-0 bg-zinc-900 rounded-2xl border border-zinc-800" />
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+                        wrapperClassName="absolute inset-0"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent rounded-2xl" />
                       <div className="relative z-10 mt-auto p-4">
@@ -1211,10 +1259,11 @@ export default function GreenSpaceArtifactsPage() {
             onClick={(e) => e.stopPropagation()}
             className="relative flex flex-col items-center max-h-[85vh] max-w-xl"
           >
-            <img
+            <ImageWithSkeleton
               src={section.images[lightboxIdx].src}
               alt={section.images[lightboxIdx].caption}
               className="max-h-[70vh] sm:max-h-[75vh] w-auto rounded-2xl object-contain shadow-2xl border border-zinc-800"
+              wrapperClassName="max-h-[70vh] sm:max-h-[75vh] w-auto"
             />
             <div className="mt-3 flex flex-col items-center gap-1 text-center">
               <p className="text-sm font-bold text-white">

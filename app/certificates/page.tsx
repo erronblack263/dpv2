@@ -15,6 +15,7 @@ import {
   Award,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
+import { ImageWithSkeleton } from "@/components/skeleton";
 import { animate, stagger } from "animejs";
 
 function TypewriterText({
@@ -744,11 +745,12 @@ export default function CertificatesPage() {
               <X className="size-4" />
             </button>
             <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card/50 p-2 shadow-lg">
-              <img
+              <ImageWithSkeleton
                 src={selected.embed}
                 alt={`${selected.title} certificate`}
                 className="w-full rounded-xl object-contain"
                 style={{ maxHeight: "42vh" }}
+                wrapperClassName="block"
               />
             </div>
             <div className="mt-7">
