@@ -327,11 +327,12 @@ export function VideoPlayer({ src, thumbnail, title }: VideoPlayerProps) {
           <div className="absolute inset-0 bg-black/40" />
 
           <button
+            type="button"
             onClick={togglePlay}
             aria-label={`Play ${title}`}
-            className="relative z-30 size-16 sm:size-20 rounded-full bg-emerald-500/90 hover:bg-emerald-400 text-black flex items-center justify-center shadow-[0_0_35px_rgba(16,185,129,0.6)] ring-4 ring-emerald-500/30 transition-all duration-300 hover:scale-110 focus:outline-none"
+            className="absolute left-1/2 top-1/2 z-30 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-emerald-500/90 text-black shadow-[0_0_35px_rgba(16,185,129,0.6)] ring-4 ring-emerald-500/30 transition-all duration-300 hover:scale-110 hover:bg-emerald-400 focus:outline-none sm:size-20"
           >
-            <Play className="size-8 sm:size-10 fill-black translate-x-0.5" />
+            <Play className="size-8 translate-x-0.5 fill-black sm:size-10" />
           </button>
         </div>
       )}
