@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Explore Witness H Musonza's portfolio of web apps, mobile products, AI experiences, and software engineering work.",
   alternates: {
-    canonical: "/",
+    canonical: "/home",
   },
 };
 
