@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LandingPage } from "@/components/landing-page";
+import HeroLandingClient from "./hero-landing-client";
 
 export const metadata: Metadata = {
   title: "Software Developer | Witness H Musonza",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function HeroLandingPage() {
-  return <LandingPage />;
+  return <HeroLandingClient />;
 }
