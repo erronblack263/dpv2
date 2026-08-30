@@ -1,15 +1,5 @@
-import type { Metadata } from "next";
-import { LandingPage } from "@/components/landing-page";
-
-export const metadata: Metadata = {
-  title: "Home",
-  description:
-    "Explore Witness H Musonza's portfolio of web apps, mobile products, AI experiences, and software engineering work.",
-  alternates: {
-    canonical: "/home",
-  },
-};
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
-  return <LandingPage />;
+  redirect("/");
 }
