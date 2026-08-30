@@ -9,7 +9,8 @@ import { openContactDrawer } from "@/components/contact-drawer";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Home", href: "/home" },
+  { label: "Home", href: "/" },
+  { label: "About Me", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Achievements", href: "/achievements" },
   { label: "Certificates", href: "/certificates" },
