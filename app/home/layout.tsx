@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { LandingPage } from "@/components/landing-page";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  return <LandingPage />;
+export default function HomeLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return children;
 }

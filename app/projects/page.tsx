@@ -17,6 +17,7 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
+import { ProjectStructuredData } from "@/components/project-structured-data";
 
 function TypewriterText({
   text,
@@ -435,8 +436,18 @@ export default function ProjectsPage() {
   }, [active, view]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
+    <>
+      <ProjectStructuredData
+        projects={PROJECTS.map((project) => ({
+          name: project.title,
+          description: project.description,
+          url: project.demo && project.demo !== "#" ? project.demo : project.artifacts || "/projects",
+          category: project.category,
+          tech: project.tech,
+        }))}
+      />
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
         <Link
           href="/"
           className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
@@ -672,7 +683,8 @@ export default function ProjectsPage() {
             </div>
           )}
         </FadeInOnScroll>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
