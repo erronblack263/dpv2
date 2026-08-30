@@ -62,7 +62,7 @@ export default function NotFound() {
 
               <div className="flex gap-3">
                 <Link
-                  href="/home"
+                  href="/"
                   className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-foreground text-background py-2.5 text-sm font-semibold transition-colors hover:opacity-90"
                 >
                   <Home className="size-4" />

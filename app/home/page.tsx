@@ -1,5 +1,5 @@
-import HeroLandingPage from "@/app/hero-landing/page";
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
-  return <HeroLandingPage />;
+  redirect("/about");
 }
