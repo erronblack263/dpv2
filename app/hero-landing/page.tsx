@@ -1,9 +1,17 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
+
+export const metadata: Metadata = {
+  title: "Software Developer | Witness H Musonza",
+  description:
+    "Witness H Musonza builds full-stack web, mobile, AI, and systems products for businesses that need elegant digital solutions.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 // Preload the WavyBackground + simplex-noise chunk in the background
 // so it's cached by the time the user navigates to /home
