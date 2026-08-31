@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import HeroLandingClient from "@/app/hero-landing/hero-landing-client";
+import { HeroLanding } from "@/components/hero-landing";
 
 export const metadata: Metadata = {
   title: "Witness H Musonza | Software Developer",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <HeroLandingClient />;
+  return <HeroLanding />;
 }
