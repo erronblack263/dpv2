@@ -9,13 +9,23 @@ import { openContactDrawer } from "@/components/contact-drawer";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Home", href: "/hero-landing" },
+  { label: "Home", href: "/" },
   { label: "About Me", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Achievements", href: "/achievements" },
   { label: "Certificates", href: "/certificates" },
   { label: "Contact", href: "/contact" },
 ];
+
+function isLinkActive(href: string, pathname: string): boolean {
+  if (href === "/") {
+    return pathname === "/" || pathname === "/hero-landing";
+  }
+  if (href === "/about") {
+    return pathname === "/about" || pathname === "/home";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -27,7 +37,7 @@ export function SiteNav() {
       className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl"
     >
       <div className="flex h-12 w-full items-center justify-between px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-        <Link href="/home" className="flex shrink-0 items-center gap-2">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="/sage-logo.png"
             alt="Sage"
@@ -43,7 +53,7 @@ export function SiteNav() {
 
         <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
           {links.map((link) => {
-            const active = pathname === link.href;
+            const active = isLinkActive(link.href, pathname);
             return (
               <Link
                 key={link.href}
@@ -95,7 +105,7 @@ export function SiteNav() {
         >
           <div className="flex w-full flex-col px-5 py-2">
             {links.map((link) => {
-              const active = pathname === link.href;
+              const active = isLinkActive(link.href, pathname);
               return (
                 <Link
                   key={link.href}
