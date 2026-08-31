@@ -19,7 +19,7 @@ const links = [
 
 function isLinkActive(href: string, pathname: string): boolean {
   if (href === "/") {
-    return pathname === "/" || pathname === "/hero-landing" || pathname === "/home";
+    return pathname === "/";
   }
   if (href === "/about") {
     return pathname === "/about";
