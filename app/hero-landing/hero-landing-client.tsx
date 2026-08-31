@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 
 // Preload the WavyBackground + simplex-noise chunk in the background
-// so it's cached by the time the user navigates to /home
+// so it's cached by the time the user navigates to /about
 function usePreloadHomeChunks() {
   useEffect(() => {
     // Wait for hero page to fully paint first, then preload in background
@@ -103,7 +103,7 @@ export default function HeroLandingClient() {
           </p>
           <div className="flex items-center gap-3">
             <Link
-              href="/home"
+              href="/about"
               className="inline-flex items-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,58,237,0.5)] transition-all hover:bg-violet-500 hover:shadow-[0_0_32px_rgba(124,58,237,0.7)]"
             >
               Take me home
