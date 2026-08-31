@@ -19,10 +19,10 @@ const links = [
 
 function isLinkActive(href: string, pathname: string): boolean {
   if (href === "/") {
-    return pathname === "/" || pathname === "/hero-landing";
+    return pathname === "/" || pathname === "/hero-landing" || pathname === "/home";
   }
   if (href === "/about") {
-    return pathname === "/about" || pathname === "/home";
+    return pathname === "/about";
   }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
