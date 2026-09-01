@@ -1,9 +1,14 @@
+const siteUrl = "https://portfolio.sagetech.co.zw";
+const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
+const logoUrl = "https://portfolio.sagetech.co.zw/sage-logo.png";
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Witness H Musonza",
   jobTitle: "Software Developer",
-  url: "https://portfolio.sagetech.co.zw",
+  url: siteUrl,
+  image: avatarUrl,
   sameAs: ["https://www.linkedin.com/in/witnessmusonza"],
   knowsAbout: [
     "Full Stack Development",
@@ -19,15 +24,43 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Witness H Musonza Portfolio",
-  url: "https://portfolio.sagetech.co.zw",
+  url: siteUrl,
   description:
     "Portfolio of Witness H Musonza, a full-stack software developer building mobile, web, and systems products.",
   inLanguage: "en-US",
+  publisher: {
+    "@type": "Organization",
+    name: "Sage Tech",
+    url: siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: logoUrl,
+    },
+  },
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://portfolio.sagetech.co.zw/projects?q={search_term_string}",
+    target: `${siteUrl}/projects?q={search_term_string}`,
     "query-input": "required name=search_term_string",
   },
+};
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Witness H Musonza | Software Developer",
+  url: siteUrl,
+  description:
+    "Fullstack engineer specialising in mobile, web and backend systems. Building scalable digital solutions with little hassle.",
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: avatarUrl,
+    contentUrl: avatarUrl,
+    caption: "Witness H Musonza - Software Developer",
+    width: 600,
+    height: 600,
+  },
+  thumbnailUrl: avatarUrl,
+  image: avatarUrl,
 };
 
 export function SiteStructuredData() {
@@ -42,6 +75,11 @@ export function SiteStructuredData() {
         id="website-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        id="webpage-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
     </>
   );
