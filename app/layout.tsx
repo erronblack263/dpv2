@@ -67,6 +67,20 @@ export const metadata: Metadata = {
       "Full-stack software developer creating scalable products across mobile, web, AI, and systems engineering.",
     images: ["/witness-avatar.png"],
   },
+  icons: {
+    icon: [
+      { url: "/sage-logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/sage-logo.png",
+    apple: [
+      { url: "/sage-logo.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  other: {
+    thumbnail: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+    "image-thumbnail": "https://portfolio.sagetech.co.zw/witness-avatar.png",
+  },
   robots: {
     index: true,
     follow: true,
