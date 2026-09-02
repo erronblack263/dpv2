@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -9,9 +9,20 @@ import { NetworkStatus } from "@/components/network-status";
 import { SiteStructuredData } from "@/components/site-structured-data";
 import "./globals.css";
 
-const inter = Inter({
+const inter = localFont({
+  src: [
+    {
+      path: "../public/font/Inter-VariableFont_opsz,wght.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Inter-Italic-VariableFont_opsz,wght.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-inter",
-  subsets: ["latin"],
   display: "swap",
   preload: true,
 });
