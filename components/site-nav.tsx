@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { openContactDrawer } from "@/components/contact-drawer";
@@ -30,6 +30,14 @@ function isLinkActive(href: string, pathname: string): boolean {
 export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const desktopLinks = links.filter(
+    (link) => link.href !== "/achievements" && link.href !== "/contact",
+  );
+  const moreLinks = links.filter(
+    (link) => link.href === "/achievements" || link.href === "/contact",
+  );
+  const moreActive = moreLinks.some((link) => isLinkActive(link.href, pathname));
 
   return (
     <header
@@ -51,8 +59,8 @@ export function SiteNav() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
-          {links.map((link) => {
+        <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
+          {desktopLinks.map((link) => {
             const active = isLinkActive(link.href, pathname);
             return (
               <Link
@@ -76,6 +84,49 @@ export function SiteNav() {
               </Link>
             );
           })}
+          <div className="relative">
+            <button
+              type="button"
+              aria-expanded={moreOpen}
+              aria-haspopup="menu"
+              onClick={() => setMoreOpen((value) => !value)}
+              className={cn(
+                "flex items-center gap-1 text-sm font-medium transition-colors hover:text-foreground",
+                moreActive ? "text-foreground font-semibold" : "text-muted-foreground",
+              )}
+            >
+              More
+              <ChevronDown
+                className={cn("size-3.5 transition-transform", moreOpen && "rotate-180")}
+                aria-hidden="true"
+              />
+            </button>
+            {moreOpen && (
+              <div
+                role="menu"
+                className="absolute right-0 top-7 min-w-44 rounded-lg border border-border bg-background p-1.5 shadow-xl"
+              >
+                {moreLinks.map((link) => {
+                  const active = isLinkActive(link.href, pathname);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      role="menuitem"
+                      aria-current={active ? "page" : undefined}
+                      onClick={() => setMoreOpen(false)}
+                      className={cn(
+                        "block rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-foreground",
+                        active ? "text-foreground font-semibold" : "text-muted-foreground",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </nav>
 
         <div className="flex items-center gap-3 shrink-0">
