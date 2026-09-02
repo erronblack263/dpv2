@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { HeroLanding } from "@/components/hero-landing";
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl = `${siteUrl}/witness-avatar.png`;
+const avatarUrl =
+  "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg";
 
 export const metadata: Metadata = {
   title: "Witness H Musonza | Software Developer",

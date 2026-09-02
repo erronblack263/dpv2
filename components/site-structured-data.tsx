@@ -1,6 +1,9 @@
 const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
-const logoUrl = "https://portfolio.sagetech.co.zw/sage-logo.png";
+const avatarUrl =
+  "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg";
+const logoUrl =
+  process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
+  "https://portfolio.sagetech.co.zw/sage-logo.png";
 
 const personSchema = {
   "@context": "https://schema.org",
