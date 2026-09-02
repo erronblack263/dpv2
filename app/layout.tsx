@@ -17,6 +17,11 @@ const inter = Inter({
 });
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
+const avatarUrl =
+  "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg";
+const logoUrl =
+  process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
+  "https://portfolio.sagetech.co.zw/sage-logo.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -53,7 +58,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/witness-avatar.png",
+        url: avatarUrl,
         width: 1200,
         height: 630,
         alt: "Witness H Musonza portrait",
@@ -65,21 +70,29 @@ export const metadata: Metadata = {
     title: "Witness H Musonza | Software Developer",
     description:
       "Full-stack software developer creating scalable products across mobile, web, AI, and systems engineering.",
-    images: ["/witness-avatar.png"],
+    images: [avatarUrl],
   },
   icons: {
     icon: [
-      { url: "/sage-logo.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+      {
+        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
     ],
-    shortcut: "/sage-logo.png",
+    shortcut:
+      "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
     apple: [
-      { url: "/sage-logo.png", sizes: "180x180", type: "image/png" },
+      {
+        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
     ],
   },
   other: {
-    thumbnail: "https://portfolio.sagetech.co.zw/witness-avatar.png",
-    "image-thumbnail": "https://portfolio.sagetech.co.zw/witness-avatar.png",
+    thumbnail: avatarUrl,
+    "image-thumbnail": avatarUrl,
   },
   robots: {
     index: true,
