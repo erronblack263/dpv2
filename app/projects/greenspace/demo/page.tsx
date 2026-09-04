@@ -181,6 +181,13 @@ export default function GreenSpaceDemoPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans pb-10 transition-colors duration-300">
+      <Link
+        href="/projects/greenspace/artifacts"
+        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_6px_18px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-[0_8px_22px_rgba(16,185,129,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
+      >
+        Take me to artifacts page
+        <ArrowRight className="size-3.5" aria-hidden="true" />
+      </Link>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-3">
         {/* Top Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">

@@ -224,6 +224,13 @@ export default function WelfareTrackerDemoPage() {
 
   return (
     <div className="min-h-screen bg-background pb-10 font-sans text-foreground transition-colors duration-300">
+      <Link
+        href="/projects/welfaretracker/artifacts"
+        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-sky-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_6px_18px_rgba(2,132,199,0.3)] transition-all hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-[0_8px_22px_rgba(2,132,199,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
+      >
+        Take me to artifacts page
+        <ArrowRight className="size-3.5" aria-hidden="true" />
+      </Link>
       <div className="mx-auto max-w-7xl px-5 pt-3 sm:px-8 lg:px-12">
         <div className="grid items-start gap-5 lg:grid-cols-12">
           <section className="relative lg:col-span-4">
