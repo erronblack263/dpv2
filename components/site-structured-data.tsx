@@ -1,6 +1,6 @@
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg";
+  "https://portfolio.sagetech.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";
@@ -21,6 +21,23 @@ const personSchema = {
     "Systems Programming",
     "AI Products",
   ],
+};
+
+const profilePageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  name: "Witness H Musonza | Software Developer",
+  url: siteUrl,
+  mainEntity: personSchema,
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: avatarUrl,
+    contentUrl: avatarUrl,
+    caption: "Witness H Musonza - Software Developer",
+    width: 1024,
+    height: 1024,
+  },
+  thumbnailUrl: avatarUrl,
 };
 
 const websiteSchema = {
@@ -59,8 +76,8 @@ const webPageSchema = {
     url: avatarUrl,
     contentUrl: avatarUrl,
     caption: "Witness H Musonza - Software Developer",
-    width: 600,
-    height: 600,
+    width: 1024,
+    height: 1024,
   },
   thumbnailUrl: avatarUrl,
   image: avatarUrl,
@@ -73,6 +90,11 @@ export function SiteStructuredData() {
         id="person-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <script
+        id="profile-page-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }}
       />
       <script
         id="website-schema"
