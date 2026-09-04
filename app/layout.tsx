@@ -29,7 +29,7 @@ const inter = localFont({
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg";
+  "https://portfolio.sagetech.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";
@@ -65,11 +65,17 @@ export const metadata: Metadata = {
       "Full-stack software developer creating scalable products across mobile, web, AI, and systems engineering.",
     url: siteUrl,
     siteName: "Witness H Musonza Portfolio",
-    type: "website",
+    type: "profile",
     locale: "en_US",
     images: [
       {
-        url: avatarUrl,
+        url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+        width: 1024,
+        height: 1024,
+        alt: "Witness H Musonza portrait",
+      },
+      {
+        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg",
         width: 1200,
         height: 630,
         alt: "Witness H Musonza portrait",
@@ -81,29 +87,38 @@ export const metadata: Metadata = {
     title: "Witness H Musonza | Software Developer",
     description:
       "Full-stack software developer creating scalable products across mobile, web, AI, and systems engineering.",
-    images: [avatarUrl],
+    images: ["https://portfolio.sagetech.co.zw/witness-avatar.png"],
   },
   icons: {
     icon: [
       {
-        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
+        url: "/favicon.ico",
+        sizes: "48x48",
+        type: "image/x-icon",
+      },
+      {
+        url: "/icon.png",
         sizes: "192x192",
         type: "image/png",
       },
+      {
+        url: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
     ],
-    shortcut:
-      "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
+    shortcut: "/favicon.ico",
     apple: [
       {
-        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345583/sage-logo_agfh7v.png",
+        url: "/apple-icon.png",
         sizes: "180x180",
         type: "image/png",
       },
     ],
   },
   other: {
-    thumbnail: avatarUrl,
-    "image-thumbnail": avatarUrl,
+    thumbnail: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+    "image-thumbnail": "https://portfolio.sagetech.co.zw/witness-avatar.png",
   },
   robots: {
     index: true,
