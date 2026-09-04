@@ -218,6 +218,13 @@ export default function InventoryManagementDemoPage() {
 
   return (
     <div className="min-h-screen bg-background pb-10 font-sans text-foreground transition-colors duration-300">
+      <Link
+        href="/projects/inventory-management"
+        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-orange-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_6px_18px_rgba(234,88,12,0.3)] transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-[0_8px_22px_rgba(234,88,12,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
+      >
+        Take me to artifacts page
+        <ArrowRight className="size-3.5" aria-hidden="true" />
+      </Link>
       <div className="mx-auto max-w-7xl px-5 pt-3 sm:px-8 lg:px-12">
         <nav
           aria-label="Breadcrumb"
