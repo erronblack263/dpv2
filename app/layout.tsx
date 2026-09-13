@@ -74,12 +74,6 @@ export const metadata: Metadata = {
         height: 1024,
         alt: "Witness H Musonza portrait",
       },
-      {
-        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Witness H Musonza portrait",
-      },
     ],
   },
   twitter: {
