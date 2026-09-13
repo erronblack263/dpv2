@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { HeroLanding } from "@/components/hero-landing";
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl =
-  "https://portfolio.sagetech.co.zw/witness-avatar.png";
+const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
 
 export const metadata: Metadata = {
   title: "Witness H Musonza | Software Developer",
