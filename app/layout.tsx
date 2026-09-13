@@ -29,7 +29,7 @@ const inter = localFont({
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://portfolio.sagetech.co.zw/msonzah.jpg";
+  "https://portfolio.sagetech.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";
@@ -68,12 +68,6 @@ export const metadata: Metadata = {
     type: "profile",
     locale: "en_US",
     images: [
-      {
-        url: "https://portfolio.sagetech.co.zw/msonzah.jpg",
-        width: 4800,
-        height: 2435,
-        alt: "Witness H Musonza portrait",
-      },
       {
         url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
         width: 1024,
