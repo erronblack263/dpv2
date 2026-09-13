@@ -452,7 +452,7 @@ export default function ProjectsPage() {
       <div className="min-h-screen bg-background text-foreground">
         <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
           <Link
-            href="/"
+            href="/about"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
           >
             <ArrowLeft className="size-4" /> Back to Home
