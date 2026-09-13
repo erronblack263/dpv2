@@ -29,7 +29,7 @@ const inter = localFont({
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://portfolio.sagetech.co.zw/witness-avatar.png";
+  "https://portfolio.sagetech.co.zw/msonzah.jpg";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";
@@ -69,15 +69,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
-        width: 1024,
-        height: 1024,
+        url: "https://portfolio.sagetech.co.zw/msonzah.jpg",
+        width: 4800,
+        height: 2435,
         alt: "Witness H Musonza portrait",
       },
       {
-        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg",
-        width: 1200,
-        height: 630,
+        url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+        width: 1024,
+        height: 1024,
         alt: "Witness H Musonza portrait",
       },
     ],

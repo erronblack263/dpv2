@@ -1,6 +1,6 @@
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://portfolio.sagetech.co.zw/witness-avatar.png";
+  "https://portfolio.sagetech.co.zw/msonzah.jpg";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";

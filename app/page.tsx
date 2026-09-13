@@ -3,7 +3,7 @@ import { HeroLanding } from "@/components/hero-landing";
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
 const avatarUrl =
-  "https://portfolio.sagetech.co.zw/witness-avatar.png";
+  "https://portfolio.sagetech.co.zw/msonzah.jpg";
 
 export const metadata: Metadata = {
   title: "Witness H Musonza | Software Developer",
@@ -22,14 +22,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: avatarUrl,
-        width: 1024,
-        height: 1024,
+        width: 4800,
+        height: 2435,
         alt: "Witness H Musonza portrait",
       },
       {
-        url: "https://res.cloudinary.com/virfpzu4/image/upload/v1788345225/20260522_194525_b3pg2a.jpg",
-        width: 1200,
-        height: 630,
+        url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+        width: 1024,
+        height: 1024,
         alt: "Witness H Musonza portrait",
       },
     ],
