@@ -28,8 +28,7 @@ const inter = localFont({
 });
 
 const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl =
-  "https://portfolio.sagetech.co.zw/witness-avatar.png";
+const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";

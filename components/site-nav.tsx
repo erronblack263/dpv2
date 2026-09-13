@@ -37,7 +37,9 @@ export function SiteNav() {
   const moreLinks = links.filter(
     (link) => link.href === "/achievements" || link.href === "/contact",
   );
-  const moreActive = moreLinks.some((link) => isLinkActive(link.href, pathname));
+  const moreActive = moreLinks.some((link) =>
+    isLinkActive(link.href, pathname),
+  );
 
   return (
     <header
@@ -92,12 +94,17 @@ export function SiteNav() {
               onClick={() => setMoreOpen((value) => !value)}
               className={cn(
                 "flex items-center gap-1 text-sm font-medium transition-colors hover:text-foreground",
-                moreActive ? "text-foreground font-semibold" : "text-muted-foreground",
+                moreActive
+                  ? "text-foreground font-semibold"
+                  : "text-muted-foreground",
               )}
             >
               More
               <ChevronDown
-                className={cn("size-3.5 transition-transform", moreOpen && "rotate-180")}
+                className={cn(
+                  "size-3.5 transition-transform",
+                  moreOpen && "rotate-180",
+                )}
                 aria-hidden="true"
               />
             </button>
@@ -117,7 +124,9 @@ export function SiteNav() {
                       onClick={() => setMoreOpen(false)}
                       className={cn(
                         "block rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-foreground",
-                        active ? "text-foreground font-semibold" : "text-muted-foreground",
+                        active
+                          ? "text-foreground font-semibold"
+                          : "text-muted-foreground",
                       )}
                     >
                       {link.label}

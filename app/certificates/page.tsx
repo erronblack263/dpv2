@@ -454,7 +454,7 @@ export default function CertificatesPage() {
       <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
         <div className="relative z-10 w-full px-5 sm:px-8 lg:px-12 pt-6 pb-14">
           <Link
-            href="/"
+            href="/about"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
           >
             <ArrowLeft className="size-4" /> Back to Home

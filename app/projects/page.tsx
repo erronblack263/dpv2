@@ -441,248 +441,251 @@ export default function ProjectsPage() {
         projects={PROJECTS.map((project) => ({
           name: project.title,
           description: project.description,
-          url: project.demo && project.demo !== "#" ? project.demo : project.artifacts || "/projects",
+          url:
+            project.demo && project.demo !== "#"
+              ? project.demo
+              : project.artifacts || "/projects",
           category: project.category,
           tech: project.tech,
         }))}
       />
       <div className="min-h-screen bg-background text-foreground">
         <div className="w-full px-5 sm:px-8 lg:px-12 pt-6 pb-16">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
-        >
-          <ArrowLeft className="size-4" /> Back to Home
-        </Link>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+          >
+            <ArrowLeft className="size-4" /> Back to Home
+          </Link>
 
-        <div className="mt-5">
-          <p className="text-sm font-medium text-violet-500 tracking-wide">
-            Selected work · 2023—2026
-          </p>
-          <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-            <TypewriterText text="Projects built for clarity, scale and impact." />
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            A focused collection of web platforms, mobile tools and backend
-            systems designed to solve real-world problems.
-          </p>
-        </div>
+          <div className="mt-5">
+            <p className="text-sm font-medium text-violet-500 tracking-wide">
+              Selected work · 2023—2026
+            </p>
+            <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+              <TypewriterText text="Projects built for clarity, scale and impact." />
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              A focused collection of web platforms, mobile tools and backend
+              systems designed to solve real-world problems.
+            </p>
+          </div>
 
-        {/* Filter tabs + view toggle */}
-        <FadeInOnScroll delay={100}>
-          <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
-            {/* Stepper breadcrumb categories */}
-            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
-              {CATEGORIES.map((cat, idx) => {
-                const isActive = active === cat;
-                const isCompleted = CATEGORIES.indexOf(active) > idx;
-                return (
-                  <div key={cat} className="flex items-center">
-                    <button
-                      onClick={() => setActive(cat)}
-                      className="flex flex-col items-center gap-1.5 group"
-                    >
-                      <div
-                        className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
-                          isActive
-                            ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
-                            : isCompleted
-                              ? "bg-violet-600/20 border-violet-500 text-violet-500"
-                              : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
-                        }`}
-                      >
-                        {isCompleted ? (
-                          <svg
-                            className="size-4"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        ) : (
-                          <span className="text-[10px] font-bold">
-                            {idx + 1}
-                          </span>
-                        )}
-                      </div>
-                      <span
-                        className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
-                          isActive
-                            ? "text-violet-500"
-                            : "text-muted-foreground group-hover:text-foreground"
-                        }`}
-                      >
-                        {cat}
-                      </span>
-                    </button>
-                    {idx < CATEGORIES.length - 1 && (
-                      <div
-                        className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
-                          isCompleted ? "bg-violet-500/60" : "bg-border"
-                        }`}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* View toggle — stepper style */}
-            <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
-              {(["grid", "tiles", "carousel", "list"] as const).map(
-                (v, idx) => {
-                  const labels: Record<string, string> = {
-                    grid: "Grid",
-                    tiles: "Tiles",
-                    carousel: "Carousel",
-                    list: "List",
-                  };
-                  const icons: Record<string, React.ReactNode> = {
-                    grid: <LayoutGrid className="size-3" />,
-                    tiles: <LayoutDashboard className="size-3" />,
-                    carousel: <GalleryHorizontal className="size-3" />,
-                    list: <List className="size-3" />,
-                  };
-                  const views = ["grid", "tiles", "carousel", "list"];
-                  const isActive = view === v;
-                  const isCompleted = views.indexOf(view) > idx;
+          {/* Filter tabs + view toggle */}
+          <FadeInOnScroll delay={100}>
+            <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
+              {/* Stepper breadcrumb categories */}
+              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
+                {CATEGORIES.map((cat, idx) => {
+                  const isActive = active === cat;
+                  const isCompleted = CATEGORIES.indexOf(active) > idx;
                   return (
-                    <div key={v} className="flex items-center">
+                    <div key={cat} className="flex items-center">
                       <button
-                        onClick={() => changeView(v)}
+                        onClick={() => setActive(cat)}
                         className="flex flex-col items-center gap-1.5 group"
                       >
                         <div
-                          className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
+                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
                             isActive
-                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
                               : isCompleted
                                 ? "bg-violet-600/20 border-violet-500 text-violet-500"
                                 : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
                           }`}
                         >
-                          {icons[v]}
+                          {isCompleted ? (
+                            <svg
+                              className="size-4"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          ) : (
+                            <span className="text-[10px] font-bold">
+                              {idx + 1}
+                            </span>
+                          )}
                         </div>
                         <span
-                          className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
+                          className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
                             isActive
                               ? "text-violet-500"
                               : "text-muted-foreground group-hover:text-foreground"
                           }`}
                         >
-                          {labels[v]}
+                          {cat}
                         </span>
                       </button>
-                      {idx < 3 && (
+                      {idx < CATEGORIES.length - 1 && (
                         <div
-                          className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
+                          className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
                             isCompleted ? "bg-violet-500/60" : "bg-border"
                           }`}
                         />
                       )}
                     </div>
                   );
-                },
-              )}
-            </div>
-          </div>
-        </FadeInOnScroll>
+                })}
+              </div>
 
-        {/* Projects */}
-        <FadeInOnScroll delay={200}>
-          {view === "grid" && (
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((p) => (
-                <GridCard key={p.title} project={p} />
-              ))}
+              {/* View toggle — stepper style */}
+              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
+                {(["grid", "tiles", "carousel", "list"] as const).map(
+                  (v, idx) => {
+                    const labels: Record<string, string> = {
+                      grid: "Grid",
+                      tiles: "Tiles",
+                      carousel: "Carousel",
+                      list: "List",
+                    };
+                    const icons: Record<string, React.ReactNode> = {
+                      grid: <LayoutGrid className="size-3" />,
+                      tiles: <LayoutDashboard className="size-3" />,
+                      carousel: <GalleryHorizontal className="size-3" />,
+                      list: <List className="size-3" />,
+                    };
+                    const views = ["grid", "tiles", "carousel", "list"];
+                    const isActive = view === v;
+                    const isCompleted = views.indexOf(view) > idx;
+                    return (
+                      <div key={v} className="flex items-center">
+                        <button
+                          onClick={() => changeView(v)}
+                          className="flex flex-col items-center gap-1.5 group"
+                        >
+                          <div
+                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
+                              isActive
+                                ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                                : isCompleted
+                                  ? "bg-violet-600/20 border-violet-500 text-violet-500"
+                                  : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
+                            }`}
+                          >
+                            {icons[v]}
+                          </div>
+                          <span
+                            className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
+                              isActive
+                                ? "text-violet-500"
+                                : "text-muted-foreground group-hover:text-foreground"
+                            }`}
+                          >
+                            {labels[v]}
+                          </span>
+                        </button>
+                        {idx < 3 && (
+                          <div
+                            className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
+                              isCompleted ? "bg-violet-500/60" : "bg-border"
+                            }`}
+                          />
+                        )}
+                      </div>
+                    );
+                  },
+                )}
+              </div>
             </div>
-          )}
-          {view === "list" && (
-            <div className="mt-6">
-              <div className="flex flex-col gap-2">
-                {visibleListProjects.map((p) => (
-                  <ListRow key={p.title} project={p} />
+          </FadeInOnScroll>
+
+          {/* Projects */}
+          <FadeInOnScroll delay={200}>
+            {view === "grid" && (
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((p) => (
+                  <GridCard key={p.title} project={p} />
                 ))}
               </div>
-              {listPageCount > 1 && (
-                <div className="mt-4 flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setListPage((page) => page - 1)}
-                    disabled={listPage === 1}
-                    aria-label="Previous projects page"
-                    className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
-                  >
-                    <ChevronLeft className="size-4" />
-                  </button>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Page {listPage} of {listPageCount}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setListPage((page) => page + 1)}
-                    disabled={listPage === listPageCount}
-                    aria-label="Next projects page"
-                    className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
-                  >
-                    <ChevronRight className="size-4" />
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          {view === "tiles" && (
-            <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-              {filtered.map((p) => (
-                <TileCard key={p.title} project={p} />
-              ))}
-            </div>
-          )}
-          {view === "carousel" && (
-            <div className="mt-6">
-              <div className="relative">
-                <div
-                  ref={carouselRef}
-                  className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
-                >
-                  {filtered.map((p) => (
-                    <div
-                      data-project-card
-                      key={p.title}
-                      className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
-                    >
-                      <CarouselCard project={p} />
-                    </div>
+            )}
+            {view === "list" && (
+              <div className="mt-6">
+                <div className="flex flex-col gap-2">
+                  {visibleListProjects.map((p) => (
+                    <ListRow key={p.title} project={p} />
                   ))}
                 </div>
+                {listPageCount > 1 && (
+                  <div className="mt-4 flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setListPage((page) => page - 1)}
+                      disabled={listPage === 1}
+                      aria-label="Previous projects page"
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                    >
+                      <ChevronLeft className="size-4" />
+                    </button>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Page {listPage} of {listPageCount}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setListPage((page) => page + 1)}
+                      disabled={listPage === listPageCount}
+                      aria-label="Next projects page"
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-violet-500 hover:bg-violet-600 hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                    >
+                      <ChevronRight className="size-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {view === "tiles" && (
+              <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                {filtered.map((p) => (
+                  <TileCard key={p.title} project={p} />
+                ))}
+              </div>
+            )}
+            {view === "carousel" && (
+              <div className="mt-6">
+                <div className="relative">
+                  <div
+                    ref={carouselRef}
+                    className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
+                  >
+                    {filtered.map((p) => (
+                      <div
+                        data-project-card
+                        key={p.title}
+                        className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
+                      >
+                        <CarouselCard project={p} />
+                      </div>
+                    ))}
+                  </div>
 
-                {/* Apple-style circular arrows — bottom right */}
-                <div className="flex items-center gap-2 absolute bottom-4 right-4">
-                  <button
-                    onClick={scrollPrev}
-                    aria-label="Previous"
-                    className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
-                  >
-                    <ChevronLeft className="size-5" />
-                  </button>
-                  <button
-                    onClick={scrollNext}
-                    aria-label="Next"
-                    className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
-                  >
-                    <ChevronRight className="size-5" />
-                  </button>
+                  {/* Apple-style circular arrows — bottom right */}
+                  <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                    <button
+                      onClick={scrollPrev}
+                      aria-label="Previous"
+                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                    >
+                      <ChevronLeft className="size-5" />
+                    </button>
+                    <button
+                      onClick={scrollNext}
+                      aria-label="Next"
+                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                    >
+                      <ChevronRight className="size-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </FadeInOnScroll>
+            )}
+          </FadeInOnScroll>
         </div>
       </div>
     </>
