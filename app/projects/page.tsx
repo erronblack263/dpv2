@@ -198,7 +198,7 @@ const GridCard = memo(function GridCard({ project }: { project: Project }) {
   return (
     <div
       data-project-card
-      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(49,91,255,0.08)] hover:border-[#315BFF]/60 hover:shadow-[0_18px_40px_rgba(49,91,255,0.22),0_0_28px_rgba(109,74,255,0.16)] hover:-translate-y-0.5"
+      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-0.5"
     >
       <div className="p-3 pb-0">
         <div
@@ -245,7 +245,7 @@ const ListRow = memo(function ListRow({ project }: { project: Project }) {
   return (
     <div
       data-project-card
-      className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-[#315BFF]/60 hover:bg-accent/30 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)]"
+      className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/60 hover:bg-violet-500/10 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)]"
     >
       {/* Left: swatch + info */}
       <div className="flex items-start gap-3 flex-1 min-w-0">
@@ -351,7 +351,7 @@ const TileCard = memo(function TileCard({ project }: { project: Project }) {
   return (
     <div
       data-project-card
-      className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[#315BFF]/60 hover:shadow-[0_12px_30px_rgba(49,91,255,0.18),0_0_22px_rgba(109,74,255,0.12)] hover:-translate-y-0.5"
+      className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/60 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)] hover:-translate-y-0.5"
     >
       <div className={`w-full h-20 bg-gradient-to-br ${project.gradient}`} />
       <div className="p-3 flex flex-col gap-1.5">

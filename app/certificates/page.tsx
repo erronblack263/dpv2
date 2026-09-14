@@ -261,7 +261,7 @@ function GridCard({
   return (
     <div
       data-certificate-surface
-      className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-violet-500/50 hover:shadow-[0_0_32px_rgba(124,58,237,0.16)] hover:-translate-y-1"
+      className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-1"
     >
       <div className="p-3 pb-0">
         <div
@@ -305,7 +305,7 @@ function ListRow({
   return (
     <div
       data-certificate-surface
-      className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all hover:border-violet-500/50 hover:bg-accent/30 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]"
+      className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all shadow-[0_4px_14px_rgba(124,58,237,0.06)] hover:border-violet-500/60 hover:bg-violet-500/10 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)]"
     >
       <div
         className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
@@ -360,7 +360,7 @@ function TileCard({
   return (
     <div
       data-certificate-surface
-      className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all hover:border-violet-500/50 hover:shadow-[0_0_24px_rgba(124,58,237,0.12)] hover:-translate-y-1"
+      className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all shadow-[0_4px_14px_rgba(124,58,237,0.06)] hover:border-violet-500/60 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)] hover:-translate-y-1"
     >
       <div
         className={`w-full h-16 bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}
