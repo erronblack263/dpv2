@@ -113,9 +113,8 @@ const PROJECTS: Project[] = [
     tech: ["C", "Assembly", "Systems Programming", "Kernel Development"],
     category: "Systems programming",
     gradient: "from-violet-800 via-purple-700 to-indigo-900",
-    demo: "#",
+    demo: "/projects/portfolio-cms/demo",
     artifacts: "/projects/portfolio-cms/artifacts",
-    github: "/projects/portfolio-cms",
   },
   {
     title: "AI Chat Assistant",

@@ -56,9 +56,6 @@ export function SiteNav() {
             className="h-9 w-auto object-contain"
             priority
           />
-          <span className="hidden sm:block text-sm font-semibold text-foreground">
-            Witness H Musonza
-          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
