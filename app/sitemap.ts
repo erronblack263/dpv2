@@ -15,7 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects/welfaretracker/demo",
     "/projects/welfaretracker/artifacts",
     "/projects/smarthr/artifacts",
-    "/projects/portfolio-cms/artifacts",
+    "/projects/sageOS/demo",
+    "/projects/sageOS/artifacts",
     "/projects/ai-chat-assistant",
     "/projects/inventory-management/demo",
   ];

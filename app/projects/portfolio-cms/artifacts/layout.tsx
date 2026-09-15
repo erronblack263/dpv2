@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "SageOS Artifacts",
     description:
       "Explore the SageOS desktop, command-line, and system interface artifacts from the custom operating system project.",
-    url: "https://portfolio.sagetech.co.zw/projects/portfolio-cms/artifacts",
+    url: "https://portfolio.sagetech.co.zw/projects/sageOS/artifacts",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },
