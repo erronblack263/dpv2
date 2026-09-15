@@ -15,6 +15,7 @@ import {
   ChevronLeft,
   ChevronRight,
   GalleryHorizontal,
+  X,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 import { ProjectStructuredData } from "@/components/project-structured-data";
@@ -192,12 +193,20 @@ function ActionButtons({ project }: { project: Project }) {
 }
 
 /* ─── GRID card ───────────────────────────────────────────────── */
-const GridCard = memo(function GridCard({ project }: { project: Project }) {
+const GridCard = memo(function GridCard({
+  project,
+  onSelect,
+}: {
+  project: Project;
+  onSelect: (project: Project) => void;
+}) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div
+    <button
+      type="button"
       data-project-card
-      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-0.5"
+      onClick={() => onSelect(project)}
+      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden text-left transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-0.5"
     >
       <div className="p-3 pb-0">
         <div
@@ -235,16 +244,24 @@ const GridCard = memo(function GridCard({ project }: { project: Project }) {
           <ActionButtons project={project} />
         </div>
       </div>
-    </div>
+    </button>
   );
 });
 
 /* ─── LIST row ────────────────────────────────────────────────── */
-const ListRow = memo(function ListRow({ project }: { project: Project }) {
+const ListRow = memo(function ListRow({
+  project,
+  onSelect,
+}: {
+  project: Project;
+  onSelect: (project: Project) => void;
+}) {
   return (
-    <div
+    <button
+      type="button"
       data-project-card
-      className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-violet-500/60 hover:bg-violet-500/10 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)]"
+      onClick={() => onSelect(project)}
+      className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-left transition-all hover:border-violet-500/60 hover:bg-violet-500/10 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)]"
     >
       {/* Left: swatch + info */}
       <div className="flex items-start gap-3 flex-1 min-w-0">
@@ -280,19 +297,23 @@ const ListRow = memo(function ListRow({ project }: { project: Project }) {
       <div className="flex flex-wrap gap-1.5 shrink-0 ml-12 sm:ml-0">
         <ActionButtons project={project} />
       </div>
-    </div>
+    </button>
   );
 });
 
 /* ─── CAROUSEL card — tall portrait, text overlay ─────────── */
 const CarouselCard = memo(function CarouselCard({
   project,
+  onSelect,
 }: {
   project: Project;
+  onSelect: (project: Project) => void;
 }) {
   const tagParts = project.tagline.split(" · ");
   return (
-    <div
+    <button
+      type="button"
+      onClick={() => onSelect(project)}
       className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
       style={{ height: "480px" }}
     >
@@ -343,14 +364,22 @@ const CarouselCard = memo(function CarouselCard({
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 });
-const TileCard = memo(function TileCard({ project }: { project: Project }) {
+const TileCard = memo(function TileCard({
+  project,
+  onSelect,
+}: {
+  project: Project;
+  onSelect: (project: Project) => void;
+}) {
   return (
-    <div
+    <button
+      type="button"
       data-project-card
-      className="flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-violet-500/60 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)] hover:-translate-y-0.5"
+      onClick={() => onSelect(project)}
+      className="flex flex-col rounded-xl border border-border bg-card overflow-hidden text-left transition-all hover:border-violet-500/60 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)] hover:-translate-y-0.5"
     >
       <div className={`w-full h-20 bg-gradient-to-br ${project.gradient}`} />
       <div className="p-3 flex flex-col gap-1.5">
@@ -367,13 +396,14 @@ const TileCard = memo(function TileCard({ project }: { project: Project }) {
           <ActionButtons project={project} />
         </div>
       </div>
-    </div>
+    </button>
   );
 });
 
 /* ─── Page ────────────────────────────────────────────────────── */
 export default function ProjectsPage() {
   const [active, setActive] = useState<Category>("All work");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [listPage, setListPage] = useState(1);
   const [view, setView] = useState<ViewMode>(() => {
     if (typeof window !== "undefined") {
@@ -416,6 +446,22 @@ export default function ProjectsPage() {
   useEffect(() => {
     setListPage(1);
   }, [active]);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedProject(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedProject]);
 
   useEffect(() => {
     const cards = document.querySelectorAll<HTMLElement>("[data-project-card]");
@@ -601,7 +647,7 @@ export default function ProjectsPage() {
             {view === "grid" && (
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((p) => (
-                  <GridCard key={p.title} project={p} />
+                  <GridCard key={p.title} project={p} onSelect={setSelectedProject} />
                 ))}
               </div>
             )}
@@ -609,7 +655,7 @@ export default function ProjectsPage() {
               <div className="mt-6">
                 <div className="flex flex-col gap-2">
                   {visibleListProjects.map((p) => (
-                    <ListRow key={p.title} project={p} />
+                    <ListRow key={p.title} project={p} onSelect={setSelectedProject} />
                   ))}
                 </div>
                 {listPageCount > 1 && (
@@ -642,7 +688,7 @@ export default function ProjectsPage() {
             {view === "tiles" && (
               <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                 {filtered.map((p) => (
-                  <TileCard key={p.title} project={p} />
+                  <TileCard key={p.title} project={p} onSelect={setSelectedProject} />
                 ))}
               </div>
             )}
@@ -659,7 +705,7 @@ export default function ProjectsPage() {
                         key={p.title}
                         className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
                       >
-                        <CarouselCard project={p} />
+                        <CarouselCard project={p} onSelect={setSelectedProject} />
                       </div>
                     ))}
                   </div>
@@ -687,6 +733,70 @@ export default function ProjectsPage() {
           </FadeInOnScroll>
         </div>
       </div>
+
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/75 p-4 backdrop-blur-md sm:p-8">
+          <button
+            type="button"
+            onClick={() => setSelectedProject(null)}
+            className="absolute inset-0 cursor-default"
+            aria-label="Close project details"
+          />
+          <div className="relative z-10 max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-violet-500/50 bg-card shadow-[0_0_80px_rgba(124,58,237,0.3)]">
+            <button
+              type="button"
+              onClick={() => setSelectedProject(null)}
+              className="absolute right-4 top-4 z-10 flex size-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label="Close project details"
+            >
+              <X className="size-4" />
+            </button>
+
+            <div className={`h-36 bg-gradient-to-br sm:h-52 ${selectedProject.gradient}`} />
+            <div className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[1.3fr_0.7fr]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-violet-500">
+                  {selectedProject.category}
+                </p>
+                <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-5xl">
+                  {selectedProject.title}
+                </h2>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                  {selectedProject.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {selectedProject.tech.map((technology) => (
+                    <span
+                      key={technology}
+                      className="rounded-full border border-violet-500/25 bg-violet-500/10 px-3 py-1.5 text-xs font-semibold text-violet-500"
+                    >
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-7">
+                  <ActionButtons project={selectedProject} />
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-background/60 p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Project focus
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground">
+                  Explore the project demo, artifacts, and implementation details.
+                </p>
+                <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-muted">
+                  <div className="h-full w-4/5 rounded-full bg-violet-500" />
+                </div>
+                <p className="mt-2 text-right text-[10px] font-semibold text-muted-foreground">
+                  Selected project
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
