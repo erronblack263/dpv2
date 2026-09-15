@@ -284,7 +284,7 @@ export default function SageOSArtifactsPage() {
                       quality={75}
                       sizes="(max-width: 1024px) 90vw, 45vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      wrapperClassName="absolute inset-0"
+                      wrapperClassName="absolute inset-0 h-full w-full"
                     />
                     <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] font-semibold text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                       Open full image
@@ -400,7 +400,7 @@ export default function SageOSArtifactsPage() {
                     quality={75}
                     sizes="320px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    wrapperClassName="absolute inset-0"
+                    wrapperClassName="absolute inset-0 h-full w-full"
                   />
                   <button
                     type="button"
@@ -469,7 +469,7 @@ export default function SageOSArtifactsPage() {
               quality={100}
               sizes="95vw"
               className="object-contain"
-              wrapperClassName="absolute inset-0"
+              wrapperClassName="absolute inset-0 h-full w-full"
             />
           </div>
         </div>
