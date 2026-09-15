@@ -261,6 +261,7 @@ function GridCard({
   return (
     <div
       data-certificate-surface
+      onClick={() => onView(cert)}
       className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-1"
     >
       <div className="p-3 pb-0">
@@ -305,6 +306,7 @@ function ListRow({
   return (
     <div
       data-certificate-surface
+      onClick={() => onView(cert)}
       className="flex items-center gap-4 rounded-xl border border-border/80 bg-card/70 backdrop-blur-md px-4 py-3 transition-all shadow-[0_4px_14px_rgba(124,58,237,0.06)] hover:border-violet-500/60 hover:bg-violet-500/10 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)]"
     >
       <div
@@ -358,8 +360,10 @@ function TileCard({
   onView: (cert: Cert) => void;
 }>) {
   return (
-    <div
+    <button
+      type="button"
       data-certificate-surface
+      onClick={() => onView(cert)}
       className="flex flex-col rounded-xl border border-border/80 bg-card/70 backdrop-blur-md overflow-hidden transition-all shadow-[0_4px_14px_rgba(124,58,237,0.06)] hover:border-violet-500/60 hover:shadow-[0_12px_30px_rgba(124,58,237,0.18),0_0_22px_rgba(167,139,250,0.12)] hover:-translate-y-1"
     >
       <div
@@ -375,15 +379,13 @@ function TileCard({
           {cert.title}
         </h3>
         <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
-        <button
-          type="button"
-          onClick={() => onView(cert)}
+        <span
           className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
         >
           View →
-        </button>
+        </span>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -661,7 +663,8 @@ export default function CertificatesPage() {
                         className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[28%]"
                       >
                         {/* Tall portrait carousel card */}
-                        <div
+                        <button
+                          type="button"
                           className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
                           style={{ height: "480px" }}
                           onClick={() => setSelected(cert)}
@@ -680,18 +683,13 @@ export default function CertificatesPage() {
                             <p className="text-sm text-white/70 mt-0.5">
                               {cert.issuer}
                             </p>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelected(cert);
-                              }}
+                            <span
                               className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
                             >
                               View certificate
-                            </button>
+                            </span>
                           </div>
-                        </div>
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -723,19 +721,17 @@ export default function CertificatesPage() {
 
       {/* Certificate details drawer */}
       {selected && (
-        <div className="fixed inset-0 z-50 overflow-hidden">
+        <dialog
+          open
+          className="fixed inset-0 z-50 m-0 flex h-full w-full max-w-none items-center justify-center overflow-hidden bg-transparent p-4 sm:p-8 [&::backdrop]:bg-transparent"
+        >
           <button
             type="button"
             aria-label="Close certificate details"
-            className="fixed inset-0 cursor-default bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+            className="absolute inset-0 cursor-default bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
             onClick={() => setSelected(null)}
           />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${selected.title} certificate details`}
-            className="fixed inset-y-0 right-0 flex w-full max-w-xl flex-col overflow-y-auto border-l border-border bg-background/95 p-6 text-foreground shadow-2xl backdrop-blur-2xl animate-in slide-in-from-right duration-300 sm:p-8"
-          >
+          <div className="relative z-10 flex max-h-[92vh] w-full max-w-5xl flex-col overflow-y-auto rounded-3xl border border-violet-500/40 bg-background/95 p-6 text-foreground shadow-[0_0_80px_rgba(124,58,237,0.28)] backdrop-blur-2xl animate-in zoom-in-95 fade-in duration-300 sm:p-10">
             <button
               type="button"
               onClick={() => setSelected(null)}
@@ -789,7 +785,7 @@ export default function CertificatesPage() {
               </p>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </>
   );
