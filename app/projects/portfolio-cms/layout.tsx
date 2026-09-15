@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "SageOS is a systems programming project exploring kernel concepts, operating system design, process management, and desktop UX.",
   alternates: {
-    canonical: "/projects/portfolio-cms",
+    canonical: "/projects/sageOS",
   },
   openGraph: {
     title: "SageOS | Systems Programming Project",
     description:
       "A custom operating system project exploring kernel architecture, process scheduling, and desktop system interfaces.",
-    url: "https://portfolio.sagetech.co.zw/projects/portfolio-cms",
+    url: "https://portfolio.sagetech.co.zw/projects/sageOS",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

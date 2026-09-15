@@ -123,7 +123,7 @@ export default function SageOSDemoPage() {
   return (
     <div className="min-h-screen bg-background pb-10 font-sans text-foreground transition-colors duration-300">
       <Link
-        href="/projects/portfolio-cms/artifacts"
+        href="/projects/sageOS/artifacts"
         className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-violet-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_6px_18px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:bg-violet-500 sm:bottom-6 sm:right-6"
       >
         Browse artifacts
