@@ -447,10 +447,6 @@ export default function CertificatesPage() {
     listPage * listPageSize,
   );
 
-  useEffect(() => {
-    setListPage(1);
-  }, [activeCategory]);
-
   return (
     <>
       <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
@@ -486,7 +482,10 @@ export default function CertificatesPage() {
                       {/* Node + Label */}
                       <button
                         type="button"
-                        onClick={() => setActiveCategory(cat)}
+                        onClick={() => {
+                          setActiveCategory(cat);
+                          setListPage(1);
+                        }}
                         className="flex flex-col items-center gap-1.5 group"
                       >
                         <div

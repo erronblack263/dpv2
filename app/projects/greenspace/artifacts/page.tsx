@@ -499,13 +499,12 @@ export default function GreenSpaceArtifactsPage() {
 
   const section = SECTIONS[sectionIdx];
   useEffect(() => {
-    setActiveScreenIdx(0);
     // Preload first 3 images of each new section
     section.images.slice(0, 3).forEach((img) => {
       const el = new Image();
       el.src = img.src;
     });
-  }, [sectionIdx]);
+  }, [sectionIdx, section.images]);
 
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
@@ -600,7 +599,10 @@ export default function GreenSpaceArtifactsPage() {
             {SECTIONS.map((sec, idx) => (
               <button
                 key={sec.title}
-                onClick={() => setSectionIdx(idx)}
+                onClick={() => {
+                  setSectionIdx(idx);
+                  setActiveScreenIdx(0);
+                }}
                 className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   idx === sectionIdx
                     ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black shadow-lg shadow-emerald-500/25 font-bold"
@@ -625,7 +627,10 @@ export default function GreenSpaceArtifactsPage() {
             ).map(({ sec, idx }) => (
               <button
                 key={sec.title}
-                onClick={() => setSectionIdx(idx)}
+                onClick={() => {
+                  setSectionIdx(idx);
+                  setActiveScreenIdx(0);
+                }}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   idx === sectionIdx
                     ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black shadow-md font-bold"
@@ -1087,10 +1092,11 @@ export default function GreenSpaceArtifactsPage() {
 
                     {/* Thumbnail Mockup Frame */}
                     <div className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-black flex items-center justify-center p-1.5 border border-zinc-800 transition-colors">
-                      <img
+                      <ImageWithSkeleton
                         src={img.src}
                         alt={img.caption}
                         className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                        wrapperClassName="h-full w-full"
                       />
 
                       {/* Quick Lightbox View Button */}
