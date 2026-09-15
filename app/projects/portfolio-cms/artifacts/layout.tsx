@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Browse the SageOS operating system screenshots, command-line tools, and desktop interface artifacts from the project.",
   alternates: {
-    canonical: "/projects/portfolio-cms/artifacts",
+    canonical: "/projects/sageOS/artifacts",
   },
   openGraph: {
     title: "SageOS Artifacts",
