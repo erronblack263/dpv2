@@ -200,10 +200,6 @@ export function Hero() {
 
           {/* Text content */}
           <div className="flex flex-col gap-3 text-center lg:text-left">
-            <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 tracking-wide">
-              Hey there! 👋
-            </p>
-
             <div>
               <h1
                 data-hero-headline
