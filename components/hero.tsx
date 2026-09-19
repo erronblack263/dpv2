@@ -212,7 +212,7 @@ export function Hero() {
               </h1>
               <p className="mt-1 text-base sm:text-lg lg:text-xl font-bold text-foreground leading-snug">
                 I build scalable digital solutions that{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400">
                   solve real problems.
                 </span>
               </p>
