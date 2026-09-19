@@ -225,14 +225,13 @@ export const WavyBackground = ({
     };
   }, []);
 
-  const [isSafari, setIsSafari] = useState(false);
-  useEffect(() => {
-    setIsSafari(
-      typeof window !== "undefined" &&
-        navigator.userAgent.includes("Safari") &&
-        !navigator.userAgent.includes("Chrome"),
+  const [isSafari] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      navigator.userAgent.includes("Safari") &&
+      !navigator.userAgent.includes("Chrome")
     );
-  }, []);
+  });
 
   return (
     <div

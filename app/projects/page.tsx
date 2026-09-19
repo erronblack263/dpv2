@@ -156,6 +156,7 @@ function ActionButtons({ project }: { project: Project }) {
       {project.demo && project.demo !== "#" && (
         <Link
           href={project.demo}
+          onClick={(event) => event.stopPropagation()}
           className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
         >
           <Play className="size-3" /> Video demo
@@ -164,6 +165,7 @@ function ActionButtons({ project }: { project: Project }) {
       {project.artifacts && (
         <Link
           href={project.artifacts}
+          onClick={(event) => event.stopPropagation()}
           className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
         >
           <ImageIcon className="size-3" /> Artifacts
@@ -174,6 +176,7 @@ function ActionButtons({ project }: { project: Project }) {
         (project.github.startsWith("/") ? (
           <Link
             href={project.github}
+            onClick={(event) => event.stopPropagation()}
             className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
           >
             <GitBranch className="size-3" /> GitHub
@@ -183,6 +186,7 @@ function ActionButtons({ project }: { project: Project }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(event) => event.stopPropagation()}
             className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
           >
             <GitBranch className="size-3" /> GitHub
@@ -339,6 +343,7 @@ const CarouselCard = memo(function CarouselCard({
           {project.demo && project.demo !== "#" && (
             <Link
               href={project.demo}
+              onClick={(event) => event.stopPropagation()}
               className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
             >
               <Play className="size-3" /> Video demo
@@ -347,6 +352,7 @@ const CarouselCard = memo(function CarouselCard({
           {project.artifacts && (
             <Link
               href={project.artifacts}
+              onClick={(event) => event.stopPropagation()}
               className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
             >
               <ImageIcon className="size-3" /> Artifacts
@@ -357,6 +363,7 @@ const CarouselCard = memo(function CarouselCard({
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(event) => event.stopPropagation()}
               className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
             >
               <GitBranch className="size-3" /> GitHub
@@ -444,10 +451,6 @@ export default function ProjectsPage() {
   );
 
   useEffect(() => {
-    setListPage(1);
-  }, [active]);
-
-  useEffect(() => {
     if (!selectedProject) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -527,7 +530,10 @@ export default function ProjectsPage() {
                   return (
                     <div key={cat} className="flex items-center">
                       <button
-                        onClick={() => setActive(cat)}
+                        onClick={() => {
+                          setActive(cat);
+                          setListPage(1);
+                        }}
                         className="flex flex-col items-center gap-1.5 group"
                       >
                         <div

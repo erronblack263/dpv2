@@ -376,10 +376,6 @@ export default function WelfareTrackerArtifactsPage() {
   const screenCarouselRef = useRef<HTMLDivElement | null>(null);
 
   const section = SECTIONS[sectionIdx];
-  useEffect(() => {
-    setActiveScreenIdx(0);
-  }, [sectionIdx]);
-
   const currentScreen = section.images[activeScreenIdx] || section.images[0];
 
   useEffect(() => {
@@ -476,7 +472,10 @@ export default function WelfareTrackerArtifactsPage() {
             {SECTIONS.map((sec, idx) => (
               <button
                 key={sec.title}
-                onClick={() => setSectionIdx(idx)}
+                onClick={() => {
+                  setSectionIdx(idx);
+                  setActiveScreenIdx(0);
+                }}
                 className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   idx === sectionIdx
                     ? "bg-sky-600 dark:bg-sky-500 text-white dark:text-black shadow-lg shadow-sky-500/25 font-bold"
@@ -501,7 +500,10 @@ export default function WelfareTrackerArtifactsPage() {
             ).map(({ sec, idx }) => (
               <button
                 key={sec.title}
-                onClick={() => setSectionIdx(idx)}
+                onClick={() => {
+                  setSectionIdx(idx);
+                  setActiveScreenIdx(0);
+                }}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   idx === sectionIdx
                     ? "bg-sky-600 dark:bg-sky-500 text-white dark:text-black shadow-md font-bold"

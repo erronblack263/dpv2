@@ -51,11 +51,13 @@ export function LandingPage() {
     window.scrollTo({ top: 0, behavior: "instant" });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0; // iOS Safari fallback
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   useEffect(() => {
     // Mount canvas immediately — chunks already preloaded from hero-landing
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCanvasReady(true);
   }, []);
 
