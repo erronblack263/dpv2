@@ -678,7 +678,7 @@ export default function GreenSpaceArtifactsPage() {
             <div>
               {/* Back to Projects Pill */}
               <Link
-                href="/projects"
+                href="/projects/greenspace"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 <ArrowLeft className="size-3.5" />
@@ -1191,7 +1191,7 @@ export default function GreenSpaceArtifactsPage() {
         <div className="mt-16 rounded-2xl border border-border bg-card/60 p-4 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Previous Project */}
           <Link
-            href="/projects"
+            href="/projects/greenspace"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
           >
             <div className="size-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-950 border border-emerald-500/30 dark:border-emerald-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
@@ -1209,7 +1209,7 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Explore More Projects */}
           <Link
-            href="/projects"
+            href="/projects/greenspace"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-xs font-bold text-foreground hover:bg-accent transition-all"
           >
             <Grid className="size-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -1218,7 +1218,7 @@ export default function GreenSpaceArtifactsPage() {
 
           {/* Next Project */}
           <Link
-            href="/projects"
+            href="/projects/greenspace"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group text-right"
           >
             <div>

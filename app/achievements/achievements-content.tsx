@@ -16,6 +16,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
+import { openContactDrawer } from "@/components/contact-drawer";
 
 const WavyBackground = dynamic(
   () =>
@@ -605,48 +606,54 @@ export function AchievementsContent() {
             value={1}
             label="Best Innovative Project Awards"
           />
-          <StatCard icon={Star} value={10} label="Projects Delivered" />
+          <StatCard icon={Star} value={4} label="Projects Delivered" />
           <StatCard icon={BadgeCheck} value={5} label="Certifications Earned" />
         </div>
 
         {/* ── Achievement timeline ───────────────────────────────── */}
         <div className="mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">
-            Journey Timeline
+            Education &amp; Project Milestones
           </h2>
         </div>
 
         <div className="flex flex-col gap-6">
           <TimelineItem
             idx={0}
-            year="2025"
-            title="Best Innovative Project — GreenSpace"
-            description="Awarded Best Innovative Project by a Male Student in Software Engineering by Telone Center for Learning. GreenSpace showcased multi-layer soil analysis, YOLOv5 detection, and a custom CNN classifier — earning Witness Musonza this prestigious recognition."
+            year="2015–2019"
+            title="Completed Ordinary Level"
+            description="Completed Ordinary Level studies at Center for Learning, passing all 7 out of 7 ordinary level subjects."
             highlight
           />
           <TimelineItem
             idx={1}
-            year="2024"
-            title="Fullstack Portfolio Redesign"
-            description="Redesigned and rebuilt my developer portfolio from the ground up using Next.js, Tailwind CSS, and modern animation libraries — creating a premium, performant web experience."
+            year="2023"
+            title="Started Tertiary Studies"
+            description="Started studying Software Engineering at TelOne Center for Learning as a tertiary student."
           />
           <TimelineItem
             idx={2}
             year="2024"
-            title="Multiple Certifications"
-            description="Earned industry-recognised certifications in software development, cloud computing, and systems architecture, solidifying expertise across the stack."
+            title="Completed Inventory Management System"
+            description="Completed the Inventory Management System project, building a practical system for managing products and stock records."
           />
           <TimelineItem
             idx={3}
-            year="2023"
-            title="First Major Client Project"
-            description="Successfully delivered a full-scale application for a real-world client, handling everything from requirements gathering to deployment and maintenance."
+            year="Jan–Dec 2025"
+            title="TelOne Private Limited Internship"
+            description="Gained professional experience and strengthened my technical skills during an internship at TelOne Private Limited."
           />
           <TimelineItem
             idx={4}
-            year="2022"
-            title="Started Software Engineering Journey"
-            description="Began formal studies and self-directed learning in software engineering, building a strong foundation in algorithms, data structures, and modern development practices."
+            year="November 2025"
+            title="Most Innovative Project Recognition — GreenSpace"
+            description="GreenSpace was recognised with the Most Innovative Project prize by TelOne Center for Learning."
+          />
+          <TimelineItem
+            idx={5}
+            year="2023–2025"
+            title="Completed Diploma in Software Engineering"
+            description="Completed a Diploma in Software Engineering at TelOne Center for Learning."
           />
         </div>
 
@@ -655,13 +662,14 @@ export function AchievementsContent() {
           <p className="text-sm text-muted-foreground mb-4">
             Interested in working together?
           </p>
-          <Link
-            href="/contact"
+          <button
+            type="button"
+            onClick={openContactDrawer}
             className="inline-flex items-center gap-2 rounded-full bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,58,237,0.5)] transition-all hover:bg-violet-500 hover:shadow-[0_0_32px_rgba(124,58,237,0.7)]"
           >
             Get in Touch
             <ChevronRight className="size-4" />
-          </Link>
+          </button>
         </div>
       </div>
     </div>

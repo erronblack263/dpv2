@@ -98,6 +98,19 @@ export function HeroLanding() {
 
         {/* ── Large heading ─────────────────────────────────────── */}
         <div className="pb-5 max-w-3xl">
+          <div className="mb-5 flex items-center gap-3">
+            <Image
+              src="/witness-avatar.png"
+              alt="Witness H Musonza"
+              width={56}
+              height={56}
+              priority
+              className="size-14 rounded-full border-2 border-violet-500/40 object-cover shadow-[0_0_22px_rgba(139,92,246,0.3)]"
+            />
+            <span className="text-sm font-semibold text-muted-foreground">
+              Witness H Musonza
+            </span>
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-extrabold text-foreground leading-[1.06] tracking-tight">
             Build scalable digital
             <br />

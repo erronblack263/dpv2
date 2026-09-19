@@ -123,7 +123,7 @@ export default function SageOSDemoPage() {
   return (
     <div className="min-h-screen bg-background pb-10 font-sans text-foreground transition-colors duration-300">
       <Link
-        href="/projects/sageOS/artifacts"
+        href="/projects/sageOS"
         className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-violet-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_6px_18px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:bg-violet-500 sm:bottom-6 sm:right-6"
       >
         Browse artifacts
@@ -136,7 +136,7 @@ export default function SageOSDemoPage() {
             <div className="pointer-events-none absolute -left-10 -top-10 size-64 rounded-full bg-violet-500/15 blur-3xl" />
             <div className="relative z-10">
               <Link
-                href="/projects"
+                href="/projects/sageOS"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               >
                 <ArrowLeft className="size-3.5" />

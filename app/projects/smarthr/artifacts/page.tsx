@@ -498,7 +498,7 @@ export default function SmartHRArtifactsPage() {
           <div className="lg:col-span-5 flex flex-col justify-between h-full pt-2">
             <div>
               <Link
-                href="/projects"
+                href="/projects/smarthr"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 <ArrowLeft className="size-3.5" />
@@ -544,7 +544,7 @@ export default function SmartHRArtifactsPage() {
 
             <div className="mt-8">
               <Link
-                href="/projects"
+                href="/projects/smarthr"
                 className="inline-flex items-center gap-2 rounded-full border border-violet-500/50 bg-violet-500/10 dark:bg-violet-950/40 px-6 py-2.5 text-sm font-semibold text-violet-600 dark:text-violet-400 transition-all hover:bg-violet-500/20 hover:border-violet-400 shadow-[0_0_20px_rgba(124,58,237,0.15)] group"
               >
                 <span>Explore All Projects</span>
@@ -965,7 +965,7 @@ export default function SmartHRArtifactsPage() {
         {/* Footer nav */}
         <div className="mt-14 rounded-2xl border border-border bg-card/60 p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link
-            href="/projects/welfaretracker/artifacts"
+            href="/projects/welfaretracker"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
           >
             <div className="size-8 rounded-xl bg-sky-500/10 dark:bg-sky-950 border border-sky-500/30 flex items-center justify-center text-sky-600 dark:text-sky-400">
@@ -976,19 +976,19 @@ export default function SmartHRArtifactsPage() {
                 ← Previous Project
               </span>
               <span className="group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
-                WelfareTracker Artifacts
+                WelfareTracker
               </span>
             </div>
           </Link>
           <Link
-            href="/projects"
+            href="/projects/smarthr"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-xs font-bold text-foreground hover:bg-accent transition-all"
           >
             <Grid className="size-3.5 text-violet-600 dark:text-violet-400" />
             <span>All Projects</span>
           </Link>
           <Link
-            href="/projects/greenspace/artifacts"
+            href="/projects/greenspace"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group text-right"
           >
             <div>
@@ -996,7 +996,7 @@ export default function SmartHRArtifactsPage() {
                 Next Project →
               </span>
               <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                GreenSpace Artifacts
+                GreenSpace
               </span>
             </div>
             <div className="size-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-950 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">

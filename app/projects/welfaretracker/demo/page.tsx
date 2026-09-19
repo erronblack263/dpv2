@@ -237,7 +237,7 @@ export default function WelfareTrackerDemoPage() {
             <div className="pointer-events-none absolute -left-10 -top-10 size-64 rounded-full bg-sky-500/15 blur-3xl" />
             <div className="relative z-10">
               <Link
-                href="/projects"
+                href="/projects/welfaretracker"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               >
                 <ArrowLeft className="size-3.5" />

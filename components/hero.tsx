@@ -200,10 +200,6 @@ export function Hero() {
 
           {/* Text content */}
           <div className="flex flex-col gap-3 text-center lg:text-left">
-            <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 tracking-wide">
-              Hey there! 👋
-            </p>
-
             <div>
               <h1
                 data-hero-headline
@@ -216,7 +212,7 @@ export function Hero() {
               </h1>
               <p className="mt-1 text-base sm:text-lg lg:text-xl font-bold text-foreground leading-snug">
                 I build scalable digital solutions that{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400">
                   solve real problems.
                 </span>
               </p>

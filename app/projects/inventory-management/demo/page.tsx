@@ -235,7 +235,7 @@ export default function InventoryManagementDemoPage() {
           </Link>
           <ChevronRight className="size-3" />
           <Link
-            href="/projects"
+            href="/projects/inventory-management"
             className="transition-colors hover:text-foreground"
           >
             Projects
@@ -251,7 +251,7 @@ export default function InventoryManagementDemoPage() {
             <div className="pointer-events-none absolute -left-10 -top-10 size-64 rounded-full bg-orange-500/15 blur-3xl" />
             <div className="relative z-10">
               <Link
-                href="/projects"
+                href="/projects/inventory-management"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               >
                 <ArrowLeft className="size-3.5" /> Back to Projects
@@ -351,7 +351,7 @@ export default function InventoryManagementDemoPage() {
               </div>
             </div>
             <Link
-              href="/projects/weather-dashboard/artifacts"
+              href="/projects/inventory-management"
               className="group rounded-xl border border-orange-500/30 bg-orange-500/10 p-4 transition-colors hover:bg-orange-500/15"
             >
               <div className="flex items-center justify-between">

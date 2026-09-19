@@ -95,7 +95,7 @@ export function Contact() {
             />
             <div className="flex flex-col gap-10">
               <div className="text-center">
-                <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight text-primary sm:text-4xl">
+                <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight text-violet-600 dark:text-violet-400 sm:text-4xl">
                   Bringing your ideas to life.
                   <br />
                   Let&apos;s turn your vision into reality
