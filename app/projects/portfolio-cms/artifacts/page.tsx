@@ -214,7 +214,7 @@ export default function SageOSArtifactsPage() {
 
       <div className="mx-auto max-w-7xl px-5 pt-6 sm:px-8 lg:px-12">
         <Link
-          href="/projects"
+          href="/projects/sageOS"
           className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         >
           <ArrowLeft className="size-3.5" />
@@ -431,7 +431,7 @@ export default function SageOSArtifactsPage() {
             Building from the ground up
           </div>
           <Link
-            href="/projects"
+            href="/projects/sageOS"
             className="inline-flex items-center gap-2 text-xs font-semibold text-violet-400 transition-colors hover:text-violet-300"
           >
             Explore all projects

@@ -57,6 +57,7 @@ interface Project {
   tech: string[];
   category: Category;
   gradient: string;
+  projectHref?: string;
   demo?: string;
   artifacts?: string;
   github?: string;
@@ -78,6 +79,7 @@ const PROJECTS: Project[] = [
     ],
     category: "Mobile",
     gradient: "from-green-800 via-emerald-700 to-green-900",
+    projectHref: "/projects/greenspace",
     demo: "/projects/greenspace/demo",
     artifacts: "/projects/greenspace/artifacts",
     github: "#",
@@ -90,6 +92,7 @@ const PROJECTS: Project[] = [
     tech: ["Flutter", "Dart", "Firebase", "Geofencing", "Real-time"],
     category: "Mobile",
     gradient: "from-sky-500 via-blue-400 to-yellow-400",
+    projectHref: "/projects/welfaretracker",
     demo: "/projects/welfaretracker/demo",
     artifacts: "/projects/welfaretracker/artifacts",
     github: "#",
@@ -102,6 +105,7 @@ const PROJECTS: Project[] = [
     tech: ["React Native", "TypeScript", "SQLite", "Redux"],
     category: "Web platforms",
     gradient: "from-zinc-800 via-zinc-700 to-zinc-900",
+    projectHref: "/projects/smarthr",
     demo: "#",
     artifacts: "/projects/smarthr/artifacts",
     github: "#",
@@ -114,6 +118,7 @@ const PROJECTS: Project[] = [
     tech: ["C", "Assembly", "Systems Programming", "Kernel Development"],
     category: "Systems programming",
     gradient: "from-violet-800 via-purple-700 to-indigo-900",
+    projectHref: "/projects/sageOS",
     demo: "/projects/sageOS/demo",
     artifacts: "/projects/sageOS/artifacts",
   },
@@ -136,8 +141,8 @@ const PROJECTS: Project[] = [
     tech: ["C#", "MySQL Server", "CRUD", "Desktop Application"],
     category: "Web platforms",
     gradient: "from-amber-700 via-orange-600 to-rose-900",
+    projectHref: "/projects/inventory-management",
     demo: "/projects/inventory-management/demo",
-    artifacts: "/projects/weather-dashboard/artifacts",
     github: "#",
   },
 ];
@@ -153,7 +158,15 @@ const CATEGORIES: Category[] = [
 function ActionButtons({ project }: { project: Project }) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      {project.demo && project.demo !== "#" && (
+      {project.projectHref ? (
+        <Link
+          href={project.projectHref}
+          onClick={(event) => event.stopPropagation()}
+          className="flex items-center gap-1 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+        >
+          Open project <ArrowRight className="size-3" />
+        </Link>
+      ) : project.demo && project.demo !== "#" ? (
         <Link
           href={project.demo}
           onClick={(event) => event.stopPropagation()}
@@ -161,8 +174,8 @@ function ActionButtons({ project }: { project: Project }) {
         >
           <Play className="size-3" /> Video demo
         </Link>
-      )}
-      {project.artifacts && (
+      ) : null}
+      {!project.projectHref && project.artifacts && (
         <Link
           href={project.artifacts}
           onClick={(event) => event.stopPropagation()}
@@ -340,7 +353,15 @@ const CarouselCard = memo(function CarouselCard({
         </p>
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2 mt-3">
-          {project.demo && project.demo !== "#" && (
+          {project.projectHref ? (
+            <Link
+              href={project.projectHref}
+              onClick={(event) => event.stopPropagation()}
+              className="flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+            >
+              Open project <ArrowRight className="size-3" />
+            </Link>
+          ) : project.demo && project.demo !== "#" ? (
             <Link
               href={project.demo}
               onClick={(event) => event.stopPropagation()}
@@ -348,8 +369,8 @@ const CarouselCard = memo(function CarouselCard({
             >
               <Play className="size-3" /> Video demo
             </Link>
-          )}
-          {project.artifacts && (
+          ) : null}
+          {!project.projectHref && project.artifacts && (
             <Link
               href={project.artifacts}
               onClick={(event) => event.stopPropagation()}
@@ -490,9 +511,10 @@ export default function ProjectsPage() {
           name: project.title,
           description: project.description,
           url:
-            project.demo && project.demo !== "#"
+            project.projectHref ||
+            (project.demo && project.demo !== "#"
               ? project.demo
-              : project.artifacts || "/projects",
+              : project.artifacts || "/projects"),
           category: project.category,
           tech: project.tech,
         }))}

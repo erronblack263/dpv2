@@ -197,7 +197,7 @@ export default function GreenSpaceDemoPage() {
 
             <div className="relative z-10">
               <Link
-                href="/projects/greenspace/artifacts"
+                href="/projects/greenspace"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 <ArrowLeft className="size-3.5" />

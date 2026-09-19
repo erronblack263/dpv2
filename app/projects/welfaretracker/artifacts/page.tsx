@@ -547,7 +547,7 @@ export default function WelfareTrackerArtifactsPage() {
           <div className="lg:col-span-5 flex flex-col justify-between h-full pt-2">
             <div>
               <Link
-                href="/projects"
+                href="/projects/welfaretracker"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 <ArrowLeft className="size-3.5" />
@@ -593,7 +593,7 @@ export default function WelfareTrackerArtifactsPage() {
 
             <div className="mt-8">
               <Link
-                href="/projects"
+                href="/projects/welfaretracker"
                 className="inline-flex items-center gap-2 rounded-full border border-sky-500/50 bg-sky-500/10 dark:bg-sky-950/40 px-6 py-2.5 text-sm font-semibold text-sky-600 dark:text-sky-400 transition-all hover:bg-sky-500/20 hover:border-sky-400 shadow-[0_0_20px_rgba(14,165,233,0.15)] group"
               >
                 <span>Explore All Features</span>
@@ -1060,7 +1060,7 @@ export default function WelfareTrackerArtifactsPage() {
         <div className="mt-16 rounded-2xl border border-border bg-card/60 p-4 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Previous Project */}
           <Link
-            href="/projects/greenspace/artifacts"
+            href="/projects/greenspace"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
           >
             <div className="size-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-950 border border-emerald-500/30 dark:border-emerald-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
@@ -1078,7 +1078,7 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Explore More Projects */}
           <Link
-            href="/projects"
+            href="/projects/welfaretracker"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-xs font-bold text-foreground hover:bg-accent transition-all"
           >
             <Grid className="size-3.5 text-sky-600 dark:text-sky-400" />
@@ -1087,7 +1087,7 @@ export default function WelfareTrackerArtifactsPage() {
 
           {/* Next Project */}
           <Link
-            href="/projects"
+            href="/projects/welfaretracker"
             className="flex items-center gap-3 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group text-right"
           >
             <div>
