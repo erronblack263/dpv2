@@ -606,7 +606,7 @@ export function AchievementsContent() {
             value={1}
             label="Best Innovative Project Awards"
           />
-          <StatCard icon={Star} value={10} label="Projects Delivered" />
+          <StatCard icon={Star} value={4} label="Projects Delivered" />
           <StatCard icon={BadgeCheck} value={5} label="Certifications Earned" />
         </div>
 
