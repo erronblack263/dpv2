@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   other: {
     thumbnail: avatarUrl,
     "image-thumbnail": avatarUrl,
+    image_src: avatarUrl,
   },
 };
 

@@ -112,6 +112,7 @@ export const metadata: Metadata = {
   other: {
     thumbnail: "https://portfolio.sagetech.co.zw/witness-avatar.png",
     "image-thumbnail": "https://portfolio.sagetech.co.zw/witness-avatar.png",
+    image_src: "https://portfolio.sagetech.co.zw/witness-avatar.png",
   },
   robots: {
     index: true,
@@ -138,6 +139,12 @@ export default function RootLayout({
       className={`${inter.variable} bg-background overflow-x-hidden`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="image_src"
+          href="https://portfolio.sagetech.co.zw/witness-avatar.png"
+        />
+      </head>
       <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider
           attribute="class"

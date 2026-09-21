@@ -102,8 +102,8 @@ export function HeroLanding() {
             <Image
               src="/witness-avatar.png"
               alt="Witness H Musonza"
-              width={56}
-              height={56}
+              width={1024}
+              height={1024}
               priority
               className="size-14 rounded-full border-2 border-violet-500/40 object-cover shadow-[0_0_22px_rgba(139,92,246,0.3)]"
             />
@@ -179,8 +179,7 @@ export function HeroLanding() {
                 alt="Portfolio preview"
                 width={1600}
                 height={1000}
-                quality={100}
-                priority
+                quality={90}
                 className="w-full object-cover object-top select-none dark:block hidden"
               />
               {/* Light mockup — visible only in light mode */}
@@ -189,8 +188,7 @@ export function HeroLanding() {
                 alt="Portfolio preview"
                 width={1600}
                 height={1000}
-                quality={100}
-                priority
+                quality={90}
                 className="w-full object-cover object-top select-none block dark:hidden"
               />
             </div>
