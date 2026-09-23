@@ -168,7 +168,7 @@ export function Hero() {
               aria-hidden="true"
             />
             <Image
-              src="/msonzah.jpg"
+              src="/witness-avatar.png"
               alt="Portrait of Witness H Musonza"
               width={480}
               height={480}
