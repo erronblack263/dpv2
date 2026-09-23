@@ -180,6 +180,7 @@ export function HeroLanding() {
                 width={1600}
                 height={1000}
                 quality={90}
+                loading="eager"
                 className="w-full object-cover object-top select-none dark:block hidden"
               />
               {/* Light mockup — visible only in light mode */}
@@ -189,6 +190,7 @@ export function HeroLanding() {
                 width={1600}
                 height={1000}
                 quality={90}
+                loading="eager"
                 className="w-full object-cover object-top select-none block dark:hidden"
               />
             </div>

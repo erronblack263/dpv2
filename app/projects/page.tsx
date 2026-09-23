@@ -675,7 +675,11 @@ export default function ProjectsPage() {
             {view === "grid" && (
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((p) => (
-                  <GridCard key={p.title} project={p} onSelect={setSelectedProject} />
+                  <GridCard
+                    key={p.title}
+                    project={p}
+                    onSelect={setSelectedProject}
+                  />
                 ))}
               </div>
             )}
@@ -683,7 +687,11 @@ export default function ProjectsPage() {
               <div className="mt-6">
                 <div className="flex flex-col gap-2">
                   {visibleListProjects.map((p) => (
-                    <ListRow key={p.title} project={p} onSelect={setSelectedProject} />
+                    <ListRow
+                      key={p.title}
+                      project={p}
+                      onSelect={setSelectedProject}
+                    />
                   ))}
                 </div>
                 {listPageCount > 1 && (
@@ -716,7 +724,11 @@ export default function ProjectsPage() {
             {view === "tiles" && (
               <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                 {filtered.map((p) => (
-                  <TileCard key={p.title} project={p} onSelect={setSelectedProject} />
+                  <TileCard
+                    key={p.title}
+                    project={p}
+                    onSelect={setSelectedProject}
+                  />
                 ))}
               </div>
             )}
@@ -733,7 +745,10 @@ export default function ProjectsPage() {
                         key={p.title}
                         className="shrink-0 snap-center w-[78%] sm:w-[48%] lg:w-[30%]"
                       >
-                        <CarouselCard project={p} onSelect={setSelectedProject} />
+                        <CarouselCard
+                          project={p}
+                          onSelect={setSelectedProject}
+                        />
                       </div>
                     ))}
                   </div>
@@ -780,7 +795,9 @@ export default function ProjectsPage() {
               <X className="size-4" />
             </button>
 
-            <div className={`h-36 bg-gradient-to-br sm:h-52 ${selectedProject.gradient}`} />
+            <div
+              className={`h-36 bg-gradient-to-br sm:h-52 ${selectedProject.gradient}`}
+            />
             <div className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[1.3fr_0.7fr]">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-violet-500">
@@ -812,7 +829,8 @@ export default function ProjectsPage() {
                   Project focus
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground">
-                  Explore the project demo, artifacts, and implementation details.
+                  Explore the project demo, artifacts, and implementation
+                  details.
                 </p>
                 <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-muted">
                   <div className="h-full w-4/5 rounded-full bg-violet-500" />

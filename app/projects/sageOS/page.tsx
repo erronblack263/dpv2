@@ -84,7 +84,9 @@ export default function SageOSPage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">SageOS</p>
-                  <p className="text-[10px] text-muted-foreground">Kernel workspace</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    Kernel workspace
+                  </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -109,12 +111,16 @@ export default function SageOSPage() {
               <div className="grid grid-cols-2 gap-3 pt-2 font-sans">
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3">
                   <Code2 className="size-4 text-violet-400" />
-                  <p className="mt-2 text-[10px] text-slate-500">Core language</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    Core language
+                  </p>
                   <p className="mt-1 text-sm font-bold text-white">C / x86</p>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3">
                   <Terminal className="size-4 text-cyan-400" />
-                  <p className="mt-2 text-[10px] text-slate-500">System tools</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    System tools
+                  </p>
                   <p className="mt-1 text-sm font-bold text-white">7 modules</p>
                 </div>
               </div>

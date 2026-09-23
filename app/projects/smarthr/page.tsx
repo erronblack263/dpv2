@@ -81,7 +81,9 @@ export default function SmartHRPage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">SmartHR</p>
-                  <p className="text-[10px] text-muted-foreground">HR command centre</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    HR command centre
+                  </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -94,12 +96,16 @@ export default function SmartHRPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-border bg-card p-3">
                   <Users className="size-4 text-violet-500" />
-                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Candidates</p>
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Candidates
+                  </p>
                   <p className="mt-1 text-xl font-bold text-foreground">248</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-3">
                   <BarChart3 className="size-4 text-cyan-500" />
-                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Hiring flow</p>
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Hiring flow
+                  </p>
                   <p className="mt-1 text-xl font-bold text-cyan-500">84%</p>
                 </div>
               </div>
@@ -110,7 +116,11 @@ export default function SmartHRPage() {
                 </div>
                 <div className="mt-4 flex items-end gap-2">
                   {[42, 62, 48, 78, 68, 90, 74].map((height, index) => (
-                    <div key={index} className="flex-1 rounded-t-md bg-violet-500/70" style={{ height: `${height}px` }} />
+                    <div
+                      key={index}
+                      className="flex-1 rounded-t-md bg-violet-500/70"
+                      style={{ height: `${height}px` }}
+                    />
                   ))}
                 </div>
               </div>

@@ -379,9 +379,7 @@ function TileCard({
           {cert.title}
         </h3>
         <p className="text-[10px] text-muted-foreground">{cert.issuer}</p>
-        <span
-          className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left"
-        >
+        <span className="mt-1 text-[10px] font-medium text-violet-500 hover:underline text-left">
           View →
         </span>
       </div>
@@ -682,9 +680,7 @@ export default function CertificatesPage() {
                             <p className="text-sm text-white/70 mt-0.5">
                               {cert.issuer}
                             </p>
-                            <span
-                              className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
-                            >
+                            <span className="mt-3 self-start flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors">
                               View certificate
                             </span>
                           </div>

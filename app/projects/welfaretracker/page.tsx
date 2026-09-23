@@ -85,7 +85,9 @@ export default function WelfareTrackerPage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">WelfareTracker</p>
-                  <p className="text-[10px] text-muted-foreground">Safety operations overview</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    Safety operations overview
+                  </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -101,22 +103,29 @@ export default function WelfareTrackerPage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">Live field awareness</p>
-                  <p className="text-xs text-muted-foreground">Geofences, check-ins, and response context</p>
+                  <p className="text-xs text-muted-foreground">
+                    Geofences, check-ins, and response context
+                  </p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-border bg-card p-3">
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Active zones</p>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Active zones
+                  </p>
                   <p className="mt-2 text-xl font-bold text-sky-500">12</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-3">
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Response</p>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Response
+                  </p>
                   <p className="mt-2 text-xl font-bold text-amber-500">SOS</p>
                 </div>
               </div>
               <div className="flex items-center justify-between rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-300">
                 <span className="flex items-center gap-2">
-                  <AlertTriangle className="size-4" /> Emergency support is one tap away
+                  <AlertTriangle className="size-4" /> Emergency support is one
+                  tap away
                 </span>
                 <CheckCircle2 className="size-4" />
               </div>

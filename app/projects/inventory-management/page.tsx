@@ -81,7 +81,9 @@ export default function InventoryManagementPage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">Sage Inventory</p>
-                  <p className="text-[10px] text-muted-foreground">Operations console</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    Operations console
+                  </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -94,12 +96,16 @@ export default function InventoryManagementPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-border bg-card p-3">
                   <Database className="size-4 text-orange-500" />
-                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Records</p>
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Records
+                  </p>
                   <p className="mt-1 text-xl font-bold text-foreground">CRUD</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-3">
                   <Server className="size-4 text-amber-500" />
-                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Database</p>
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Database
+                  </p>
                   <p className="mt-1 text-xl font-bold text-amber-500">MySQL</p>
                 </div>
               </div>

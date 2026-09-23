@@ -192,7 +192,10 @@ const ShaderMaterial = ({
   uniforms: Uniforms;
 }) => {
   const { size } = useThree();
-  const ref = useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial> | null>(null);
+  const ref = useRef<THREE.Mesh<
+    THREE.PlaneGeometry,
+    THREE.ShaderMaterial
+  > | null>(null);
   const lastFrameTime = useRef(0);
 
   useFrame(({ clock }) => {
@@ -209,7 +212,8 @@ const ShaderMaterial = ({
   });
 
   const getUniforms = React.useCallback(() => {
-    const preparedUniforms: Record<string, { value: unknown; type: string }> = {};
+    const preparedUniforms: Record<string, { value: unknown; type: string }> =
+      {};
 
     for (const uniformName in uniforms) {
       const uniform = uniforms[uniformName];
