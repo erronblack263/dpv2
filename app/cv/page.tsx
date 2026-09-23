@@ -1,30 +1,64 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, FileText, Mail, Maximize2, X } from "lucide-react";
+import type { SyntheticEvent } from "react";
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Mail,
+  Maximize2,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 
-const CV_URL =
-  "https://res.cloudinary.com/virfpzu4/image/upload/v1790154669/witness_musonza_cv_tnsnt0.pdf";
+const CV_PAGE_URLS = [
+  "https://res.cloudinary.com/virfpzu4/image/upload/pg_1,w_1600,q_auto,f_auto/v1790154669/witness_musonza_cv_tnsnt0.jpg",
+  "https://res.cloudinary.com/virfpzu4/image/upload/pg_2,w_1600,q_auto,f_auto/v1790154669/witness_musonza_cv_tnsnt0.jpg",
+];
+
+function blockDocumentSaving(event: SyntheticEvent) {
+  event.preventDefault();
+}
 
 export default function CVPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activePage, setActivePage] = useState(0);
+
+  function openPage(index: number) {
+    setActivePage(index);
+    setLightboxOpen(true);
+  }
 
   useEffect(() => {
     if (!lightboxOpen) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setLightboxOpen(false);
+      if (
+        event.key === "Escape" ||
+        ((event.ctrlKey || event.metaKey) && ["s", "p", "u"].includes(event.key.toLowerCase()))
+      ) {
+        event.preventDefault();
+        if (event.key === "Escape") setLightboxOpen(false);
+      }
     };
+
     document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [lightboxOpen]);
 
   return (
-    <main className="min-h-screen bg-background px-5 py-8 text-foreground sm:px-8 lg:px-12">
+    <main
+      className="min-h-screen bg-background px-5 py-8 text-foreground sm:px-8 lg:px-12"
+      onContextMenu={blockDocumentSaving}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
@@ -52,7 +86,7 @@ export default function CVPage() {
             <div className="mt-7 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => setLightboxOpen(true)}
+                onClick={() => openPage(0)}
                 className="inline-flex items-center gap-2 rounded-full bg-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,58,237,0.4)] transition-all hover:bg-violet-500"
               >
                 <Maximize2 className="size-4" /> Open full CV
@@ -68,20 +102,20 @@ export default function CVPage() {
 
           <section
             aria-label="CV preview"
-            className="relative overflow-hidden rounded-xl border border-border bg-card shadow-[0_24px_80px_rgba(15,23,42,0.22)]"
+            className="relative overflow-hidden rounded-xl border border-border bg-card p-3 shadow-[0_24px_80px_rgba(15,23,42,0.22)] sm:p-5"
           >
-            <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <div className="mb-4 flex items-center justify-between px-1">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-violet-500">
                   Original document
                 </p>
                 <p className="mt-1 text-sm font-semibold text-foreground">
-                  witness_musonza_cv.pdf
+                  Curriculum vitae · 2 pages
                 </p>
               </div>
               <button
                 type="button"
-                onClick={() => setLightboxOpen(true)}
+                onClick={() => openPage(0)}
                 className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-violet-500"
                 aria-label="Open CV in lightbox"
                 title="Open CV in lightbox"
@@ -89,11 +123,25 @@ export default function CVPage() {
                 <Maximize2 className="size-4" />
               </button>
             </div>
-            <iframe
-              title="Witness H Musonza CV preview"
-              src={`${CV_URL}#view=FitH`}
-              className="h-[min(78vh,900px)] w-full bg-white"
-            />
+            <div className="space-y-4">
+              {CV_PAGE_URLS.map((src, index) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => openPage(index)}
+                  className="block max-h-[min(72vh,820px)] w-full cursor-zoom-in overflow-hidden rounded-md bg-white shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+                  aria-label={`Open CV page ${index + 1} in lightbox`}
+                >
+                  <img
+                    src={src}
+                    alt={`Witness H Musonza CV page ${index + 1}`}
+                    className="block h-auto max-h-[min(72vh,820px)] w-full object-contain object-top select-none"
+                    draggable={false}
+                    onContextMenu={blockDocumentSaving}
+                  />
+                </button>
+              ))}
+            </div>
           </section>
         </div>
       </div>
@@ -105,27 +153,55 @@ export default function CVPage() {
           aria-modal="true"
           aria-label="Curriculum Vitae lightbox"
           onClick={() => setLightboxOpen(false)}
+          onContextMenu={blockDocumentSaving}
         >
           <div
-            className="relative h-[94vh] w-full max-w-6xl overflow-hidden rounded-xl border border-white/15 bg-white shadow-2xl"
+            className="relative h-[94vh] w-full max-w-6xl overflow-y-auto rounded-xl border border-white/15 bg-slate-100 p-3 shadow-2xl sm:p-5"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="absolute right-3 top-3 z-10">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(false)}
+              className="fixed right-5 top-5 z-10 inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
+              aria-label="Close CV lightbox"
+              title="Close CV lightbox"
+            >
+              <X className="size-5" />
+            </button>
+            <div className="relative mx-auto flex h-full max-w-4xl items-center justify-center">
+              <img
+                src={CV_PAGE_URLS[activePage]}
+                alt={`Witness H Musonza CV page ${activePage + 1}`}
+                className="max-h-full max-w-full select-none bg-white object-contain shadow-sm"
+                draggable={false}
+                onContextMenu={blockDocumentSaving}
+              />
               <button
                 type="button"
-                onClick={() => setLightboxOpen(false)}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
-                aria-label="Close CV lightbox"
-                title="Close CV lightbox"
+                onClick={() =>
+                  setActivePage(
+                    (page) => (page - 1 + CV_PAGE_URLS.length) % CV_PAGE_URLS.length,
+                  )
+                }
+                className="absolute left-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
+                aria-label="Previous CV page"
               >
-                <X className="size-5" />
+                <ChevronLeft className="size-5" />
               </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setActivePage((page) => (page + 1) % CV_PAGE_URLS.length)
+                }
+                className="absolute right-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
+                aria-label="Next CV page"
+              >
+                <ChevronRight className="size-5" />
+              </button>
+              <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold text-white">
+                Page {activePage + 1} of {CV_PAGE_URLS.length}
+              </span>
             </div>
-            <iframe
-              title="Witness H Musonza CV lightbox"
-              src={`${CV_URL}#view=FitH`}
-              className="h-full w-full bg-white"
-            />
           </div>
         </div>
       )}
