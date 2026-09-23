@@ -493,7 +493,10 @@ export function AchievementsContent() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-8">
-          <Link href="/about" className="hover:text-foreground transition-colors">
+          <Link
+            href="/about"
+            className="hover:text-foreground transition-colors"
+          >
             Home
           </Link>
           <ChevronRight className="size-3" />

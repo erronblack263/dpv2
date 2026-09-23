@@ -45,16 +45,20 @@ export default function GreenSpacePage() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {["React Native", "TypeScript", "Python", "Machine Learning", "Supabase"].map(
-                (item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-border bg-muted/80 px-3 py-1.5 text-xs font-medium text-foreground"
-                  >
-                    {item}
-                  </span>
-                ),
-              )}
+              {[
+                "React Native",
+                "TypeScript",
+                "Python",
+                "Machine Learning",
+                "Supabase",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-border bg-muted/80 px-3 py-1.5 text-xs font-medium text-foreground"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
@@ -83,7 +87,9 @@ export default function GreenSpacePage() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold">GreenSpace</p>
-                  <p className="text-[10px] text-muted-foreground">Project overview</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    Project overview
+                  </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-500">
@@ -98,17 +104,25 @@ export default function GreenSpacePage() {
                   <BrainCircuit className="size-5" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold">Sage soil intelligence</p>
-                  <p className="text-xs text-muted-foreground">AI-assisted classification workflow</p>
+                  <p className="text-sm font-semibold">
+                    Sage soil intelligence
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    AI-assisted classification workflow
+                  </p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-border bg-card p-3">
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Classification</p>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Classification
+                  </p>
                   <p className="mt-2 text-xl font-bold text-emerald-500">96%</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-3">
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Field tests</p>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Field tests
+                  </p>
                   <p className="mt-2 text-xl font-bold text-foreground">03</p>
                 </div>
               </div>

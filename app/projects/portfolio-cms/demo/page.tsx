@@ -27,19 +27,22 @@ const DEMO_FRAMES = [
   {
     title: "System tools",
     category: "System tools",
-    description: "A closer look at the terminal, file manager, and notepad tools.",
+    description:
+      "A closer look at the terminal, file manager, and notepad tools.",
     icon: Terminal,
   },
   {
     title: "Runtime and processes",
     category: "Kernel",
-    description: "An overview of process scheduling and system monitoring concepts.",
+    description:
+      "An overview of process scheduling and system monitoring concepts.",
     icon: Cpu,
   },
   {
     title: "Desktop applications",
     category: "Desktop",
-    description: "A preview of the applications and interaction model planned for SageOS.",
+    description:
+      "A preview of the applications and interaction model planned for SageOS.",
     icon: Monitor,
   },
 ] as const;
@@ -55,17 +58,20 @@ const DEMO_CATEGORIES = [
 const WORKFLOW = [
   {
     title: "Kernel foundation",
-    description: "Memory management and process control form the systems layer.",
+    description:
+      "Memory management and process control form the systems layer.",
     icon: HardDrive,
   },
   {
     title: "System utilities",
-    description: "Terminal, file management, and core tools expose the runtime.",
+    description:
+      "Terminal, file management, and core tools expose the runtime.",
     icon: Terminal,
   },
   {
     title: "Desktop shell",
-    description: "A focused desktop environment brings the operating system to life.",
+    description:
+      "A focused desktop environment brings the operating system to life.",
     icon: Monitor,
   },
   {
@@ -83,13 +89,16 @@ const DETAILS = [
 ] as const;
 
 export default function SageOSDemoPage() {
-  const [activeCategory, setActiveCategory] = useState<(typeof DEMO_CATEGORIES)[number]>("All demos");
+  const [activeCategory, setActiveCategory] =
+    useState<(typeof DEMO_CATEGORIES)[number]>("All demos");
   const [activeFrame, setActiveFrame] = useState(0);
   const [previewPage, setPreviewPage] = useState(0);
   const filteredFrames =
     activeCategory === "All demos"
       ? DEMO_FRAMES
-      : DEMO_FRAMES.filter((demoFrame) => demoFrame.category === activeCategory);
+      : DEMO_FRAMES.filter(
+          (demoFrame) => demoFrame.category === activeCategory,
+        );
   const frame = filteredFrames[activeFrame] ?? filteredFrames[0];
   const previewPageSize = 3;
   const previewPageCount = Math.ceil(filteredFrames.length / previewPageSize);
@@ -178,8 +187,12 @@ export default function SageOSDemoPage() {
                   <Play className="ml-1 size-6 fill-current" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white">Video demo placeholder</p>
-                  <p className="mt-1 text-xs text-zinc-400">Recording will be added soon</p>
+                  <p className="text-sm font-bold text-white">
+                    Video demo placeholder
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-400">
+                    Recording will be added soon
+                  </p>
                 </div>
               </div>
             </div>
@@ -224,16 +237,23 @@ export default function SageOSDemoPage() {
             <div className="rounded-xl border border-border bg-card p-4 shadow-xl">
               <div className="mb-3 flex items-center gap-2 border-b border-border pb-2.5">
                 <Calendar className="size-3.5 text-violet-500" />
-                <h2 className="text-xs font-bold tracking-wide">Project Details</h2>
+                <h2 className="text-xs font-bold tracking-wide">
+                  Project Details
+                </h2>
               </div>
               <div className="flex flex-col gap-2.5 text-[11px] text-muted-foreground">
                 {DETAILS.map(({ label, value, icon: Icon }) => (
-                  <div key={label} className="flex items-center justify-between gap-3">
+                  <div
+                    key={label}
+                    className="flex items-center justify-between gap-3"
+                  >
                     <span className="flex items-center gap-1.5">
                       <Icon className="size-3 shrink-0" />
                       {label}
                     </span>
-                    <span className="text-right font-semibold text-foreground">{value}</span>
+                    <span className="text-right font-semibold text-foreground">
+                      {value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -266,12 +286,16 @@ export default function SageOSDemoPage() {
                   >
                     {isCompleted ? "✓" : index + 1}
                   </span>
-                  <span className={`whitespace-nowrap text-[10px] font-semibold ${isActive ? "text-violet-500" : "text-muted-foreground group-hover:text-foreground"}`}>
+                  <span
+                    className={`whitespace-nowrap text-[10px] font-semibold ${isActive ? "text-violet-500" : "text-muted-foreground group-hover:text-foreground"}`}
+                  >
                     {category}
                   </span>
                 </button>
                 {index < DEMO_CATEGORIES.length - 1 && (
-                  <span className={`mx-2 mb-4 h-0.5 w-6 rounded-full sm:w-10 ${isCompleted ? "bg-violet-500/60" : "bg-border"}`} />
+                  <span
+                    className={`mx-2 mb-4 h-0.5 w-6 rounded-full sm:w-10 ${isCompleted ? "bg-violet-500/60" : "bg-border"}`}
+                  />
                 )}
               </div>
             );
@@ -280,16 +304,34 @@ export default function SageOSDemoPage() {
 
         <section className="mt-5 rounded-xl border border-border bg-card/60 p-3.5 backdrop-blur-md sm:p-4">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.18em] text-violet-500">Demo preview frames</h2>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.18em] text-violet-500">
+              Demo preview frames
+            </h2>
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-              <span>{filteredFrames.length} sections in {activeCategory}</span>
+              <span>
+                {filteredFrames.length} sections in {activeCategory}
+              </span>
               {previewPageCount > 1 && (
                 <span className="flex items-center gap-1.5 border-l border-border pl-2">
-                  <button type="button" onClick={() => changePreviewPage(previewPage - 1)} disabled={previewPage === 0} className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30" aria-label="Previous demo page">
+                  <button
+                    type="button"
+                    onClick={() => changePreviewPage(previewPage - 1)}
+                    disabled={previewPage === 0}
+                    className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30"
+                    aria-label="Previous demo page"
+                  >
                     <ChevronLeft className="size-3.5" />
                   </button>
-                  <span className="font-mono">{previewPage + 1}/{previewPageCount}</span>
-                  <button type="button" onClick={() => changePreviewPage(previewPage + 1)} disabled={previewPage === previewPageCount - 1} className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30" aria-label="Next demo page">
+                  <span className="font-mono">
+                    {previewPage + 1}/{previewPageCount}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => changePreviewPage(previewPage + 1)}
+                    disabled={previewPage === previewPageCount - 1}
+                    className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30"
+                    aria-label="Next demo page"
+                  >
                     <ChevronRight className="size-3.5" />
                   </button>
                 </span>
@@ -310,12 +352,23 @@ export default function SageOSDemoPage() {
                 >
                   <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-zinc-950">
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:18px_18px]" />
-                    <span className="relative flex size-9 items-center justify-center rounded-full bg-violet-500 text-white shadow-lg transition-transform group-hover:scale-110"><Play className="ml-0.5 size-4 fill-white" /></span>
-                    <span className="absolute left-2 top-2 rounded-md bg-black/75 px-1.5 py-0.5 font-mono text-[9px] text-white">0{absoluteIndex + 1}</span>
-                    <span className="absolute bottom-2 right-2 rounded-md bg-violet-400 px-1.5 py-0.5 text-[9px] font-bold text-white">PLACEHOLDER</span>
+                    <span className="relative flex size-9 items-center justify-center rounded-full bg-violet-500 text-white shadow-lg transition-transform group-hover:scale-110">
+                      <Play className="ml-0.5 size-4 fill-white" />
+                    </span>
+                    <span className="absolute left-2 top-2 rounded-md bg-black/75 px-1.5 py-0.5 font-mono text-[9px] text-white">
+                      0{absoluteIndex + 1}
+                    </span>
+                    <span className="absolute bottom-2 right-2 rounded-md bg-violet-400 px-1.5 py-0.5 text-[9px] font-bold text-white">
+                      PLACEHOLDER
+                    </span>
                   </div>
-                  <p className="mt-2 truncate text-[11px] font-bold">{demoFrame.title}</p>
-                  <span className="mt-1 inline-flex w-fit rounded-full border border-violet-500/25 bg-violet-500/10 px-2 py-0.5 text-[9px] font-semibold text-violet-500"><Icon className="mr-1 size-3" />{demoFrame.category}</span>
+                  <p className="mt-2 truncate text-[11px] font-bold">
+                    {demoFrame.title}
+                  </p>
+                  <span className="mt-1 inline-flex w-fit rounded-full border border-violet-500/25 bg-violet-500/10 px-2 py-0.5 text-[9px] font-semibold text-violet-500">
+                    <Icon className="mr-1 size-3" />
+                    {demoFrame.category}
+                  </span>
                 </button>
               );
             })}
@@ -325,13 +378,24 @@ export default function SageOSDemoPage() {
         <section className="mt-5 rounded-xl border border-border bg-card p-4 shadow-xl">
           <div className="mb-4 flex items-center gap-2 border-b border-border pb-3">
             <Layers3 className="size-3.5 text-violet-500" />
-            <h2 className="text-xs font-bold tracking-wide">SageOS build workflow</h2>
+            <h2 className="text-xs font-bold tracking-wide">
+              SageOS build workflow
+            </h2>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {WORKFLOW.map(({ title, description, icon: Icon }, index) => (
               <div key={title} className="flex items-start gap-2.5">
-                <span className={`flex size-7 shrink-0 items-center justify-center rounded-full text-white ${index % 2 === 0 ? "bg-violet-500" : "bg-indigo-500"}`}><Icon className="size-3.5" /></span>
-                <div><h3 className="text-[11px] font-bold">{title}</h3><p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">{description}</p></div>
+                <span
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-full text-white ${index % 2 === 0 ? "bg-violet-500" : "bg-indigo-500"}`}
+                >
+                  <Icon className="size-3.5" />
+                </span>
+                <div>
+                  <h3 className="text-[11px] font-bold">{title}</h3>
+                  <p className="mt-0.5 text-[10px] leading-snug text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
