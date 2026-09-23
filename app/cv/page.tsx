@@ -9,6 +9,8 @@ import {
   FileText,
   Mail,
   Maximize2,
+  Minus,
+  Plus,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -25,9 +27,11 @@ function blockDocumentSaving(event: SyntheticEvent) {
 export default function CVPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activePage, setActivePage] = useState(0);
+  const [zoom, setZoom] = useState(1);
 
   function openPage(index: number) {
     setActivePage(index);
+    setZoom(1);
     setLightboxOpen(true);
   }
 
@@ -158,23 +162,49 @@ export default function CVPage() {
           onContextMenu={blockDocumentSaving}
         >
           <div
-            className="relative h-[94vh] w-full max-w-6xl overflow-y-auto rounded-xl border border-white/15 bg-slate-100 p-3 shadow-2xl sm:p-5"
+            className="relative h-[94vh] w-full max-w-6xl overflow-auto rounded-xl border border-white/15 bg-slate-100 p-3 shadow-2xl sm:p-5"
             onClick={(event) => event.stopPropagation()}
           >
-            <button
-              type="button"
-              onClick={() => setLightboxOpen(false)}
-              className="fixed right-5 top-5 z-10 inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
-              aria-label="Close CV lightbox"
-              title="Close CV lightbox"
-            >
-              <X className="size-5" />
-            </button>
-            <div className="relative mx-auto flex h-full max-w-4xl items-center justify-center">
+            <div className="fixed right-5 top-5 z-10 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setZoom((value) => Math.max(0.75, value - 0.25))}
+                className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600 disabled:opacity-40"
+                aria-label="Zoom out"
+                title="Zoom out"
+                disabled={zoom <= 0.75}
+              >
+                <Minus className="size-4" />
+              </button>
+              <span className="min-w-12 rounded-full border border-white/20 bg-slate-900/80 px-2 py-2 text-center text-[11px] font-semibold text-white">
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                type="button"
+                onClick={() => setZoom((value) => Math.min(2, value + 0.25))}
+                className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600 disabled:opacity-40"
+                aria-label="Zoom in"
+                title="Zoom in"
+                disabled={zoom >= 2}
+              >
+                <Plus className="size-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(false)}
+                className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-slate-900/80 text-white transition-colors hover:bg-violet-600"
+                aria-label="Close CV lightbox"
+                title="Close CV lightbox"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+            <div className="relative mx-auto flex min-h-full max-w-4xl items-center justify-center py-12">
               <img
                 src={CV_PAGE_URLS[activePage]}
                 alt={`Witness H Musonza CV page ${activePage + 1}`}
-                className="max-h-full max-w-full select-none bg-white object-contain shadow-sm"
+                className="max-h-full max-w-full select-none bg-white object-contain shadow-sm transition-transform duration-200"
+                style={{ transform: `scale(${zoom})` }}
                 draggable={false}
                 onContextMenu={blockDocumentSaving}
               />
