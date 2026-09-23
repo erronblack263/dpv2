@@ -162,7 +162,7 @@ export default function CVPage() {
           onContextMenu={blockDocumentSaving}
         >
           <div
-            className="relative h-[94vh] w-full max-w-6xl overflow-auto rounded-xl border border-white/15 bg-slate-100 p-3 shadow-2xl sm:p-5"
+            className="relative h-[94vh] w-full max-w-6xl overflow-auto rounded-xl border border-white/15 bg-slate-100 p-3 shadow-2xl dark:bg-slate-950 sm:p-5"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="fixed right-5 top-5 z-10 flex items-center gap-2">
