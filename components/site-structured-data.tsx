@@ -4,107 +4,78 @@ const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
   "https://portfolio.sagetech.co.zw/sage-logo.png";
 
-const personSchema = {
+const graphSchema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Witness H Musonza",
-  jobTitle: "Software Developer",
-  url: siteUrl,
-  image: avatarUrl,
-  sameAs: ["https://www.linkedin.com/in/witnessmusonza"],
-  knowsAbout: [
-    "Full Stack Development",
-    "Web Applications",
-    "Mobile Applications",
-    "Backend Systems",
-    "Systems Programming",
-    "AI Products",
-  ],
-};
-
-const profilePageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  name: "Witness H Musonza | Software Developer",
-  url: siteUrl,
-  mainEntity: personSchema,
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: avatarUrl,
-    contentUrl: avatarUrl,
-    caption: "Witness H Musonza - Software Developer",
-    width: 1024,
-    height: 1024,
-  },
-  thumbnailUrl: avatarUrl,
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Witness H Musonza Portfolio",
-  url: siteUrl,
-  description:
-    "Portfolio of Witness H Musonza, a full-stack software developer building mobile, web, and systems products.",
-  inLanguage: "en-US",
-  publisher: {
-    "@type": "Organization",
-    name: "Sage Tech",
-    url: siteUrl,
-    logo: {
-      "@type": "ImageObject",
-      url: logoUrl,
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: "Witness H Musonza",
+      jobTitle: "Software Developer",
+      url: siteUrl,
+      image: {
+        "@type": "ImageObject",
+        "@id": `${siteUrl}/#personimage`,
+        url: avatarUrl,
+        contentUrl: avatarUrl,
+        caption: "Witness H Musonza - Software Developer",
+        width: 1024,
+        height: 1024,
+      },
+      sameAs: ["https://www.linkedin.com/in/witnessmusonza"],
+      knowsAbout: [
+        "Full Stack Development",
+        "Web Applications",
+        "Mobile Applications",
+        "Backend Systems",
+        "Systems Programming",
+        "AI Products",
+      ],
     },
-  },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${siteUrl}/projects?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
-};
-
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Witness H Musonza | Software Developer",
-  url: siteUrl,
-  description:
-    "Fullstack engineer specialising in mobile, web and backend systems. Building scalable digital solutions with little hassle.",
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: avatarUrl,
-    contentUrl: avatarUrl,
-    caption: "Witness H Musonza - Software Developer",
-    width: 1024,
-    height: 1024,
-  },
-  thumbnailUrl: avatarUrl,
-  image: avatarUrl,
+    {
+      "@type": "ProfilePage",
+      "@id": `${siteUrl}/#webpage`,
+      name: "Witness H Musonza | Software Developer",
+      url: siteUrl,
+      mainEntity: { "@id": `${siteUrl}/#person` },
+      primaryImageOfPage: { "@id": `${siteUrl}/#personimage` },
+      image: avatarUrl,
+      thumbnailUrl: avatarUrl,
+      description:
+        "Fullstack engineer specialising in mobile, web and backend systems. Building scalable digital solutions with little hassle.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "Witness H Musonza Portfolio",
+      url: siteUrl,
+      description:
+        "Portfolio of Witness H Musonza, a full-stack software developer building mobile, web, and systems products.",
+      inLanguage: "en-US",
+      publisher: {
+        "@type": "Organization",
+        name: "Sage Tech",
+        url: siteUrl,
+        logo: {
+          "@type": "ImageObject",
+          url: logoUrl,
+        },
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteUrl}/projects?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export function SiteStructuredData() {
   return (
-    <>
-      <script
-        id="person-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
-      <script
-        id="profile-page-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }}
-      />
-      <script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        id="webpage-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-    </>
+    <script
+      id="site-schema-graph"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(graphSchema) }}
+    />
   );
 }

@@ -39,6 +39,17 @@ export const metadata: Metadata = {
     "image-thumbnail": avatarUrl,
     image_src: avatarUrl,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function Page() {

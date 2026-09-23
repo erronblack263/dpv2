@@ -98,16 +98,21 @@ export function HeroLanding() {
 
         {/* ── Large heading ─────────────────────────────────────── */}
         <div className="pb-5 max-w-3xl">
-          <div className="mb-5 flex items-center gap-3">
+          <div
+            itemScope
+            itemType="https://schema.org/Person"
+            className="mb-5 flex items-center gap-3"
+          >
             <Image
               src="/witness-avatar.png"
               alt="Witness H Musonza"
               width={1024}
               height={1024}
               priority
+              itemProp="image"
               className="size-14 rounded-full border-2 border-violet-500/40 object-cover shadow-[0_0_22px_rgba(139,92,246,0.3)]"
             />
-            <span className="text-sm font-semibold text-muted-foreground">
+            <span itemProp="name" className="text-sm font-semibold text-muted-foreground">
               Witness H Musonza
             </span>
           </div>
@@ -153,8 +158,9 @@ export function HeroLanding() {
         </div>
 
         {/* ── Full-width mockup image ───────────────────────────── */}
-        <div className="relative w-full px-4 sm:px-8 lg:px-16 pb-0">
+        <div data-nosnippet className="relative w-full px-4 sm:px-8 lg:px-16 pb-0">
           <div
+            data-nosnippet
             className="relative rounded-2xl p-[1px]"
             style={{
               background:
@@ -163,7 +169,7 @@ export function HeroLanding() {
                 "0 0 60px rgba(168,85,247,0.45), 0 0 120px rgba(124,58,237,0.2)",
             }}
           >
-            <div className="relative overflow-hidden rounded-2xl">
+            <div data-nosnippet className="relative overflow-hidden rounded-2xl">
               {/* Bottom fade */}
               <div
                 className="absolute bottom-0 left-0 right-0 h-1/4 z-10 pointer-events-none"
@@ -176,7 +182,9 @@ export function HeroLanding() {
               {/* Dark mockup — visible by default, hidden in light mode via CSS */}
               <Image
                 src="/landing.png"
-                alt="Portfolio preview"
+                alt=""
+                aria-hidden="true"
+                data-nosnippet
                 width={1600}
                 height={1000}
                 quality={90}
@@ -186,7 +194,9 @@ export function HeroLanding() {
               {/* Light mockup — visible only in light mode */}
               <Image
                 src="/landing-light.png"
-                alt="Portfolio preview"
+                alt=""
+                aria-hidden="true"
+                data-nosnippet
                 width={1600}
                 height={1000}
                 quality={90}
