@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { ContactDrawer } from "@/components/contact-drawer";
 import { NetworkStatus } from "@/components/network-status";
 import { SiteStructuredData } from "@/components/site-structured-data";
+import { PageTransition } from "@/components/page-transition";
 import "./globals.css";
 
 const inter = localFont({
@@ -161,7 +162,7 @@ export default function RootLayout({
               style={{ position: "relative", zIndex: 1 }}
               className="w-full overflow-x-hidden flex-1"
             >
-              {children}
+              <PageTransition>{children}</PageTransition>
             </main>
             <SiteFooter />
             <ContactDrawer />
