@@ -45,7 +45,7 @@ export function SiteNav() {
   return (
     <header
       data-site-nav
-      className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl"
+      className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl pt-[env(safe-area-inset-top,0px)]"
     >
       <div className="flex h-12 w-full items-center justify-between px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
         <Link href="/" className="flex shrink-0 items-center gap-2">
