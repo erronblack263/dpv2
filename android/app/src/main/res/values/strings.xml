@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Witness Musonza</string>
+    <string name="title_activity_main">Witness Musonza</string>
+    <string name="package_name">zw.co.sagetech.portfolio</string>
+    <string name="custom_url_scheme">zw.co.sagetech.portfolio</string>
+</resources>
