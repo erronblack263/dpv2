@@ -15,11 +15,11 @@ function cleanHeader(value: string) {
 
 export async function POST(req: Request) {
   try {
-    const clientId = process.env.GMAIL_CLIENT_ID;
-    const clientSecret = process.env.GMAIL_CLIENT_SECRET;
-    const refreshToken = process.env.GMAIL_REFRESH_TOKEN;
-    const sender = process.env.GMAIL_USER;
-    const recipient = process.env.GMAIL_TO;
+    const clientId = process.env.GMAIL_CLIENT_ID?.trim();
+    const clientSecret = process.env.GMAIL_CLIENT_SECRET?.trim();
+    const refreshToken = process.env.GMAIL_REFRESH_TOKEN?.trim();
+    const sender = process.env.GMAIL_USER?.trim();
+    const recipient = process.env.GMAIL_TO?.trim();
 
     if (!clientId || !clientSecret || !refreshToken || !sender || !recipient) {
       return NextResponse.json(
