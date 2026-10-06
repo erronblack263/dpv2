@@ -16,44 +16,89 @@ import {
   Terminal,
 } from "lucide-react";
 import { useState } from "react";
-
-const DEMO_FRAMES = [
-  {
-    title: "SageOS desktop overview",
-    category: "Overview",
-    description: "A guided walkthrough of the SageOS desktop environment.",
-    icon: Monitor,
-  },
-  {
-    title: "System tools",
-    category: "System tools",
-    description:
-      "A closer look at the terminal, file manager, and notepad tools.",
-    icon: Terminal,
-  },
-  {
-    title: "Runtime and processes",
-    category: "Kernel",
-    description:
-      "An overview of process scheduling and system monitoring concepts.",
-    icon: Cpu,
-  },
-  {
-    title: "Desktop applications",
-    category: "Desktop",
-    description:
-      "A preview of the applications and interaction model planned for SageOS.",
-    icon: Monitor,
-  },
-] as const;
+import { VideoPlayer } from "@/components/video-player";
 
 const DEMO_CATEGORIES = [
   "All demos",
-  "Overview",
-  "System tools",
-  "Kernel",
+  "Authentication",
+  "File Manager",
+  "Terminal functions",
   "Desktop",
 ] as const;
+
+function buildDemoFrames(videoUrl?: string, secondaryVideoUrl?: string) {
+  return [
+    {
+      title: "Authentication",
+      category: "Authentication",
+      description: "Sign-in flow and secure account access for the SageOS user experience.",
+      icon: Monitor,
+      video: videoUrl,
+    },
+    {
+      title: "File Manager functions",
+      category: "File Manager",
+      description:
+        "A closer look at file navigation, organization, and local system management.",
+      icon: Terminal,
+      video: secondaryVideoUrl ?? videoUrl,
+    },
+    {
+      title: "File Manager Sorting",
+      category: "File Manager",
+      description:
+        "Sorting, organization, and quick file-management workflows in the SageOS environment.",
+      icon: Terminal,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273564/file-manager_sorting_4_ykwp7l.mp4",
+    },
+    {
+      title: "Terminal functions",
+      category: "Terminal functions",
+      description:
+        "Command-line workflows and shell-level operations that power the SageOS environment.",
+      icon: Terminal,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273880/terminal_3_tgsobr.mp4",
+    },
+    {
+      title: "NetStack",
+      category: "Desktop",
+      description:
+        "A preview of the networking layer and system communication model within SageOS.",
+      icon: Monitor,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273874/netstack_3_xqiwqy.mp4",
+    },
+    {
+      title: "Calculator Functions",
+      category: "Desktop",
+      description:
+        "Built-in calculator workflows and utility interactions inside the SageOS desktop environment.",
+      icon: Monitor,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273512/calculator_func_1_i2eryp.mp4",
+    },
+    {
+      title: "Notes & Wallpaper Settings",
+      category: "Desktop",
+      description:
+        "Customize notes, wallpaper preferences, and the desktop experience in SageOS.",
+      icon: Monitor,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273878/note_wall_settings_2_xrlsxq.mp4",
+    },
+    {
+      title: "SageOS Outro",
+      category: "Desktop",
+      description:
+        "A closing look at the end-to-end SageOS experience and final system showcase.",
+      icon: Monitor,
+      video:
+        "https://res.cloudinary.com/virfpzu4/video/upload/v1791273869/sageos-outro_4_db9etf.mp4",
+    },
+  ] as const;
+}
 
 const WORKFLOW = [
   {
@@ -88,20 +133,37 @@ const DETAILS = [
   { label: "Scope", value: "Kernel and desktop", icon: HardDrive },
 ] as const;
 
-export default function SageOSDemoPage() {
+function getPreviewThumbnail(videoUrl?: string) {
+  if (!videoUrl) return undefined;
+
+  return videoUrl
+    .replace("/video/upload/", "/video/upload/so_0,w_1200,q_auto,f_auto/")
+    .replace(/\.mp4$/, ".jpg");
+}
+
+export default function SageOSDemoPage({
+  videoUrl,
+  secondaryVideoUrl,
+}: {
+  readonly videoUrl?: string;
+  readonly secondaryVideoUrl?: string;
+}) {
+  const demoFrames = buildDemoFrames(videoUrl, secondaryVideoUrl);
   const [activeCategory, setActiveCategory] =
     useState<(typeof DEMO_CATEGORIES)[number]>("All demos");
   const [activeFrame, setActiveFrame] = useState(0);
   const [previewPage, setPreviewPage] = useState(0);
   const filteredFrames =
     activeCategory === "All demos"
-      ? DEMO_FRAMES
-      : DEMO_FRAMES.filter(
-          (demoFrame) => demoFrame.category === activeCategory,
-        );
+      ? demoFrames
+      : demoFrames.filter((demoFrame) => demoFrame.category === activeCategory);
   const frame = filteredFrames[activeFrame] ?? filteredFrames[0];
   const previewPageSize = 3;
   const previewPageCount = Math.ceil(filteredFrames.length / previewPageSize);
+  const isFirstPreviewPage = previewPage === 0;
+  const isLastPreviewPage = previewPage === previewPageCount - 1;
+  const prevPreviewDisabled = Boolean(isFirstPreviewPage);
+  const nextPreviewDisabled = Boolean(isLastPreviewPage);
   const visibleFrames = filteredFrames.slice(
     previewPage * previewPageSize,
     (previewPage + 1) * previewPageSize,
@@ -181,20 +243,33 @@ export default function SageOSDemoPage() {
               data-demo-video
               className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-xl border border-violet-500/25 bg-zinc-950 shadow-[0_0_40px_rgba(124,58,237,0.18)]"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:28px_28px]" />
-              <div className="relative flex flex-col items-center gap-3 text-center">
-                <div className="flex size-14 items-center justify-center rounded-full border border-violet-400/40 bg-violet-500/15 text-violet-300">
-                  <Play className="ml-1 size-6 fill-current" />
+              {frame.video ? (
+                <div className="absolute inset-0">
+                  <VideoPlayer
+                    src={frame.video}
+                    thumbnail={getPreviewThumbnail(frame.video) ?? frame.video}
+                    title={frame.title}
+                    maxHeight={999}
+                  />
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-white">
-                    Video demo placeholder
-                  </p>
-                  <p className="mt-1 text-xs text-zinc-400">
-                    Recording will be added soon
-                  </p>
-                </div>
-              </div>
+              ) : (
+                <>
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:28px_28px]" />
+                  <div className="relative flex flex-col items-center gap-3 text-center">
+                    <div className="flex size-14 items-center justify-center rounded-full border border-violet-400/40 bg-violet-500/15 text-violet-300">
+                      <Play className="ml-1 size-6 fill-current" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-white">
+                        Video demo placeholder
+                      </p>
+                      <p className="mt-1 text-xs text-zinc-400">
+                        Recording will be added soon
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div
@@ -211,7 +286,7 @@ export default function SageOSDemoPage() {
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
                 <span className="font-mono text-[11px] font-bold">
-                  {activeFrame + 1}/{DEMO_FRAMES.length}
+                  {activeFrame + 1}/{filteredFrames.length}
                 </span>
                 <button
                   type="button"
@@ -312,11 +387,15 @@ export default function SageOSDemoPage() {
                 {filteredFrames.length} sections in {activeCategory}
               </span>
               {previewPageCount > 1 && (
-                <span className="flex items-center gap-1.5 border-l border-border pl-2">
+                <span
+                  suppressHydrationWarning
+                  className="flex items-center gap-1.5 border-l border-border pl-2"
+                >
                   <button
                     type="button"
+                    suppressHydrationWarning
                     onClick={() => changePreviewPage(previewPage - 1)}
-                    disabled={previewPage === 0}
+                    disabled={prevPreviewDisabled}
                     className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30"
                     aria-label="Previous demo page"
                   >
@@ -327,8 +406,9 @@ export default function SageOSDemoPage() {
                   </span>
                   <button
                     type="button"
+                    suppressHydrationWarning
                     onClick={() => changePreviewPage(previewPage + 1)}
-                    disabled={previewPage === previewPageCount - 1}
+                    disabled={nextPreviewDisabled}
                     className="flex size-6 items-center justify-center rounded-md border border-violet-500/30 text-violet-500 hover:bg-violet-500/10 disabled:pointer-events-none disabled:opacity-30"
                     aria-label="Next demo page"
                   >
@@ -343,6 +423,7 @@ export default function SageOSDemoPage() {
               const absoluteIndex = previewPage * previewPageSize + index;
               const Icon = demoFrame.icon;
               const active = absoluteIndex === activeFrame;
+              const framePreviewThumbnail = getPreviewThumbnail(demoFrame.video);
               return (
                 <button
                   key={demoFrame.title}
@@ -351,15 +432,23 @@ export default function SageOSDemoPage() {
                   className={`group relative overflow-hidden rounded-xl border p-2 text-left transition-all ${active ? "border-violet-500 bg-violet-500/10 shadow-[0_0_20px_rgba(124,58,237,0.18)]" : "border-border bg-background/50 hover:border-violet-500/40"}`}
                 >
                   <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-zinc-950">
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:18px_18px]" />
+                    {framePreviewThumbnail ? (
+                      <>
+                        <img
+                          src={framePreviewThumbnail}
+                          alt={demoFrame.title}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:18px_18px]" />
+                    )}
                     <span className="relative flex size-9 items-center justify-center rounded-full bg-violet-500 text-white shadow-lg transition-transform group-hover:scale-110">
                       <Play className="ml-0.5 size-4 fill-white" />
                     </span>
                     <span className="absolute left-2 top-2 rounded-md bg-black/75 px-1.5 py-0.5 font-mono text-[9px] text-white">
                       0{absoluteIndex + 1}
-                    </span>
-                    <span className="absolute bottom-2 right-2 rounded-md bg-violet-400 px-1.5 py-0.5 text-[9px] font-bold text-white">
-                      PLACEHOLDER
                     </span>
                   </div>
                   <p className="mt-2 truncate text-[11px] font-bold">
