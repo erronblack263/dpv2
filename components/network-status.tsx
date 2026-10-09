@@ -151,19 +151,19 @@ export function NetworkStatus() {
   }
 
   return (
-    <div className="pointer-events-none fixed left-1/2 top-1/2 z-[150] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2">
+    <div className="pointer-events-none fixed right-3 top-14 z-[150] flex max-w-[calc(100vw-1.5rem)] justify-end sm:right-5 sm:top-16">
       <div
         role="status"
         aria-live="polite"
-        className={`pointer-events-auto flex w-full items-center gap-2 rounded-xl border px-4 py-3 text-xs font-semibold shadow-lg backdrop-blur-xl animate-in fade-in zoom-in-95 ${colorClass}`}
+        className={`pointer-events-auto flex w-fit max-w-full items-center gap-1.5 rounded-lg border px-3 py-2 text-[11px] font-semibold shadow-lg backdrop-blur-xl animate-in fade-in slide-in-from-top-2 ${colorClass}`}
       >
-        {icon}
+        <span className="shrink-0 [&>svg]:size-3.5">{icon}</span>
         <span className="min-w-0 flex-1">{message}</span>
         {isOffline && (
           <button
             type="button"
             onClick={() => retryCheckRef.current?.()}
-            className="shrink-0 rounded-md bg-foreground px-3 py-1.5 text-[11px] font-bold text-background transition-opacity hover:opacity-80"
+            className="shrink-0 rounded-md bg-foreground px-2 py-1 text-[10px] font-bold text-background transition-opacity hover:opacity-80"
           >
             Retry
           </button>
@@ -172,7 +172,7 @@ export function NetworkStatus() {
           <button
             type="button"
             onClick={() => setDismissed(true)}
-            className="ml-1 rounded-full p-0.5 opacity-70 transition-opacity hover:opacity-100"
+            className="ml-0.5 shrink-0 rounded-full p-0.5 opacity-70 transition-opacity hover:opacity-100"
             aria-label="Dismiss network status"
           >
             <X className="size-3.5" />
