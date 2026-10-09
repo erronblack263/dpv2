@@ -127,48 +127,21 @@ export function NetworkStatus() {
 
   if (process.env.NODE_ENV !== "production") return null;
 
-  if (networkState === "offline") {
-    return (
-      <div className="fixed inset-0 z-[200] flex min-h-dvh items-center justify-center overflow-hidden bg-background px-6 text-foreground">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,transparent_0%,rgba(244,63,94,0.06)_50%,transparent_100%)]" />
-        <main className="relative z-10 flex w-full max-w-md flex-col items-center text-center">
-          <div className="flex size-20 items-center justify-center rounded-3xl border border-rose-500/30 bg-rose-500/10 text-rose-500 shadow-[0_0_45px_rgba(244,63,94,0.16)]">
-            <WifiOff className="size-9" />
-          </div>
-          <p className="mt-7 text-xs font-bold uppercase tracking-[0.2em] text-rose-500">
-            Connection interrupted
-          </p>
-          <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            You&apos;re offline
-          </h1>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Your internet connection is unavailable. Sage is waiting for the
-            connection to return, and some features may be temporarily paused.
-          </p>
-          <div className="mt-7 flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-muted-foreground shadow-sm">
-            <LoaderCircle className="size-3.5 animate-spin text-rose-500" />
-            Reconnecting automatically...
-          </div>
-          <button
-            type="button"
-            onClick={() => retryCheckRef.current?.()}
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-xs font-bold text-background transition-opacity hover:opacity-80"
-          >
-            <Wifi className="size-3.5" />
-            Try again
-          </button>
-        </main>
-      </div>
-    );
-  }
-
   if (dismissed || networkState === "online") return null;
 
+  const isOffline = networkState === "offline";
   const isRestored = networkState === "restored";
   let icon = <LoaderCircle className="size-4 animate-spin" />;
   let message = "Poor network connection. Some features may be unavailable.";
   let colorClass =
     "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300";
+
+  if (isOffline) {
+    icon = <WifiOff className="size-4" />;
+    message = "You're offline. Reconnecting automatically...";
+    colorClass =
+      "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300";
+  }
 
   if (isRestored) {
     icon = <Wifi className="size-4" />;
@@ -178,14 +151,23 @@ export function NetworkStatus() {
   }
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-3 z-[150] flex justify-center px-4">
+    <div className="pointer-events-none fixed left-1/2 top-1/2 z-[150] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2">
       <div
         role="status"
         aria-live="polite"
-        className={`pointer-events-auto inline-flex max-w-xl items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold shadow-lg backdrop-blur-xl animate-in fade-in slide-in-from-top-2 ${colorClass}`}
+        className={`pointer-events-auto flex w-full items-center gap-2 rounded-xl border px-4 py-3 text-xs font-semibold shadow-lg backdrop-blur-xl animate-in fade-in zoom-in-95 ${colorClass}`}
       >
         {icon}
-        <span>{message}</span>
+        <span className="min-w-0 flex-1">{message}</span>
+        {isOffline && (
+          <button
+            type="button"
+            onClick={() => retryCheckRef.current?.()}
+            className="shrink-0 rounded-md bg-foreground px-3 py-1.5 text-[11px] font-bold text-background transition-opacity hover:opacity-80"
+          >
+            Retry
+          </button>
+        )}
         {!isRestored && (
           <button
             type="button"
