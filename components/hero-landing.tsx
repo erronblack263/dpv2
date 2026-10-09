@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import { animate } from "animejs";
+import { FluidFieldBackground } from "@/components/fluid-field-background";
 
 // Preload the WavyBackground + simplex-noise chunk in the background
 // so it's cached by the time the user navigates to /about
@@ -44,52 +45,7 @@ export function HeroLanding() {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
-      {/* ── Purple diagonal light beam ──────────────────────────── */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            right: "12%",
-            width: "2px",
-            height: "120%",
-            background:
-              "linear-gradient(180deg, transparent 0%, #c084fc 25%, #ffffff 50%, #c084fc 75%, transparent 100%)",
-            transform: "rotate(-38deg)",
-            transformOrigin: "top center",
-            filter: "blur(0.5px)",
-            opacity: 0.95,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            right: "6%",
-            width: "260px",
-            height: "110%",
-            background:
-              "linear-gradient(180deg, transparent 0%, rgba(168,85,247,0.08) 15%, rgba(168,85,247,0.38) 40%, rgba(168,85,247,0.08) 70%, transparent 100%)",
-            transform: "rotate(-38deg)",
-            transformOrigin: "top center",
-            filter: "blur(55px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "58%",
-            height: "60%",
-            backgroundImage:
-              "radial-gradient(circle, rgba(168,85,247,0.2) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-            maskImage:
-              "radial-gradient(ellipse 80% 80% at 75% 35%, black 0%, transparent 65%)",
-          }}
-        />
-      </div>
+      <FluidFieldBackground />
 
       {/* ── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">

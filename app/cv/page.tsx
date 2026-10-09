@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { SyntheticEvent } from "react";
+import { FluidFieldBackground } from "@/components/fluid-field-background";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -60,10 +61,11 @@ export default function CVPage() {
 
   return (
     <main
-      className="min-h-screen bg-background px-5 py-8 text-foreground sm:px-8 lg:px-12"
+      className="relative isolate min-h-screen bg-background px-5 py-8 text-foreground sm:px-8 lg:px-12"
       onContextMenu={blockDocumentSaving}
     >
-      <div className="mx-auto max-w-7xl">
+      <FluidFieldBackground />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
             href="/about"
