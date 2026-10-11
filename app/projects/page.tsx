@@ -753,19 +753,18 @@ export default function ProjectsPage() {
                     ))}
                   </div>
 
-                  {/* Apple-style circular arrows — bottom right */}
-                  <div className="flex items-center gap-2 absolute bottom-4 right-4">
+                  <div className="absolute inset-y-0 left-0 right-0 z-20 flex items-center justify-between px-1 pointer-events-none">
                     <button
                       onClick={scrollPrev}
                       aria-label="Previous"
-                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                      className="pointer-events-auto flex items-center justify-center size-10 rounded-full bg-card/90 border border-border shadow-md text-foreground backdrop-blur hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
                     >
                       <ChevronLeft className="size-5" />
                     </button>
                     <button
                       onClick={scrollNext}
                       aria-label="Next"
-                      className="flex items-center justify-center size-10 rounded-full bg-card border border-border shadow-md text-foreground hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+                      className="pointer-events-auto flex items-center justify-center size-10 rounded-full bg-card/90 border border-border shadow-md text-foreground backdrop-blur hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
                     >
                       <ChevronRight className="size-5" />
                     </button>

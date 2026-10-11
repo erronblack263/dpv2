@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { animate } from "animejs";
 import { FluidFieldBackground } from "@/components/fluid-field-background";
 import { WovenLightElement } from "@/components/woven-light-element";
+import { StatsBar } from "@/components/stats-bar";
+import { WhatIDo } from "@/components/what-i-do";
 
 // Preload the WavyBackground + simplex-noise chunk in the background
 // so it's cached by the time the user navigates to /about
@@ -15,8 +17,6 @@ function usePreloadHomeChunks() {
     // Wait for hero page to fully paint first, then preload in background
     const timer = setTimeout(() => {
       import("@/components/ui/wavy-background").catch(() => {});
-      import("@/components/stats-bar").catch(() => {});
-      import("@/components/what-i-do").catch(() => {});
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -175,6 +175,8 @@ export function HeroLanding() {
           />
         </div>
       </div>
+      <StatsBar />
+      <WhatIDo />
     </div>
   );
 }
