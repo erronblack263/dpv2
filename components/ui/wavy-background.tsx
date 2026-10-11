@@ -11,6 +11,8 @@ const DEFAULT_WAVE_COLORS = [
   "#22d3ee",
 ];
 
+const FRAME_INTERVAL_MS = 1000 / 30;
+
 export const WavyBackground = ({
   children,
   className,
@@ -82,6 +84,7 @@ export const WavyBackground = ({
     let prefersReducedMotion = false;
     let avatarBaseline = 0;
     let isDocumentVisible = document.visibilityState === "visible";
+    let lastFrameTime = 0;
 
     const getSpeed = () => {
       if (prefersReducedMotion) return 0;
@@ -138,19 +141,23 @@ export const WavyBackground = ({
       }
     };
 
-    const render = () => {
+    const render = (timestamp = performance.now()) => {
       if (!isDocumentVisible) return;
 
-      ntRef.current += getSpeed();
+      if (timestamp - lastFrameTime >= FRAME_INTERVAL_MS) {
+        const elapsed = timestamp - lastFrameTime;
+        lastFrameTime = timestamp;
+        ntRef.current += getSpeed() * (elapsed / (1000 / 60));
 
-      ctx.globalAlpha = 1;
-      ctx.filter = "none";
-      ctx.fillStyle = backgroundFillRef.current;
-      ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = 1;
+        ctx.filter = "none";
+        ctx.fillStyle = backgroundFillRef.current;
+        ctx.fillRect(0, 0, w, h);
 
-      const blurPx = isMobile ? Math.min(blurRef.current, 8) : blurRef.current;
-      ctx.filter = `blur(${blurPx}px)`;
-      drawWave();
+        const blurPx = isMobile ? Math.min(blurRef.current, 8) : blurRef.current;
+        ctx.filter = `blur(${blurPx}px)`;
+        drawWave();
+      }
 
       animationIdRef.current = requestAnimationFrame(render);
     };
@@ -177,7 +184,7 @@ export const WavyBackground = ({
             container.scrollHeight || 0,
           );
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
       canvas.style.width = `${w}px`;

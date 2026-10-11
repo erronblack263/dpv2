@@ -11,12 +11,12 @@ export function PageTransition({
 }) {
   const pathname = usePathname();
   const contentRef = useRef<HTMLDivElement>(null);
+  const previousPathname = useRef(pathname);
 
   useEffect(() => {
     const content = contentRef.current;
-    const shouldAnimate =
-      pathname.startsWith("/projects") || pathname === "/cv";
-    if (!content || !shouldAnimate) return;
+    if (!content || previousPathname.current === pathname) return;
+    previousPathname.current = pathname;
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -28,13 +28,10 @@ export function PageTransition({
       return;
     }
 
-    content.style.opacity = "0";
-    content.style.transform = "translateY(12px)";
-
     animate(content, {
       opacity: [0, 1],
-      translateY: [12, 0],
-      duration: 500,
+      translateY: [32, 0],
+      duration: 420,
       ease: "outCubic",
       onComplete: () => {
         content.style.transform = "";
