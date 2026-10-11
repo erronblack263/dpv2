@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import { animate } from "animejs";
 import { FluidFieldBackground } from "@/components/fluid-field-background";
+import { WovenLightElement } from "@/components/woven-light-element";
 
 // Preload the WavyBackground + simplex-noise chunk in the background
 // so it's cached by the time the user navigates to /about
@@ -46,6 +47,7 @@ export function HeroLanding() {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <FluidFieldBackground />
+      <WovenLightElement />
 
       {/* ── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">

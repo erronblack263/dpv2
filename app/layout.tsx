@@ -8,6 +8,8 @@ import { ContactDrawer } from "@/components/contact-drawer";
 import { NetworkStatus } from "@/components/network-status";
 import { SiteStructuredData } from "@/components/site-structured-data";
 import { PageTransition } from "@/components/page-transition";
+import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const inter = localFont({
@@ -157,18 +159,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden flex flex-col justify-between">
-            <SiteNav />
-            <main
-              style={{ position: "relative", zIndex: 1 }}
-              className="w-full overflow-x-hidden flex-1"
-            >
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <SiteFooter />
-            <ContactDrawer />
-            <NetworkStatus />
-          </div>
+          <SmoothScrollProvider>
+            <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden flex flex-col justify-between">
+              <SiteNav />
+              <main
+                style={{ position: "relative", zIndex: 1 }}
+                className="w-full overflow-x-hidden flex-1"
+              >
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <SiteFooter />
+              <ContactDrawer />
+              <NetworkStatus />
+            </div>
+          </SmoothScrollProvider>
         </ThemeProvider>
         <SiteStructuredData />
         {process.env.NODE_ENV === "production" && <Analytics />}

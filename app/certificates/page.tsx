@@ -13,6 +13,7 @@ import {
   GalleryHorizontal,
   CalendarDays,
   Award,
+  Expand,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 import { ImageWithSkeleton } from "@/components/skeleton";
@@ -77,6 +78,7 @@ const allCerts: Cert[] = [
     embed:
       "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804810/javascript_cert_cswyzj.png",
     gradient: "from-yellow-700 via-amber-600 to-orange-800",
+     achieved: "September 27, 2023",
   },
   {
     title: "Dart",
@@ -87,6 +89,7 @@ const allCerts: Cert[] = [
     embed:
       "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784813291/dart_cert_d6rilt.png",
     gradient: "from-cyan-700 via-teal-600 to-blue-900",
+    achieved: "September 6, 2025",
   },
   {
     title: "Java Certificate",
@@ -97,6 +100,7 @@ const allCerts: Cert[] = [
     embed:
       "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1784804534/java_cert_lhbtzk.png",
     gradient: "from-red-800 via-rose-700 to-orange-900",
+    achieved: "June 14, 2024",
   },
   {
     title: "TypeScript",
@@ -390,15 +394,43 @@ function TileCard({
 /* ─── Page ─────────────────────────────────────────────────────── */
 export default function CertificatesPage() {
   const [selected, setSelected] = useState<Cert | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [view, setView] = useState<ViewMode>("grid");
   const [activeCategory, setActiveCategory] = useState("All");
   const [listPage, setListPage] = useState(1);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
+  function openCertificate(cert: Cert) {
+    setLightboxOpen(false);
+    setSelected(cert);
+  }
+
+  function closeCertificate() {
+    setLightboxOpen(false);
+    setSelected(null);
+  }
+
   useEffect(() => {
     document.body.classList.toggle("modal-open", selected !== null);
     return () => document.body.classList.remove("modal-open");
   }, [selected]);
+
+  useEffect(() => {
+    if (!selected) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        if (lightboxOpen) setLightboxOpen(false);
+        else {
+          setLightboxOpen(false);
+          setSelected(null);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selected, lightboxOpen]);
 
   useEffect(() => {
     const surfaces = document.querySelectorAll<HTMLElement>(
@@ -598,7 +630,7 @@ export default function CertificatesPage() {
             {view === "grid" && (
               <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                 {filtered.map((cert) => (
-                  <GridCard key={cert.embed} cert={cert} onView={setSelected} />
+                  <GridCard key={cert.embed} cert={cert} onView={openCertificate} />
                 ))}
               </div>
             )}
@@ -609,7 +641,7 @@ export default function CertificatesPage() {
                     <ListRow
                       key={cert.embed}
                       cert={cert}
-                      onView={setSelected}
+                      onView={openCertificate}
                     />
                   ))}
                 </div>
@@ -643,7 +675,7 @@ export default function CertificatesPage() {
             {view === "tiles" && (
               <div className="mt-6 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
                 {filtered.map((cert) => (
-                  <TileCard key={cert.embed} cert={cert} onView={setSelected} />
+                  <TileCard key={cert.embed} cert={cert} onView={openCertificate} />
                 ))}
               </div>
             )}
@@ -664,7 +696,7 @@ export default function CertificatesPage() {
                           type="button"
                           className="relative flex flex-col rounded-3xl overflow-hidden cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
                           style={{ height: "480px" }}
-                          onClick={() => setSelected(cert)}
+                          onClick={() => openCertificate(cert)}
                         >
                           <div
                             className={`absolute inset-0 bg-gradient-to-br ${cert.gradient}`}
@@ -718,32 +750,41 @@ export default function CertificatesPage() {
       {selected && (
         <dialog
           open
-          className="fixed inset-0 z-50 m-0 flex h-full w-full max-w-none items-center justify-center overflow-hidden bg-transparent p-4 sm:p-8 [&::backdrop]:bg-transparent"
+          className="fixed inset-0 z-50 m-0 flex h-full w-full max-w-none items-stretch justify-end overflow-hidden bg-transparent p-0 [&::backdrop]:bg-transparent"
         >
           <button
             type="button"
             aria-label="Close certificate details"
             className="absolute inset-0 cursor-default bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
-            onClick={() => setSelected(null)}
+            onClick={closeCertificate}
           />
-          <div className="relative z-10 flex max-h-[92vh] w-full max-w-5xl flex-col overflow-y-auto rounded-3xl border border-violet-500/40 bg-background/95 p-6 text-foreground shadow-[0_0_80px_rgba(124,58,237,0.28)] backdrop-blur-2xl animate-in zoom-in-95 fade-in duration-300 sm:p-10">
+          <div className="relative z-10 flex h-full w-full max-w-lg flex-col overflow-y-auto border-l border-violet-500/40 bg-background/95 p-5 text-foreground shadow-[-24px_0_80px_rgba(124,58,237,0.2)] backdrop-blur-2xl animate-in slide-in-from-right duration-300 sm:p-7">
             <button
               type="button"
-              onClick={() => setSelected(null)}
-              className="ml-auto flex size-9 items-center justify-center rounded-xl border border-border bg-card/60 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              onClick={closeCertificate}
+              className="sticky top-0 z-10 -mr-1 ml-auto flex size-9 shrink-0 items-center justify-center rounded-xl border border-border bg-background/90 text-muted-foreground backdrop-blur transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Close certificate details"
             >
               <X className="size-4" />
             </button>
-            <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card/50 p-2 shadow-lg">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(true)}
+              aria-label={`Enlarge ${selected.title} certificate`}
+              className="group relative mt-4 block w-full overflow-hidden rounded-2xl border border-border bg-card/50 p-2 text-left shadow-lg"
+            >
               <ImageWithSkeleton
                 src={selected.embed}
                 alt={`${selected.title} certificate`}
                 className="w-full rounded-xl object-contain"
-                style={{ maxHeight: "42vh" }}
+                style={{ maxHeight: "34vh" }}
                 wrapperClassName="block"
               />
-            </div>
+              <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-violet-300/40 bg-violet-700/90 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-violet-950/30 backdrop-blur-md transition-transform group-hover:scale-105">
+                <Expand className="size-3.5" />
+                Click to enlarge
+              </span>
+            </button>
             <div className="mt-7">
               <p className="text-xs font-semibold uppercase tracking-wider text-violet-500">
                 Certificate details
@@ -781,6 +822,38 @@ export default function CertificatesPage() {
             </div>
           </div>
         </dialog>
+      )}
+      {selected && lightboxOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selected.title} certificate image`}
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-8"
+        >
+          <button
+            type="button"
+            aria-label="Close enlarged certificate"
+            onClick={() => setLightboxOpen(false)}
+            className="absolute inset-0 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
+          />
+          <div className="relative z-10 flex max-h-full w-full max-w-6xl flex-col items-center gap-3 animate-in zoom-in-95 fade-in duration-200">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(false)}
+              aria-label="Close enlarged certificate"
+              className="absolute -right-2 -top-2 z-20 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white shadow-lg transition-colors hover:bg-white/15 sm:-right-4 sm:-top-4"
+            >
+              <X className="size-5" />
+            </button>
+            <ImageWithSkeleton
+              src={selected.embed}
+              alt={`${selected.title} certificate enlarged`}
+              className="max-h-[calc(100vh-6rem)] max-w-full rounded-lg object-contain shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
+              wrapperClassName="flex max-h-full w-full items-center justify-center"
+            />
+            <p className="text-sm font-medium text-white/80">{selected.title}</p>
+          </div>
+        </div>
       )}
     </>
   );

@@ -32,7 +32,6 @@ export function ThemeToggle() {
         }`}
       >
         <Sun className="size-3.5" />
-        <span>Light</span>
       </button>
       <button
         type="button"
@@ -47,7 +46,6 @@ export function ThemeToggle() {
         }`}
       >
         <Moon className="size-3.5" />
-        <span>Dark</span>
       </button>
     </div>
   );
