@@ -214,26 +214,6 @@ const CATEGORIES = [
   "Security",
 ];
 
-function getStepClass(isActive: boolean, isCompleted: boolean) {
-  if (isActive) {
-    return "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]";
-  }
-  if (isCompleted) {
-    return "bg-violet-600/20 border-violet-500 text-violet-500";
-  }
-  return "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400";
-}
-
-function getViewStepClass(isActive: boolean, isCompleted: boolean) {
-  if (isActive) {
-    return "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]";
-  }
-  if (isCompleted) {
-    return "bg-violet-600/20 border-violet-500 text-violet-500";
-  }
-  return "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400";
-}
-
 /* ─── Cert icon ────────────────────────────────────────────────── */
 function CertIcon() {
   return (
@@ -502,74 +482,33 @@ export default function CertificatesPage() {
           </div>
 
           <FadeInOnScroll>
-            <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
-              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
-                {CATEGORIES.map((cat, idx) => {
+            <div className="mt-6 flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-border bg-muted/60 p-1 scrollbar-none">
+                {CATEGORIES.map((cat) => {
                   const isActive = activeCategory === cat;
-                  const isCompleted = CATEGORIES.indexOf(activeCategory) > idx;
                   return (
-                    <div key={cat} className="flex items-center">
-                      {/* Node + Label */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setActiveCategory(cat);
-                          setListPage(1);
-                        }}
-                        className="flex flex-col items-center gap-1.5 group"
-                      >
-                        <div
-                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${getStepClass(
-                            isActive,
-                            isCompleted,
-                          )}`}
-                        >
-                          {isCompleted ? (
-                            <svg
-                              className="size-4"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          ) : (
-                            <span className="text-[10px] font-bold">
-                              {idx + 1}
-                            </span>
-                          )}
-                        </div>
-                        <span
-                          className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
-                            isActive
-                              ? "text-violet-500"
-                              : "text-muted-foreground group-hover:text-foreground"
-                          }`}
-                        >
-                          {cat}
-                        </span>
-                      </button>
-                      {/* Connector line */}
-                      {idx < CATEGORIES.length - 1 && (
-                        <div
-                          className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
-                            isCompleted ? "bg-violet-500/60" : "bg-border"
-                          }`}
-                        />
-                      )}
-                    </div>
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setListPage(1);
+                      }}
+                      aria-pressed={isActive}
+                      className={`whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
+                        isActive
+                          ? "bg-violet-600 text-white shadow-sm"
+                          : "text-muted-foreground hover:bg-background hover:text-foreground"
+                      }`}
+                    >
+                      {cat}
+                    </button>
                   );
                 })}
               </div>
 
-              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
-                {(["grid", "tiles", "carousel", "list"] as const).map(
-                  (v, idx) => {
+              <div className="flex shrink-0 items-center gap-1 overflow-x-auto rounded-full border border-border bg-muted/60 p-1 scrollbar-none">
+                {(["grid", "tiles", "carousel", "list"] as const).map((v) => {
                     const labels: Record<string, string> = {
                       grid: "Grid",
                       tiles: "Tiles",
@@ -582,45 +521,24 @@ export default function CertificatesPage() {
                       carousel: <GalleryHorizontal className="size-3" />,
                       list: <List className="size-3" />,
                     };
-                    const views = ["grid", "tiles", "carousel", "list"];
                     const isActive = view === v;
-                    const isCompleted = views.indexOf(view) > idx;
                     return (
-                      <div key={v} className="flex items-center">
-                        <button
-                          type="button"
-                          onClick={() => setView(v)}
-                          className="flex flex-col items-center gap-1.5 group"
-                        >
-                          <div
-                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${getViewStepClass(
-                              isActive,
-                              isCompleted,
-                            )}`}
-                          >
-                            {icons[v]}
-                          </div>
-                          <span
-                            className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
-                              isActive
-                                ? "text-violet-500"
-                                : "text-muted-foreground group-hover:text-foreground"
-                            }`}
-                          >
-                            {labels[v]}
-                          </span>
-                        </button>
-                        {idx < 3 && (
-                          <div
-                            className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
-                              isCompleted ? "bg-violet-500/60" : "bg-border"
-                            }`}
-                          />
-                        )}
-                      </div>
+                      <button
+                        key={v}
+                        type="button"
+                        onClick={() => setView(v)}
+                        aria-pressed={isActive}
+                        className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
+                          isActive
+                            ? "bg-violet-600 text-white shadow-sm"
+                            : "text-muted-foreground hover:bg-background hover:text-foreground"
+                        }`}
+                      >
+                        {icons[v]}
+                        {labels[v]}
+                      </button>
                     );
-                  },
-                )}
+                  })}
               </div>
             </div>
           </FadeInOnScroll>
