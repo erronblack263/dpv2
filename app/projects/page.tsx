@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, memo, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { animate, stagger } from "animejs";
 import {
   ArrowLeft,
@@ -16,6 +17,13 @@ import {
   ChevronRight,
   GalleryHorizontal,
   X,
+  Boxes,
+  Bot,
+  Layers,
+  Package,
+  Send,
+  Sparkles,
+  Users,
 } from "lucide-react";
 import { FadeInOnScroll } from "@/components/fade-in-on-scroll";
 import { ProjectStructuredData } from "@/components/project-structured-data";
@@ -57,6 +65,10 @@ interface Project {
   tech: string[];
   category: Category;
   gradient: string;
+  coverImage?: string;
+  mobileCover?: boolean;
+  chatbotIllustration?: boolean;
+  inventoryIllustration?: boolean;
   projectHref?: string;
   demo?: string;
   artifacts?: string;
@@ -79,6 +91,9 @@ const PROJECTS: Project[] = [
     ],
     category: "Mobile",
     gradient: "from-green-800 via-emerald-700 to-green-900",
+    coverImage:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1785959050/dashboard_screen_ncgdqw.jpg",
+    mobileCover: true,
     projectHref: "/projects/greenspace",
     demo: "/projects/greenspace/demo",
     artifacts: "/projects/greenspace/artifacts",
@@ -92,6 +107,9 @@ const PROJECTS: Project[] = [
     tech: ["Flutter", "Dart", "Firebase", "Geofencing", "Real-time"],
     category: "Mobile",
     gradient: "from-sky-500 via-blue-400 to-yellow-400",
+    coverImage:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_600,q_auto,f_auto/v1784627935/splash_screen_nqcwym.jpg",
+    mobileCover: true,
     projectHref: "/projects/welfaretracker",
     demo: "/projects/welfaretracker/demo",
     artifacts: "/projects/welfaretracker/artifacts",
@@ -105,6 +123,8 @@ const PROJECTS: Project[] = [
     tech: ["React Native", "TypeScript", "SQLite", "Redux"],
     category: "Web platforms",
     gradient: "from-zinc-800 via-zinc-700 to-zinc-900",
+    coverImage:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785842008/smarthr_xwyta5.png",
     projectHref: "/projects/smarthr",
     demo: "#",
     artifacts: "/projects/smarthr/artifacts",
@@ -118,6 +138,8 @@ const PROJECTS: Project[] = [
     tech: ["C", "Assembly", "Systems Programming", "Kernel Development"],
     category: "Systems programming",
     gradient: "from-violet-800 via-purple-700 to-indigo-900",
+    coverImage:
+      "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1787475347/Screenshot_2026-08-17_113653_x1ot2e.png",
     projectHref: "/projects/sageOS",
     demo: "/projects/sageOS/demo",
     artifacts: "/projects/sageOS/artifacts",
@@ -130,6 +152,7 @@ const PROJECTS: Project[] = [
     tech: ["Next.js", "OpenAI", "TypeScript", "Tailwind CSS"],
     category: "Web platforms",
     gradient: "from-rose-800 via-pink-700 to-purple-900",
+    chatbotIllustration: true,
     demo: "/projects/ai-chat-assistant",
     github: "#",
   },
@@ -141,6 +164,7 @@ const PROJECTS: Project[] = [
     tech: ["C#", "MySQL Server", "CRUD", "Desktop Application"],
     category: "Web platforms",
     gradient: "from-amber-700 via-orange-600 to-rose-900",
+    inventoryIllustration: true,
     projectHref: "/projects/inventory-management",
     demo: "/projects/inventory-management/demo",
     github: "#",
@@ -210,6 +234,276 @@ function ActionButtons({ project }: { project: Project }) {
 }
 
 /* ─── GRID card ───────────────────────────────────────────────── */
+function ProjectArtwork({ project }: { project: Project }) {
+  return (
+    <div
+      className={`relative aspect-[16/9] overflow-hidden rounded-xl bg-gradient-to-br ${project.gradient}`}
+      aria-hidden="true"
+    >
+      <div className="absolute inset-0 bg-black/10" />
+      {project.chatbotIllustration ? (
+        <>
+          <div className="absolute -right-8 -top-10 size-36 rounded-full bg-fuchsia-500/30 blur-3xl" />
+          <div className="absolute -bottom-12 -left-8 size-40 rounded-full bg-violet-500/30 blur-3xl" />
+          <div className="absolute inset-3 overflow-hidden rounded-xl border border-white/20 bg-[#11101c]/95 shadow-[0_12px_30px_rgba(0,0,0,0.45)] sm:inset-4">
+            <div className="flex h-7 items-center justify-between border-b border-white/10 bg-white/[0.04] px-2.5">
+              <div className="flex items-center gap-1.5">
+                <span className="flex size-4 items-center justify-center rounded-md bg-gradient-to-br from-fuchsia-500 to-violet-500 text-white">
+                  <Sparkles className="size-2.5" />
+                </span>
+                <span className="text-[8px] font-semibold tracking-wide text-white/90">
+                  Sage AI
+                </span>
+              </div>
+              <div className="flex items-center gap-1 text-[7px] text-emerald-300/90">
+                <span className="size-1 rounded-full bg-emerald-400" />
+                Ready to help
+              </div>
+            </div>
+            <div className="grid h-[calc(100%-1.75rem)] grid-cols-[24%_1fr]">
+              <div className="space-y-2 border-r border-white/10 bg-black/10 p-2">
+                <div className="mb-3 h-1.5 w-4/5 rounded-full bg-white/20" />
+                <div className="h-4 rounded-md border border-violet-400/25 bg-violet-400/10" />
+                <div className="h-1 w-4/5 rounded-full bg-white/15" />
+                <div className="h-1 w-3/5 rounded-full bg-white/10" />
+              </div>
+              <div className="relative flex min-w-0 flex-col items-center justify-center gap-2 p-2 sm:gap-2.5 sm:p-3">
+                <div className="absolute right-3 top-3 text-fuchsia-200/80">
+                  <Sparkles className="size-3" />
+                </div>
+                <div className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500/30 to-violet-500/30 text-fuchsia-100 ring-1 ring-white/15 shadow-[0_0_20px_rgba(217,70,239,0.25)] sm:size-10">
+                  <Bot className="size-4 sm:size-5" />
+                </div>
+                <div className="space-y-1 text-center">
+                  <div className="text-[9px] font-semibold text-white/90 sm:text-[10px]">
+                    Your AI assistant
+                  </div>
+                  <div className="text-[7px] text-white/40">
+                    Ask anything. Let&apos;s figure it out.
+                  </div>
+                </div>
+                <div className="w-full max-w-[190px] space-y-1.5">
+                  <div className="ml-auto w-[66%] rounded-lg rounded-br-sm bg-violet-500/35 px-2 py-1.5 text-[7px] text-violet-50/90">
+                    Help me plan my next project
+                  </div>
+                  <div className="flex items-start gap-1.5 rounded-lg rounded-bl-sm border border-white/10 bg-white/[0.06] px-2 py-1.5">
+                    <Sparkles className="mt-0.5 size-2 shrink-0 text-fuchsia-300" />
+                    <div className="space-y-1">
+                      <div className="h-1 w-28 max-w-full rounded-full bg-white/50" />
+                      <div className="h-1 w-20 max-w-full rounded-full bg-white/25" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex w-full max-w-[190px] items-center justify-between rounded-full border border-white/15 bg-black/20 px-2 py-1.5 text-[7px] text-white/35">
+                  <span>Message Sage AI...</span>
+                  <span className="flex size-4 items-center justify-center rounded-full bg-violet-500 text-white">
+                    <Send className="size-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : project.inventoryIllustration ? (
+        <>
+          <div className="absolute -right-8 -top-8 size-40 rounded-full bg-orange-400/25 blur-3xl" />
+          <div className="absolute -bottom-12 -left-8 size-40 rounded-full bg-amber-300/20 blur-3xl" />
+          <div className="absolute inset-x-3 top-2 bottom-1">
+            <div className="absolute inset-x-0 top-0 bottom-7 rounded-[1.1rem] border border-zinc-500/80 bg-gradient-to-br from-zinc-500 via-zinc-800 to-zinc-600 p-[5px] shadow-[0_12px_24px_rgba(0,0,0,0.55)]">
+              <div className="relative h-full w-full overflow-hidden rounded-[0.8rem] border border-black/80 bg-[#f5f6f8]">
+                <div className="flex h-5 items-center justify-between bg-[#202936] px-2">
+                  <div className="flex items-center gap-1">
+                    <span className="flex size-3 items-center justify-center rounded-sm bg-orange-500 text-white">
+                      <Package className="size-2" />
+                    </span>
+                    <span className="text-[6px] font-semibold text-white/90">
+                      SAGE INVENTORY
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="size-1 rounded-full bg-emerald-400" />
+                    <span className="text-[5px] text-white/60">Connected</span>
+                    <span className="ml-1 size-2.5 rounded-full bg-white/15" />
+                  </div>
+                </div>
+                <div className="grid h-[calc(100%-1.25rem)] grid-cols-[19%_1fr]">
+                  <div className="space-y-2 bg-[#263241] p-1.5">
+                    <div className="mb-2 h-1 w-3/5 rounded-full bg-white/20" />
+                    <div className="flex items-center gap-1 rounded bg-orange-500/20 px-1 py-1 text-[5px] font-medium text-orange-200">
+                      <Boxes className="size-2" /> Dashboard
+                    </div>
+                    <div className="flex items-center gap-1 px-1 text-[5px] text-white/55">
+                      <Package className="size-2" /> Products
+                    </div>
+                    <div className="flex items-center gap-1 px-1 text-[5px] text-white/55">
+                      <Layers className="size-2" /> Categories
+                    </div>
+                    <div className="flex items-center gap-1 px-1 text-[5px] text-white/55">
+                      <Users className="size-2" /> Customers
+                    </div>
+                  </div>
+                  <div className="min-w-0 overflow-hidden p-1.5 sm:p-2">
+                    <div className="mb-1.5 flex items-center justify-between">
+                      <div>
+                        <div className="text-[7px] font-bold text-slate-800 sm:text-[8px]">
+                          Inventory overview
+                        </div>
+                        <div className="text-[5px] text-slate-400">
+                          Monitor your products and stock
+                        </div>
+                      </div>
+                      <span className="rounded bg-orange-500 px-1.5 py-1 text-[5px] font-semibold text-white">
+                        + Add product
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1">
+                      {[
+                        ["Total products", "1,248", "text-orange-500"],
+                        ["In stock", "1,106", "text-emerald-600"],
+                        ["Low stock", "24", "text-amber-600"],
+                      ].map(([label, value, color]) => (
+                        <div
+                          key={label}
+                          className="rounded border border-slate-200 bg-white px-1 py-1"
+                        >
+                          <div className="text-[4px] text-slate-400 sm:text-[5px]">
+                            {label}
+                          </div>
+                          <div
+                            className={`mt-0.5 text-[7px] font-bold sm:text-[8px] ${color}`}
+                          >
+                            {value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-1.5 overflow-hidden rounded border border-slate-200 bg-white">
+                      <div className="flex items-center justify-between border-b border-slate-100 px-1.5 py-1">
+                        <span className="text-[5px] font-semibold text-slate-700">
+                          Recent products
+                        </span>
+                        <span className="text-[4px] text-orange-600">
+                          View all
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-[1fr_0.7fr_0.45fr] gap-1 border-b border-slate-100 bg-slate-50 px-1.5 py-1 text-[4px] font-medium text-slate-400">
+                        <span>PRODUCT</span>
+                        <span>CATEGORY</span>
+                        <span>STOCK</span>
+                      </div>
+                      {[
+                        ["Wireless keyboard", "Electronics", "In stock"],
+                        ["Office chair", "Furniture", "In stock"],
+                        ["USB-C adapter", "Accessories", "Low stock"],
+                      ].map(([name, category, stock], index) => (
+                        <div
+                          key={name}
+                          className="grid grid-cols-[1fr_0.7fr_0.45fr] items-center gap-1 border-b border-slate-100 px-1.5 py-1 last:border-0"
+                        >
+                          <span className="flex min-w-0 items-center gap-1 truncate text-[4px] text-slate-700 sm:text-[5px]">
+                            <span
+                              className={`flex size-3 shrink-0 items-center justify-center rounded-sm ${index === 0 ? "bg-orange-100 text-orange-600" : index === 1 ? "bg-blue-100 text-blue-600" : "bg-violet-100 text-violet-600"}`}
+                            >
+                              <Package className="size-2" />
+                            </span>
+                            {name}
+                          </span>
+                          <span className="truncate text-[4px] text-slate-400 sm:text-[5px]">
+                            {category}
+                          </span>
+                          <span
+                            className={`text-[4px] font-medium sm:text-[5px] ${stock === "In stock" ? "text-emerald-600" : "text-amber-600"}`}
+                          >
+                            {stock}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span className="absolute bottom-1.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-zinc-400/70" />
+            </div>
+            <div className="absolute bottom-1 left-1/2 h-7 w-[18%] -translate-x-1/2 bg-gradient-to-b from-zinc-500 via-zinc-600 to-zinc-700 [clip-path:polygon(35%_0,65%_0,82%_100%,18%_100%)]" />
+            <div className="absolute bottom-0 left-1/2 h-1.5 w-[34%] -translate-x-1/2 rounded-full border border-zinc-500/80 bg-gradient-to-b from-zinc-500 to-zinc-700 shadow-[0_3px_6px_rgba(0,0,0,0.4)]" />
+          </div>
+        </>
+      ) : project.coverImage ? (
+        project.mobileCover ? (
+          <div className="absolute inset-y-2 left-1/2 aspect-[9/19.5] -translate-x-1/2 rounded-[1.6rem] border-[5px] border-zinc-700 bg-gradient-to-br from-zinc-500 via-zinc-900 to-black p-[3px] shadow-[0_12px_28px_rgba(0,0,0,0.55)]">
+            <span className="absolute -left-[7px] top-[24%] h-7 w-[3px] rounded-l-sm bg-zinc-600" />
+            <span className="absolute -left-[7px] top-[38%] h-10 w-[3px] rounded-l-sm bg-zinc-600" />
+            <span className="absolute -right-[7px] top-[31%] h-12 w-[3px] rounded-r-sm bg-zinc-500" />
+            <div className="relative h-full w-full overflow-hidden rounded-[1.25rem] bg-zinc-950">
+              <Image
+                src={project.coverImage}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100px, 130px"
+                className="object-cover"
+              />
+              <div className="absolute left-1/2 top-1.5 z-10 flex h-[13px] w-[42%] -translate-x-1/2 items-center justify-end gap-1 rounded-full bg-black px-1.5 shadow-sm">
+                <span className="h-1 w-3 rounded-full bg-zinc-800" />
+                <span className="size-1.5 rounded-full bg-slate-900 ring-1 ring-slate-700/80" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="absolute inset-x-3 top-2 bottom-1">
+            <div className="absolute inset-x-0 top-0 bottom-7 rounded-[1.1rem] border border-zinc-500/80 bg-gradient-to-br from-zinc-500 via-zinc-800 to-zinc-600 p-[5px] shadow-[0_12px_24px_rgba(0,0,0,0.55)]">
+              <div className="relative h-full w-full overflow-hidden rounded-[0.8rem] border border-black/80 bg-zinc-950">
+                <Image
+                  src={project.coverImage}
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 30vw"
+                  className="object-cover object-top"
+                />
+              </div>
+              <span className="absolute bottom-1.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-zinc-400/70" />
+            </div>
+            <div className="absolute bottom-1 left-1/2 h-7 w-[18%] -translate-x-1/2 bg-gradient-to-b from-zinc-500 via-zinc-600 to-zinc-700 [clip-path:polygon(35%_0,65%_0,82%_100%,18%_100%)]" />
+            <div className="absolute bottom-0 left-1/2 h-1.5 w-[34%] -translate-x-1/2 rounded-full border border-zinc-500/80 bg-gradient-to-b from-zinc-500 to-zinc-700 shadow-[0_3px_6px_rgba(0,0,0,0.4)]" />
+          </div>
+        )
+      ) : (
+        <div className="absolute inset-3 overflow-hidden rounded-lg border border-white/20 bg-zinc-950/90 p-2.5 shadow-xl">
+          <div className="flex h-full flex-col overflow-hidden rounded-md border border-white/10 bg-zinc-900/90">
+            <div className="flex h-4 shrink-0 items-center gap-1 border-b border-white/10 px-2">
+              <span className="size-1 rounded-full bg-rose-400/80" />
+              <span className="size-1 rounded-full bg-amber-300/80" />
+              <span className="size-1 rounded-full bg-emerald-400/80" />
+              <span className="ml-2 h-1 w-1/3 rounded-full bg-white/10" />
+            </div>
+            <div className="grid min-h-0 flex-1 grid-cols-[22%_1fr] gap-2 p-2">
+              <div className="space-y-1.5 border-r border-white/10 pr-1.5">
+                <div className="h-1.5 w-full rounded-full bg-violet-400/70" />
+                <div className="h-1 w-4/5 rounded-full bg-white/20" />
+                <div className="h-1 w-3/4 rounded-full bg-white/15" />
+                <div className="h-1 w-5/6 rounded-full bg-white/15" />
+              </div>
+              <div className="flex min-w-0 flex-col gap-2">
+                <div className="h-2 w-2/5 rounded-full bg-white/40" />
+                <div className="grid flex-1 grid-cols-3 gap-1">
+                  <div className="rounded bg-violet-400/20" />
+                  <div className="rounded bg-sky-400/20" />
+                  <div className="rounded bg-emerald-400/20" />
+                </div>
+                <div className="space-y-1">
+                  <div className="h-1 rounded-full bg-white/15" />
+                  <div className="h-1 w-4/5 rounded-full bg-white/15" />
+                  <div className="h-1 w-3/5 rounded-full bg-white/15" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <span className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+    </div>
+  );
+}
+
 const GridCard = memo(function GridCard({
   project,
   onSelect,
@@ -217,51 +511,69 @@ const GridCard = memo(function GridCard({
   project: Project;
   onSelect: (project: Project) => void;
 }) {
+  const [showAllTech, setShowAllTech] = useState(false);
   const tagParts = project.tagline.split(" · ");
   return (
-    <button
-      type="button"
+    <article
       data-project-card
-      onClick={() => onSelect(project)}
-      className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden text-left transition-all duration-300 shadow-[0_6px_18px_rgba(124,58,237,0.08)] hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)] hover:-translate-y-0.5"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card text-left shadow-[0_6px_18px_rgba(124,58,237,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-500/60 hover:shadow-[0_18px_40px_rgba(124,58,237,0.22),0_0_28px_rgba(167,139,250,0.16)]"
     >
-      <div className="p-3 pb-0">
-        <div
-          className={`relative w-full aspect-[16/9] rounded-xl bg-gradient-to-br ${project.gradient} overflow-hidden`}
-        />
+      <button
+        type="button"
+        onClick={() => onSelect(project)}
+        aria-label={`View ${project.title} project details`}
+        className="absolute inset-0 z-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500"
+      />
+      <div className="pointer-events-none relative z-10 flex flex-1 flex-col p-2.5">
+        <div className="relative">
+          <ProjectArtwork project={project} />
+          <span className="absolute left-2 top-2 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm backdrop-blur-md">
+            {tagParts.join(" · ")}
+          </span>
+        </div>
+        <div className="flex flex-1 flex-col px-1.5 pb-1 pt-3">
+          <h3 className="text-base font-bold leading-snug text-foreground">
+            {project.title}
+          </h3>
+          <p className="mt-1.5 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
+            {project.description}
+          </p>
+          <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
+            {project.tech
+              .slice(0, showAllTech ? undefined : 4)
+              .map((technology) => (
+              <span
+                key={technology}
+                className="rounded-full border border-violet-500/15 bg-violet-500/[0.08] px-2 py-1 text-[10px] font-medium text-violet-600 dark:text-violet-300"
+              >
+                {technology}
+              </span>
+              ))}
+            {project.tech.length > 4 && (
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setShowAllTech((showAll) => !showAll);
+                }}
+                aria-expanded={showAllTech}
+                aria-label={
+                  showAllTech
+                    ? "Show fewer technologies"
+                    : `Show ${project.tech.length - 4} more technologies`
+                }
+                className="pointer-events-auto rounded-full border border-border bg-muted px-2 py-1 text-[10px] font-medium text-muted-foreground transition-colors hover:border-violet-500/40 hover:text-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+              >
+                {showAllTech ? "Show less" : `+${project.tech.length - 4}`}
+              </button>
+            )}
+          </div>
+          <div className="pointer-events-auto mt-3 border-t border-border/70 pt-3">
+            <ActionButtons project={project} />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col flex-1 p-4 gap-2">
-        <div className="flex flex-wrap gap-1 text-xs font-medium text-violet-500">
-          {tagParts.map((part, i) => (
-            <span key={part}>
-              {i > 0 && (
-                <span className="text-muted-foreground/40 mr-1">·</span>
-              )}
-              {part}
-            </span>
-          ))}
-        </div>
-        <h3 className="text-lg font-bold text-foreground leading-snug">
-          {project.title}
-        </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-x-1 gap-y-0.5 mt-auto pt-1 text-[11px] font-medium text-violet-500">
-          {project.tech.map((t, i) => (
-            <span key={t}>
-              {t}
-              {i < project.tech.length - 1 && (
-                <span className="text-muted-foreground/30 ml-1">·</span>
-              )}
-            </span>
-          ))}
-        </div>
-        <div className="pt-2">
-          <ActionButtons project={project} />
-        </div>
-      </div>
-    </button>
+    </article>
   );
 });
 
@@ -543,76 +855,35 @@ export default function ProjectsPage() {
 
           {/* Filter tabs + view toggle */}
           <FadeInOnScroll delay={100}>
-            <div className="mt-6 flex items-center justify-between border-b border-border pb-4 gap-3 flex-wrap">
-              {/* Stepper breadcrumb categories */}
-              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
-                {CATEGORIES.map((cat, idx) => {
+            <div className="mt-6 flex items-center justify-between gap-3 flex-wrap">
+              {/* Project category filters */}
+              <div className="flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-border bg-muted/60 p-1 scrollbar-none">
+                {CATEGORIES.map((cat) => {
                   const isActive = active === cat;
-                  const isCompleted = CATEGORIES.indexOf(active) > idx;
                   return (
-                    <div key={cat} className="flex items-center">
-                      <button
-                        onClick={() => {
-                          setActive(cat);
-                          setListPage(1);
-                        }}
-                        className="flex flex-col items-center gap-1.5 group"
-                      >
-                        <div
-                          className={`flex items-center justify-center size-8 rounded-full border-2 transition-all duration-200 ${
-                            isActive
-                              ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_12px_rgba(124,58,237,0.5)]"
-                              : isCompleted
-                                ? "bg-violet-600/20 border-violet-500 text-violet-500"
-                                : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
-                          }`}
-                        >
-                          {isCompleted ? (
-                            <svg
-                              className="size-4"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          ) : (
-                            <span className="text-[10px] font-bold">
-                              {idx + 1}
-                            </span>
-                          )}
-                        </div>
-                        <span
-                          className={`text-[11px] font-semibold whitespace-nowrap transition-colors ${
-                            isActive
-                              ? "text-violet-500"
-                              : "text-muted-foreground group-hover:text-foreground"
-                          }`}
-                        >
-                          {cat}
-                        </span>
-                      </button>
-                      {idx < CATEGORIES.length - 1 && (
-                        <div
-                          className={`h-[2px] w-8 sm:w-12 mx-1 mb-4 rounded-full transition-colors ${
-                            isCompleted ? "bg-violet-500/60" : "bg-border"
-                          }`}
-                        />
-                      )}
-                    </div>
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setActive(cat);
+                        setListPage(1);
+                      }}
+                      aria-pressed={isActive}
+                      className={`whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
+                        isActive
+                          ? "bg-violet-600 text-white shadow-sm"
+                          : "text-muted-foreground hover:bg-background hover:text-foreground"
+                      }`}
+                    >
+                      {cat}
+                    </button>
                   );
                 })}
               </div>
 
-              {/* View toggle — stepper style */}
-              <div className="flex items-center gap-0 overflow-x-auto scrollbar-none shrink-0">
-                {(["grid", "tiles", "carousel", "list"] as const).map(
-                  (v, idx) => {
+              {/* View toggle */}
+              <div className="flex shrink-0 items-center gap-1 overflow-x-auto rounded-full border border-border bg-muted/60 p-1 scrollbar-none">
+                {(["grid", "tiles", "carousel", "list"] as const).map((v) => {
                     const labels: Record<string, string> = {
                       grid: "Grid",
                       tiles: "Tiles",
@@ -625,47 +896,24 @@ export default function ProjectsPage() {
                       carousel: <GalleryHorizontal className="size-3" />,
                       list: <List className="size-3" />,
                     };
-                    const views = ["grid", "tiles", "carousel", "list"];
                     const isActive = view === v;
-                    const isCompleted = views.indexOf(view) > idx;
                     return (
-                      <div key={v} className="flex items-center">
-                        <button
-                          onClick={() => changeView(v)}
-                          className="flex flex-col items-center gap-1.5 group"
-                        >
-                          <div
-                            className={`flex items-center justify-center size-7 rounded-full border-2 transition-all duration-200 ${
-                              isActive
-                                ? "bg-violet-600 border-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.5)]"
-                                : isCompleted
-                                  ? "bg-violet-600/20 border-violet-500 text-violet-500"
-                                  : "bg-muted border-border text-muted-foreground group-hover:border-violet-400 group-hover:text-violet-400"
-                            }`}
-                          >
-                            {icons[v]}
-                          </div>
-                          <span
-                            className={`text-[10px] font-semibold whitespace-nowrap transition-colors ${
-                              isActive
-                                ? "text-violet-500"
-                                : "text-muted-foreground group-hover:text-foreground"
-                            }`}
-                          >
-                            {labels[v]}
-                          </span>
-                        </button>
-                        {idx < 3 && (
-                          <div
-                            className={`h-[2px] w-6 sm:w-8 mx-1 mb-4 rounded-full transition-colors ${
-                              isCompleted ? "bg-violet-500/60" : "bg-border"
-                            }`}
-                          />
-                        )}
-                      </div>
+                      <button
+                        key={v}
+                        type="button"
+                        onClick={() => changeView(v)}
+                        aria-pressed={isActive}
+                        className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
+                          isActive
+                            ? "bg-violet-600 text-white shadow-sm"
+                            : "text-muted-foreground hover:bg-background hover:text-foreground"
+                        }`}
+                      >
+                        {icons[v]}
+                        {labels[v]}
+                      </button>
                     );
-                  },
-                )}
+                  })}
               </div>
             </div>
           </FadeInOnScroll>
