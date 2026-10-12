@@ -2,7 +2,10 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import JavaScriptObfuscator from "javascript-obfuscator";
 
-const chunksDirectory = path.join(process.cwd(), ".next", "static", "chunks");
+const chunksDirectory = path.resolve(
+  process.cwd(),
+  process.argv[2] ?? ".next/static/chunks",
+);
 
 async function getJavaScriptFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
