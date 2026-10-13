@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "WelfareTracker Artifacts",
     description:
       "Review the WelfareTracker product screens and field operations artifacts that guide the safety workflow design.",
-    url: "https://portfolio.sagetech.co.zw/projects/welfaretracker/artifacts",
+    url: "https://musonzahw.co.zw/projects/welfaretracker/artifacts",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

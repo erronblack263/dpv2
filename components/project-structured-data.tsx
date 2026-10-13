@@ -28,7 +28,7 @@ export function ProjectStructuredData({
         applicationCategory: project.category,
         operatingSystem: "Web, Mobile, Desktop",
         description: project.description,
-        url: `https://portfolio.sagetech.co.zw${project.url}`,
+        url: `https://musonzahw.co.zw${project.url}`,
         keywords: project.tech.join(", "),
         author: {
           "@type": "Person",

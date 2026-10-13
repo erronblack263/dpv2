@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "WelfareTracker Demo",
     description:
       "Review the WelfareTracker demo for emergency alerts, safe-zone setup, and field operations monitoring.",
-    url: "https://portfolio.sagetech.co.zw/projects/welfaretracker/demo",
+    url: "https://musonzahw.co.zw/projects/welfaretracker/demo",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Curriculum Vitae | Witness H Musonza",
     description:
       "Explore Witness H Musonza's software engineering experience, education, projects, and technical skills.",
-    url: "https://portfolio.sagetech.co.zw/cv",
+    url: "https://musonzahw.co.zw/cv",
     siteName: "Witness H Musonza Portfolio",
     type: "profile",
   },

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "SageOS | Systems Programming Project",
     description:
       "A custom operating system project exploring kernel architecture, process scheduling, and desktop system interfaces.",
-    url: "https://portfolio.sagetech.co.zw/projects/sageOS",
+    url: "https://musonzahw.co.zw/projects/sageOS",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

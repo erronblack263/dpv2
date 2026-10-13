@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "SmartHR Artifacts",
     description:
       "Explore the SmartHR artifact gallery covering onboarding, recruitment, employee workflows, and reporting interfaces.",
-    url: "https://portfolio.sagetech.co.zw/projects/smarthr/artifacts",
+    url: "https://musonzahw.co.zw/projects/smarthr/artifacts",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

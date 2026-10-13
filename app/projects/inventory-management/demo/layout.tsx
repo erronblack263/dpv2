@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Inventory Management Demo",
     description:
       "Watch the Sage Inventory Management demo showcasing product, stock, and workflow operations in a desktop system.",
-    url: "https://portfolio.sagetech.co.zw/projects/inventory-management/demo",
+    url: "https://musonzahw.co.zw/projects/inventory-management/demo",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },
