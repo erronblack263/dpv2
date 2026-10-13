@@ -6,10 +6,6 @@
     {
       "pattern": "musonzahw.co.zw",
       "custom_domain": true
-    },
-    {
-      "pattern": "portfolio.sagetech.co.zw",
-      "custom_domain": true
     }
   ],
   "compatibility_date": "2026-09-25",
