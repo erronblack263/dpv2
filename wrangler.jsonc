@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "creativesage",
+  "previews": {},
   "routes": [
     {
       "pattern": "musonzahw.co.zw",
