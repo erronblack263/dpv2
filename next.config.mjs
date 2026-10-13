@@ -24,6 +24,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "portfolio.sagetech.co.zw",
+          },
+        ],
+        destination: "https://musonzahw.co.zw/:path*",
+        permanent: true,
+      },
+      {
         source: "/home",
         destination: "/",
         permanent: true,
