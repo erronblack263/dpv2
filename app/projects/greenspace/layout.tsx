@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Green Space | Agri-Tech Project",
     description:
       "AI-assisted soil classification and crop intelligence for better agricultural decision-making.",
-    url: "https://portfolio.sagetech.co.zw/projects/greenspace",
+    url: "https://musonzahw.co.zw/projects/greenspace",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

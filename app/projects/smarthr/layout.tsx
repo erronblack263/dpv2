@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "SmartHR | HR Platform",
     description:
       "A workforce and recruitment platform for managing hiring, employee workflows, and HR reporting.",
-    url: "https://portfolio.sagetech.co.zw/projects/smarthr",
+    url: "https://musonzahw.co.zw/projects/smarthr",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

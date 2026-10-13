@@ -30,11 +30,11 @@ const inter = localFont({
   preload: true,
 });
 
-const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
+const siteUrl = "https://musonzahw.co.zw";
+const avatarUrl = "https://musonzahw.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
-  "https://portfolio.sagetech.co.zw/sage-logo.png";
+  "https://musonzahw.co.zw/sage-logo.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+        url: avatarUrl,
         width: 1024,
         height: 1024,
         alt: "Witness H Musonza portrait",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     title: "Witness H Musonza | Software Developer",
     description:
       "Full-stack software developer creating scalable products across mobile, web, AI, and systems engineering.",
-    images: ["https://portfolio.sagetech.co.zw/witness-avatar.png"],
+    images: [avatarUrl],
   },
   icons: {
     icon: [
@@ -113,9 +113,9 @@ export const metadata: Metadata = {
     ],
   },
   other: {
-    thumbnail: "https://portfolio.sagetech.co.zw/witness-avatar.png",
-    "image-thumbnail": "https://portfolio.sagetech.co.zw/witness-avatar.png",
-    image_src: "https://portfolio.sagetech.co.zw/witness-avatar.png",
+    thumbnail: avatarUrl,
+    "image-thumbnail": avatarUrl,
+    image_src: avatarUrl,
   },
   robots: {
     index: true,
@@ -149,7 +149,7 @@ export default function RootLayout({
       <head>
         <link
           rel="image_src"
-          href="https://portfolio.sagetech.co.zw/witness-avatar.png"
+          href="https://musonzahw.co.zw/witness-avatar.png"
         />
       </head>
       <body className="font-sans antialiased overflow-x-hidden">

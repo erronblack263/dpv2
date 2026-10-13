@@ -12,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/landing.png", "/landing-light.png"],
       },
     ],
-    sitemap: "https://portfolio.sagetech.co.zw/sitemap.xml",
-    host: "https://portfolio.sagetech.co.zw",
+    sitemap: "https://musonzahw.co.zw/sitemap.xml",
+    host: "https://musonzahw.co.zw",
   };
 }

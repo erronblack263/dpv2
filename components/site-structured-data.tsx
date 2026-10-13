@@ -1,8 +1,8 @@
-const siteUrl = "https://portfolio.sagetech.co.zw";
-const avatarUrl = "https://portfolio.sagetech.co.zw/witness-avatar.png";
+const siteUrl = "https://musonzahw.co.zw";
+const avatarUrl = "https://musonzahw.co.zw/witness-avatar.png";
 const logoUrl =
   process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_URL ||
-  "https://portfolio.sagetech.co.zw/sage-logo.png";
+  "https://musonzahw.co.zw/sage-logo.png";
 
 const graphSchema = {
   "@context": "https://schema.org",

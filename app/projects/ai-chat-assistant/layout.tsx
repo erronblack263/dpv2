@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "AI Chat Assistant | AI Product",
     description:
       "A conversational AI product with streaming responses, persistent chat history, and modern interaction design.",
-    url: "https://portfolio.sagetech.co.zw/projects/ai-chat-assistant",
+    url: "https://musonzahw.co.zw/projects/ai-chat-assistant",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

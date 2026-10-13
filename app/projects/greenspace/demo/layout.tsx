@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Green Space Demo",
     description:
       "See the Green Space product demo showcasing soil intelligence, AI predictions, and field workflows.",
-    url: "https://portfolio.sagetech.co.zw/projects/greenspace/demo",
+    url: "https://musonzahw.co.zw/projects/greenspace/demo",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

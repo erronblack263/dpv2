@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "WelfareTracker | Field Safety Platform",
     description:
       "A welfare and emergency response platform built for field teams, live tracking, and safer operations.",
-    url: "https://portfolio.sagetech.co.zw/projects/welfaretracker",
+    url: "https://musonzahw.co.zw/projects/welfaretracker",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },

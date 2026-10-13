@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: "Witness Musonza",
   webDir: "public",
   server: {
-    url: "https://portfolio.sagetech.co.zw",
+    url: "https://musonzahw.co.zw",
     cleartext: true,
   },
 };
