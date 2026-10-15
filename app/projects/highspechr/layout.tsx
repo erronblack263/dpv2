@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SmartHR",
+  title: "HighSpecHR",
   description:
-    "SmartHR is a recruitment and workforce management platform designed to simplify HR operations, hiring workflows, and reporting.",
+    "HighSpecHR is a recruitment and workforce management platform designed to simplify HR operations, hiring workflows, and reporting.",
   alternates: {
-    canonical: "/projects/smarthr",
+    canonical: "/projects/highspechr",
   },
   openGraph: {
-    title: "SmartHR | HR Platform",
+    title: "HighSpecHR | HR Platform",
     description:
       "A workforce and recruitment platform for managing hiring, employee workflows, and HR reporting.",
-    url: "https://musonzahw.co.zw/projects/smarthr",
+    url: "https://musonzahw.co.zw/projects/highspechr",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SmartHR | HR Platform",
+    title: "HighSpecHR | HR Platform",
     description:
       "A workforce and recruitment platform for managing hiring, employee workflows, and HR reporting.",
   },
 };
 
-export default function SmartHRLayout({
+export default function HighSpecHRLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

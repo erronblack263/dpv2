@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SmartHR Artifacts",
+  title: "HighSpecHR Artifacts",
   description:
-    "View SmartHR product screens, onboarding flow, recruitment pipelines, and employee management artifacts from this HR platform project.",
+    "View HighSpecHR product screens, onboarding flow, recruitment pipelines, and employee management artifacts from this HR platform project.",
   alternates: {
-    canonical: "/projects/smarthr/artifacts",
+    canonical: "/projects/highspechr/artifacts",
   },
   openGraph: {
-    title: "SmartHR Artifacts",
+    title: "HighSpecHR Artifacts",
     description:
-      "Explore the SmartHR artifact gallery covering onboarding, recruitment, employee workflows, and reporting interfaces.",
-    url: "https://musonzahw.co.zw/projects/smarthr/artifacts",
+      "Explore the HighSpecHR artifact gallery covering onboarding, recruitment, employee workflows, and reporting interfaces.",
+    url: "https://musonzahw.co.zw/projects/highspechr/artifacts",
     siteName: "Witness H Musonza Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SmartHR Artifacts",
+    title: "HighSpecHR Artifacts",
     description:
-      "Explore the SmartHR artifact gallery covering onboarding, recruitment, employee workflows, and reporting interfaces.",
+      "Explore the HighSpecHR artifact gallery covering onboarding, recruitment, employee workflows, and reporting interfaces.",
   },
 };
 
-export default function SmartHRArtifactsLayout({
+export default function HighSpecHRArtifactsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
