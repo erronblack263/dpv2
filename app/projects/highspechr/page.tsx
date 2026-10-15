@@ -12,7 +12,7 @@ import {
 
 const TECHNOLOGIES = ["React", "TypeScript", "Spring Boot", "SQLite", "Redux"];
 
-export default function SmartHRPage() {
+export default function HighSpecHRPage() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-6 py-16 text-foreground sm:px-10">
       <div aria-hidden="true" className="pointer-events-none fixed inset-0">
@@ -38,7 +38,7 @@ export default function SmartHRPage() {
 
             <div className="space-y-4">
               <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-                SmartHR
+                HighSpecHR
               </h1>
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 A workforce and recruitment platform that brings hiring
@@ -60,7 +60,7 @@ export default function SmartHRPage() {
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Link
-                href="/projects/smarthr/artifacts"
+                href="/projects/highspechr/artifacts"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_28px_rgba(124,58,237,0.35)] transition-all hover:bg-violet-500"
               >
                 <Images className="size-4" />
@@ -80,7 +80,7 @@ export default function SmartHRPage() {
                   <Monitor className="size-4" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold">SmartHR</p>
+                  <p className="text-sm font-semibold">HighSpecHR</p>
                   <p className="text-[10px] text-muted-foreground">
                     HR command centre
                   </p>

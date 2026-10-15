@@ -44,6 +44,16 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/projects/smarthr",
+        destination: "/projects/highspechr",
+        permanent: true,
+      },
+      {
+        source: "/projects/smarthr/:path*",
+        destination: "/projects/highspechr/:path*",
+        permanent: true,
+      },
     ];
   },
 };

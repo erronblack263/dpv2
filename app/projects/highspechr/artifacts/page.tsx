@@ -92,7 +92,7 @@ const SECTIONS: SectionData[] = [
     title: "Auth Screens",
     tagline: "Authentication & Onboarding",
     description:
-      "Secure login and signup flows with form validation, error handling and seamless account creation for SmartHR users.",
+      "Secure login and signup flows with form validation, error handling and seamless account creation for HighSpecHR users.",
     category: "Authentication",
     platform: "Web",
     role: "Fullstack Developer",
@@ -319,7 +319,7 @@ const SECTIONS: SectionData[] = [
 
 type ScreenViewMode = "grid" | "tiles" | "carousel";
 
-export default function SmartHRArtifactsPage() {
+export default function HighSpecHRArtifactsPage() {
   const [sectionIdx, setSectionIdx] = useState(0);
   const [activeScreenIdx, setActiveScreenIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
@@ -351,7 +351,7 @@ export default function SmartHRArtifactsPage() {
 
   useEffect(() => {
     const galleryItems = document.querySelectorAll<HTMLElement>(
-      "[data-smarthr-gallery-item]",
+      "[data-highspechr-gallery-item]",
     );
     if (!galleryItems.length) return;
 
@@ -371,7 +371,7 @@ export default function SmartHRArtifactsPage() {
 
   useEffect(() => {
     const currentScreenElement = document.querySelector<HTMLElement>(
-      "[data-smarthr-current-screen]",
+      "[data-highspechr-current-screen]",
     );
     if (!currentScreenElement) return;
 
@@ -498,7 +498,7 @@ export default function SmartHRArtifactsPage() {
           <div className="lg:col-span-5 flex flex-col justify-between h-full pt-2">
             <div>
               <Link
-                href="/projects/smarthr"
+                href="/projects/highspechr"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 <ArrowLeft className="size-3.5" />
@@ -507,7 +507,7 @@ export default function SmartHRArtifactsPage() {
 
               <div className="mt-6">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-violet-600 dark:text-violet-400 drop-shadow-[0_0_25px_rgba(124,58,237,0.2)]">
-                  SmartHR
+                  HighSpecHR
                 </h1>
                 <p className="mt-1 text-lg sm:text-xl font-medium text-muted-foreground">
                   {section.tagline}
@@ -544,7 +544,7 @@ export default function SmartHRArtifactsPage() {
 
             <div className="mt-8">
               <Link
-                href="/projects/smarthr"
+                href="/projects/highspechr"
                 className="inline-flex items-center gap-2 rounded-full border border-violet-500/50 bg-violet-500/10 dark:bg-violet-950/40 px-6 py-2.5 text-sm font-semibold text-violet-600 dark:text-violet-400 transition-all hover:bg-violet-500/20 hover:border-violet-400 shadow-[0_0_20px_rgba(124,58,237,0.15)] group"
               >
                 <span>Explore All Projects</span>
@@ -594,7 +594,7 @@ export default function SmartHRArtifactsPage() {
                 {/* Screen content */}
                 <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
                   <ImageWithSkeleton
-                    data-smarthr-current-screen
+                    data-highspechr-current-screen
                     src={currentScreen.src}
                     alt={currentScreen.caption}
                     className="w-full h-full object-cover transition-opacity duration-300"
@@ -632,7 +632,7 @@ export default function SmartHRArtifactsPage() {
                   {
                     icon: <Monitor className="size-3.5" />,
                     label: "Project",
-                    value: "SmartHR",
+                    value: "HighSpecHR",
                   },
                   {
                     icon: <Layers className="size-3.5" />,
@@ -785,7 +785,7 @@ export default function SmartHRArtifactsPage() {
           {/* Screen cards — grid view */}
           {screenView === "grid" && (
             <div
-              data-smarthr-gallery-item
+              data-highspechr-gallery-item
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
               {section.images.map((img, i) => {
@@ -845,7 +845,7 @@ export default function SmartHRArtifactsPage() {
           {/* Screen cards — tiles view */}
           {screenView === "tiles" && (
             <div
-              data-smarthr-gallery-item
+              data-highspechr-gallery-item
               className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {section.images.map((img, i) => {
@@ -904,7 +904,7 @@ export default function SmartHRArtifactsPage() {
 
           {/* Screen cards — carousel view */}
           {screenView === "carousel" && (
-            <div data-smarthr-gallery-item className="relative">
+            <div data-highspechr-gallery-item className="relative">
               <div
                 ref={screenCarouselRef}
                 className="-mx-4 px-4 overflow-x-auto scrollbar-none flex gap-4 snap-x snap-mandatory pb-16"
@@ -981,7 +981,7 @@ export default function SmartHRArtifactsPage() {
             </div>
           </Link>
           <Link
-            href="/projects/smarthr"
+            href="/projects/highspechr"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-xs font-bold text-foreground hover:bg-accent transition-all"
           >
             <Grid className="size-3.5 text-violet-600 dark:text-violet-400" />

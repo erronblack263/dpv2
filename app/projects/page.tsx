@@ -116,7 +116,7 @@ const PROJECTS: Project[] = [
     github: "#",
   },
   {
-    title: "SmartHR",
+    title: "HighSpecHR",
     tagline: "Web platforms · HR",
     description:
       "A HR web platform that streamlines hiring, recruitment and candidate assessment with automated workflows and real-time analytics.",
@@ -125,9 +125,9 @@ const PROJECTS: Project[] = [
     gradient: "from-zinc-800 via-zinc-700 to-zinc-900",
     coverImage:
       "https://res.cloudinary.com/virfpzu4/image/upload/w_1200,q_auto,f_auto/v1785842008/smarthr_xwyta5.png",
-    projectHref: "/projects/smarthr",
+    projectHref: "/projects/highspechr",
     demo: "#",
-    artifacts: "/projects/smarthr/artifacts",
+    artifacts: "/projects/highspechr/artifacts",
     github: "#",
   },
   {
